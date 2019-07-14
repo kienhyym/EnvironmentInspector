@@ -37,6 +37,10 @@
                 <div class="card-body">
                     <div class="float-right text-muted d-none" ></div>
                     <h4 class="card-title text-muted">GĐ1: Ra quyết định thanh tra</h4>
+                    
+                    
+                    
+                    <h5>Quyết định thanh tra</h5>
                     <div class="row">
 		       	   	   <div class="form-group col-6 required">
 			             <label>Số quyết định thanh tra</label>
@@ -47,14 +51,35 @@
 			             <input required type="text" data-bind="value:ngayquyetdinh" placeholder="Ngày ra quyết định" class="form-control">
 			           </div>
 		       	   </div>
+		       	   
+		       	   <div class="row">
+		       	   		<div class="form-group col">
+				              <label>Tài liệu đính kèm</label>
+				              <div class="custom-file">
+								    <input type="file" class="custom-file-input" id="upload_files_gd2" lang="vi">
+								    <label class="custom-file-label" for="upload_files_gd4">Chọn file tải lên</label>
+								</div>
+								<div class="highlight d-none border" id="preview_file_gd4" style="height:130px;overflow-y: auto; background-color: aliceblue;">
+									<pre >
+										 <ul class="list_file_gd4">
+										</ul> 
+									</pre>
+								</div>
+				        </div>
+		       	   </div>
+		       	   
+		       	   
+		       	   
+		       	   <hr/>
 		       	   <div class="row">
 		       	   		
 			       	   	<div class="col">
-				            <h5 style="padding-bottom: 10px;">Các thông số không đạt</h5>
+				            <h5 style="padding-bottom: 10px;">Danh sách thành viên đoàn thanh tra</h5>
 				            <table class="table table-bordered">
 				                <thead>
 				                    <tr>
 				                        <th>Họ và tên</th>
+				                        <th>Đơn vị công tác</th>
 				                        <th>Vai trò</th>
 				                        <th id="header_del_member" class="d-none"></th>
 				                    </tr>
@@ -64,9 +89,51 @@
 	                    </div>
 	                    
 		       	   </div>
+		       	   <hr/>
+		       	   <h5>Quyết định trưng cầu giám định</h5>
+		       	   <div class="row">
+		       	   		<div class="form-group col-6">
+			             <label>Đơn vị thực hiện</label>
+			             <input required type="text" placeholder="Trường mới" class="form-control">
+			           </div>
+		       	   	   <div class="form-group col-3">
+			             <label>Số quyết định</label>
+			             <input required type="text" placeholder="Trường mới" class="form-control">
+			           </div>
+			           <div class="form-group col-3">
+			             <label>Ngày quyết định</label>
+			             <input required type="text" placeholder="Trường mới" class="form-control">
+			           </div>
+		       	   </div>
+		       	   
+		       	   <div class="row">
+		       	   		<div class="form-group col">
+				              <label>Tài liệu đính kèm</label>
+				              <div class="custom-file">
+								    <input type="file" class="custom-file-input" id="upload_files_gd2" lang="vi">
+								    <label class="custom-file-label" for="upload_files_gd4">Chọn file tải lên</label>
+								</div>
+								<div class="highlight d-none border" id="preview_file_gd4" style="height:130px;overflow-y: auto; background-color: aliceblue;">
+									<pre >
+										 <ul class="list_file_gd4">
+										</ul> 
+									</pre>
+								</div>
+				        </div>
+		       	   </div>
+		       	   <hr/>
+		       	   <h5>Người giám sát</h5>
+		       	   <div class="row">
+	                	<div class="form-group col-6 required">
+				             <label>Người giám sát</label>
+				             <input required type="text"  placeholder="Người giám sát" class="form-control">
+				           </div>
+	                </div>
 		       	   <button class="btn btn-success btn-save-gd1">Lưu</button>
 		       	   <button class="btn btn-primary btn-add-member">Thêm thành viên</button>
                 </div>
+                
+                
             </div>
         </div>
     </div>
@@ -90,7 +157,7 @@
             <div class="card border-success shadow">
                 <div class="card-body">
                     <div class="float-right text-success d-none"></div>
-                    <h4 class="card-title text-success">GĐ2: Lên kế hoạch thanh tra (Kế hoạch phân công công việc)</h4>
+                    <h4 class="card-title text-success">GĐ2: Xây dựng kế hoạch thanh tra</h4>
                     <div class="row">
 		       	   	   <div class="form-group col-6 required">
 			             <label>Số văn bản kế hoạch</label>
@@ -227,8 +294,8 @@
         <div class="col py-2">
             <div class="card">
                 <div class="card-body">
-                    <div class="float-right text-muted d-none">Thu, Jan 12th 2019 11:30 AM</div>
-                    <h4 class="card-title">GĐ 4: Yêu cầu báo cáo từ đối tượng thanh tra</h4>
+                    <div class="float-right text-muted d-none"></div>
+                    <h4 class="card-title">GĐ 4: Yêu cầu đối tượng thanh tra báo cáo</h4>
                     <div class="row">
 		       	   	   <div class="form-group col-6 required">
 			             <label>Số công văn yêu cầu</label>
@@ -239,6 +306,51 @@
 			             <input required type="text" data-bind="value:ngayguicongvan_yeucau" placeholder="Ngày gửi công văn" class="form-control">
 			           </div>
 		       	   </div>
+		       	   <div class="row">
+		       	   		<div class="form-group col">
+				              <label>Tài liệu đính kèm</label>
+				              <div class="custom-file">
+								    <input type="file" class="custom-file-input" id="upload_files_gd2" lang="vi">
+								    <label class="custom-file-label" for="upload_files_gd4">Chọn file tải lên</label>
+								</div>
+								<div class="highlight d-none border" id="preview_file_gd4" style="height:130px;overflow-y: auto; background-color: aliceblue;">
+									<pre >
+										 <ul class="list_file_gd4">
+										</ul> 
+									</pre>
+								</div>
+				        </div>
+		       	   </div>
+		       	   <hr/>
+		       	   
+		       	    <div class="row">
+		       	   	   <div class="form-group col-6 required">
+			             <label>Số văn bản báo cáo</label>
+			             <input required type="text" placeholder="Nhập văn bản báo cáo" class="form-control">
+			           </div>
+			           <!-- Thêm 2 trường mới -->
+			           <div class="form-group col-6 required">
+			             <label>Ngày gửi văn bản báo cáo</label>
+			             <input required type="text" placeholder="Ngày gửi văn bản" class="form-control">
+			           </div>
+		       	   </div>
+		       	   
+		       	   <div class="row">
+		       	   		<div class="form-group col">
+				              <label>Tài liệu đính kèm</label>
+				              <div class="custom-file">
+								    <input type="file" class="custom-file-input" id="upload_files_gd2" lang="vi">
+								    <label class="custom-file-label" for="upload_files_gd4">Chọn file tải lên</label>
+								</div>
+								<div class="highlight d-none border" id="preview_file_gd4" style="height:130px;overflow-y: auto; background-color: aliceblue;">
+									<pre >
+										 <ul class="list_file_gd4">
+										</ul> 
+									</pre>
+								</div>
+				        </div>
+		       	   </div>
+		       	   
 		       	   <button class="btn btn-success btn-save-gd4">Lưu</button>
                 </div>
             </div>
@@ -417,21 +529,7 @@
 					  </table>
 					  
 		       	   </div>
-		       	   	<div class="row">
-		       	   		<div class="form-group col">
-				              <label>Tài liệu đính kèm</label>
-				              <div class="custom-file">
-								    <input type="file" class="custom-file-input" id="upload_files_gd8" lang="vi">
-								    <label class="custom-file-label" for="upload_files_gd8">Chọn file tải lên</label>
-								</div>
-								<div class="highlight d-none border" id="preview_file_gd8" style="height:130px;overflow-y: auto; background-color: aliceblue;">
-									<pre >
-										 <ul class="list_file_gd8">
-										</ul> 
-									</pre>
-								</div>
-				        </div>
-		       	   </div>
+		       	   	
 		       	   <button class="btn btn-success btn-save-gd8">Lưu</button>
 		       	   <i><span class="danger-reason"></span></i>
                 </div>
@@ -458,13 +556,20 @@
         <div class="col py-2">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">GĐ 9: Xây dựng dự thảo kết luận thanh tra</h4>
-		       	   	<button class="btn btn-success btn-add-duthao">Thêm mới dự thảo</button>
-		       	   	<div class="row danhsachduthao">
-					  
+                    <h4 class="card-title">GĐ 9: Báo cáo của đoàn thanh tra</h4>
+		       	   	<div class="row">
+		       	   		
+                    		<div class="form-group col-6">
+				             <label>Số văn bản</label>
+				             <input required type="text" data-bind="value:sovanban_giaitrinh" placeholder="Nhập số văn bản giải trình" class="form-control">
+				           </div>
+				           <div class="form-group col-6 required">
+				             <label>Ngày gửi bảo cáo giải trình</label>
+				             <input required type="text" data-bind="value:ngaygui_vanban_giaitrinh" placeholder="Ngày gửi báo cáo giải trình" class="form-control">
+				           </div>
 		       	   	</div>
 		       	   	<hr>
-		       	   	<h5>Báo cáo giải trình của đối tượng thanh tra</h5>
+		       	   	<h5>Công văn giải trình của đối tượng thanh tra</h5>
 		       	   	<div class="row">
 		       	   		
                     		<div class="form-group col-6">
@@ -478,6 +583,152 @@
 		       	   	</div>
 		       	   		
 		       	   <button class="btn btn-success btn-save-gd9">Lưu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/row-->
+    
+    
+    <!-- timeline GD 9 -->
+    <div class="row gd9">
+        <div class="col-auto text-center flex-column d-none d-sm-flex">
+            <div class="row h-50">
+                <div class="col border-right border-line">&nbsp;</div>
+                <div class="col">&nbsp;</div>
+            </div>
+            <h5 class="m-2">
+                <span class="badge badge-pill bg-light border">&nbsp;</span>
+            </h5>
+            <div class="row h-50">
+                <div class="col border-right border-line">&nbsp;</div>
+                <div class="col">&nbsp;</div>
+            </div>
+        </div>
+        <div class="col py-2">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">GĐ 10: Xây dựng dự thảo kết luận thanh tra</h4>
+		       	   	<h5>Văn bản dự thảo lần 1</h5>
+		       	   	<div class="row">
+                    		<div class="form-group col-5">
+				             <label>Số văn bản dự thảo</label>
+				             <input required type="text" placeholder="Thêm trường" class="form-control">
+				           </div>
+				           <div class="form-group col-5 required">
+				             <label>Ngày dự thảo</label>
+				             <input required type="text" placeholder="Thêm trường" class="form-control">
+				           </div>
+				           <div class="form-group col-2 required">
+				             <label>Trạng thái (Phê duyệt)</label>
+				             <input type="text" placeholder="Thêm trường - (Phê duyệt)" class="form-control">
+				           </div>
+		       	   	</div>
+		       	   	<div class="row">
+		       	   		<div class="form-group col">
+				              <label>Tài liệu đính kèm</label>
+				              <div class="custom-file">
+								    <input type="file" class="custom-file-input" id="upload_files_gd2" lang="vi">
+								    <label class="custom-file-label" for="upload_files_gd4">Chọn file tải lên</label>
+								</div>
+								<div class="highlight d-none border" id="preview_file_gd4" style="height:130px;overflow-y: auto; background-color: aliceblue;">
+									<pre >
+										 <ul class="list_file_gd4">
+										</ul> 
+									</pre>
+								</div>
+				        </div>
+		       	   </div>
+		       	   	<hr>
+		       	   	<h5>Công văn giải trình của đối tượng thanh tra</h5>
+		       	   	<div class="row">
+		       	   		
+                    		<div class="form-group col-6">
+				             <label>Số văn bản</label>
+				             <input required type="text" data-bind="value:sovanban_giaitrinh" placeholder="Nhập số văn bản giải trình" class="form-control">
+				           </div>
+				           <div class="form-group col-6 required">
+				             <label>Ngày gửi bảo cáo giải trình</label>
+				             <input required type="text" data-bind="value:ngaygui_vanban_giaitrinh" placeholder="Ngày gửi báo cáo giải trình" class="form-control">
+				           </div>
+		       	   	</div>
+		       	   	<div class="row">
+		       	   		<div class="form-group col">
+				              <label>Tài liệu đính kèm</label>
+				              <div class="custom-file">
+								    <input type="file" class="custom-file-input" id="upload_files_gd2" lang="vi">
+								    <label class="custom-file-label" for="upload_files_gd4">Chọn file tải lên</label>
+								</div>
+								<div class="highlight d-none border" id="preview_file_gd4" style="height:130px;overflow-y: auto; background-color: aliceblue;">
+									<pre >
+										 <ul class="list_file_gd4">
+										</ul> 
+									</pre>
+								</div>
+				        </div>
+		       	   </div>
+		       	   	
+		       	   	<hr/>
+		       	   	<h5>Tham khảo ý kiến</h5>
+		       	   	<div class="row">
+                    		<div class="form-group col-6">
+				             <label>Số văn bản phản hồi</label>
+				             <input required type="text" placeholder="Thêm trường" class="form-control">
+				           </div>
+				           <div class="form-group col-6 required">
+				             <label>Ngày nhận văn bản phản hồi</label>
+				             <input required type="text" placeholder="Ngày gửi báo cáo giải trình" class="form-control">
+				           </div>
+		       	   	</div>
+		       	   	<div class="row">
+		       	   		<div class="form-group col">
+				              <label>Tài liệu đính kèm</label>
+				              <div class="custom-file">
+								    <input type="file" class="custom-file-input" id="upload_files_gd2" lang="vi">
+								    <label class="custom-file-label" for="upload_files_gd4">Chọn file tải lên</label>
+								</div>
+								<div class="highlight d-none border" id="preview_file_gd4" style="height:130px;overflow-y: auto; background-color: aliceblue;">
+									<pre >
+										 <ul class="list_file_gd4">
+										</ul> 
+									</pre>
+								</div>
+				        </div>
+		       	   </div>
+		       	   <hr/>
+		       	   <h5>Văn bản dự thảo lần 2</h5>
+		       	   	<div class="row">
+                    		<div class="form-group col-5">
+				             <label>Số văn bản dự thảo</label>
+				             <input required type="text" placeholder="Thêm trường" class="form-control">
+				           </div>
+				           <div class="form-group col-5 required">
+				             <label>Ngày dự thảo</label>
+				             <input required type="text" placeholder="Thêm trường" class="form-control">
+				           </div>
+				           <div class="form-group col-2 required">
+				             <label>Trạng thái</label>
+				             <input type="text" placeholder="Thêm trường" class="form-control">
+				           </div>
+		       	   	</div>
+		       	   	<div class="row">
+		       	   		<div class="form-group col">
+				              <label>Tài liệu đính kèm</label>
+				              <div class="custom-file">
+								    <input type="file" class="custom-file-input" id="upload_files_gd2" lang="vi">
+								    <label class="custom-file-label" for="upload_files_gd4">Chọn file tải lên</label>
+								</div>
+								<div class="highlight d-none border" id="preview_file_gd4" style="height:130px;overflow-y: auto; background-color: aliceblue;">
+									<pre >
+										 <ul class="list_file_gd4">
+										</ul> 
+									</pre>
+								</div>
+				        </div>
+		       	   </div>
+		       	   		
+		       	   <button class="btn btn-success btn-save-gd9">Lưu</button>
+		       	   <button class="btn btn-danger">Lập biên bản và xử phạt</button>
                 </div>
             </div>
         </div>
@@ -502,8 +753,103 @@
         <div class="col py-2">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">GĐ 10: Ký và ban hành kết luận thanh tra</h4>
+                    <h4 class="card-title">GĐ 11: Ký và ban hành kết luận thanh tra</h4>
+                    
+                    <h5>Kết luận thanh tra</h5>
 		       	   	<div class="row">
+                    		<div class="form-group col-6">
+				             <label>Số kết luận</label>
+				             <input required type="text" placeholder="Thêm trường" class="form-control">
+				           </div>
+				           <div class="form-group col-6 required">
+				             <label>Ngày kết luận</label>
+				             <input required type="text" placeholder="Ngày gửi báo cáo giải trình" class="form-control">
+				           </div>
+		       	   	</div>
+		       	   	<div class="row">
+		       	   		<div class="form-group col">
+				              <label>Tài liệu đính kèm</label>
+				              <div class="custom-file">
+								    <input type="file" class="custom-file-input" id="upload_files_gd2" lang="vi">
+								    <label class="custom-file-label" for="upload_files_gd4">Chọn file tải lên</label>
+								</div>
+								<div class="highlight d-none border" id="preview_file_gd4" style="height:130px;overflow-y: auto; background-color: aliceblue;">
+									<pre >
+										 <ul class="list_file_gd4">
+										</ul> 
+									</pre>
+								</div>
+				        </div>
+		       	   </div>
+		       	   
+		       	   <hr/>
+		       	   
+		       	   <h5>Biên bản vi phạm hành chính</h5>
+		       	   	<div class="row">
+		       	   		<div class="form-group col-6">
+				             <label>Cơ quan lập biên bản</label>
+				             <input required type="text" placeholder="Thêm trường" class="form-control">
+				           </div>
+                    		<div class="form-group col-3">
+				             <label>Số biên bản</label>
+				             <input required type="text" placeholder="Thêm trường" class="form-control">
+				           </div>
+				           <div class="form-group col-3 required">
+				             <label>Ngày lập biên bản</label>
+				             <input required type="text" placeholder="Ngày gửi báo cáo giải trình" class="form-control">
+				           </div>
+		       	   	</div>
+		       	   	<div class="row">
+		       	   		<div class="form-group col">
+				              <label>Tài liệu đính kèm</label>
+				              <div class="custom-file">
+								    <input type="file" class="custom-file-input" id="upload_files_gd2" lang="vi">
+								    <label class="custom-file-label" for="upload_files_gd4">Chọn file tải lên</label>
+								</div>
+								<div class="highlight d-none border" id="preview_file_gd4" style="height:130px;overflow-y: auto; background-color: aliceblue;">
+									<pre >
+										 <ul class="list_file_gd4">
+										</ul> 
+									</pre>
+								</div>
+				        </div>
+		       	   </div>
+		       	   
+		       	   <hr/>
+		       	   <h5>Quyết định xử phạt</h5>
+		       	   <div class="row">
+		       	   		<div class="form-group col-6">
+				             <label>Cơ quan xử phạt</label>
+				             <input required type="text" placeholder="Thêm trường" class="form-control">
+				           </div>
+                    		<div class="form-group col-3">
+				             <label>Số quyết định xử phạt</label>
+				             <input required type="text" placeholder="Thêm trường" class="form-control">
+				           </div>
+				           <div class="form-group col-3 required">
+				             <label>Ngày xử phạt</label>
+				             <input required type="text" placeholder="Ngày gửi báo cáo giải trình" class="form-control">
+				           </div>
+		       	   	</div>
+		       	   	<div class="row">
+		       	   		<div class="form-group col">
+				              <label>Tài liệu đính kèm</label>
+				              <div class="custom-file">
+								    <input type="file" class="custom-file-input" id="upload_files_gd2" lang="vi">
+								    <label class="custom-file-label" for="upload_files_gd4">Chọn file tải lên</label>
+								</div>
+								<div class="highlight d-none border" id="preview_file_gd4" style="height:130px;overflow-y: auto; background-color: aliceblue;">
+									<pre >
+										 <ul class="list_file_gd4">
+										</ul> 
+									</pre>
+								</div>
+				        </div>
+		       	   </div>
+                    
+                    
+                    
+		       	   	<!-- <div class="row">
 		       	   		<div class="col-6">
                     		<div class="form-group">
 				             <label>Số quyết định</label>
@@ -546,9 +892,10 @@
 								</div>
 				        	</div>
                     	</div>
-		       	   	</div>
+		       	   	</div> -->
 		       	   		
 		       	   <button class="btn btn-success btn-save-gd10">Lưu</button>
+		       	   <button class="btn btn-danger">Lập biên bản và xử phạt</button>
                 </div>
             </div>
         </div>
@@ -573,7 +920,37 @@
         <div class="col py-2">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">GĐ 11: Công khai kết luận thanh tra</h4>
+                    <h4 class="card-title">GĐ 12: Công bố, công khai kết luận thanh tra</h4>
+                    <h5>Công bố kết luận thanh tra</h5>
+		       	   <div class="row">
+		       	   		
+                    		<div class="form-group col-6">
+				             <label>Số biên bản công bố</label>
+				             <input required type="text" placeholder="Thêm trường" class="form-control">
+				           </div>
+				           <div class="form-group col-6 required">
+				             <label>Ngày công bố</label>
+				             <input required type="text" placeholder="Ngày gửi báo cáo giải trình" class="form-control">
+				           </div>
+		       	   	</div>
+		       	   	<div class="row">
+		       	   		<div class="form-group col">
+				              <label>Tài liệu đính kèm</label>
+				              <div class="custom-file">
+								    <input type="file" class="custom-file-input" id="upload_files_gd2" lang="vi">
+								    <label class="custom-file-label" for="upload_files_gd4">Chọn file tải lên</label>
+								</div>
+								<div class="highlight d-none border" id="preview_file_gd4" style="height:130px;overflow-y: auto; background-color: aliceblue;">
+									<pre >
+										 <ul class="list_file_gd4">
+										</ul> 
+									</pre>
+								</div>
+				        </div>
+		       	   </div>
+		       	   
+		       	   <hr/>
+                    <h5>Công bố, công khai kết luận thanh tra</h5>
 		       	   	<div class="row">
 		       	   		<div class="col-6">
 				           <div class="form-group">
@@ -593,8 +970,25 @@
 				           </div>
                     	</div>
 		       	   	</div>
+		       	   	
+		       	   	<div class="row">
+		       	   		<div class="form-group col">
+				              <label>Tài liệu đính kèm (Ảnh chụp trang web)</label>
+				              <div class="custom-file">
+								    <input type="file" class="custom-file-input" id="upload_files_gd2" lang="vi">
+								    <label class="custom-file-label" for="upload_files_gd4">Chọn file tải lên</label>
+								</div>
+								<div class="highlight d-none border" id="preview_file_gd4" style="height:130px;overflow-y: auto; background-color: aliceblue;">
+									<pre >
+										 <ul class="list_file_gd4">
+										</ul> 
+									</pre>
+								</div>
+				        </div>
+		       	   </div>
 		       	   		
 		       	   <button class="btn btn-success btn-save-gd11">Lưu</button>
+		       	   <button class="btn btn-danger">Lập biên bản và xử phạt</button>
                 </div>
             </div>
         </div>
@@ -619,7 +1013,92 @@
         <div class="col py-2">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">GĐ 12: Bàn giao bộ phận lưu trữ hồ sơ</h4>
+                    <h4 class="card-title">13: Theo dõi thực hiện kết luận thanh tra</h4>
+                    <h5>Công văn yêu cầu báo cáo thực hiện kết luận thanh tra</h5>
+		       	   	<div class="row">
+		       	   		<div class="col-6">
+				           <div class="form-group">
+				             <label>Đơn vị phát hành công văn</label>
+				             <input required type="text" placeholder="Thêm trường" class="form-control">
+				           </div>
+				           
+                    	</div>
+		       	   		<div class="col-3">
+				           <div class="form-group">
+				             <label>Số công văn</label>
+				             <input required type="text" placeholder="Thêm trường" class="form-control">
+				           </div>
+				           
+                    	</div>
+                    	<div class="col-3">
+				           <div class="form-group">
+				             <label>Ngày công văn</label>
+				             <input required type="text" placeholder="Thêm trường" class="form-control">
+				           </div>
+                    	</div>
+                    	
+		       	   	</div>
+		       	   	
+		       	   	<hr/>
+		       	   	<h5>Báo cáo thực hiện của đối tượng thanh tra</h5>
+		       	   	<div class="row">
+		       	   		<div class="col-6">
+				           <div class="form-group">
+				             <label>Số báo cáo</label>
+				             <input required type="text" placeholder="Thêm trường" class="form-control">
+				           </div>
+				           
+                    	</div>
+                    	<div class="col-6">
+				           <div class="form-group">
+				             <label>Ngày báo cáo</label>
+				             <input required type="text" placeholder="Thêm trường" class="form-control">
+				           </div>
+				           
+                    	</div>
+		       	   	</div>
+		       	   	<div class="row">
+		       	   		<div class="form-group col">
+				              <label>Tài liệu đính kèm (Ảnh chụp phiếu nộp phạt)</label>
+				              <div class="custom-file">
+								    <input type="file" class="custom-file-input" id="upload_files_gd2" lang="vi">
+								    <label class="custom-file-label" for="upload_files_gd4">Chọn file tải lên</label>
+								</div>
+								<div class="highlight d-none border" id="preview_file_gd4" style="height:130px;overflow-y: auto; background-color: aliceblue;">
+									<pre >
+										 <ul class="list_file_gd4">
+										</ul> 
+									</pre>
+								</div>
+				        </div>
+		       	   </div>
+		       	   		
+		       	   <button class="btn btn-success btn-save-gd12">Lưu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <!-- timeline GD 12 -->
+    <div class="row gd12">
+        <div class="col-auto text-center flex-column d-none d-sm-flex">
+            <div class="row h-50">
+                <div class="col border-right border-line">&nbsp;</div>
+                <div class="col">&nbsp;</div>
+            </div>
+            <h5 class="m-2">
+                <span class="badge badge-pill bg-light border">&nbsp;</span>
+            </h5>
+            <div class="row h-50">
+                <div class="col border-right border-line">&nbsp;</div>
+                <div class="col">&nbsp;</div>
+            </div>
+        </div>
+        <div class="col py-2">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">14: Bàn giao bộ phận lưu trữ hồ sơ</h4>
 		       	   	<div class="row">
 		       	   		<div class="col-6">
 				           <div class="form-group">

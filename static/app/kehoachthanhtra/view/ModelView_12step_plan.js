@@ -767,10 +767,24 @@ define(function (require) {
     		self.$el.find(".gd6 .danger-reason").html("");
     		var ngay_congbo_quyetdinh = self.model.get("ngay_congbo_quyetdinh");
     		var ngayguicongvan_yeucau = self.model.get("ngayguicongvan_yeucau");
+    		var ngayquyetdinh  = self.model.get("ngayquyetdinh");
+    		var danger = false;
+    		var danger_html = "";
     		
-    		if(!!ngayguicongvan_yeucau && !!ngay_congbo_quyetdinh && ( (ngay_congbo_quyetdinh - ngayguicongvan_yeucau) < 5*24*60*60)){
-    			self.$el.find(".gd6 .danger-reason").html("Công bố quyết định thanh tra quá sớm");
-    			return "danger"
+    		if(!!ngayguicongvan_yeucau && !!ngay_congbo_quyetdinh ){
+    			if ((ngay_congbo_quyetdinh - ngayguicongvan_yeucau) < 5*24*60*60){
+    				danger_html = danger_html + "Công bố quyết định thanh tra quá sớm";
+    				danger = true;
+    			}
+    			if ((ngay_congbo_quyetdinh - ngayguicongvan_yeucau) > 15*24*60*60){
+    				danger_html = danger_html + "Công bố quyết định thanh tra muộn hơn 15 ngày";
+    				danger = true;
+    			}
+    			
+    		}
+    		if (danger){
+    			self.$el.find(".gd6 .danger-reason").html(danger_html);
+    			return "danger";
     		}
     		
     		if (self.model.get("sovanban_congbo_quyetdinh")!==null

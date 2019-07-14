@@ -39,8 +39,7 @@ define(function (require) {
                         { value: "phodoan", text: "Phó đoàn" },
                         { value: "thuky", text: "Thư ký" },
                         { value: "thanhvien", text: "Thành viên" },
-                        { value: "dubi", text: "Thành viên dự trù" },
-                        { value: "khác", text: "Khác" },
+                        { value: "congtacvien", text: "Cộng tác viên" },
                     ],
    				},
         	]

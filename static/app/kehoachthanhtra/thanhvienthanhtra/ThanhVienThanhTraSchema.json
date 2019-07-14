@@ -9,13 +9,7 @@
     "vaitro": {
         "type": "string"
     },
-    "nhiemvu": {
-        "type": "string"
-    },
-    "thoigian": {
-        "type": "string"
-    },
-    "trangthai": {
+    "donvicongtac": {
         "type": "string"
     }
 }

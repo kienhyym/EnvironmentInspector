@@ -38,7 +38,7 @@ define(function (require) {
 			     }
             },
             {
-			    "text":"Danh sách kế hoạch ",
+			    "text":"Xây dựng kế hoạch ",
 			    "icon":"fa fa-book",
 			    "type":"view",
 			    "collectionName":"kehoachthanhtra",
@@ -82,7 +82,7 @@ define(function (require) {
 			     }
 			},
 			{
-			    "text":"kế hoạch đang thực hiện",
+			    "text":"Triển khai cuộc thanh tra",
 			    "icon":"fa fa-book",
 			    "type":"view",
 			    "collectionName":"kehoachthanhtra",
