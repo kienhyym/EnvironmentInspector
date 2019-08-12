@@ -130,8 +130,7 @@ class KeHoachThanhTra(CommonModel):
     tendoanhnghiep = db.Column(String(50), nullable=False)
     doanhnghiep = db.Column(JSONB)
     tailieulienquan = db.Column(JSONB)
-    userid_nguoisoanthao = db.Column(String)
-    username_nguoisoanthao = db.Column(String)
+    
     ngaysoanthao = db.Column(BigInteger())
     chucvu_nguoisoanthao = db.Column(String)
     userid_phongduyet = db.Column(String)
@@ -154,55 +153,140 @@ class KeHoachThanhTra(CommonModel):
     ketluanthanhtra = db.Column(String)
     ngayketthuc = db.Column(BigInteger())
     
-    soquyetdinh = db.Column(String)
-    ngayquyetdinh = db.Column(BigInteger())
+    #step1
+    so_quyetdinh_thanhtra = db.Column(String)
+    ngay_quyetdinh_thanhtra = db.Column(BigInteger())
+    quyetdinh_thanhtra_attachment = db.Column(String)
     danhsach_thanhvien = db.Column(JSONB)
+    ## step1 - quyet dinh trung cau giam dinh
+    donvi_trungcau_giamdinh = db.Column(String)
+    so_quyetdinh_trungcau_giamdinh = db.Column(String)
+    ngay_quyetdinh_trungcau_giamdinh = db.Column(BigInteger())
+    quyetdinh_trungcau_giamdinh_attachment = db.Column(String)
+    nguoigiamsat = db.Column(String)
     
-    sokehoach = db.Column(String)
-    ngaylenkehoach = db.Column(BigInteger())
-#     danhsach_congviec = db.Column(JSONB)
+    #Step2 -OK
+    so_vanban_kehoach = db.Column(String)
+    ngay_vanban_kehoach = db.Column(BigInteger())
+    userid_nguoisoanthao_kehoach = db.Column(String)
+    username_nguoisoanthao_kehoach = db.Column(String)
+    chucvu_nguoisoanthao_kehoach = db.Column(String)
     
-    socongvan_yeucau = db.Column(String)
-    ngayguicongvan_yeucau = db.Column(BigInteger())
+    userid_nguoixemxet_kehoach = db.Column(String)
+    username_nguoixemxet_kehoach = db.Column(String)
+    chucvu_nguoixemxet_kehoach = db.Column(String)
     
-    sovanban_thongbao_doituong_thanhtra = db.Column(String)
+    userid_nguoiduyet_kehoach = db.Column(String)
+    username_nguoiduyet_kehoach = db.Column(String)
+    chucvu_nguoiduyet_kehoach = db.Column(String)
+    
+    vanban_kehoach_attachment = db.Column(String)
+    
+    #GD3 - OK
+    danhsach_congviec_thanhtra = db.Column(JSONB)
+    
+    #GD4 - OK
+    so_congvan_yeucau_doituong_baocao = db.Column(String)
+    ngay_congvan_yeucau_doituong_baocao = db.Column(BigInteger())
+    congvan_yeucau_doituong_baocao_attachment = db.Column(String)
+    
+    so_vanban_doituong_baocao = db.Column(String)
+    ngay_vanban_doituong_baocao = db.Column(BigInteger())
+    vanban_doituong_baocao_attachment = db.Column(String)
+    
+    #GD5 -OK
+    so_vanban_thongbao_doituong_thanhtra = db.Column(String)
     ngay_vanban_thongbao_doituong_thanhtra = db.Column(BigInteger())
-    thongbao_dienthoai_doituong_thanhtra = db.Column(String)
+    sodienthoai_thongbao_doituong_thanhtra = db.Column(String)
     
-    sovanban_congbo_quyetdinh = db.Column(String)
-    ngay_congbo_quyetdinh = db.Column(BigInteger())
+    #GD6 -ok
+    so_vanban_congbo_quyetdinh = db.Column(String)
+    ngay_vanban_congbo_quyetdinh = db.Column(BigInteger())
     
-    socongvan_ketthuc_thanhtra = db.Column(String)
+    #GD7 -OK
+    so_thongbao_ketthuc_thanhtra = db.Column(String)
     ngay_congvan_ketthuc_thanhtra = db.Column(BigInteger())
     codauhieu_hinhsu = db.Column(String)
     ghichu_codauhieu_hinhsu = db.Column(String)
     
-    danhsach_congviec_theodoi = db.Column(JSONB)
+    #GD8 -OK
     danhsach_congviec_thuchien = db.Column(JSONB)
-    danhsach_xetnghiem_thanhtra = db.Column(JSONB)
-    ngay_theodoi_thanhtra = db.Column(BigInteger())
     
-    duthao_ketthuc_thanhtra = db.Column(JSONB)
-    sovanban_giaitrinh = db.Column(String)
-    ngaygui_vanban_giaitrinh = db.Column(BigInteger())
-    baocao_giaitrinh_ketthuc_thanhtra = db.Column(JSONB)
+    #GD9 - OK
+    so_baocao_doanthanhtra = db.Column(String)
+    ngay_baocao_doanthanhtra = db.Column(BigInteger())
+    so_vanban_doituong_giaitrinh = db.Column(String)
+    ngay_vanban_doituong_giaitrinh = db.Column(BigInteger())
     
-    so_quyetdinh_ketluanthanhtra = db.Column(String)
-    tailieu_quyetdinh_ketluanthanhtra = db.Column(JSONB)
-    ngay_quyetdinh_ketluanthanhtra = db.Column(BigInteger())
-    so_quyetdinh_xuphat = db.Column(String)
-    tailieu_quyetdinh_xuphat = db.Column(JSONB)
     
-    ngay_congkhai_doituong_ketluanthanhtra = db.Column(BigInteger())
-    link_congkhai_ketluanthanhtra = db.Column(String)
-    ngay_congkhai_link_ketluanthanhtra = db.Column(BigInteger())
+    #GD10- OK co xu phat
+    vanban_duthao = db.Column(JSONB) #list du thao
+    so_vanban_thamkhao_ykien = db.Column(String)
+    ngay_vanban_thamkhao_ykien = db.Column(BigInteger())
+    vanban_thamkhao_ykien_attachment = db.Column(String)
     
+    coquan_lapbienban_hanhchinh = db.Column(String)
+    so_bienban_hanhchinh = db.Column(String)
+    ngay_lapbienban_hanhchinh = db.Column(BigInteger())
+    bienban_hanhchinh_attachment = db.Column(String)
+    coquan_xuphat = db.Column(String)
+    so_bienban_xuphat = db.Column(String)
+    ngay_bienban_xuphat = db.Column(BigInteger())
+    bienban_xuphat_attachment = db.Column(String)
+    
+    
+    #GD11- OK co xu phat
+    so_ketluan_thanhtra = db.Column(String)
+    ngay_ketluan_thanhtra = db.Column(BigInteger())
+    ketluan_thanhtra_attachment = db.Column(String)
+    
+    #GD12 - Cong bo ket luan thanh tra OK - html
+    so_bienban_congbo_ketluan = db.Column(String)
+    ngay_bienban_congbo_ketluan = db.Column(BigInteger())
+    bienban_congbo_ketluan_attachment = db.Column(String)
+    ngay_congkhai_ketluan_tai_doituong = db.Column(BigInteger())
+    ngay_congkhai_ketluan_internet = db.Column(BigInteger())
+    congkhai_ketluan_link = db.Column(BigInteger())
+    congkhai_ketluan_image_attachment = db.Column(String)
+    
+    
+    #GD13 - ok
+    coquan_congvan_yeucau_baocao_thuchien = db.Column(String)
+    so_congvan_yeucau_baocao_thuchien = db.Column(String)
+    ngay_congvan_yeucau_baocao_thuchien = db.Column(BigInteger())
+
+    so_baocao_doituong_thuchien = db.Column(String)
+    ngay_baocao_doituong_thuchien = db.Column(BigInteger())
+    baocao_doituong_thuchien_attachment = db.Column(String)
+    
+    #GD14 ok
     danhsach_hoso_bangiao_luutru = db.Column(JSONB)
     ngay_bangiao_luutru = db.Column(BigInteger())
     
     
 
     trangthai = db.Column(String)
+    
+    
+    
+    
+#     danhsach_xetnghiem_thanhtra = db.Column(JSONB)
+#     ngay_theodoi_thanhtra = db.Column(BigInteger())
+#     
+#     duthao_ketthuc_thanhtra = db.Column(JSONB)
+#     baocao_giaitrinh_ketthuc_thanhtra = db.Column(JSONB)
+#     
+#     so_quyetdinh_ketluanthanhtra = db.Column(String)
+#     tailieu_quyetdinh_ketluanthanhtra = db.Column(JSONB)
+#     ngay_quyetdinh_ketluanthanhtra = db.Column(BigInteger())
+#     so_quyetdinh_xuphat = db.Column(String)
+#     tailieu_quyetdinh_xuphat = db.Column(JSONB)
+#     
+#     ngay_congkhai_doituong_ketluanthanhtra = db.Column(BigInteger())
+#     link_congkhai_ketluanthanhtra = db.Column(String)
+#     ngay_congkhai_link_ketluanthanhtra = db.Column(BigInteger())
+    
+    
 # Index('hosobenhnhan_uq_sochamsoc_id', HoSoBenhNhan.sochamsoc_id, unique=True, postgresql_where=(and_(HoSoBenhNhan.sochamsoc_id.isnot(None),HoSoBenhNhan.sochamsoc_id !='')))
 
     

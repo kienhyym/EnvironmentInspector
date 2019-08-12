@@ -73,7 +73,7 @@ define(function (require) {
     	uiControl:{
     		fields:[
     			{
-					field:"ngayquyetdinh",
+					field:"ngay_quyetdinh_thanhtra",
 					uicontrol:"datetimepicker",
 					textFormat:"DD/MM/YYYY",
 					extraFormats:["DDMMYYYY"],
@@ -84,8 +84,21 @@ define(function (require) {
                 		return date.unix()
                 	}
 				},
+				{
+					field:"ngay_quyetdinh_trungcau_giamdinh",
+					uicontrol:"datetimepicker",
+					textFormat:"DD/MM/YYYY",
+					extraFormats:["DDMMYYYY"],
+					parseInputDate: function(val){
+                		return moment.unix(val)
+                	},
+                	parseOutputDate: function(date){
+                		return date.unix()
+                	}
+				},
+				
     			{
-					field:"ngaysoanthao",
+					field:"ngay_vanban_kehoach",
 					uicontrol:"datetimepicker",
 					textFormat:"DD/MM/YYYY",
 					extraFormats:["DDMMYYYY"],
@@ -97,7 +110,7 @@ define(function (require) {
                 	}
 				},
 				{
-					field:"ngaypheduyet",
+					field:"ngay_congvan_yeucau_doituong_baocao",
 					uicontrol:"datetimepicker",
 					textFormat:"DD/MM/YYYY",
 					extraFormats:["DDMMYYYY"],
@@ -109,7 +122,7 @@ define(function (require) {
                 	}
 				},
 				{
-					field:"ngaythanhtra",
+					field:"ngay_vanban_doituong_baocao",
 					uicontrol:"datetimepicker",
 					textFormat:"DD/MM/YYYY",
 					extraFormats:["DDMMYYYY"],
@@ -120,30 +133,7 @@ define(function (require) {
                 		return date.unix()
                 	}
 				},
-				{
-					field:"ngaylenkehoach",
-					uicontrol:"datetimepicker",
-					textFormat:"DD/MM/YYYY",
-					extraFormats:["DDMMYYYY"],
-					parseInputDate: function(val){
-                		return moment.unix(val)
-                	},
-                	parseOutputDate: function(date){
-                		return date.unix()
-                	}
-				},
-				{
-					field:"ngayguicongvan_yeucau",
-					uicontrol:"datetimepicker",
-					textFormat:"DD/MM/YYYY",
-					extraFormats:["DDMMYYYY"],
-					parseInputDate: function(val){
-                		return moment.unix(val)
-                	},
-                	parseOutputDate: function(date){
-                		return date.unix()
-                	}
-				},
+				
 				{
 					field:"ngay_congvan_ketthuc_thanhtra",
 					uicontrol:"datetimepicker",
@@ -157,7 +147,84 @@ define(function (require) {
                 	}
 				},
 				{
-					field:"ngaygui_vanban_giaitrinh",
+					field:"ngay_ketluan_thanhtra",
+					uicontrol:"datetimepicker",
+					textFormat:"DD/MM/YYYY",
+					extraFormats:["DDMMYYYY"],
+					parseInputDate: function(val){
+                		return moment.unix(val)
+                	},
+                	parseOutputDate: function(date){
+                		return date.unix()
+                	}
+				},
+				
+				{
+					field:"ngay_bienban_congbo_ketluan",
+					uicontrol:"datetimepicker",
+					textFormat:"DD/MM/YYYY",
+					extraFormats:["DDMMYYYY"],
+					parseInputDate: function(val){
+                		return moment.unix(val)
+                	},
+                	parseOutputDate: function(date){
+                		return date.unix()
+                	}
+				},
+				
+				
+				{
+					field:"ngay_congkhai_ketluan_tai_doituong",
+					uicontrol:"datetimepicker",
+					textFormat:"DD/MM/YYYY",
+					extraFormats:["DDMMYYYY"],
+					parseInputDate: function(val){
+                		return moment.unix(val)
+                	},
+                	parseOutputDate: function(date){
+                		return date.unix()
+                	}
+				},
+				
+				{
+					field:"ngay_lapbienban_hanhchinh",
+					uicontrol:"datetimepicker",
+					textFormat:"DD/MM/YYYY",
+					extraFormats:["DDMMYYYY"],
+					parseInputDate: function(val){
+                		return moment.unix(val)
+                	},
+                	parseOutputDate: function(date){
+                		return date.unix()
+                	}
+				},
+				
+				{
+					field:"ngay_bienban_xuphat",
+					uicontrol:"datetimepicker",
+					textFormat:"DD/MM/YYYY",
+					extraFormats:["DDMMYYYY"],
+					parseInputDate: function(val){
+                		return moment.unix(val)
+                	},
+                	parseOutputDate: function(date){
+                		return date.unix()
+                	}
+				},
+				{
+					field:"ngay_thongbao_ketthuc_thanhtra",
+					uicontrol:"datetimepicker",
+					textFormat:"DD/MM/YYYY",
+					extraFormats:["DDMMYYYY"],
+					parseInputDate: function(val){
+                		return moment.unix(val)
+                	},
+                	parseOutputDate: function(date){
+                		return date.unix()
+                	}
+				},
+				{
+					field:"ngay_vanban_doituong_giaitrinh",
 					uicontrol:"datetimepicker",
 					textFormat:"DD/MM/YYYY",
 					extraFormats:["DDMMYYYY"],
@@ -193,7 +260,7 @@ define(function (require) {
                 	}
 				},
 				{
-					field:"ngay_congbo_quyetdinh",
+					field:"ngay_vanban_congbo_quyetdinh",
 					uicontrol:"datetimepicker",
 					textFormat:"DD/MM/YYYY",
 					extraFormats:["DDMMYYYY"],
@@ -204,6 +271,33 @@ define(function (require) {
                 		return date.unix()
                 	}
 				},
+				
+				{
+					field:"ngay_vanban_thamkhao_ykien",
+					uicontrol:"datetimepicker",
+					textFormat:"DD/MM/YYYY",
+					extraFormats:["DDMMYYYY"],
+					parseInputDate: function(val){
+                		return moment.unix(val)
+                	},
+                	parseOutputDate: function(date){
+                		return date.unix()
+                	}
+				},
+				
+				{
+					field:"ngay_lapbienban_xuphat",
+					uicontrol:"datetimepicker",
+					textFormat:"DD/MM/YYYY",
+					extraFormats:["DDMMYYYY"],
+					parseInputDate: function(val){
+                		return moment.unix(val)
+                	},
+                	parseOutputDate: function(date){
+                		return date.unix()
+                	}
+				},
+				
 				{
 					field:"ngay_quyetdinh_ketluanthanhtra",
 					uicontrol:"datetimepicker",
@@ -255,7 +349,33 @@ define(function (require) {
                 	}
 				},
 				{
-					field: "danhsach_congviec_theodoi",
+					field:"ngay_congvan_yeucau_baocao_thuchien",
+					uicontrol:"datetimepicker",
+					textFormat:"DD/MM/YYYY",
+					extraFormats:["DDMMYYYY"],
+					parseInputDate: function(val){
+                		return moment.unix(val)
+                	},
+                	parseOutputDate: function(date){
+                		return date.unix()
+                	}
+				},
+				
+				{
+					field:"ngay_baocao_doituong_thuchien",
+					uicontrol:"datetimepicker",
+					textFormat:"DD/MM/YYYY",
+					extraFormats:["DDMMYYYY"],
+					parseInputDate: function(val){
+                		return moment.unix(val)
+                	},
+                	parseOutputDate: function(date){
+                		return date.unix()
+                	}
+				},
+				
+				{
+					field: "danhsach_congviec_thanhtra",
 					uicontrol: false,
 					itemView: CongViecThanhTraItemView,
 					tools:[
@@ -341,30 +461,30 @@ define(function (require) {
         					self.model.set("danhsach_congviec_thuchien", []);
         				}
         				
-        				if (self.model.get("danhsach_congviec_theodoi") === null){
-        					self.model.set("danhsach_congviec_theodoi", []);
+        				if (self.model.get("danhsach_congviec_thanhtra") === null){
+        					self.model.set("danhsach_congviec_thanhtra", []);
         				}
-        				var danhsach_congviec_theodoi = self.model.get("danhsach_congviec_theodoi");
+        				var danhsach_congviec_thanhtra = self.model.get("danhsach_congviec_thanhtra");
         				var danhsach_congviec_thuchien = self.model.get("danhsach_congviec_thuchien");
         				
-        				//$.each(danhsach_congviec_theodoi,function(idx, value){
+        				//$.each(danhsach_congviec_thanhtra,function(idx, value){
         					//self.renderDanhSachCongViec(value);
-        					for(var i = 0; i < danhsach_congviec_theodoi.length; i++){
+        					for(var i = 0; i < danhsach_congviec_thanhtra.length; i++){
         						var found = false;
         						for (var j = 0; j < danhsach_congviec_thuchien.length; j++){
         							found = true;
-        							if (danhsach_congviec_theodoi[i].id === danhsach_congviec_thuchien[j].id){
-        								danhsach_congviec_thuchien[j].hangmuccongviec = danhsach_congviec_theodoi[i].hangmuccongviec;
-        								danhsach_congviec_thuchien[j].nguoiduocphancong = danhsach_congviec_theodoi[i].nguoiduocphancong;
+        							if (danhsach_congviec_thanhtra[i].id === danhsach_congviec_thuchien[j].id){
+        								danhsach_congviec_thuchien[j].hangmuccongviec = danhsach_congviec_thanhtra[i].hangmuccongviec;
+        								danhsach_congviec_thuchien[j].nguoiduocphancong = danhsach_congviec_thanhtra[i].nguoiduocphancong;
         								break;
         							}
         						};
         						if (!found){
-        							danhsach_congviec_thuchien.push($.parseJSON(JSON.stringify(danhsach_congviec_theodoi[i])));
+        							danhsach_congviec_thuchien.push($.parseJSON(JSON.stringify(danhsach_congviec_thanhtra[i])));
         						}
         					};
         					
-        					self.model.set("danhsach_congviec_thuchien", danhsach_congviec_theodoi);
+        					self.model.set("danhsach_congviec_thuchien", danhsach_congviec_thanhtra);
         					
         				//});
         				
@@ -449,8 +569,8 @@ define(function (require) {
     		
     		
     		self.$el.find(".btn-save-gd3").unbind('click').bind('click', function(){
-    			var danhsach_congviec_theodoi = self.model.get("danhsach_congviec_theodoi");
-    			if(danhsach_congviec_theodoi === null || danhsach_congviec_theodoi===""){
+    			var danhsach_congviec_thanhtra = self.model.get("danhsach_congviec_thanhtra");
+    			if(danhsach_congviec_thanhtra === null || danhsach_congviec_thanhtra===""){
     				self.getApp().notify("Vui lòng nhập danh sách công việc");
     				return;
     			}
@@ -668,6 +788,8 @@ define(function (require) {
     		self.updateStepUI(1, self.check_gd1_sucees());
     		self.updateStepUI(2, self.check_gd2_sucees());
     		
+    		self.updateStepUI(3, self.check_gd3_sucees());
+    		
     		self.updateStepUI(4, self.check_gd4_sucees());
     		self.updateStepUI(5, self.check_gd5_sucees());
     		self.updateStepUI(6, self.check_gd6_sucees());
@@ -678,6 +800,8 @@ define(function (require) {
     		self.updateStepUI(10, self.check_gd10_sucees());
     		self.updateStepUI(11, self.check_gd11_sucees());
     		self.updateStepUI(12, self.check_gd12_sucees());
+    		self.updateStepUI(13, self.check_gd13_sucees());
+    		self.updateStepUI(14, self.check_gd14_sucees());
     	},
     	updateStepUI: function(step, status){
     		var self = this;
@@ -692,7 +816,7 @@ define(function (require) {
     			self.$el.find(".gd" + step +" .card").addClass("border-" + status + " shadow");
     			self.$el.find(".gd" + step +" .card-title").addClass("text-" + status);
     			self.$el.find(".gd" + step +" .badge-pill").removeClass("bg-light border");
-    			self.$el.find(".gd" + step +" .badge-pill").addClass("bg-" + status);
+    			self.$el.find(".gd" + step +" .badge-pill").addClass("bg-" + status + " border");
     		}
     		
     		
@@ -725,7 +849,7 @@ define(function (require) {
     				&& self.model.get("ngayquyetdinh")!==null){
     			return "success"
     		}
-    		return "default";
+    		return "light";
     	},
     	check_gd2_sucees: function(){
     		var self = this;
@@ -733,17 +857,17 @@ define(function (require) {
     				&& self.model.get("ngaylenkehoach")!==null ){
     			return "success"
     		}
-    		return "default";
+    		return "light";
     	},
     	
     	check_gd3_sucees: function(){
     		var self = this;
-    		if (self.model.get("danhsach_congviec_theodoi")!==null
-    				&& self.model.get("danhsach_congviec_theodoi")!==null 
-    				&& self.model.get("danhsach_congviec_theodoi").length > 0) {
+    		if (self.model.get("danhsach_congviec_thanhtra")!==null
+    				&& self.model.get("danhsach_congviec_thanhtra")!==null 
+    				&& self.model.get("danhsach_congviec_thanhtra").length > 0) {
     			return "success"
     		}
-    		return "default";
+    		return "light";
     	},
     	
     	check_gd4_sucees: function(){
@@ -752,7 +876,7 @@ define(function (require) {
     				&& self.model.get("ngayguicongvan_yeucau")!==null ){
     			return "success"
     		}
-    		return "default";
+    		return "light";
     	},
     	check_gd5_sucees: function(){
     		var self = this;
@@ -760,23 +884,23 @@ define(function (require) {
     				&& self.model.get("ngay_vanban_thongbao_doituong_thanhtra")!==null ){
     			return "success"
     		}
-    		return "default";
+    		return "light";
     	},
     	check_gd6_sucees: function(){
     		var self = this;
     		self.$el.find(".gd6 .danger-reason").html("");
-    		var ngay_congbo_quyetdinh = self.model.get("ngay_congbo_quyetdinh");
+    		var ngay_vanban_congbo_quyetdinh = self.model.get("ngay_vanban_congbo_quyetdinh");
     		var ngayguicongvan_yeucau = self.model.get("ngayguicongvan_yeucau");
     		var ngayquyetdinh  = self.model.get("ngayquyetdinh");
     		var danger = false;
     		var danger_html = "";
     		
-    		if(!!ngayguicongvan_yeucau && !!ngay_congbo_quyetdinh ){
-    			if ((ngay_congbo_quyetdinh - ngayguicongvan_yeucau) < 5*24*60*60){
+    		if(!!ngayguicongvan_yeucau && !!ngay_vanban_congbo_quyetdinh ){
+    			if ((ngay_vanban_congbo_quyetdinh - ngayguicongvan_yeucau) < 5*24*60*60){
     				danger_html = danger_html + "Công bố quyết định thanh tra quá sớm";
     				danger = true;
     			}
-    			if ((ngay_congbo_quyetdinh - ngayguicongvan_yeucau) > 15*24*60*60){
+    			if ((ngay_vanban_congbo_quyetdinh - ngayguicongvan_yeucau) > 15*24*60*60){
     				danger_html = danger_html + "Công bố quyết định thanh tra muộn hơn 15 ngày";
     				danger = true;
     			}
@@ -788,42 +912,42 @@ define(function (require) {
     		}
     		
     		if (self.model.get("sovanban_congbo_quyetdinh")!==null
-    				&& self.model.get("ngay_congbo_quyetdinh")!==null ){
+    				&& self.model.get("ngay_vanban_congbo_quyetdinh")!==null ){
     			return "success"
     		}
     		
-    		return "default";
+    		return "light";
     	},
     	check_gd7_sucees: function(){
     		var self = this;
-    		if (self.model.get("socongvan_ketthuc_thanhtra")!==null
-    				&& self.model.get("ngay_congvan_ketthuc_thanhtra")!==null ){
+    		if (self.model.get("so_thongbao_ketthuc_thanhtra")!==null
+    				&& self.model.get("ngay_thongbao_ketthuc_thanhtra")!==null ){
     			return "success"
     		}
-    		return "default";
+    		return "light";
     	},
     	check_gd8_sucees: function(){
     		var self = this;
-    		var ngay_congbo_quyetdinh = self.model.get("ngay_congbo_quyetdinh");
-    		var ngaygui_vanban_giaitrinh = self.model.get("ngaygui_vanban_giaitrinh");
+    		var ngay_vanban_congbo_quyetdinh = self.model.get("ngay_vanban_congbo_quyetdinh");
+    		var ngay_vanban_doituong_giaitrinh = self.model.get("ngay_vanban_doituong_giaitrinh");
     		
-    		if(!!ngay_congbo_quyetdinh){
+    		if(!!ngay_vanban_congbo_quyetdinh){
     			var checkngay = moment().unix();
-    			if (!!ngaygui_vanban_giaitrinh){
-    				checkngay = ngaygui_vanban_giaitrinh;
+    			if (!!ngay_vanban_doituong_giaitrinh){
+    				checkngay = ngay_vanban_doituong_giaitrinh;
     			}
     			
-    			if ((checkngay - ngay_congbo_quyetdinh) > 45*24*60*60){
+    			if ((checkngay - ngay_vanban_congbo_quyetdinh) > 45*24*60*60){
     				self.$el.find(".gd8 .danger-reason").html("Quá 45 ngày kể từ ngày gửi quyết định thanh tra");
 					return "danger"
 				}
     		}
-    		return "default";
+    		return "light";
     	},
     	check_gd9_sucees: function(){
     		var self = this;
     		if (self.model.get("sovanban_giaitrinh")!==null
-    				&& self.model.get("ngaygui_vanban_giaitrinh")!==null );
+    				&& self.model.get("ngay_vanban_doituong_giaitrinh")!==null );
     	},
     	check_gd10_sucees: function(){
     		var self = this;
@@ -835,6 +959,14 @@ define(function (require) {
     		if (self.model.get("ngay_congkhai_doituong_ketluanthanhtra")!==null);
     	},
     	check_gd12_sucees: function(){
+    		var self = this;
+    		if (self.model.get("ngay_bangiao_luutru")!==null);
+    	},
+    	check_gd13_sucees: function(){
+    		var self = this;
+    		if (self.model.get("ngay_bangiao_luutru")!==null);
+    	},
+    	check_gd14_sucees: function(){
     		var self = this;
     		if (self.model.get("ngay_bangiao_luutru")!==null);
     	},
