@@ -68,5 +68,20 @@
     "status": {
         "type": "number",
         "default": 0
+    },
+    "quymodonvi": {
+        "type": "number"
+    },
+    "tuanthuphapluat_chiso": {
+        "type": "number"
+    },
+    "tuanthuphapluat_chiso_ghichu": {
+        "type": "string"
+    },
+    "danhsachchinhanhdonvi_field": {
+        "type": "list"
+    },
+    "danhmuclinhvuc_foreign": {
+        "type": "list"
     }
 }

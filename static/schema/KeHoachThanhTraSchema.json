@@ -130,9 +130,6 @@
     "ngaylenkehoach": {
         "type": "number"
     },
-    "danhsach_congviec_theodoi": {
-        "type": "json"
-    },
     "socongvan_yeucau": {
         "type": "string"
     },
