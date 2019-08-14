@@ -143,6 +143,7 @@ class DanhSachChiNhanhDonVi(CommonModel):
     __tablename__ ='danhsachchinhanhdonvi'
     id = db.Column(UUID(as_uuid =True),primary_key= True,default = default_uuid)
     tenchinhanh = db.Column(String)
+    diachichinhanh = db.Column(String)
     tinhthanh_id = db.Column(String, nullable=True)
     tinhthanh = db.Column(JSONB)
     danhmucdoanhnghiep_id = db.Column(UUID(as_uuid=True), ForeignKey('danhmucdoanhnghiep.id'), nullable=True)

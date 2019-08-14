@@ -28,6 +28,9 @@
     "tenchinhanh": {
         "type": "string"
     },
+    "diachichinhanh": {
+        "type": "string"
+    },
     "tinhthanh_id": {
         "type": "string"
     },

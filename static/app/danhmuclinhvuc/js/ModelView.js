@@ -47,6 +47,8 @@ define(function (require) {
 							self.model.save(null, {
 								success: function (model, respose, options) {
 									self.getApp().notify("Lưu thông tin thành công");
+									self.getApp().getRouter().navigate(self.collectionName + "/collection");
+
 								},
 								error: function (xhr, status, error) {
 									try {
