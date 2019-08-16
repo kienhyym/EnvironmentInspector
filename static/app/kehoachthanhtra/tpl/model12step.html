@@ -117,19 +117,28 @@
 		       	   </div>
 		       	   
 		       	   <div class="row">
+						
 		       	   		<div class="form-group col">
-				              <label>Tài liệu đính kèm</label>
-				              <div class="custom-file">
-								    <input type="file" class="custom-file-input" id="quyetdinh_thanhtra_attachment" lang="vi">
-								    <label class="custom-file-label" for="upload_files_gd4">Chọn file tải lên</label>
+							  	<label>Tài liệu đính kèm</label>
+							  	<div id="upload-quyetdinh_thanhtra_attachment" >
+										<div class="custom-file">
+												<input type="file" class="custom-file-input upload_files" id="upload_files" data-attr="quyetdinh_thanhtra_attachment" lang="vi">
+												<label class="custom-file-label">Chọn file tải lên</label>
+											</div>
 								</div>
-								<div class="highlight d-none border" id="preview_file_gd4" style="height:130px;overflow-y: auto; background-color: aliceblue;">
-									<pre >
-										 <ul class="list_file_gd4">
-										</ul> 
-									</pre>
+								<div id="download-quyetdinh_thanhtra_attachment" class="form-group col col-md-12 col-sm-12">
+									<span data-bind="text:quyetdinh_thanhtra_attachment"/>
+									<a href="abc">Download</a>
+									<!--<div class="highlight d-none border" id="preview_file_gd4" style="height:130px;overflow-y: auto; background-color: aliceblue;">
+												<pre >
+												 <ul class="list_file_quyetdinh_trungcau_giamdinh_attachment">
+												</ul> 
+												</pre>
+											</div>-->
 								</div>
-				        </div>
+				              
+						</div>
+						
 		       	   </div>
 		       	   
 		       	   
@@ -173,17 +182,17 @@
 		       	   
 		       	   <div class="row">
 		       	   		<div class="form-group col">
-				              <label>Tài liệu đính kèm</label>
-				              <div class="custom-file">
-								    <input type="file" class="custom-file-input" id="quyetdinh_trungcau_giamdinh_attachment" lang="vi">
-								    <label class="custom-file-label" for="upload_files_gd4">Chọn file tải lên</label>
-								</div>
-								<div class="highlight d-none border" id="preview_file_gd4" style="height:130px;overflow-y: auto; background-color: aliceblue;">
-									<pre >
-										 <ul class="list_file_quyetdinh_trungcau_giamdinh_attachment">
-										</ul> 
-									</pre>
-								</div>
+							  <label>Tài liệu đính kèm</label>
+							  <div id="upload-quyetdinh_trungcau_giamdinh_attachment" >
+									<div class="custom-file">
+											<input type="file" class="custom-file-input upload_files" id="upload_files" data-attr="quyetdinh_trungcau_giamdinh_attachment" lang="vi">
+											<label class="custom-file-label" >Chọn file tải lên</label>
+										</div>
+							</div>
+							<div id="download-quyetdinh_trungcau_giamdinh_attachment" class="form-group col col-md-12 col-sm-12">
+								<span data-bind="text:quyetdinh_trungcau_giamdinh_attachment"/>
+								<a href="abc">Download</a>
+							</div>
 				        </div>
 		       	   </div>
 		       	   <hr/>

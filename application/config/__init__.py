@@ -36,6 +36,7 @@ class Config(object):
     FIREBASE_SERVER_KEY = "AIzaSyBj_Mat5FFPMAkXmUPjxjbgYby1Z9tkZgU"
 
 #     FS_ROOT= "/Users/namdv/workspace/thanhtra_moitruong/repo/static/uploads/"
-    FS_ROOT= "/opt/deploy/thanhtra-moitruong/repo/static/uploads/"
-    FILE_SERVICE_URL = 'http://103.74.120.65:9080/static/uploads'
+    FS_ROOT= "static/uploads/"
+    #FILE_SERVICE_URL = 'http://103.74.120.65:9080/static/uploads'
+    FILE_SERVICE_URL = '/static/uploads'
 

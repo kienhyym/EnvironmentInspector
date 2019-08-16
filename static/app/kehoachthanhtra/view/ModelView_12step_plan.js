@@ -72,6 +72,13 @@ define(function (require) {
     	    }],
     	uiControl:{
     		fields:[
+				// {
+				// 	field:"quyetdinh_thanhtra_attachment",
+				// 	uicontrol: "imagelink",
+				// 	service: {
+				// 		url: "/api/v1/upload/file",
+				// 	}
+				// },
     			{
 					field:"ngay_quyetdinh_thanhtra",
 					uicontrol:"datetimepicker",
@@ -491,7 +498,8 @@ define(function (require) {
         				
         				self.applyBindings();
     	    			self.$el.find("#multiselect_donvidoanhnghiep").selectpicker('val',self.model.get("madoanhnghiep"));
-    	    			self.updateStepStatus();
+						self.updateStepStatus();
+						self.renderUpload();
         			},
         			error: function (xhr, status, error) {
 						try {
@@ -517,7 +525,24 @@ define(function (require) {
     		}
     		
     		
-    	},
+		},
+		renderUpload(){
+			var self = this;
+			var keys = ["quyetdinh_thanhtra_attachment", "quyetdinh_trungcau_giamdinh_attachment"];
+			$.each(keys, function(i, key){
+				var attr_value = self.model.get(key);
+				console.log(key, attr_value, "1");
+				if(!!attr_value){
+					//self.$el.find("#upload-" + key).hide();
+					self.$el.find("#download-" + key).show();
+				}else{
+					console.log(key, attr_value);
+					self.$el.find("#upload-" + key).show();
+					self.$el.find("#download-" + key).hide();
+				}
+			})
+			
+		},
     	bindEventGD1:function(){
     		var self = this;
     		self.$el.find(".btn-add-member").unbind('click').bind('click',function(){
@@ -1051,61 +1076,74 @@ define(function (require) {
     		});
     		self.$el.find("#btn_cancel").unbind("click").bind("click", function(){
     			self.cancel_kehoach();
-    		});
-    		self.$el.find("#upload_files").on("change",function(){
-    			var http = new XMLHttpRequest();
-                var fd       = new FormData();
-           
-                fd.append('file', self.$el.find("#upload_files")[0].files[0]);
-                http.open('POST', '/api/v1/upload/file');
-                http.upload.addEventListener('progress', function(evt){
-                  if(evt.lengthComputable){
-                    var percent = evt.loaded/evt.total;
-                    percent = parseInt(percent*100);
-                    console.log(percent);
-//                    progess.attr('value',percent);
-//                    if(percent == 100)
-//                    {
-//                        plink.html("Upload 100%");
-//                    }
-                  }
-                },false);
-                http.addEventListener('error',function(){
-                    console.log("Upload error!");
-                },false);
-
-                http.onreadystatechange = function () {
-                    if (http.status === 200){
-                        if( http.readyState === 4) {
-	                       var data_file = JSON.parse(http.responseText), link, p, t;
-	                        self.getApp().notify("Tải file thành công");
-	                        console.log("response update===",data_file);
-	                        var tailieu = self.model.get("tailieulienquan");
-	                        if(tailieu === null){
-	                        	tailieu = [];
-	                        }
-	                        tailieu.push(data_file);
-	        				self.$el.find(".highlight").removeClass('d-none');
-	                        self.model.set("tailieulienquan",tailieu);
-	                        self.render_list_file(data_file, self);
-//	                        plink.html('');
-//	                        plink.html(link);
-//	                        status.show();
-//	                        progess.hide();
-//	                        totalupload=totalupload+1;
-//	                        txt_uploaded.val(totalupload+" file uploaded");
-	
-	                    }
-                    } else {
-                    	self.getApp().notify("Không thể tải tệp tin lên máy chủ");
-//                            status.addClass('glyphicon glyphicon-exclamation-sign');
-//                            status.show();
-//                            plink.html("Upload Error!");
-//                            progess.val(50);
-                        }
-                };
-                http.send(fd);
 			});
+			self.$el.find(".upload_files").on("change",function(){
+					var http = new XMLHttpRequest();
+					var fd       = new FormData();
+					
+					var data_attr = $(this).attr("data-attr");
+					fd.append('file', this.files[0]);
+
+					//fd.append('file', self.$el.find("#upload_files")[0].files[0]);
+
+					http.open('POST', '/api/v1/upload/file');
+
+					http.upload.addEventListener('progress', function(evt){
+					  if(evt.lengthComputable){
+						var percent = evt.loaded/evt.total;
+						percent = parseInt(percent*100);
+						
+					  }
+					},false);
+					http.addEventListener('error',function(){
+						console.log("Upload error!");
+					},false);
+	
+					http.onreadystatechange = function () {
+						if (http.status === 200){
+							if( http.readyState === 4) {
+							   var data_file = JSON.parse(http.responseText), link, p, t;
+								self.getApp().notify("Tải file thành công");
+
+								self.model.set(data_attr, data_file.link);
+								self.saveModel();
+								
+
+
+
+								// var tailieu = self.model.get("tailieulienquan");
+								// if(tailieu === null){
+								// 	tailieu = [];
+								// }
+								// tailieu.push(data_file);
+								// self.$el.find(".highlight").removeClass('d-none');
+								// self.model.set("tailieulienquan",tailieu);
+								// self.render_list_file(data_file, self);
+								
+	
+	
+	
+	
+	
+	//	                        plink.html('');
+	//	                        plink.html(link);
+	//	                        status.show();
+	//	                        progess.hide();
+	//	                        totalupload=totalupload+1;
+	//	                        txt_uploaded.val(totalupload+" file uploaded");
+		
+							}
+						} else {
+							self.getApp().notify("Không thể tải tệp tin lên máy chủ");
+						}
+					};
+					http.send(fd);
+				});
+
+			
+			
+			
+			
     	},
     	render_list_file: function(data_file, self){
     		var li_el = $('<li>').attr({"id":data_file.id}).html(data_file.filename_organization + data_file.extname);
