@@ -48,8 +48,8 @@ class XaPhuong(CommonModel):
 
 
 roles_users = db.Table('roles_users',
-                       db.Column('user_id', UUID(as_uuid=True), db.ForeignKey('user.id', ondelete='cascade'), primary_key=True),
-                       db.Column('role_id', UUID(as_uuid=True), db.ForeignKey('role.id', onupdate='cascade'), primary_key=True))
+    db.Column('user_id', UUID(as_uuid=True), db.ForeignKey('user.id', ondelete='cascade'), primary_key=True),
+    db.Column('role_id', UUID(as_uuid=True), db.ForeignKey('role.id', onupdate='cascade'), primary_key=True))
 
 
 class Role(CommonModel):
@@ -102,9 +102,13 @@ class User(CommonModel):
         else:
             return role in self.roles
 
+DonVi_LinhVuc = db.Table('donvi_linhvuc',
+    db.Column('donvi_id', UUID(as_uuid=True), db.ForeignKey('danhmucdoanhnghiep.id', ondelete='cascade'), primary_key=True),
+    db.Column('linhvuc_id', UUID(as_uuid=True), db.ForeignKey('danhmuclinhvuc.id', onupdate='cascade'), primary_key=True))
+
 
 class DanhMucDoanhNghiep(CommonModel):
-    __tablename__ = 'danhmucdoanhnghiep'
+    __tablename__ ='danhmucdoanhnghiep'
     id = db.Column(UUID(as_uuid=True), primary_key=True, default=default_uuid)
     code = db.Column(String, index=True, unique=True)
     name = db.Column(String, nullable=False)
@@ -120,7 +124,30 @@ class DanhMucDoanhNghiep(CommonModel):
     xaphuong = db.Column(JSONB)
     type = db.Column(String)
     status = db.Column(Integer, default=0)    
-    
+    quymodonvi = db.Column(Integer())
+    tuanthuphapluat_chiso = db.Column(Integer())
+    tuanthuphapluat_chiso_ghichu = db.Column(String) 
+    danhsachchinhanhdonvi_field = db.relationship('DanhSachChiNhanhDonVi', cascade="all, delete-orphan")
+    danhmuclinhvuc_foreign = db.relationship("DanhMucLinhVuc", secondary=DonVi_LinhVuc,cascade="save-update")
+
+
+class DanhMucLinhVuc(CommonModel):
+    __tablename__ ='danhmuclinhvuc'
+    id = db.Column(UUID(as_uuid =True),primary_key= True,default = default_uuid)
+    malinhvuc = db.Column(String)
+    tenlinhvuc = db.Column(String)
+    # danhmucdoanhnghiep_foreign = db.relationship("DanhMucDoanhNghiep", secondary=DonVi_LinhVuc)
+
+
+class DanhSachChiNhanhDonVi(CommonModel):
+    __tablename__ ='danhsachchinhanhdonvi'
+    id = db.Column(UUID(as_uuid =True),primary_key= True,default = default_uuid)
+    tenchinhanh = db.Column(String)
+    diachichinhanh = db.Column(String)
+    tinhthanh_id = db.Column(String, nullable=True)
+    tinhthanh = db.Column(JSONB)
+    danhmucdoanhnghiep_id = db.Column(UUID(as_uuid=True), ForeignKey('danhmucdoanhnghiep.id'), nullable=True)
+
 class KeHoachThanhTra(CommonModel):
     __tablename__ = 'kehoachthanhtra'
     id = db.Column(String, primary_key=True)
