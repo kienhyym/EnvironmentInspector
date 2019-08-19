@@ -264,6 +264,7 @@ class KeHoachThanhTra(CommonModel):
     so_bienban_xuphat = db.Column(String)
     ngay_bienban_xuphat = db.Column(BigInteger())
     bienban_xuphat_attachment = db.Column(String)
+    vitriannutxuphat = db.Column(Integer)
     
     
     #GD11- OK co xu phat

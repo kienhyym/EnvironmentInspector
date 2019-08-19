@@ -376,7 +376,7 @@ define(function (require) {
 							}
 						}
 						catch (err) {
-							self.getApp().notify({ message: "Lưu thông tin không thành công" }, { type: "danger", delay: 1000 });
+							// self.getApp().notify({ message: "Lưu thông tin không thành công" }, { type: "danger", delay: 1000 });
 						}
 					}
 				});
@@ -421,31 +421,11 @@ define(function (require) {
 							self.getApp().notify("Tải file thành công");
 
 							self.model.set(data_attr, data_file.link);
+							var mdel = self.model.get("taokehoach_attachment");
+							self.$el.find(".upload-taokehoach_attachment").hide();
+
+							self.$el.find(".hienthilink").html(mdel);
 							self.saveModel();
-
-
-
-
-							// var tailieu = self.model.get("tailieulienquan");
-							// if(tailieu === null){
-							// 	tailieu = [];
-							// }
-							// tailieu.push(data_file);
-							// self.$el.find(".highlight").removeClass('d-none');
-							// self.model.set("tailieulienquan",tailieu);
-							// self.render_list_file(data_file, self);
-
-
-
-
-
-
-							//	                        plink.html('');
-							//	                        plink.html(link);
-							//	                        status.show();
-							//	                        progess.hide();
-							//	                        totalupload=totalupload+1;
-							//	                        txt_uploaded.val(totalupload+" file uploaded");
 
 						}
 					} else {
@@ -458,6 +438,7 @@ define(function (require) {
 		},
 		saveModel: function () {
 			var self = this;
+			
 			self.model.save(null, {
 				success: function (model, response, options) {
 					self.getApp().notify("Lưu thông tin thành công");

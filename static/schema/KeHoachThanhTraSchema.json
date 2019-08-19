@@ -283,6 +283,9 @@
     "bienban_xuphat_attachment": {
         "type": "string"
     },
+    "vitriannutxuphat": {
+        "type": "number"
+    },
     "so_ketluan_thanhtra": {
         "type": "string"
     },

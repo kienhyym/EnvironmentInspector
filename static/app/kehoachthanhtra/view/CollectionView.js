@@ -56,7 +56,7 @@ define(function (require) {
 				return;
 			}
 			//	    	self.getDataSource(0,filter_new,1,100);
-
+		
 			return this;
 		},
 		bindEvent: function () {
@@ -169,6 +169,15 @@ define(function (require) {
 				data: { data: JSON.stringify({ "filters": filters, "order_by": [{ "field": "updated_at", "direction": "desc" }], "page": page, "results_per_page": results_per_page }) },
 				contentType: "application/json",
 				success: function (data) {
+					var x = data.objects
+					console.log('-----------------------',x);
+					// var dataSource = lodash.orderBy(x, ['created_at'], ['asc']);
+					// _.orderBy(x, [ 'created_at'], ['desc']);
+
+					// console.log('x',x)
+					
+					
+
 					console.log('success',status)
 
 					self.render_grid(status, data.objects);
@@ -317,7 +326,7 @@ define(function (require) {
 					//
 					//	     	    	   			modalConfirm(function(confirm){
 					//	     	    	   			});
-					//
+					//render_grid
 					//             	    	        },
 					//	     	    	        	"class": function(e){
 					//	     	    	        		var currentUser = self.getApp().currentUser;

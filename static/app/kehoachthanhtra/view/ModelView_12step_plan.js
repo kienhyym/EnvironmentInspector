@@ -500,6 +500,7 @@ define(function (require) {
 						self.$el.find("#multiselect_donvidoanhnghiep").selectpicker('val', self.model.get("madoanhnghiep"));
 						self.updateStepStatus();
 						self.renderUpload();
+						self.LapBienBan();
 					},
 					error: function (xhr, status, error) {
 						try {
@@ -561,6 +562,60 @@ define(function (require) {
 				}
 			})
 		},
+		LapBienBan: function () {
+			var self = this;
+			var lapBienBanXuPhat = self.$el.find(".lap_bien_ban_xuphat")
+			var quyetDinhXuPhat = self.$el.find(".QuyetDinhXuPhat")
+			
+			
+			
+
+			lapBienBanXuPhat[0].onclick = clickk;
+			function clickk() {
+				self.model.set("vitriannutxuphat",0)
+				self.saveModel();	
+				
+			}
+			lapBienBanXuPhat[1].onclick = clickk2;
+			function clickk2() {
+				self.model.set("vitriannutxuphat",1)
+				self.saveModel();
+			}
+
+			lapBienBanXuPhat[2].onclick = clickk3;
+			function clickk3() {
+				self.model.set("vitriannutxuphat",2)
+				self.saveModel();
+			}
+
+			var x =self.model.get("vitriannutxuphat");
+			if(x == 0){
+				quyetDinhXuPhat[1].style.display = 'none';
+				quyetDinhXuPhat[2].style.display = 'none';
+				lapBienBanXuPhat[1].style.display = 'none';
+				lapBienBanXuPhat[2].style.display = 'none';
+				lapBienBanXuPhat[0].style.display = 'none';
+
+			}
+			if(x == 1){
+				quyetDinhXuPhat[0].style.display = 'none';
+				quyetDinhXuPhat[2].style.display = 'none';
+				lapBienBanXuPhat[0].style.display = 'none';
+				lapBienBanXuPhat[1].style.display = 'none';
+
+				lapBienBanXuPhat[2].style.display = 'none';
+			}
+			if(x == 2){
+				quyetDinhXuPhat[0].style.display = 'none';
+				quyetDinhXuPhat[1].style.display = 'none';
+				lapBienBanXuPhat[0].style.display = 'none';
+				lapBienBanXuPhat[1].style.display = 'none';
+				lapBienBanXuPhat[2].style.display = 'none';
+
+
+			}
+		},
+
 		bindEventGD1: function () {
 			var self = this;
 			self.$el.find(".btn-add-member").unbind('click').bind('click', function () {
