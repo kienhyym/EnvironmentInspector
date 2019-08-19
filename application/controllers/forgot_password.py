@@ -8,7 +8,7 @@ import asyncio
 import aiosmtplib
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from email.mime.text import MIMEText
-from application.database import redisdb,db
+# from application.database import redisdb,db
 from gatco_restapi.helpers import to_dict
 from application.server import app
 from application.extensions import  jinja
@@ -23,13 +23,13 @@ import uuid
 from sqlalchemy import func
 from application.models.models import User
 
-async def generate_token(user_id, time_expire):
-    token =  binascii.hexlify(uuid.uuid4().bytes).decode()
-    p = redisdb.pipeline()
-    p.set("sessions:" + token, user_id)
-    p.expire("sessions:" + token, time_expire)
-    p.execute()
-    return token
+# async def generate_token(user_id, time_expire):
+#     token =  binascii.hexlify(uuid.uuid4().bytes).decode()
+#     p = redisdb.pipeline()
+#     p.set("sessions:" + token, user_id)
+#     p.expire("sessions:" + token, time_expire)
+#     p.execute()
+#     return token
 
 async def send_mail(subject, recipient, body):
 

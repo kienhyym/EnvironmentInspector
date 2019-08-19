@@ -7,7 +7,7 @@ import aiohttp
 import copy
 from gatco.response import json, text, html
 from application.extensions import sqlapimanager
-from application.database import db, redisdb
+# from application.database import db, redisdb
 from application.models.models import *
 
 
@@ -24,11 +24,11 @@ import ujson
 
 
 
-def check_token_app(token):
-    uid = redisdb.get("sessions:" + user_token)
-    if uid is not None:
-        return uid.decode('utf8')
-    return None
+# def check_token_app(token):
+#     uid = redisdb.get("sessions:" + user_token)
+#     if uid is not None:
+#         return uid.decode('utf8')
+#     return None
             
 
 async def pre_process_post_put_appinfo(request=None, data=None, Model=None, **kw):

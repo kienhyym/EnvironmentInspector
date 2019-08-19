@@ -100,7 +100,7 @@
 						</div>
 						<div class="mb-3">
 							<label for="cc-expiration">Địa chỉ</label>
-							<textarea rows="3" class="form-control" data-bind="value:diachi" placeholder="..."
+							<textarea rows="3" class="form-control" data-bind="value:diachi" id="diachitruso" placeholder="..."
 								required=""></textarea>
 						</div>
 
@@ -125,15 +125,17 @@
 							<label class="pt-1 pl-1">Danh sách chi nhánh </label>
 						</div>
 						<div class="row">
-							<div class="col-md-6 ">
-								<label>Tên chi nhánh</label>
-							</div>
-							<div class="col-md-6 ">
-								<label>Tỉnh Thành </label>
+								<div class="col-md-6 mb-3">
+										<input type="text" class="form-control" id="trusochinh" value="Trụ sở chính" disabled>
+									</div>
+							<div class="col-md-6 mb-3" id="tinhthanhtruso">
+								<input type="text" class="form-control" data-bind="dict:tinhthanh" disabled>
 							</div>
 						</div>
+						<div class="mb-12 mb-5">
+								<textarea rows="3" class="form-control" id="diachitrusochinh" disabled></textarea>
+							</div>
 						<div data-bind="list:danhsachchinhanhdonvi_field"></div>
-						
 					</form>
 				</div>
 			</div>

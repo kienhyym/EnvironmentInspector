@@ -162,8 +162,8 @@ sqlapimanager.create_api(DanhMucLinhVuc, max_results_per_page=1000000,
 sqlapimanager.create_api(KeHoachThanhTra, max_results_per_page=1000000,
     methods=['GET', 'POST', 'DELETE', 'PUT'],
     url_prefix='/api/v1',
-    preprocess=dict(GET_SINGLE=[], GET_MANY=[pregetmany_kehoachthanhtra], POST=[pre_post_kehoachthanhtra], PUT_SINGLE=[]),
-    postprocess=dict(POST=[], PUT_SINGLE=[], DELETE_SINGLE=[], GET_MANY =[response_getmany_kehoachthanhtra]),
+    preprocess=dict(GET_SINGLE=[], GET_MANY=[], POST=[], PUT_SINGLE=[]),
+    postprocess=dict(POST=[], PUT_SINGLE=[], DELETE_SINGLE=[], GET_MANY =[]),
     collection_name='kehoachthanhtra')
 
 

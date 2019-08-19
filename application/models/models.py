@@ -150,7 +150,7 @@ class DanhSachChiNhanhDonVi(CommonModel):
 
 class KeHoachThanhTra(CommonModel):
     __tablename__ = 'kehoachthanhtra'
-    id = db.Column(String, primary_key=True)
+    id = db.Column(UUID(as_uuid =True),primary_key= True,default = default_uuid)
     makehoach = db.Column(String(255))
     tenkehoach = db.Column(String(255))
     madoanhnghiep = db.Column(String(50),  nullable=False)
@@ -250,8 +250,11 @@ class KeHoachThanhTra(CommonModel):
     vanban_duthao = db.Column(JSONB) #list du thao
     so_vanban_thamkhao_ykien = db.Column(String)
     ngay_vanban_thamkhao_ykien = db.Column(BigInteger())
-    vanban_thamkhao_ykien_attachment = db.Column(String)
-    
+    vanban_duthao_duthao_lan1_attachment = db.Column(String)
+    congvan_giaitrinh_cua_doituong_thanhtra_attachment = db.Column(String)
+    tham_khao_y_kien_attachment = db.Column(String)
+    vanban_duthao_duthao_lan2_attachment = db.Column(String)
+
     coquan_lapbienban_hanhchinh = db.Column(String)
     so_bienban_hanhchinh = db.Column(String)
     ngay_lapbienban_hanhchinh = db.Column(BigInteger())
@@ -266,7 +269,8 @@ class KeHoachThanhTra(CommonModel):
     so_ketluan_thanhtra = db.Column(String)
     ngay_ketluan_thanhtra = db.Column(BigInteger())
     ketluan_thanhtra_attachment = db.Column(String)
-    
+    quyetdinh_xuphat_attachment = db.Column(String)
+
     #GD12 - Cong bo ket luan thanh tra OK - html
     so_bienban_congbo_ketluan = db.Column(String)
     ngay_bienban_congbo_ketluan = db.Column(BigInteger())

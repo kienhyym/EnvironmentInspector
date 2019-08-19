@@ -2,7 +2,7 @@ class Config(object):
     # DEV MODE
     DEBUG = True
     SYSTEM_MAINTAINANCE = False
-    STATIC_URL = "static2"
+    STATIC_URL = "static"
     SQLALCHEMY_DATABASE_URI = 'postgresql://thanhtramoitruongusr:1as2df3qw4ef5gh6@localhost:5432/thanhtramoitruong'
     
 

@@ -1,7 +1,9 @@
 body {
   font-size: .875rem;
 }
-
+#tinhthanhtruso span{
+  background: #f5f6f8;
+}
 .feather {
   width: 16px;
   height: 16px;

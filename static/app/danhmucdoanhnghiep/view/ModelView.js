@@ -57,7 +57,7 @@ define(function (require) {
 								}
 							});
 							self.model.set("danhmuclinhvuc_foreign", danhmuclinhvuc_foreign);
-							console.log('self.model.set("danhmuclinhvuc_foreign", danhmuclinhvuc_foreign)',self.model.set("danhmuclinhvuc_foreign", danhmuclinhvuc_foreign))
+							console.log('self.model.set("danhmuclinhvuc_foreign", danhmuclinhvuc_foreign)', self.model.set("danhmuclinhvuc_foreign", danhmuclinhvuc_foreign))
 
 							self.model.save(null, {
 								success: function (model, respose, options) {
@@ -152,7 +152,7 @@ define(function (require) {
 						{ "value": 4, "text": "4 sao" },
 						{ "value": 5, "text": "5 sao" },
 					],
-					
+
 
 				},
 				{
@@ -164,7 +164,7 @@ define(function (require) {
 						{ "value": 1, "text": "dưới 50 lao động" },
 						{ "value": 2, "text": "từ 51 đến 200 lao động" },
 						{ "value": 3, "text": "trên 200 lao động" },
-						
+
 					],
 				},
 				{
@@ -185,12 +185,18 @@ define(function (require) {
 		render: function () {
 			var self = this;
 			var id = this.getApp().getRouter().getParam("id");
+
 			self.getLinhvucs();
 
 			if (id) {
 				this.model.set('id', id);
 				this.model.fetch({
 					success: function (data) {
+						var y = self.model.get('xaphuong').ten
+						var z = self.model.get('quanhuyen').ten
+						var x = self.model.get('diachi')
+						console.log(z)
+						self.$el.find("#diachitrusochinh").val(x+' '+y+' '+z );
 						self.applyBindings();
 						self.model.on("change:tinhthanh_id", function () {
 							self.getFieldElement("quanhuyen").data("gonrin").setFilters({ "tinhthanh_id": { "$eq": self.model.get("tinhthanh_id") } });
@@ -284,7 +290,9 @@ define(function (require) {
 			} else {
 				return false;
 			}
-		}
+		},
+
+
 	});
 
 });

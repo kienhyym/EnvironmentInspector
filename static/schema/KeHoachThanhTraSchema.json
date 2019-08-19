@@ -244,7 +244,16 @@
     "ngay_vanban_thamkhao_ykien": {
         "type": "number"
     },
-    "vanban_thamkhao_ykien_attachment": {
+    "vanban_duthao_duthao_lan1_attachment": {
+        "type": "string"
+    },
+    "congvan_giaitrinh_cua_doituong_thanhtra_attachment": {
+        "type": "string"
+    },
+    "tham_khao_y_kien_attachment": {
+        "type": "string"
+    },
+    "vanban_duthao_duthao_lan2_attachment": {
         "type": "string"
     },
     "coquan_lapbienban_hanhchinh": {
@@ -278,6 +287,9 @@
         "type": "number"
     },
     "ketluan_thanhtra_attachment": {
+        "type": "string"
+    },
+    "quyetdinh_xuphat_attachment": {
         "type": "string"
     },
     "so_bienban_congbo_ketluan": {
