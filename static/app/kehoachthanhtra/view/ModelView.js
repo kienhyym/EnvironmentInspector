@@ -123,7 +123,6 @@ define(function (require) {
 			self.bindEventSelect();
 			self.updateUIPermission();
 
-
 			var id = this.getApp().getRouter().getParam("id");
 			if (id) {
 				this.model.set('id', id);
@@ -147,6 +146,8 @@ define(function (require) {
 						self.$el.find("#multiselect_donvidoanhnghiep").selectpicker('val', self.model.get("madoanhnghiep"));
 						self.updateUITimeline(self.model.toJSON());
 						self.updateUIPermission();
+						self.renderUpload();
+
 					},
 					error: function (xhr, status, error) {
 						try {
@@ -170,8 +171,29 @@ define(function (require) {
 				self.$el.find("#btn_approve").hide();
 				self.$el.find("#btn_cancel").hide();
 				self.applyBindings();
+				self.renderUpload();
+
 			}
 
+		},
+		renderUpload() {
+			var self = this;
+
+			var keys = ["taokehoach_attachment"];
+			$.each(keys, function (i, key) {
+				var attr_value = self.model.get(key);
+				var linkDownload = self.$el.find(".linkDownload");
+
+				if (!!attr_value) {
+					linkDownload[i].href = attr_value;
+					self.$el.find("#upload-" + key).hide();
+					self.$el.find("#download-" + key).show();
+				} else {
+					// console.log(key, attr_value);
+					self.$el.find("#upload-" + key).show();
+					self.$el.find("#download-" + key).hide();
+				}
+			})
 		},
 		updateUIPermission: function () {
 			var self = this;
@@ -334,7 +356,6 @@ define(function (require) {
 						self.model.set("tendoanhnghiep", my_object.name);
 					}
 				}
-
 			});
 			console.log('self.model.toJSON()',self.model.toJSON());
 			self.$el.find("#btn_save").unbind("click").bind("click", function () {
@@ -345,7 +366,7 @@ define(function (require) {
 						self.getApp().notify("Lưu thông tin thành công");
 					},
 					error: function (xhr, status, error) {
-						console.log('error',xhr)
+						// console.log('error',xhr)
 						try {
 							if (($.parseJSON(error.xhr.responseText).error_code) === "SESSION_EXPIRED") {
 								self.getApp().notify("Hết phiên làm việc, vui lòng đăng nhập lại!");
@@ -370,26 +391,27 @@ define(function (require) {
 			self.$el.find("#btn_cancel").unbind("click").bind("click", function () {
 				self.cancel_kehoach();
 			});
-			self.$el.find("#upload_files").on("change", function () {
+			self.$el.find(".upload_files").on("change", function () {
+				console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
 				var http = new XMLHttpRequest();
 				var fd = new FormData();
 
-				fd.append('file', self.$el.find("#upload_files")[0].files[0]);
+				var data_attr = $(this).attr("data-attr");
+				fd.append('file', this.files[0]);
+
+				//fd.append('file', self.$el.find("#upload_files")[0].files[0]);
+
 				http.open('POST', '/api/v1/upload/file');
+
 				http.upload.addEventListener('progress', function (evt) {
 					if (evt.lengthComputable) {
 						var percent = evt.loaded / evt.total;
 						percent = parseInt(percent * 100);
-						console.log(percent);
-						//                    progess.attr('value',percent);
-						//                    if(percent == 100)
-						//                    {
-						//                        plink.html("Upload 100%");
-						//                    }
+
 					}
 				}, false);
 				http.addEventListener('error', function () {
-					console.log("Upload error!");
+					// console.log("Upload error!");
 				}, false);
 
 				http.onreadystatechange = function () {
@@ -397,15 +419,27 @@ define(function (require) {
 						if (http.readyState === 4) {
 							var data_file = JSON.parse(http.responseText), link, p, t;
 							self.getApp().notify("Tải file thành công");
-							console.log("response update===", data_file);
-							var tailieu = self.model.get("tailieulienquan");
-							if (tailieu === null) {
-								tailieu = [];
-							}
-							tailieu.push(data_file);
-							self.$el.find(".highlight").removeClass('d-none');
-							self.model.set("tailieulienquan", tailieu);
-							self.render_list_file(data_file, self);
+
+							self.model.set(data_attr, data_file.link);
+							self.saveModel();
+
+
+
+
+							// var tailieu = self.model.get("tailieulienquan");
+							// if(tailieu === null){
+							// 	tailieu = [];
+							// }
+							// tailieu.push(data_file);
+							// self.$el.find(".highlight").removeClass('d-none');
+							// self.model.set("tailieulienquan",tailieu);
+							// self.render_list_file(data_file, self);
+
+
+
+
+
+
 							//	                        plink.html('');
 							//	                        plink.html(link);
 							//	                        status.show();
@@ -416,13 +450,32 @@ define(function (require) {
 						}
 					} else {
 						self.getApp().notify("Không thể tải tệp tin lên máy chủ");
-						//                            status.addClass('glyphicon glyphicon-exclamation-sign');
-						//                            status.show();
-						//                            plink.html("Upload Error!");
-						//                            progess.val(50);
 					}
 				};
 				http.send(fd);
+			});
+
+		},
+		saveModel: function () {
+			var self = this;
+			self.model.save(null, {
+				success: function (model, response, options) {
+					self.getApp().notify("Lưu thông tin thành công");
+					self.getApp().router.refresh();
+				},
+				error: function (xhr, status, error) {
+					try {
+						if (($.parseJSON(error.xhr.responseText).error_code) === "SESSION_EXPIRED") {
+							self.getApp().notify("Hết phiên làm việc, vui lòng đăng nhập lại!");
+							self.getApp().getRouter().navigate("login");
+						} else {
+							self.getApp().notify({ message: $.parseJSON(error.xhr.responseText).error_message }, { type: "danger", delay: 1000 });
+						}
+					}
+					catch (err) {
+						// self.getApp().notify({ message: "Lưu thông tin không thành công" }, { type: "danger", delay: 1000 });
+					}
+				}
 			});
 		},
 		render_list_file: function (data_file, self) {
@@ -509,7 +562,7 @@ define(function (require) {
 
 		},
 		updateUITimeline: function (data) {
-			console.log('data',data)
+			// console.log('data',data)
 			var self = this;
 			var el_status_new = self.$el.find("#timeline .kehoach_new");
 			el_status_new.addClass("complete");
@@ -520,7 +573,7 @@ define(function (require) {
 			var arr_timeline_capphong = ["send_review_pct", "cancel_reviewed_pct", "send_approved", "approved", "cancel_approved", "checked"]
 			if (data.trangthai != "new" && data.trangthai != "send_review_truongphong" &&
 				data.trangthai != "cancel_reviewed_truongphong") {
-				console.log("timeline truong phong");
+				// console.log("timeline truong phong");
 				var el_status_capphong = self.$el.find("#timeline .kehoach_send_review_capphong");
 				el_status_capphong.addClass("complete");
 				el_status_capphong.find('.author').html(data.username_phongduyet || "&nbsp;");

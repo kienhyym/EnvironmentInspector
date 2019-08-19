@@ -109,6 +109,9 @@
     "ngayketthuc": {
         "type": "number"
     },
+    "taokehoach_attachment": {
+        "type": "string"
+    },
     "so_quyetdinh_thanhtra": {
         "type": "string"
     },

@@ -242,7 +242,7 @@
 					              <textarea required rows="2"  data-bind="value:doanthanhtra"  class="form-control" placeholder="Nhập danh sách đoàn thanh tra"></textarea>
 					        </div>
 					        
-					        <div class="form-group">
+					        <!-- <div class="form-group">
 					              <label>Tài liệu đính kèm</label>
 					              <div class="custom-file">
 									    <input type="file" class="custom-file-input" id="upload_files" lang="vi">
@@ -255,8 +255,25 @@
 											</ul> 
 										</pre>
 									</div>
-					        </div>
-					        
+					        </div> -->
+							<div class="row">
+								<div class="form-group col">
+									<label>Tài liệu đính kèm</label>
+									<div id="upload-taokehoach_attachment">
+										<div class="custom-file">
+											<input type="file" class="custom-file-input upload_files" id="upload_files"
+												data-attr="taokehoach_attachment" lang="vi">
+											<label class="custom-file-label">Chọn file tải lên</label>
+										</div>
+									</div>
+									<div id="download-taokehoach_attachment"
+										class="form-group col col-md-12 col-sm-12">
+										<span class="textDownload"  data-bind="text:taokehoach_attachment" />
+										<a href="#" class="linkDownload">Download</a>
+									</div>
+								</div>
+							</div>
+	
 					        <div class="row nguoisoanthao d-none">
 				            	  <div class="form-group required col-6">
 						             <label>Người soạn thảo</label>

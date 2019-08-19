@@ -179,7 +179,8 @@ class KeHoachThanhTra(CommonModel):
     ketquathanhtra = db.Column(String)
     ketluanthanhtra = db.Column(String)
     ngayketthuc = db.Column(BigInteger())
-    
+    taokehoach_attachment = db.Column(String)
+
     #step1
     so_quyetdinh_thanhtra = db.Column(String)
     ngay_quyetdinh_thanhtra = db.Column(BigInteger())

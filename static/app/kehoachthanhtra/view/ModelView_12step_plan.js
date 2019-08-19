@@ -544,7 +544,7 @@ define(function (require) {
 				"quyetdinh_xuphat_attachment",
 				"bienban_congbo_ketluan_attachment",
 				"congkhai_ketluan_image_attachment",
-				"baocao_doituong_thuchien_attachment"
+				"baocao_doituong_thuchien_attachment",
 			];
 			$.each(keys, function (i, key) {
 				var attr_value = self.model.get(key);
