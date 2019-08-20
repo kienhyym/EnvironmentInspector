@@ -192,12 +192,11 @@ define(function (require) {
 				this.model.set('id', id);
 				this.model.fetch({
 					success: function (data) {
-						var y = self.model.get('xaphuong').ten
-						var z = self.model.get('quanhuyen').ten
-						var x = self.model.get('diachi')
-						console.log(z)
-						self.$el.find("#diachitrusochinh").val(x+' '+y+' '+z );
+					
+						
 						self.applyBindings();
+
+
 						self.model.on("change:tinhthanh_id", function () {
 							self.getFieldElement("quanhuyen").data("gonrin").setFilters({ "tinhthanh_id": { "$eq": self.model.get("tinhthanh_id") } });
 						});
@@ -213,7 +212,28 @@ define(function (require) {
 							}
 						}
 						self.$el.find("#multiselect_linhvuc").selectpicker('val', val_danhmuclinhvuc_foreign);
-
+						var x;
+						var y;
+						var z;
+						if(self.model.get('xaphuong')== null){
+							y = "";
+						}
+						else{
+							y = self.model.get('xaphuong').ten;
+						}
+						if(self.model.get('quanhuyen')== null){
+							z = "";
+						}
+						else{
+							z = self.model.get('quanhuyen').ten;
+						}
+						if(self.model.get('diachi')== null){
+							x = "";
+						}
+						else{
+							x = self.model.get('diachi');
+						}					
+						self.$el.find("#diachitrusochinh").val(x+' '+y+' '+z );
 					},
 					error: function (xhr, status, error) {
 						try {
