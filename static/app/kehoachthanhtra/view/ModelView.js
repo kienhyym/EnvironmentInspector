@@ -346,53 +346,10 @@ define(function (require) {
 		},
 		bindEventSelect: function () {
 			var self = this;
-			self.$el.find('#multiselect_donvidoanhnghiep').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
-				var data_ck = self.$el.find('#multiselect_donvidoanhnghiep option:selected').attr('data-ck');
-				if (data_ck !== undefined && data_ck !== null) {
-					var my_object = JSON.parse(decodeURIComponent(data_ck));
-					if (my_object !== null) {
-						self.model.set("doanhnghiep", my_object);
-						self.model.set("madoanhnghiep", my_object.id);
-						self.model.set("tendoanhnghiep", my_object.name);
-					}
-				}
-			});
-			console.log('self.model.toJSON()',self.model.toJSON());
-			self.$el.find("#btn_save").unbind("click").bind("click", function () {
-				self.model.save(null, {
-					success: function (model, response, options) {
-						self.updateUITimeline(self.model.toJSON());
-						self.updateUIPermission();
-						self.getApp().notify("Lưu thông tin thành công");
-					},
-					error: function (xhr, status, error) {
-						// console.log('error',xhr)
-						try {
-							if (($.parseJSON(error.xhr.responseText).error_code) === "SESSION_EXPIRED") {
-								self.getApp().notify("Hết phiên làm việc, vui lòng đăng nhập lại!");
-								self.getApp().getRouter().navigate("login");
-							} else {
-								self.getApp().notify({ message: $.parseJSON(error.xhr.responseText).error_message }, { type: "danger", delay: 1000 });
-							}
-						}
-						catch (err) {
-							// self.getApp().notify({ message: "Lưu thông tin không thành công" }, { type: "danger", delay: 1000 });
-						}
-					}
-				});
-
-			});
-			self.$el.find("#btn_review").unbind("click").bind("click", function () {
-				self.confirm_kehoach();
-			});
-			self.$el.find("#btn_approve").unbind("click").bind("click", function () {
-				self.confirm_kehoach();
-			});
-			self.$el.find("#btn_cancel").unbind("click").bind("click", function () {
-				self.cancel_kehoach();
-			});
 			self.$el.find(".upload_files").on("change", function () {
 				console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+				var mdel = self.model.get("taokehoach_attachment");
+				self.$el.find(".hienthilink").html(mdel);
 				var http = new XMLHttpRequest();
 				var fd = new FormData();
 
@@ -425,7 +382,6 @@ define(function (require) {
 							self.$el.find(".upload-taokehoach_attachment").hide();
 
 							self.$el.find(".hienthilink").html(mdel);
-							self.saveModel();
 
 						}
 					} else {
@@ -434,6 +390,54 @@ define(function (require) {
 				};
 				http.send(fd);
 			});
+
+			self.$el.find('#multiselect_donvidoanhnghiep').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+				var data_ck = self.$el.find('#multiselect_donvidoanhnghiep option:selected').attr('data-ck');
+				if (data_ck !== undefined && data_ck !== null) {
+					var my_object = JSON.parse(decodeURIComponent(data_ck));
+					if (my_object !== null) {
+						self.model.set("doanhnghiep", my_object);
+						self.model.set("madoanhnghiep", my_object.id);
+						self.model.set("tendoanhnghiep", my_object.name);
+					}
+				}
+			});
+			console.log('self.model.toJSON()',self.model.toJSON());
+			self.$el.find("#btn_save").unbind("click").bind("click", function () {
+				self.model.save(null, {
+					success: function (model, response, options) {
+						self.updateUITimeline(self.model.toJSON());
+						self.updateUIPermission();
+						self.getApp().notify("Lưu thông tin thành công");
+						
+					},
+					error: function (xhr, status, error) {
+						// console.log('error',xhr)
+						try {
+							if (($.parseJSON(error.xhr.responseText).error_code) === "SESSION_EXPIRED") {
+								self.getApp().notify("Hết phiên làm việc, vui lòng đăng nhập lại!");
+								self.getApp().getRouter().navigate("login");
+							} else {
+								self.getApp().notify({ message: $.parseJSON(error.xhr.responseText).error_message }, { type: "danger", delay: 1000 });
+							}
+						}
+						catch (err) {
+							// self.getApp().notify({ message: "Lưu thông tin không thành công" }, { type: "danger", delay: 1000 });
+						}
+					}
+				});
+
+			});
+			self.$el.find("#btn_review").unbind("click").bind("click", function () {
+				self.confirm_kehoach();
+			});
+			self.$el.find("#btn_approve").unbind("click").bind("click", function () {
+				self.confirm_kehoach();
+			});
+			self.$el.find("#btn_cancel").unbind("click").bind("click", function () {
+				self.cancel_kehoach();
+			});
+			
 
 		},
 		saveModel: function () {
