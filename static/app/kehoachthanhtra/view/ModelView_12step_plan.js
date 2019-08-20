@@ -567,9 +567,6 @@ define(function (require) {
 			var lapBienBanXuPhat = self.$el.find(".lap_bien_ban_xuphat")
 			var quyetDinhXuPhat = self.$el.find(".QuyetDinhXuPhat")
 			
-			
-			
-
 			lapBienBanXuPhat[0].onclick = clickk;
 			function clickk() {
 				self.model.set("vitriannutxuphat",0)
@@ -588,31 +585,32 @@ define(function (require) {
 				self.saveModel();
 			}
 
+			function hidexuphat(){
+				lapBienBanXuPhat.each(function(key,value){
+					lapBienBanXuPhat.attr("style","display:none");
+				})
+			}
+			function hidemucxuphat(x){
+				for(var i = 0; i<quyetDinhXuPhat.length;i++){
+					if(i != x){
+						quyetDinhXuPhat[i].style.display = 'none';
+						console.log(i);
+					}
+				}
+			}
+
 			var x =self.model.get("vitriannutxuphat");
 			if(x == 0){
-				quyetDinhXuPhat[1].style.display = 'none';
-				quyetDinhXuPhat[2].style.display = 'none';
-				lapBienBanXuPhat[1].style.display = 'none';
-				lapBienBanXuPhat[2].style.display = 'none';
-				lapBienBanXuPhat[0].style.display = 'none';
-
+				hidexuphat();
+				hidemucxuphat(x);
 			}
-			if(x == 1){
-				quyetDinhXuPhat[0].style.display = 'none';
-				quyetDinhXuPhat[2].style.display = 'none';
-				lapBienBanXuPhat[0].style.display = 'none';
-				lapBienBanXuPhat[1].style.display = 'none';
-
-				lapBienBanXuPhat[2].style.display = 'none';
+			if(x == 1){;
+				hidexuphat();
+				hidemucxuphat(x);
 			}
 			if(x == 2){
-				quyetDinhXuPhat[0].style.display = 'none';
-				quyetDinhXuPhat[1].style.display = 'none';
-				lapBienBanXuPhat[0].style.display = 'none';
-				lapBienBanXuPhat[1].style.display = 'none';
-				lapBienBanXuPhat[2].style.display = 'none';
-
-
+				hidexuphat();
+				hidemucxuphat(x);
 			}
 		},
 
