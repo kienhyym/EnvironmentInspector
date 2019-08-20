@@ -41,7 +41,7 @@ define(function (require) {
 						buttonClass: "btn-danger btn-sm",
 						label: "TRANSLATE:DELETE",
 						visible: function () {
-							return this.getApp().currentUser.hasRole("Admin");
+							return (this.getApp().currentUser.hasRole("CucTruong") && this.getApp().getRouter().getParam("id") !== null);
 						},
 						command: function () {
 							var self = this;
@@ -50,9 +50,18 @@ define(function (require) {
 									self.getApp().notify('Xoá dữ liệu thành công');
 									self.getApp().getRouter().navigate(self.collectionName + "/collection");
 								},
-								error: function (model, xhr, options) {
-									self.getApp().notify('Xoá dữ liệu không thành công!');
-
+								error: function (xhr, status, error) {
+									try {
+										if (($.parseJSON(error.xhr.responseText).error_code) === "SESSION_EXPIRED") {
+											self.getApp().notify("Hết phiên làm việc, vui lòng đăng nhập lại!");
+											self.getApp().getRouter().navigate("login");
+										} else {
+											self.getApp().notify({ message: $.parseJSON(error.xhr.responseText).error_message }, { type: "danger", delay: 1000 });
+										}
+									}
+									catch (err) {
+										self.getApp().notify({ message: "Xóa dữ liệu không thành công" }, { type: "danger", delay: 1000 });
+									}
 								}
 							});
 						}
@@ -123,6 +132,8 @@ define(function (require) {
 				self.model.save(null, {
 					success: function (model, respose, options) {
 						self.getApp().notify("Lưu dữ liệu thành công");
+						self.getApp().getRouter().navigate(self.collectionName + "/collection");
+
 					},
 					error: function (xhr, status, error) {
 						try {
