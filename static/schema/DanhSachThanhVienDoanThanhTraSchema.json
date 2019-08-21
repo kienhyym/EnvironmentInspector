@@ -1,0 +1,44 @@
+{
+    "created_at": {
+        "type": "number"
+    },
+    "created_by": {
+        "type": "string"
+    },
+    "updated_at": {
+        "type": "number"
+    },
+    "updated_by": {
+        "type": "string"
+    },
+    "deleted": {
+        "type": "boolean",
+        "default": false
+    },
+    "deleted_by": {
+        "type": "string"
+    },
+    "deleted_at": {
+        "type": "number"
+    },
+    "id": {
+        "type": "string",
+        "primary": true
+    },
+    "ten": {
+        "type": "string",
+        "length": 255
+    },
+    "donvi_id": {
+        "type": "string"
+    },
+    "kehoachthanhtra_id": {
+        "type": "string"
+    },
+    "donvi": {
+        "type": "dict"
+    },
+    "roles": {
+        "type": "list"
+    }
+}

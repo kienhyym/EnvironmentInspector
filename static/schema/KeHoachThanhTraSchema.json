@@ -345,5 +345,8 @@
     },
     "trangthai": {
         "type": "string"
+    },
+    "field_danhsachthanhviendoanthanhtra": {
+        "type": "list"
     }
 }

@@ -11,6 +11,7 @@ define(function (require) {
 	var ThanhVienThanhTraItemView = require('app/kehoachthanhtra/thanhvienthanhtra/ThanhVienThanhTraItem');
 	var CongViecThanhTraItemView = require('app/kehoachthanhtra/congviecthanhtra/CongViecThanhTraItemView');
 	var CongViecThanhTraThucHienItemView = require('app/kehoachthanhtra/congviecthanhtra/CongViecThanhTraThucHienItemView');
+	var DanhSachThanhVienDoanThanhTraItemView = require('app/kehoachthanhtra/view/DanhSachThanhVienDoanThanhTraView');
 
 
 	return Gonrin.ModelView.extend({
@@ -78,6 +79,19 @@ define(function (require) {
 				// 	service: {
 				// 		url: "/api/v1/upload/file",
 				// 	}
+				// },
+				// {
+				// 	field: "field_danhsachthanhviendoanthanhtra",
+				// 	uicontrol: false,
+				// 	itemView: DanhSachThanhVienDoanThanhTraItemView,
+				// 	tools: [{
+				// 		name: "create",
+				// 		type: "button",
+				// 		buttonClass: "btn btn-outline-secondary btn-fw btn-sm create-item",
+				// 		label: "<span class='fa fa-plus'></span>",
+				// 		command: "create"
+				// 	}],
+				// 	toolEl: "#add_row"
 				// },
 				{
 					field: "ngay_quyetdinh_thanhtra",
@@ -432,6 +446,9 @@ define(function (require) {
 			self.getDoanhNghiep();
 			self.bindEventSelect();
 			self.updateStepStatus();
+			self.$el.find(".linkDownload").bind('click', function () {
+				console.log("bbbbbbbbbbbbbbbbbbbbb",self.$el.find(".linkDownload"))
+				})
 
 			var id = this.getApp().getRouter().getParam("id");
 
@@ -497,10 +514,13 @@ define(function (require) {
 
 
 						self.applyBindings();
-						self.$el.find("#multiselect_donvidoanhnghiep").selectpicker('val', self.model.get("madoanhnghiep"));
+						
+						self.addRowThanhVienThanhTra();
+						self.renderThanhVienThanhTra();
+						self.LapBienBan();
+						// self.$el.find("#multiselect_donvidoanhnghiep").selectpicker('val', self.model.get("madoanhnghiep"));
 						self.updateStepStatus();
 						self.renderUpload();
-						self.LapBienBan();
 					},
 					error: function (xhr, status, error) {
 						try {
@@ -522,15 +542,71 @@ define(function (require) {
 			} else {
 
 				self.applyBindings();
+				
+				self.addRowThanhVienThanhTra();
+				self.renderThanhVienThanhTra();
 				self.bindEventGD1();
 			}
 
 
 		},
+
+		addRowThanhVienThanhTra: function () {
+			const self = this;
+			var id = self.model.get("id");
+			var containerEl = self.$el.find("#space_thanhvienthanhtra");
+			self.$el.find("#btn_add_thanhvienthanhtra").on("click", (eventClick) => {
+
+				var viewThanhVienThanhTra = new DanhSachThanhVienDoanThanhTraItemView();
+				viewThanhVienThanhTra.model.set("kehoachthanhtra_id",id);
+				viewThanhVienThanhTra.model.save(null, {
+					success: (model, response, options) => {
+						// console.info("response", response)
+						viewThanhVienThanhTra.model.set(response);
+
+						viewThanhVienThanhTra.render();
+						$(viewThanhVienThanhTra.el).hide().appendTo(containerEl).fadeIn();
+					}, error: (error) => {
+						console.log("error", error);
+					}
+
+				});
+				self.getApp().router.refresh();
+
+			});
+
+		},
+
+		renderThanhVienThanhTra: function () {
+			const self = this;
+
+			var danhSachThanhVienDoanThanhTra = self.model.get("field_danhsachthanhviendoanthanhtra");
+			var containerEl = self.$el.find("#space_thanhvienthanhtra");
+
+			danhSachThanhVienDoanThanhTra.forEach((item, idx) => {
+				var viewDanhSachThanhVienDoanThanhTra= new DanhSachThanhVienDoanThanhTraItemView();
+				viewDanhSachThanhVienDoanThanhTra.model.set(item);
+				viewDanhSachThanhVienDoanThanhTra.render();
+
+				$(viewDanhSachThanhVienDoanThanhTra.el).hide().appendTo(containerEl).fadeIn();
+				viewDanhSachThanhVienDoanThanhTra.model.on("change", (change) => {
+					console.log("change", change);
+					var danhSachDoanThanhTra =  self.model.get("field_danhsachthanhviendoanthanhtra");
+					if (change.attributes) {
+						danhSachDoanThanhTra.forEach((item, idx) => {
+							if (item.id === change.attributes.id) {
+								danhSachDoanThanhTra[idx] = change.attributes;
+							}
+						});
+						self.model.set("field_danhsachthanhviendoanthanhtra", danhSachDoanThanhTra);
+
+					}
+				})
+			});
+		},
+
 		renderUpload() {
 			var self = this;
-
-
 			var keys = ["quyetdinh_thanhtra_attachment",
 				"quyetdinh_trungcau_giamdinh_attachment",
 				"vanban_kehoach_attachment",
@@ -639,11 +715,11 @@ define(function (require) {
 					self.getApp().notify("Vui lòng nhập ngày quyết định thanh tra");
 					return;
 				}
-				var danhsach_thanhvien = self.model.get("danhsach_thanhvien");
-				if (danhsach_thanhvien === null || danhsach_thanhvien === "" || danhsach_thanhvien.length == 0) {
-					self.getApp().notify("Vui lòng nhập danh sách đoàn thanh tra");
-					return;
-				}
+				// var danhsach_thanhvien = self.model.get("danhsach_thanhvien");
+				// if (danhsach_thanhvien === null || danhsach_thanhvien === "" || danhsach_thanhvien.length == 0) {
+				// 	self.getApp().notify("Vui lòng nhập danh sách đoàn thanh tra");
+				// 	return;
+				// }
 				self.saveModel();
 			});
 
