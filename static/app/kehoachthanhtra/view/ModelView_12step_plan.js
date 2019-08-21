@@ -607,7 +607,8 @@ define(function (require) {
 
 		renderUpload() {
 			var self = this;
-			var keys = ["quyetdinh_thanhtra_attachment",
+			var keys = [
+				"quyetdinh_thanhtra_attachment",
 				"quyetdinh_trungcau_giamdinh_attachment",
 				"vanban_kehoach_attachment",
 				"congvan_yeucau_doituong_baocao_attachment",
@@ -616,11 +617,15 @@ define(function (require) {
 				"congvan_giaitrinh_cua_doituong_thanhtra_attachment",
 				"tham_khao_y_kien_attachment",
 				"vanban_duthao_duthao_lan2_attachment",
+				"bienban_hanhchinh_attachment",
+				"quyetdinh_xuphat_attachment",
 				"ketluan_thanhtra_attachment",
 				"bienban_hanhchinh_attachment",
 				"quyetdinh_xuphat_attachment",
 				"bienban_congbo_ketluan_attachment",
 				"congkhai_ketluan_image_attachment",
+				"bienban_hanhchinh_attachment",
+				"quyetdinh_xuphat_attachment",
 				"baocao_doituong_thuchien_attachment",
 			];
 			$.each(keys, function (i, key) {
@@ -631,12 +636,23 @@ define(function (require) {
 					linkDownload[i].href = attr_value;
 					self.$el.find("#upload-" + key).hide();
 					self.$el.find("#download-" + key).show();
+					
 				} else {
 					// console.log(key, attr_value);
 					self.$el.find("#upload-" + key).show();
 					self.$el.find("#download-" + key).hide();
+					
 				}
+
 			})
+
+			var linkDownload = self.$el.find(".linkDownload");
+			for(var i = 0 ; i < linkDownload.length; i++){
+				if(linkDownload[i].href === '' ){
+					linkDownload[i].style.display = "none";
+				}
+			}
+			
 		},
 		LapBienBan: function () {
 			var self = this;
