@@ -720,7 +720,24 @@ define(function (require) {
 			var btnSave = self.$el.find(".btn-save")
 			self.$el.find(".btn-end-exit").unbind('click').bind('click', function () {
 				self.model.set("ketthucthanhtra",1)
-				self.saveModel();
+				self.model.save(null, {
+					success: function (model, response, options) {
+						self.getApp().notify("Đã kết thúc thanh tra");
+					},
+					error: function (xhr, status, error) {
+						try {
+							if (($.parseJSON(error.xhr.responseText).error_code) === "SESSION_EXPIRED") {
+								self.getApp().notify("Hết phiên làm việc, vui lòng đăng nhập lại!");
+								self.getApp().getRouter().navigate("login");
+							} else {
+								self.getApp().notify({ message: $.parseJSON(error.xhr.responseText).error_message }, { type: "danger", delay: 1000 });
+							}
+						}
+						catch (err) {
+							self.getApp().notify({ message: "kêt thúc thanh tra không thành công" }, { type: "danger", delay: 1000 });
+						}
+					}
+				});
 				
 			})
 			var ketThucThanhTraTrangThai = self.model.get("ketthucthanhtra");
