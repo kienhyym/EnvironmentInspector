@@ -301,7 +301,7 @@ class KeHoachThanhTra(CommonModel):
     ngay_bangiao_luutru = db.Column(BigInteger())
     
     
-
+    ketthucthanhtra = db.Column(Integer)
     trangthai = db.Column(String)
     field_danhsachthanhviendoanthanhtra = db.relationship('DanhSachThanhVienDoanThanhTra', cascade="all, delete-orphan")
 

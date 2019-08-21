@@ -343,6 +343,9 @@
     "ngay_bangiao_luutru": {
         "type": "number"
     },
+    "ketthucthanhtra": {
+        "type": "number"
+    },
     "trangthai": {
         "type": "string"
     },

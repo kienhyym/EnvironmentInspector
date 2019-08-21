@@ -518,6 +518,7 @@ define(function (require) {
 						self.addRowThanhVienThanhTra();
 						self.renderThanhVienThanhTra();
 						self.LapBienBan();
+						self.ketthuc_thanhtra();
 						// self.$el.find("#multiselect_donvidoanhnghiep").selectpicker('val', self.model.get("madoanhnghiep"));
 						self.updateStepStatus();
 						self.renderUpload();
@@ -705,6 +706,128 @@ define(function (require) {
 				hidemucxuphat(x);
 			}
 		},
+
+
+
+
+		// ######   ####     ##  ####### 
+		// ##       ## ###   ##  ##   ###  
+		// ######   ##   ######  ##    ###
+		// ##       ##     ####  ##   ##
+		// ######   ##       ##  #####
+		ketthuc_thanhtra:function (){
+			var self = this;
+			var btnSave = self.$el.find(".btn-save")
+			self.$el.find(".btn-end-exit").unbind('click').bind('click', function () {
+				self.model.set("ketthucthanhtra",1)
+				self.saveModel();
+				
+			})
+			var ketThucThanhTraTrangThai = self.model.get("ketthucthanhtra");
+			if(ketThucThanhTraTrangThai != null){
+				btnSave.each(function () {
+					btnSave.hide();
+				})
+				self.$el.find(".notify-end").attr("style","display:block");
+			}
+		},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 		bindEventGD1: function () {
 			var self = this;
@@ -905,6 +1028,8 @@ define(function (require) {
 		},
 		saveModel: function () {
 			var self = this;
+			var kiemTraKetThucThanhTra = self.model.get("ketthucthanhtra");
+			if(kiemTraKetThucThanhTra != 1 ){
 			self.model.save(null, {
 				success: function (model, response, options) {
 					self.getApp().notify("Lưu thông tin thành công");
@@ -924,6 +1049,10 @@ define(function (require) {
 					}
 				}
 			});
+			}
+			else{
+				self.getApp().notify({ message: "Đã kết thúc thanh tra" }, { type: "danger", delay: 1000 });
+			}
 		},
 		renderMember_GD1: function (data) {
 			var self = this;
@@ -1462,7 +1591,9 @@ define(function (require) {
 			} else {
 				return false;
 			}
-		}
+		},
+		
+
 	});
 
 });
