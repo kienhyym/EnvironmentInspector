@@ -314,7 +314,7 @@
         "type": "number"
     },
     "congkhai_ketluan_link": {
-        "type": "number"
+        "type": "string"
     },
     "congkhai_ketluan_image_attachment": {
         "type": "string"
@@ -348,8 +348,5 @@
     },
     "trangthai": {
         "type": "string"
-    },
-    "field_danhsachthanhviendoanthanhtra": {
-        "type": "list"
     }
 }

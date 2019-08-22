@@ -51,9 +51,6 @@ roles_users = db.Table('roles_users',
     db.Column('user_id', UUID(as_uuid=True), db.ForeignKey('user.id', ondelete='cascade'), primary_key=True),
     db.Column('role_id', UUID(as_uuid=True), db.ForeignKey('role.id', onupdate='cascade'), primary_key=True))
 
-roles_danhsachthanhviendoanthanhtra = db.Table('roles_danhsachthanhviendoanthanhtra',
-    db.Column('danhsachthanhviendoanthanhtra_id', UUID(as_uuid=True), db.ForeignKey('danhsachthanhviendoanthanhtra.id', ondelete='cascade'), primary_key=True),
-    db.Column('role_id', UUID(as_uuid=True), db.ForeignKey('role.id', onupdate='cascade'), primary_key=True))
 
 
 class Role(CommonModel):
@@ -283,7 +280,7 @@ class KeHoachThanhTra(CommonModel):
     bienban_congbo_ketluan_attachment = db.Column(String)
     ngay_congkhai_ketluan_tai_doituong = db.Column(BigInteger())
     ngay_congkhai_ketluan_internet = db.Column(BigInteger())
-    congkhai_ketluan_link = db.Column(BigInteger())
+    congkhai_ketluan_link = db.Column(String)
     congkhai_ketluan_image_attachment = db.Column(String)
     
     
@@ -303,7 +300,6 @@ class KeHoachThanhTra(CommonModel):
     
     ketthucthanhtra = db.Column(Integer)
     trangthai = db.Column(String)
-    field_danhsachthanhviendoanthanhtra = db.relationship('DanhSachThanhVienDoanThanhTra', cascade="all, delete-orphan")
 
     
     
@@ -348,11 +344,3 @@ class NotifyUser(CommonModel):
     read_at = db.Column(BigInteger())
 
 
-class DanhSachThanhVienDoanThanhTra(CommonModel):
-    __tablename__ = 'danhsachthanhviendoanthanhtra'
-    id = db.Column(UUID(as_uuid=True), primary_key=True, default=default_uuid)
-    ten = db.Column(String(255))   
-    donvi_id = db.Column(UUID(as_uuid=True),db.ForeignKey('danhmucdoanhnghiep.id'), nullable=True)
-    donvi = db.relationship('DanhMucDoanhNghiep', viewonly=True)
-    roles = db.relationship('Role', secondary=roles_danhsachthanhviendoanthanhtra, cascade="save-update")
-    kehoachthanhtra_id = db.Column(UUID(as_uuid=True), ForeignKey('kehoachthanhtra.id'), nullable=True)

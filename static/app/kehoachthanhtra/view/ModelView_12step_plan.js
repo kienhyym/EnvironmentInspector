@@ -11,7 +11,6 @@ define(function (require) {
 	var ThanhVienThanhTraItemView = require('app/kehoachthanhtra/thanhvienthanhtra/ThanhVienThanhTraItem');
 	var CongViecThanhTraItemView = require('app/kehoachthanhtra/congviecthanhtra/CongViecThanhTraItemView');
 	var CongViecThanhTraThucHienItemView = require('app/kehoachthanhtra/congviecthanhtra/CongViecThanhTraThucHienItemView');
-	var DanhSachThanhVienDoanThanhTraItemView = require('app/kehoachthanhtra/view/DanhSachThanhVienDoanThanhTraView');
 
 
 	return Gonrin.ModelView.extend({
@@ -80,19 +79,7 @@ define(function (require) {
 				// 		url: "/api/v1/upload/file",
 				// 	}
 				// },
-				// {
-				// 	field: "field_danhsachthanhviendoanthanhtra",
-				// 	uicontrol: false,
-				// 	itemView: DanhSachThanhVienDoanThanhTraItemView,
-				// 	tools: [{
-				// 		name: "create",
-				// 		type: "button",
-				// 		buttonClass: "btn btn-outline-secondary btn-fw btn-sm create-item",
-				// 		label: "<span class='fa fa-plus'></span>",
-				// 		command: "create"
-				// 	}],
-				// 	toolEl: "#add_row"
-				// },
+			
 				{
 					field: "ngay_quyetdinh_thanhtra",
 					uicontrol: "datetimepicker",
@@ -196,6 +183,18 @@ define(function (require) {
 
 				{
 					field: "ngay_congkhai_ketluan_tai_doituong",
+					uicontrol: "datetimepicker",
+					textFormat: "DD/MM/YYYY",
+					extraFormats: ["DDMMYYYY"],
+					parseInputDate: function (val) {
+						return moment.unix(val)
+					},
+					parseOutputDate: function (date) {
+						return date.unix()
+					}
+				},
+				{
+					field: "ngay_congkhai_ketluan_internet",
 					uicontrol: "datetimepicker",
 					textFormat: "DD/MM/YYYY",
 					extraFormats: ["DDMMYYYY"],
@@ -515,8 +514,7 @@ define(function (require) {
 
 						self.applyBindings();
 						
-						self.addRowThanhVienThanhTra();
-						self.renderThanhVienThanhTra();
+					
 						self.LapBienBan();
 						self.ketthuc_thanhtra();
 						// self.$el.find("#multiselect_donvidoanhnghiep").selectpicker('val', self.model.get("madoanhnghiep"));
@@ -544,67 +542,13 @@ define(function (require) {
 
 				self.applyBindings();
 				
-				self.addRowThanhVienThanhTra();
-				self.renderThanhVienThanhTra();
+			
 				self.bindEventGD1();
 			}
 
 
 		},
 
-		addRowThanhVienThanhTra: function () {
-			const self = this;
-			var id = self.model.get("id");
-			var containerEl = self.$el.find("#space_thanhvienthanhtra");
-			self.$el.find("#btn_add_thanhvienthanhtra").on("click", (eventClick) => {
-
-				var viewThanhVienThanhTra = new DanhSachThanhVienDoanThanhTraItemView();
-				viewThanhVienThanhTra.model.set("kehoachthanhtra_id",id);
-				viewThanhVienThanhTra.model.save(null, {
-					success: (model, response, options) => {
-						// console.info("response", response)
-						viewThanhVienThanhTra.model.set(response);
-
-						viewThanhVienThanhTra.render();
-						$(viewThanhVienThanhTra.el).hide().appendTo(containerEl).fadeIn();
-					}, error: (error) => {
-						console.log("error", error);
-					}
-
-				});
-				self.getApp().router.refresh();
-
-			});
-
-		},
-
-		renderThanhVienThanhTra: function () {
-			const self = this;
-
-			var danhSachThanhVienDoanThanhTra = self.model.get("field_danhsachthanhviendoanthanhtra");
-			var containerEl = self.$el.find("#space_thanhvienthanhtra");
-
-			danhSachThanhVienDoanThanhTra.forEach((item, idx) => {
-				var viewDanhSachThanhVienDoanThanhTra= new DanhSachThanhVienDoanThanhTraItemView();
-				viewDanhSachThanhVienDoanThanhTra.model.set(item);
-				viewDanhSachThanhVienDoanThanhTra.render();
-
-				$(viewDanhSachThanhVienDoanThanhTra.el).hide().appendTo(containerEl).fadeIn();
-				viewDanhSachThanhVienDoanThanhTra.model.on("change", (change) => {
-					console.log("change", change);
-					var danhSachDoanThanhTra =  self.model.get("field_danhsachthanhviendoanthanhtra");
-					if (change.attributes) {
-						danhSachDoanThanhTra.forEach((item, idx) => {
-							if (item.id === change.attributes.id) {
-								danhSachDoanThanhTra[idx] = change.attributes;
-							}
-						});
-						self.model.set("field_danhsachthanhviendoanthanhtra", danhSachDoanThanhTra);
-
-					}
-				})
-			});
-		},
 
 		renderUpload() {
 			var self = this;
@@ -723,6 +667,8 @@ define(function (require) {
 				self.model.save(null, {
 					success: function (model, response, options) {
 						self.getApp().notify("Đã kết thúc thanh tra");
+						self.getApp().router.refresh();
+
 					},
 					error: function (xhr, status, error) {
 						try {
