@@ -40,6 +40,7 @@ require(['jquery', 'gonrin', 'app/router', 'app/nav/NavbarView', 'text!app/base/
 			}
 		});
 		window.lodash = lodash;
+		
 		var app = new Gonrin.Application({
 			serviceURL: location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : ''),
 			router: new Router(),

@@ -234,7 +234,11 @@ define(function (require) {
 						template: function (rowData) {
 							if (!!rowData && rowData.ngaythanhtra) {
 								var template_helper = new TemplateHelper();
-								return template_helper.datetimeFormat(rowData.ngaythanhtra, "DD/MM/YYYY");
+								var utcTolocal = function (times, format) {
+									return moment(times * 1000).local().format(format);
+								}
+								// return template_helper.datetimeFormat(rowData.ngaythanhtra, "DD/MM/YYYY");
+								return utcTolocal(rowData.ngaythanhtra, "DD/MM/YYYY");
 							}
 							return "";
 						},

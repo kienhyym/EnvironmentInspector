@@ -63,6 +63,7 @@ define(function (require) {
 			fields: [
 				{
 					field: "ngaysoanthao",
+					uicontrol: "datetimepicker",
 					textFormat: "DD/MM/YYYY",
 					extraFormats: ["DDMMYYYY"],
 					parseInputDate: function (val) {
@@ -74,6 +75,7 @@ define(function (require) {
 				},
 				{
 					field: "ngaypheduyet",
+					uicontrol: "datetimepicker",
 					textFormat: "DD/MM/YYYY",
 					extraFormats: ["DDMMYYYY"],
 					parseInputDate: function (val) {
@@ -85,6 +87,19 @@ define(function (require) {
 				},
 				{
 					field: "ngaythanhtra",
+					uicontrol: "datetimepicker",
+					textFormat: "DD/MM/YYYY",
+					extraFormats: ["DDMMYYYY"],
+					parseInputDate: function (val) {
+						return moment.unix(val)
+					},
+					parseOutputDate: function (date) {
+						return date.unix()
+					}
+				},
+				{
+					field: "ngayketthuc",
+					uicontrol: "datetimepicker",
 					textFormat: "DD/MM/YYYY",
 					extraFormats: ["DDMMYYYY"],
 					parseInputDate: function (val) {

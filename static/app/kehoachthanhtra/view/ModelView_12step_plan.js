@@ -541,8 +541,6 @@ define(function (require) {
 			} else {
 
 				self.applyBindings();
-				
-			
 				self.bindEventGD1();
 			}
 
