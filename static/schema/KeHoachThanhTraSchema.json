@@ -122,7 +122,7 @@
         "type": "string"
     },
     "danhsach_thanhvien": {
-        "type": "json"
+        "type": "list"
     },
     "donvi_trungcau_giamdinh": {
         "type": "string"

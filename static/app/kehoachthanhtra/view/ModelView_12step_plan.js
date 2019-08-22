@@ -410,6 +410,21 @@ define(function (require) {
 					toolEl: "#btn-add-task-gd3"
 				},
 				{
+					field: "danhsach_thanhvien",
+					uicontrol: false,
+					itemView: ThanhVienThanhTraItemView,
+					tools: [
+						{
+							name: "create",
+							type: "button",
+							buttonClass: "btn btn-primary",
+							label: "Thêm hạng mục",
+							command: "create"
+						},
+					],
+					toolEl: "#btn-add-member"
+				},
+				{
 					field: "danhsach_congviec_thuchien",
 					uicontrol: false,
 					itemView: CongViecThanhTraThucHienItemView,
@@ -445,9 +460,7 @@ define(function (require) {
 			self.getDoanhNghiep();
 			self.bindEventSelect();
 			self.updateStepStatus();
-			self.$el.find(".linkDownload").bind('click', function () {
-				console.log("bbbbbbbbbbbbbbbbbbbbb",self.$el.find(".linkDownload"))
-				})
+			
 
 			var id = this.getApp().getRouter().getParam("id");
 
@@ -470,13 +483,13 @@ define(function (require) {
 						for (var i = 0; i < danhsachfile.length; i++) {
 							self.render_list_file(danhsachfile[i], self);
 						}
-						var danhsach_thanhvien = self.model.get("danhsach_thanhvien");
-						if (danhsach_thanhvien === null) {
-							danhsach_thanhvien = [];
-						}
-						$.each(danhsach_thanhvien, function (idx, value) {
-							self.renderMember_GD1(value);
-						});
+						// var danhsach_thanhvien = self.model.get("danhsach_thanhvien");
+						// if (danhsach_thanhvien === null) {
+						// 	danhsach_thanhvien = [];
+						// }
+						// $.each(danhsach_thanhvien, function (idx, value) {
+						// 	self.renderMember_GD1(value);
+						// });
 
 						//danh sach conviec theo doi
 
@@ -517,7 +530,6 @@ define(function (require) {
 					
 						self.LapBienBan();
 						self.ketthuc_thanhtra();
-						// self.$el.find("#multiselect_donvidoanhnghiep").selectpicker('val', self.model.get("madoanhnghiep"));
 						self.updateStepStatus();
 						self.renderUpload();
 					},
@@ -793,7 +805,9 @@ define(function (require) {
 		bindEventGD1: function () {
 			var self = this;
 			self.$el.find(".btn-add-member").unbind('click').bind('click', function () {
-				var data_default = { "id": gonrin.uuid(), "hoten": "", "vaitro": null };
+				var memberView = new ThanhVienThanhTraItemView();
+				
+				var data_default = { "id": gonrin.uuid(), "hoten": "","donvicongtac":null, "vaitro": null };
 				var danhsach_thanhvien = self.model.get("danhsach_thanhvien");
 				if (danhsach_thanhvien === null || danhsach_thanhvien.length === 0) {
 					danhsach_thanhvien = [];
@@ -803,6 +817,8 @@ define(function (require) {
 				self.applyBinding("danhsach_thanhvien");
 				self.renderMember_GD1(data_default);
 			});
+
+
 			self.$el.find(".btn-save-gd1").unbind('click').bind('click', function () {
 				var soquyetdinh = self.model.get("soquyetdinh");
 				if (soquyetdinh === null || soquyetdinh === "") {
@@ -1028,33 +1044,33 @@ define(function (require) {
 			memberView.render();
 			// console.log("memberView====", memberView.$el);
 			self.$el.find("#gd1-danhsachthanhvien").append(memberView.$el);
-			memberView.on("change", function (event) {
-				var ds_member = self.model.get("danhsach_thanhvien");
-				if (ds_member === null) {
-					ds_member = [];
-					ds_member.push(event.data)
-				}
-				for (var i = 0; i < ds_member.length; i++) {
-					if (ds_member[i].id === event.oldData.id) {
-						ds_member[i] = event.data;
-						break;
-					}
-				}
-				self.model.set("danhsach_thanhvien", ds_member);
-				self.applyBinding("danhsach_thanhvien");
-			});
-			memberView.$el.find("#del_member").unbind("click").bind("click", function () {
-				var ds_member = self.model.get("danhsach_thanhvien");
-				for (var i = 0; i < ds_member.length; i++) {
-					if (ds_member[i].id === memberView.model.get("id")) {
-						ds_member.splice(i, 1);
-					}
-				}
-				self.model.set("danhsach_thanhvien", ds_member);
-				self.applyBinding("danhsach_thanhvien");
-				memberView.destroy();
-				memberView.remove();
-			});
+			// memberView.on("change", function (event) {
+			// 	var ds_member = self.model.get("danhsach_thanhvien");
+			// 	if (ds_member === null) {
+			// 		ds_member = [];
+			// 		ds_member.push(event.data)
+			// 	}
+			// 	for (var i = 0; i < ds_member.length; i++) {
+			// 		if (ds_member[i].id === event.oldData.id) {
+			// 			ds_member[i] = event.data;
+			// 			break;
+			// 		}
+			// 	}
+			// 	self.model.set("danhsach_thanhvien", ds_member);
+			// 	self.applyBinding("danhsach_thanhvien");
+			// });
+			// memberView.$el.find("#del_member").unbind("click").bind("click", function () {
+			// 	var ds_member = self.model.get("danhsach_thanhvien");
+			// 	for (var i = 0; i < ds_member.length; i++) {
+			// 		if (ds_member[i].id === memberView.model.get("id")) {
+			// 			ds_member.splice(i, 1);
+			// 		}
+			// 	}
+			// 	self.model.set("danhsach_thanhvien", ds_member);
+			// 	self.applyBinding("danhsach_thanhvien");
+			// 	memberView.destroy();
+			// 	memberView.remove();
+			// });
 
 
 		},
