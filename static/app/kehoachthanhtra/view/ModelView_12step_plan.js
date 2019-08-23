@@ -79,7 +79,7 @@ define(function (require) {
 				// 		url: "/api/v1/upload/file",
 				// 	}
 				// },
-			
+
 				{
 					field: "ngay_quyetdinh_thanhtra",
 					uicontrol: "datetimepicker",
@@ -409,21 +409,21 @@ define(function (require) {
 					],
 					toolEl: "#btn-add-task-gd3"
 				},
-				{
-					field: "danhsach_thanhvien",
-					uicontrol: false,
-					itemView: ThanhVienThanhTraItemView,
-					tools: [
-						{
-							name: "create",
-							type: "button",
-							buttonClass: "btn btn-primary",
-							label: "Thêm hạng mục",
-							command: "create"
-						},
-					],
-					toolEl: "#btn-add-member"
-				},
+				// {
+				// 	field: "danhsach_thanhvien",
+				// 	uicontrol: false,
+				// 	itemView: ThanhVienThanhTraItemView,
+				// 	tools: [
+				// 		{
+				// 			name: "create",
+				// 			type: "button",
+				// 			buttonClass: "btn btn-primary",
+				// 			label: "Thêm hạng mục",
+				// 			command: "create"
+				// 		},
+				// 	],
+				// 	toolEl: "#btn-add-member"
+				// },
 				{
 					field: "danhsach_congviec_thuchien",
 					uicontrol: false,
@@ -457,10 +457,11 @@ define(function (require) {
 		},
 		render: function () {
 			var self = this;
+			
 			self.getDoanhNghiep();
 			self.bindEventSelect();
 			self.updateStepStatus();
-			
+
 
 			var id = this.getApp().getRouter().getParam("id");
 
@@ -483,13 +484,13 @@ define(function (require) {
 						for (var i = 0; i < danhsachfile.length; i++) {
 							self.render_list_file(danhsachfile[i], self);
 						}
-						// var danhsach_thanhvien = self.model.get("danhsach_thanhvien");
-						// if (danhsach_thanhvien === null) {
-						// 	danhsach_thanhvien = [];
-						// }
-						// $.each(danhsach_thanhvien, function (idx, value) {
-						// 	self.renderMember_GD1(value);
-						// });
+						var danhsach_thanhvien = self.model.get("danhsach_thanhvien");
+						if (danhsach_thanhvien === null) {
+							danhsach_thanhvien = [];
+						}
+						$.each(danhsach_thanhvien, function (idx, value) {
+							self.renderMember_GD1(value);
+						});
 
 						//danh sach conviec theo doi
 
@@ -526,11 +527,12 @@ define(function (require) {
 
 
 						self.applyBindings();
-						
-					
+
+
 						self.LapBienBan();
 						self.ketthuc_thanhtra();
 						self.updateStepStatus();
+						self.hoso_luutru();
 						self.renderUpload();
 					},
 					error: function (xhr, status, error) {
@@ -591,71 +593,106 @@ define(function (require) {
 					linkDownload[i].href = attr_value;
 					self.$el.find("#upload-" + key).hide();
 					self.$el.find("#download-" + key).show();
-					
+
 				} else {
 					// console.log(key, attr_value);
 					self.$el.find("#upload-" + key).show();
 					self.$el.find("#download-" + key).hide();
-					
+
 				}
 
 			})
 
 			var linkDownload = self.$el.find(".linkDownload");
-			for(var i = 0 ; i < linkDownload.length; i++){
-				if(linkDownload[i].href === '' ){
+			var textDownload = self.$el.find(".textDownload");
+			var link = self.$el.find(".linkdownload_and_button");
+			var hoso = self.$el.find(".danhsachhoso_bangiao");
+			var arr = [];
+
+			for (var i = 0; i < linkDownload.length; i++) {
+				if (linkDownload[i].href === '') {
 					linkDownload[i].style.display = "none";
 				}
+				else {
+					arr.push(linkDownload[i].href)
+				}
+
 			}
+		
+			let ans = deduplicate(arr);
 			
+			function deduplicate(arr) {
+				let isExist = (arr, x) => {
+					for (let i = 0; i < arr.length; i++) {
+						if (arr[i] === x) return true;
+					}
+					return false;
+				}
+
+				let ans = [];
+				arr.forEach(element => {
+					if (!isExist(ans, element)) ans.push(element);
+				});
+				return ans;
+			}
+
+			for(var i = 0;i<ans.length ; i++){
+				hoso.after("<span>&nbsp;&nbsp;"+ans[i].slice(35)+"</span><a href='"+ans[i]+"'>download</a><br>")
+			
+			}
+
 		},
+
 		LapBienBan: function () {
 			var self = this;
 			var lapBienBanXuPhat = self.$el.find(".lap_bien_ban_xuphat")
 			var quyetDinhXuPhat = self.$el.find(".QuyetDinhXuPhat")
-			
+
 			lapBienBanXuPhat[0].onclick = clickk;
 			function clickk() {
-				self.model.set("vitriannutxuphat",0)
-				self.saveModel();	
-				
+				self.model.set("vitriannutxuphat", 0)
+				self.saveModel();
+
+
 			}
 			lapBienBanXuPhat[1].onclick = clickk2;
 			function clickk2() {
-				self.model.set("vitriannutxuphat",1)
+				self.model.set("vitriannutxuphat", 1)
 				self.saveModel();
 			}
 
 			lapBienBanXuPhat[2].onclick = clickk3;
 			function clickk3() {
-				self.model.set("vitriannutxuphat",2)
+				self.model.set("vitriannutxuphat", 2)
 				self.saveModel();
 			}
 
-			function hidexuphat(){
-				lapBienBanXuPhat.each(function(key,value){
-					lapBienBanXuPhat.attr("style","display:none");
+			function hidexuphat() {
+				lapBienBanXuPhat.each(function (key, value) {
+					lapBienBanXuPhat.attr("style", "display:none");
 				})
 			}
-			function hidemucxuphat(x){
-				for(var i = 0; i<quyetDinhXuPhat.length;i++){
-					if(i != x){
+			function hidemucxuphat(x) {
+				for (var i = 0; i < quyetDinhXuPhat.length; i++) {
+					if (i != x) {
 						quyetDinhXuPhat[i].style.display = 'none';
 						console.log(i);
 					}
 				}
 			}
 
-			var x =self.model.get("vitriannutxuphat");
-			if(x == 0){
+			var x = self.model.get("vitriannutxuphat");
+			if (x == 0) {
+				hidexuphat();
+				hidemucxuphat(x);
+
+			}
+			if (x == 1) {
+				;
 				hidexuphat();
 				hidemucxuphat(x);
 			}
-			if(x == 1){;
-				hidexuphat();
-				hidemucxuphat(x);
-			}
-			if(x == 2){
+			if (x == 2) {
 				hidexuphat();
 				hidemucxuphat(x);
 			}
@@ -669,42 +706,72 @@ define(function (require) {
 		// ######   ##   ######  ##    ###
 		// ##       ##     ####  ##   ##
 		// ######   ##       ##  #####
-		ketthuc_thanhtra:function (){
+		ketthuc_thanhtra: function () {
 			var self = this;
 			var btnSave = self.$el.find(".btn-save")
-			self.$el.find(".btn-end-exit").unbind('click').bind('click', function () {
-				self.model.set("ketthucthanhtra",1)
-				self.model.save(null, {
-					success: function (model, response, options) {
-						self.getApp().notify("Đã kết thúc thanh tra");
-						self.getApp().router.refresh();
 
-					},
-					error: function (xhr, status, error) {
-						try {
-							if (($.parseJSON(error.xhr.responseText).error_code) === "SESSION_EXPIRED") {
-								self.getApp().notify("Hết phiên làm việc, vui lòng đăng nhập lại!");
-								self.getApp().getRouter().navigate("login");
-							} else {
-								self.getApp().notify({ message: $.parseJSON(error.xhr.responseText).error_message }, { type: "danger", delay: 1000 });
+			var btnYesKetThuc = self.$el.find("#yes-ketthuc")
+			var btnNoKetThuc = self.$el.find("#no-ketthuc")
+			var thongbaoketthuc = self.$el.find(".notify-ketthuc-thanhtra")
+			self.$el.find(".btn-end-exit").unbind('click').bind('click', function () {
+				self.$el.find(".content_14step").css("opacity", "0.33333")
+				thongbaoketthuc.show();
+				btnYesKetThuc.unbind('click').bind('click', function () {
+					thongbaoketthuc.hide();
+					self.$el.find(".content_14step").css("opacity", "1")
+					self.model.set("ketthucthanhtra", 1)
+					self.model.save(null, {
+						success: function (model, response, options) {
+							self.getApp().notify("Đã kết thúc thanh tra");
+							self.getApp().router.refresh();
+
+
+						},
+						error: function (xhr, status, error) {
+							try {
+								if (($.parseJSON(error.xhr.responseText).error_code) === "SESSION_EXPIRED") {
+									self.getApp().notify("Hết phiên làm việc, vui lòng đăng nhập lại!");
+									self.getApp().getRouter().navigate("login");
+								} else {
+									self.getApp().notify({ message: $.parseJSON(error.xhr.responseText).error_message }, { type: "danger", delay: 1000 });
+								}
+							}
+							catch (err) {
+								self.getApp().notify({ message: "kêt thúc thanh tra không thành công" }, { type: "danger", delay: 1000 });
 							}
 						}
-						catch (err) {
-							self.getApp().notify({ message: "kêt thúc thanh tra không thành công" }, { type: "danger", delay: 1000 });
-						}
-					}
+					});
+					Backbone.history.history.back();
 				});
-				
+				btnNoKetThuc.unbind('click').bind('click', function () {
+					thongbaoketthuc.hide();
+					self.$el.find(".content_14step").css("opacity", "1");
+					// self.getApp().router.refresh();
+					Backbone.history.history.back();
+					// console.log('xxxxxxxxxxxxxxxxxxxxx',location.href)
+
+					// self.getApp().getRouter().navigate(location.href)
+
+					// console.log('xxxxxxxxxxxxxxxxxxxxx',location.href)
+				})
+
 			})
 			var ketThucThanhTraTrangThai = self.model.get("ketthucthanhtra");
-			if(ketThucThanhTraTrangThai != null){
+			if (ketThucThanhTraTrangThai != null) {
 				btnSave.each(function () {
 					btnSave.hide();
 				})
-				self.$el.find(".notify-end").attr("style","display:block");
+				self.$el.find(".notify-end").attr("style", "display:block");
 			}
+
 		},
 
+
+		hoso_luutru: function () {
+			var self = this
+
+			self.$el.find("#danhsach_hoso_luutru").append("")
+		},
 
 
 
@@ -806,8 +873,8 @@ define(function (require) {
 			var self = this;
 			self.$el.find(".btn-add-member").unbind('click').bind('click', function () {
 				var memberView = new ThanhVienThanhTraItemView();
-				
-				var data_default = { "id": gonrin.uuid(), "hoten": "","donvicongtac":null, "vaitro": null };
+
+				var data_default = { "id": gonrin.uuid(), "hoten": "", "donvicongtac": null, "vaitro": null };
 				var danhsach_thanhvien = self.model.get("danhsach_thanhvien");
 				if (danhsach_thanhvien === null || danhsach_thanhvien.length === 0) {
 					danhsach_thanhvien = [];
@@ -1006,28 +1073,28 @@ define(function (require) {
 		saveModel: function () {
 			var self = this;
 			var kiemTraKetThucThanhTra = self.model.get("ketthucthanhtra");
-			if(kiemTraKetThucThanhTra != 1 ){
-			self.model.save(null, {
-				success: function (model, response, options) {
-					self.getApp().notify("Lưu thông tin thành công");
-					self.getApp().router.refresh();
-				},
-				error: function (xhr, status, error) {
-					try {
-						if (($.parseJSON(error.xhr.responseText).error_code) === "SESSION_EXPIRED") {
-							self.getApp().notify("Hết phiên làm việc, vui lòng đăng nhập lại!");
-							self.getApp().getRouter().navigate("login");
-						} else {
-							self.getApp().notify({ message: $.parseJSON(error.xhr.responseText).error_message }, { type: "danger", delay: 1000 });
+			if (kiemTraKetThucThanhTra != 1) {
+				self.model.save(null, {
+					success: function (model, response, options) {
+						self.getApp().notify("Lưu thông tin thành công");
+						self.getApp().router.refresh();
+					},
+					error: function (xhr, status, error) {
+						try {
+							if (($.parseJSON(error.xhr.responseText).error_code) === "SESSION_EXPIRED") {
+								self.getApp().notify("Hết phiên làm việc, vui lòng đăng nhập lại!");
+								self.getApp().getRouter().navigate("login");
+							} else {
+								self.getApp().notify({ message: $.parseJSON(error.xhr.responseText).error_message }, { type: "danger", delay: 1000 });
+							}
+						}
+						catch (err) {
+							self.getApp().notify({ message: "Lưu thông tin không thành công" }, { type: "danger", delay: 1000 });
 						}
 					}
-					catch (err) {
-						self.getApp().notify({ message: "Lưu thông tin không thành công" }, { type: "danger", delay: 1000 });
-					}
-				}
-			});
+				});
 			}
-			else{
+			else {
 				self.getApp().notify({ message: "Đã kết thúc thanh tra" }, { type: "danger", delay: 1000 });
 			}
 		},
@@ -1044,33 +1111,33 @@ define(function (require) {
 			memberView.render();
 			// console.log("memberView====", memberView.$el);
 			self.$el.find("#gd1-danhsachthanhvien").append(memberView.$el);
-			// memberView.on("change", function (event) {
-			// 	var ds_member = self.model.get("danhsach_thanhvien");
-			// 	if (ds_member === null) {
-			// 		ds_member = [];
-			// 		ds_member.push(event.data)
-			// 	}
-			// 	for (var i = 0; i < ds_member.length; i++) {
-			// 		if (ds_member[i].id === event.oldData.id) {
-			// 			ds_member[i] = event.data;
-			// 			break;
-			// 		}
-			// 	}
-			// 	self.model.set("danhsach_thanhvien", ds_member);
-			// 	self.applyBinding("danhsach_thanhvien");
-			// });
-			// memberView.$el.find("#del_member").unbind("click").bind("click", function () {
-			// 	var ds_member = self.model.get("danhsach_thanhvien");
-			// 	for (var i = 0; i < ds_member.length; i++) {
-			// 		if (ds_member[i].id === memberView.model.get("id")) {
-			// 			ds_member.splice(i, 1);
-			// 		}
-			// 	}
-			// 	self.model.set("danhsach_thanhvien", ds_member);
-			// 	self.applyBinding("danhsach_thanhvien");
-			// 	memberView.destroy();
-			// 	memberView.remove();
-			// });
+			memberView.on("change", function (event) {
+				var ds_member = self.model.get("danhsach_thanhvien");
+				if (ds_member === null) {
+					ds_member = [];
+					ds_member.push(event.data)
+				}
+				for (var i = 0; i < ds_member.length; i++) {
+					if (ds_member[i].id === event.oldData.id) {
+						ds_member[i] = event.data;
+						break;
+					}
+				}
+				self.model.set("danhsach_thanhvien", ds_member);
+				self.applyBinding("danhsach_thanhvien");
+			});
+			memberView.$el.find("#del_member").unbind("click").bind("click", function () {
+				var ds_member = self.model.get("danhsach_thanhvien");
+				for (var i = 0; i < ds_member.length; i++) {
+					if (ds_member[i].id === memberView.model.get("id")) {
+						ds_member.splice(i, 1);
+					}
+				}
+				self.model.set("danhsach_thanhvien", ds_member);
+				self.applyBinding("danhsach_thanhvien");
+				memberView.destroy();
+				memberView.remove();
+			});
 
 
 		},
@@ -1346,6 +1413,8 @@ define(function (require) {
 			self.$el.find("#btn_cancel").unbind("click").bind("click", function () {
 				self.cancel_kehoach();
 			});
+
+
 			self.$el.find(".upload_files").on("change", function () {
 				var http = new XMLHttpRequest();
 				var fd = new FormData();
@@ -1569,7 +1638,7 @@ define(function (require) {
 				return false;
 			}
 		},
-		
+
 
 	});
 

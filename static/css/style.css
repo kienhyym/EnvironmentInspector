@@ -1,6 +1,16 @@
 body {
   font-size: .875rem;
 }
+.notify-ketthuc-thanhtra{
+  position: fixed;
+  left: 45%;
+  top: 10rem;
+  display: none;
+  z-index: 999999999;
+}
+
+
+
 #tinhthanhtruso span{
   background: #f5f6f8;
 }

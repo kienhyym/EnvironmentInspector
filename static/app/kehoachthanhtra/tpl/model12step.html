@@ -8,7 +8,18 @@
 		color: #999 !important;
 	}
 </style>
-<div block-bind="content">
+<div class="card notify-ketthuc-thanhtra" >
+		<div class="card-body">
+			<h5 class="card-title">Thông báo</h5>
+			<p class="card-text">Bạn có chắc chắn muốn kết thúc thanh tra.</p>
+			<a href="#" class="btn btn-primary" id="yes-ketthuc" >Có</a>
+			<a href="#" class="btn btn-primary" id="no-ketthuc">không</a>
+		</div>
+	</div>
+<div block-bind="content" class="content_14step">
+	
+
+
 	<div class="container py-2">
 		<h2 class="font-weight-light text-center text-muted py-3">Chi tiết thanh tra</h2>
 		<h2 class=" text-center  py-3 text-danger notify-end" style="display: none">THANH TRA ĐÃ KẾT THÚC </h2>
@@ -131,7 +142,7 @@
 									</div>
 								</div>
 								<div id="download-quyetdinh_thanhtra_attachment"
-									class="form-group col col-md-12 col-sm-12">
+									class="form-group col col-md-12 col-sm-12 linkdownload_and_button">
 									<span class="textDownload" data-bind="text:quyetdinh_thanhtra_attachment" />
 									<a class="linkDownload">Download</a>
 									<!--<div class="highlight d-none border" id="preview_file_gd4" style="height:130px;overflow-y: auto; background-color: aliceblue;">
@@ -164,8 +175,8 @@
 									</thead>
 									<tbody id="danhsach_thanhvien" data-bind="list:danhsach_thanhvien"></tbody>
 								</table>
-								
-								<!-- <button class="btn btn-primary btn-add-member">Thêm thành viên</button> -->
+
+								<button class="btn btn-primary btn-add-member">Thêm thành viên</button>
 								<span id="btn-add-member"></span>
 
 							</div>
@@ -202,7 +213,7 @@
 									</div>
 								</div>
 								<div id="download-quyetdinh_trungcau_giamdinh_attachment"
-									class="form-group col col-md-12 col-sm-12">
+									class="form-group col col-md-12 col-sm-12 linkdownload_and_button">
 									<span class="textDownload"
 										data-bind="text:quyetdinh_trungcau_giamdinh_attachment" />
 									<a class="linkDownload">Download</a>
@@ -322,7 +333,8 @@
 										<label class="custom-file-label">Chọn file tải lên</label>
 									</div>
 								</div>
-								<div id="download-vanban_kehoach_attachment" class="form-group col col-md-12 col-sm-12">
+								<div id="download-vanban_kehoach_attachment"
+									class="form-group col col-md-12 col-sm-12 linkdownload_and_button">
 									<span class="textDownload" data-bind="text:vanban_kehoach_attachment" />
 									<a class="linkDownload">Download</a>
 								</div>
@@ -420,7 +432,7 @@
 									</div>
 								</div>
 								<div id="download-congvan_yeucau_doituong_baocao_attachment"
-									class="form-group col col-md-12 col-sm-12">
+									class="form-group col col-md-12 col-sm-12 linkdownload_and_button">
 									<span class="textDownload"
 										data-bind="text:congvan_yeucau_doituong_baocao_attachment" />
 									<a class="linkDownload">Download</a>
@@ -454,7 +466,7 @@
 									</div>
 								</div>
 								<div id="download-vanban_doituong_baocao_attachment"
-									class="form-group col col-md-12 col-sm-12">
+									class="form-group col col-md-12 col-sm-12 linkdownload_and_button">
 									<span class="textDownload" data-bind="text:vanban_doituong_baocao_attachment" />
 									<a class="linkDownload">Download</a>
 								</div>
@@ -739,7 +751,7 @@
 							<div class="form-group col-4 required">
 								<label>Ngày dự thảo</label>
 								<input required type="text" data-bind="value:ngay_vanban_thamkhao_ykien"
-								placeholder="Ngày ra quyết định" class="form-control">							</div>
+									placeholder="Ngày ra quyết định" class="form-control"> </div>
 							<div class="form-group col-4 required">
 								<label>Trạng thái (Phê duyệt)</label>
 								<input type="text" placeholder="Thêm trường - (Phê duyệt)" class="form-control">
@@ -756,7 +768,7 @@
 									</div>
 								</div>
 								<div id="download-vanban_duthao_duthao_lan1_attachment"
-									class="form-group col col-md-12 col-sm-12">
+									class="form-group col col-md-12 col-sm-12 linkdownload_and_button">
 									<span class="textDownload" data-bind="text:vanban_duthao_duthao_lan1_attachment" />
 									<a class="linkDownload">Download</a>
 								</div>
@@ -788,7 +800,7 @@
 									</div>
 								</div>
 								<div id="download-congvan_giaitrinh_cua_doituong_thanhtra_attachment"
-									class="form-group col col-md-12 col-sm-12">
+									class="form-group col col-md-12 col-sm-12 linkdownload_and_button">
 									<span class="textDownload"
 										data-bind="text:congvan_giaitrinh_cua_doituong_thanhtra_attachment" />
 									<a class="linkDownload">Download</a>
@@ -821,7 +833,7 @@
 									</div>
 								</div>
 								<div id="download-tham_khao_y_kien_attachment"
-									class="form-group col col-md-12 col-sm-12">
+									class="form-group col col-md-12 col-sm-12 linkdownload_and_button">
 									<span class="textDownload" data-bind="text:tham_khao_y_kien_attachment" />
 									<a class="linkDownload">Download</a>
 								</div>
@@ -854,7 +866,7 @@
 									</div>
 								</div>
 								<div id="download-vanban_duthao_duthao_lan2_attachment"
-									class="form-group col col-md-12 col-sm-12">
+									class="form-group col col-md-12 col-sm-12 linkdownload_and_button">
 									<span class="textDownload" data-bind="text:vanban_duthao_duthao_lan2_attachment" />
 									<a class="linkDownload">Download</a>
 								</div>
@@ -862,77 +874,81 @@
 						</div>
 						<div class="QuyetDinhXuPhat">
 							<hr />
-						<h5>Biên bản vi phạm hành chính</h5>
-						<div class="row">
-							<div class="form-group col-6">
-								<label>Cơ quan lập biên bản</label>
-								<input required type="text" data-bind="value:coquan_lapbienban_hanhchinh"
-									class="form-control">
+							<h5>Biên bản vi phạm hành chính</h5>
+							<div class="row">
+								<div class="form-group col-6">
+									<label>Cơ quan lập biên bản</label>
+									<input required type="text" data-bind="value:coquan_lapbienban_hanhchinh"
+										class="form-control">
+								</div>
+								<div class="form-group col-3">
+									<label>Số biên bản</label>
+									<input required type="text" data-bind="value:so_bienban_hanhchinh"
+										class="form-control">
+								</div>
+								<div class="form-group col-3 required">
+									<label>Ngày lập biên bản</label>
+									<input required type="text" data-bind="value:ngay_lapbienban_hanhchinh"
+										class="form-control">
+								</div>
 							</div>
-							<div class="form-group col-3">
-								<label>Số biên bản</label>
-								<input required type="text" data-bind="value:so_bienban_hanhchinh" class="form-control">
-							</div>
-							<div class="form-group col-3 required">
-								<label>Ngày lập biên bản</label>
-								<input required type="text" data-bind="value:ngay_lapbienban_hanhchinh"
-									class="form-control">
-							</div>
-						</div>
-						<div class="row">
-							<div class="form-group col">
-								<label>Tài liệu đính kèm</label>
-								<div id="upload-bienban_hanhchinh_attachment">
-									<div class="custom-file">
-										<input type="file" class="custom-file-input upload_files" id="upload_files"
-											data-attr="bienban_hanhchinh_attachment" lang="vi">
-										<label class="custom-file-label">Chọn file tải lên</label>
+							<div class="row">
+								<div class="form-group col">
+									<label>Tài liệu đính kèm</label>
+									<div id="upload-bienban_hanhchinh_attachment">
+										<div class="custom-file">
+											<input type="file" class="custom-file-input upload_files" id="upload_files"
+												data-attr="bienban_hanhchinh_attachment" lang="vi">
+											<label class="custom-file-label">Chọn file tải lên</label>
+										</div>
+									</div>
+									<div id="download-bienban_hanhchinh_attachment"
+										class="form-group col col-md-12 col-sm-12 linkdownload_and_button">
+										<span class="textDownload" data-bind="text:bienban_hanhchinh_attachment" />
+										<a class="linkDownload">Download</a>
 									</div>
 								</div>
-								<div id="download-bienban_hanhchinh_attachment"
-									class="form-group col col-md-12 col-sm-12">
-									<span class="textDownload" data-bind="text:bienban_hanhchinh_attachment" />
-									<a class="linkDownload">Download</a>
-								</div>
 							</div>
-						</div>
 
-						<hr />
-						<h5>Quyết định xử phạt</h5>
-						<div class="row">
-							<div class="form-group col-6">
-								<label>Cơ quan xử phạt</label>
-								<input required type="text" data-bind="value:coquan_xuphat" class="form-control">
+							<hr />
+							<h5>Quyết định xử phạt</h5>
+							<div class="row">
+								<div class="form-group col-6">
+									<label>Cơ quan xử phạt</label>
+									<input required type="text" data-bind="value:coquan_xuphat" class="form-control">
+								</div>
+								<div class="form-group col-3">
+									<label>Số quyết định xử phạt</label>
+									<input required type="text" data-bind="value:so_bienban_xuphat"
+										class="form-control">
+								</div>
+								<div class="form-group col-3 required">
+									<label>Ngày xử phạt</label>
+									<input required type="text" data-bind="value:ngay_bienban_xuphat"
+										class="form-control">
+								</div>
 							</div>
-							<div class="form-group col-3">
-								<label>Số quyết định xử phạt</label>
-								<input required type="text" data-bind="value:so_bienban_xuphat" class="form-control">
-							</div>
-							<div class="form-group col-3 required">
-								<label>Ngày xử phạt</label>
-								<input required type="text" data-bind="value:ngay_bienban_xuphat" class="form-control">
-							</div>
-						</div>
-						<div class="row">
-							<div class="form-group col">
-								<label>Tài liệu đính kèm</label>
-								<div id="upload-quyetdinh_xuphat_attachment">
-									<div class="custom-file">
-										<input type="file" class="custom-file-input upload_files" id="upload_files"
-											data-attr="quyetdinh_xuphat_attachment" lang="vi">
-										<label class="custom-file-label">Chọn file tải lên</label>
+							<div class="row">
+								<div class="form-group col">
+									<label>Tài liệu đính kèm</label>
+									<div id="upload-quyetdinh_xuphat_attachment">
+										<div class="custom-file">
+											<input type="file" class="custom-file-input upload_files" id="upload_files"
+												data-attr="quyetdinh_xuphat_attachment" lang="vi">
+											<label class="custom-file-label">Chọn file tải lên</label>
+										</div>
+									</div>
+									<div id="download-quyetdinh_xuphat_attachment"
+										class="form-group col col-md-12 col-sm-12 linkdownload_and_button">
+										<span class="textDownload" data-bind="text:quyetdinh_xuphat_attachment" />
+										<a class="linkDownload">Download</a>
 									</div>
 								</div>
-								<div id="download-quyetdinh_xuphat_attachment"
-									class="form-group col col-md-12 col-sm-12">
-									<span class="textDownload" data-bind="text:quyetdinh_xuphat_attachment" />
-									<a class="linkDownload">Download</a>
-								</div>
 							</div>
 						</div>
-					</div>
 						<button class="btn btn-success btn-save btn-save-gd9">Lưu</button>
-						<button class="btn btn-danger lap_bien_ban_xuphat" id="lap_bien_ban_xuphat_btn" data-step-id="10">Lập biên bản và xử
+						<button class="btn btn-danger lap_bien_ban_xuphat" id="lap_bien_ban_xuphat_btn"
+							data-step-id="10">Lập biên bản và xử
 							phạt</button>
 					</div>
 				</div>
@@ -983,7 +999,7 @@
 									</div>
 								</div>
 								<div id="download-ketluan_thanhtra_attachment"
-									class="form-group col col-md-12 col-sm-12">
+									class="form-group col col-md-12 col-sm-12 linkdownload_and_button">
 									<span class="textDownload" data-bind="text:ketluan_thanhtra_attachment" />
 									<a class="linkDownload">Download</a>
 								</div>
@@ -1021,7 +1037,7 @@
 										</div>
 									</div>
 									<div id="download-bienban_hanhchinh_attachment"
-										class="form-group col col-md-12 col-sm-12">
+										class="form-group col col-md-12 col-sm-12 linkdownload_and_button">
 										<span class="textDownload" data-bind="text:bienban_hanhchinh_attachment" />
 										<a class="linkDownload">Download</a>
 									</div>
@@ -1057,7 +1073,7 @@
 										</div>
 									</div>
 									<div id="download-quyetdinh_xuphat_attachment"
-										class="form-group col col-md-12 col-sm-12">
+										class="form-group col col-md-12 col-sm-12 linkdownload_and_button">
 										<span class="textDownload" data-bind="text:quyetdinh_xuphat_attachment" />
 										<a class="linkDownload">Download</a>
 									</div>
@@ -1068,7 +1084,8 @@
 
 
 						<button class="btn btn-success btn-save btn-save-gd10">Lưu</button>
-						<button class="btn btn-danger lap_bien_ban_xuphat" id=" lap_bien_ban_xuphat_btn" data-step-id="11"">Lập biên bản và xử phạt</button>
+						<button class="btn btn-danger lap_bien_ban_xuphat" id=" lap_bien_ban_xuphat_btn"
+							data-step-id="11"">Lập biên bản và xử phạt</button>
                 </div>
             </div>
         </div>
@@ -1120,7 +1137,7 @@
 													</div>
 												</div>
 												<div id="download-bienban_congbo_ketluan_attachment"
-													class="form-group col col-md-12 col-sm-12">
+													class="form-group col col-md-12 col-sm-12 linkdownload_and_button">
 													<span class="textDownload"
 														data-bind="text:bienban_congbo_ketluan_attachment" />
 													<a class="linkDownload">Download</a>
@@ -1167,7 +1184,7 @@
 													</div>
 												</div>
 												<div id="download-congkhai_ketluan_image_attachment"
-													class="form-group col col-md-12 col-sm-12">
+													class="form-group col col-md-12 col-sm-12 linkdownload_and_button">
 													<span class="textDownload"
 														data-bind="text:congkhai_ketluan_image_attachment" />
 													<a class="linkDownload">Download</a>
@@ -1207,7 +1224,7 @@
 														</div>
 													</div>
 													<div id="download-bienban_hanhchinh_attachment"
-														class="form-group col col-md-12 col-sm-12">
+														class="form-group col col-md-12 col-sm-12 linkdownload_and_button">
 														<span class="textDownload"
 															data-bind="text:bienban_hanhchinh_attachment" />
 														<a class="linkDownload">Download</a>
@@ -1246,7 +1263,7 @@
 														</div>
 													</div>
 													<div id="download-quyetdinh_xuphat_attachment"
-														class="form-group col col-md-12 col-sm-12">
+														class="form-group col col-md-12 col-sm-12 linkdownload_and_button">
 														<span class="textDownload"
 															data-bind="text:quyetdinh_xuphat_attachment" />
 														<a class="linkDownload">Download</a>
@@ -1346,7 +1363,7 @@
 												</div>
 											</div>
 											<div id="download-baocao_doituong_thuchien_attachment"
-												class="form-group col col-md-12 col-sm-12">
+												class="form-group col col-md-12 col-sm-12 linkdownload_and_button">
 												<span class="textDownload"
 													data-bind="text:baocao_doituong_thuchien_attachment" />
 												<a class="linkDownload">Download</a>
@@ -1381,7 +1398,7 @@
 								<div class="card-body">
 									<h4 class="card-title">14: Bàn giao bộ phận lưu trữ hồ sơ</h4>
 									<div class="row">
-										<div class="col-6">
+										<div class="col-12">
 											<div class="form-group">
 												<label>Ngày bàn giao</label>
 												<input required type="text" data-bind="value:ngay_bangiao_luutru"
@@ -1389,9 +1406,11 @@
 											</div>
 											<div class="form-group">
 												<label>Danh sách hồ sơ bàn giao</label>
-												<div class="danhsachhoso-bangiao">
-													<textarea rows="3" class="form-control"></textarea>
-													<!-- <textarea rows="3" data-bind="value:danhsach_hoso_bangiao_luutru" class="form-control"></textarea> -->
+												<div style="background-color: #f3f3f3;border-radius: 10px;">
+													<div class="danhsachhoso_bangiao">
+														<!-- <textarea rows="3" class="form-control" id="danhsach_hoso_luutru"></textarea> -->
+														<!-- <textarea rows="3" data-bind="value:danhsach_hoso_bangiao_luutru" class="form-control"></textarea> -->
+													</div>
 												</div>
 											</div>
 										</div>

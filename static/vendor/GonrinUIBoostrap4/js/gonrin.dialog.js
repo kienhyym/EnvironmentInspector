@@ -727,6 +727,7 @@
       // if the user has managed to click the close button we
       // have to close the dialog, callback or not
       processCallback(e, dialog, callbacks.onEscape);
+     
     });
 
     dialog.on("keyup", function(e) {

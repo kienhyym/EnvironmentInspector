@@ -49,7 +49,10 @@ Chart.controllers.LineWithLine = Chart.controllers.line.extend({
 });
 
 $(document).ready(function () {
-
+  $(".bootbox-close-button").on(click ,function(){
+    console.log("xxxxxxxx")
+  })
+  
   /**
    * Dropdown adjustments
    */
