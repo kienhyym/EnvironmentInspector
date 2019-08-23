@@ -457,7 +457,7 @@ define(function (require) {
 		},
 		render: function () {
 			var self = this;
-			
+
 			self.getDoanhNghiep();
 			self.bindEventSelect();
 			self.updateStepStatus();
@@ -470,6 +470,7 @@ define(function (require) {
 				this.model.set('id', id);
 				this.model.fetch({
 					success: function (data) {
+						console.log(data)
 						self.$el.find("#form-content").find("input").prop("disabled", true);
 						self.$el.find("#trangthai").removeClass("hidden");
 						var danhsachfile = self.model.get("tailieulienquan");
@@ -486,9 +487,11 @@ define(function (require) {
 						}
 						var danhsach_thanhvien = self.model.get("danhsach_thanhvien");
 						if (danhsach_thanhvien === null) {
-							danhsach_thanhvien = [];
+							self.model.set("danhsach_thanhvien" ,[]);
 						}
 						$.each(danhsach_thanhvien, function (idx, value) {
+							console.log('idx',idx)
+							console.log('value',value)
 							self.renderMember_GD1(value);
 						});
 
@@ -560,7 +563,9 @@ define(function (require) {
 
 
 		},
-
+		dsthanhvien_thanhtra() {
+			var self = this;
+		},
 
 		renderUpload() {
 			var self = this;
@@ -618,9 +623,9 @@ define(function (require) {
 				}
 
 			}
-		
+
 			let ans = deduplicate(arr);
-			
+
 			function deduplicate(arr) {
 				let isExist = (arr, x) => {
 					for (let i = 0; i < arr.length; i++) {
@@ -636,9 +641,9 @@ define(function (require) {
 				return ans;
 			}
 
-			for(var i = 0;i<ans.length ; i++){
-				hoso.after("<span>&nbsp;&nbsp;"+ans[i].slice(35)+"</span><a href='"+ans[i]+"'>download</a><br>")
-			
+			for (var i = 0; i < ans.length; i++) {
+				hoso.after("<span>&nbsp;&nbsp;" + ans[i].slice(35) + "</span><a href='" + ans[i] + "'>download</a><br>")
+
 			}
 
 		},
@@ -1072,7 +1077,9 @@ define(function (require) {
 		},
 		saveModel: function () {
 			var self = this;
+			
 			var kiemTraKetThucThanhTra = self.model.get("ketthucthanhtra");
+			console.log(self.model);
 			if (kiemTraKetThucThanhTra != 1) {
 				self.model.save(null, {
 					success: function (model, response, options) {
@@ -1100,6 +1107,7 @@ define(function (require) {
 		},
 		renderMember_GD1: function (data) {
 			var self = this;
+			console.log('renderMember_GD1-data',data)
 			self.$el.find("#header_del_member").removeClass("d-none");
 			//    		gd1-danhsachthanhvien
 
@@ -1109,13 +1117,16 @@ define(function (require) {
 			}
 
 			memberView.render();
+			console.log('memberView',memberView)
 			// console.log("memberView====", memberView.$el);
-			self.$el.find("#gd1-danhsachthanhvien").append(memberView.$el);
+			self.$el.find("#danhsach_thanhvien").append(memberView.$el);
 			memberView.on("change", function (event) {
 				var ds_member = self.model.get("danhsach_thanhvien");
+				console.log('ds_member',ds_member)
 				if (ds_member === null) {
 					ds_member = [];
 					ds_member.push(event.data)
+					console.log("event.data",event.data)
 				}
 				for (var i = 0; i < ds_member.length; i++) {
 					if (ds_member[i].id === event.oldData.id) {
@@ -1123,6 +1134,7 @@ define(function (require) {
 						break;
 					}
 				}
+				console.log("ds_member",ds_member)
 				self.model.set("danhsach_thanhvien", ds_member);
 				self.applyBinding("danhsach_thanhvien");
 			});
