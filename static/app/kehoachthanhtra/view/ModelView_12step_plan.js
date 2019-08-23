@@ -279,8 +279,45 @@ define(function (require) {
 						return date.unix()
 					}
 				},
+				
+				{
+					field: "ngay_gui_congvan_giaitrinh",
+					uicontrol: "datetimepicker",
+					textFormat: "DD/MM/YYYY",
+					extraFormats: ["DDMMYYYY"],
+					parseInputDate: function (val) {
+						return moment.unix(val)
+					},
+					parseOutputDate: function (date) {
+						return date.unix()
+					}
+				},
 				{
 					field: "ngay_vanban_congbo_quyetdinh",
+					uicontrol: "datetimepicker",
+					textFormat: "DD/MM/YYYY",
+					extraFormats: ["DDMMYYYY"],
+					parseInputDate: function (val) {
+						return moment.unix(val)
+					},
+					parseOutputDate: function (date) {
+						return date.unix()
+					}
+				},
+				{
+					field: "ngay_duthao_vanban_lan1",
+					uicontrol: "datetimepicker",
+					textFormat: "DD/MM/YYYY",
+					extraFormats: ["DDMMYYYY"],
+					parseInputDate: function (val) {
+						return moment.unix(val)
+					},
+					parseOutputDate: function (date) {
+						return date.unix()
+					}
+				},
+				{
+					field: "ngay_duthao_vanban_lan2",
 					uicontrol: "datetimepicker",
 					textFormat: "DD/MM/YYYY",
 					extraFormats: ["DDMMYYYY"],
@@ -495,6 +532,8 @@ define(function (require) {
 							self.renderMember_GD1(value);
 						});
 
+
+						var vanban_duthao
 						//danh sach conviec theo doi
 
 						if (self.model.get("danhsach_congviec_thuchien") === null) {
@@ -563,9 +602,7 @@ define(function (require) {
 
 
 		},
-		dsthanhvien_thanhtra() {
-			var self = this;
-		},
+		
 
 		renderUpload() {
 			var self = this;
@@ -642,7 +679,7 @@ define(function (require) {
 			}
 
 			for (var i = 0; i < ans.length; i++) {
-				hoso.after("<span>&nbsp;&nbsp;" + ans[i].slice(35) + "</span><a href='" + ans[i] + "'>download</a><br>")
+				hoso.after("<span>&nbsp;&nbsp;" + ans[i].slice(41) + "</span><a href='" + ans[i] + "'>download</a><br>")
 
 			}
 

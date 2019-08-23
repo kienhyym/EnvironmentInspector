@@ -249,12 +249,22 @@ class KeHoachThanhTra(CommonModel):
     
     
     #GD10- OK co xu phat
-    vanban_duthao = db.Column(JSONB) #list du thao
+    so_vanban_duthao_lan1 = db.Column(String)
+    ngay_duthao_vanban_lan1 = db.Column(BigInteger())
+    trangthai_vanban_lan1 = db.Column(Integer)
+    vanban_duthao_duthao_lan1_attachment = db.Column(String)
+
+    so_congvan_giaitrinh = db.Column(String)
+    ngay_gui_congvan_giaitrinh = db.Column(BigInteger())
+    congvan_giaitrinh_cua_doituong_thanhtra_attachment = db.Column(String)
+
     so_vanban_thamkhao_ykien = db.Column(String)
     ngay_vanban_thamkhao_ykien = db.Column(BigInteger())
-    vanban_duthao_duthao_lan1_attachment = db.Column(String)
-    congvan_giaitrinh_cua_doituong_thanhtra_attachment = db.Column(String)
     tham_khao_y_kien_attachment = db.Column(String)
+
+    so_vanban_duthao_lan2 = db.Column(String)
+    ngay_duthao_vanban_lan2 = db.Column(BigInteger())
+    trangthai_vanban_lan2 = db.Column(Integer)
     vanban_duthao_duthao_lan2_attachment = db.Column(String)
 
     coquan_lapbienban_hanhchinh = db.Column(String)

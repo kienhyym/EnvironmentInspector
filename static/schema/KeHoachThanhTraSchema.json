@@ -238,8 +238,26 @@
     "ngay_vanban_doituong_giaitrinh": {
         "type": "number"
     },
-    "vanban_duthao": {
-        "type": "json"
+    "so_vanban_duthao_lan1": {
+        "type": "string"
+    },
+    "ngay_duthao_vanban_lan1": {
+        "type": "number"
+    },
+    "trangthai_vanban_lan1": {
+        "type": "number"
+    },
+    "vanban_duthao_duthao_lan1_attachment": {
+        "type": "string"
+    },
+    "so_congvan_giaitrinh": {
+        "type": "string"
+    },
+    "ngay_gui_congvan_giaitrinh": {
+        "type": "number"
+    },
+    "congvan_giaitrinh_cua_doituong_thanhtra_attachment": {
+        "type": "string"
     },
     "so_vanban_thamkhao_ykien": {
         "type": "string"
@@ -247,14 +265,17 @@
     "ngay_vanban_thamkhao_ykien": {
         "type": "number"
     },
-    "vanban_duthao_duthao_lan1_attachment": {
-        "type": "string"
-    },
-    "congvan_giaitrinh_cua_doituong_thanhtra_attachment": {
-        "type": "string"
-    },
     "tham_khao_y_kien_attachment": {
         "type": "string"
+    },
+    "so_vanban_duthao_lan2": {
+        "type": "string"
+    },
+    "ngay_duthao_vanban_lan2": {
+        "type": "number"
+    },
+    "trangthai_vanban_lan2": {
+        "type": "number"
     },
     "vanban_duthao_duthao_lan2_attachment": {
         "type": "string"
