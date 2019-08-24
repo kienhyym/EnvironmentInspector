@@ -408,6 +408,7 @@ define(function (require) {
 
 			self.$el.find('#multiselect_donvidoanhnghiep').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
 				var data_ck = self.$el.find('#multiselect_donvidoanhnghiep option:selected').attr('data-ck');
+
 				if (data_ck !== undefined && data_ck !== null) {
 					var my_object = JSON.parse(decodeURIComponent(data_ck));
 					if (my_object !== null) {

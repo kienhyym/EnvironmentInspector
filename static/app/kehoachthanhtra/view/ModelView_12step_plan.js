@@ -279,7 +279,7 @@ define(function (require) {
 						return date.unix()
 					}
 				},
-				
+
 				{
 					field: "ngay_gui_congvan_giaitrinh",
 					uicontrol: "datetimepicker",
@@ -507,7 +507,6 @@ define(function (require) {
 				this.model.set('id', id);
 				this.model.fetch({
 					success: function (data) {
-						console.log(data)
 						self.$el.find("#form-content").find("input").prop("disabled", true);
 						self.$el.find("#trangthai").removeClass("hidden");
 						var danhsachfile = self.model.get("tailieulienquan");
@@ -524,11 +523,10 @@ define(function (require) {
 						}
 						var danhsach_thanhvien = self.model.get("danhsach_thanhvien");
 						if (danhsach_thanhvien === null) {
-							self.model.set("danhsach_thanhvien" ,[]);
+							self.model.set("danhsach_thanhvien", []);
 						}
 						$.each(danhsach_thanhvien, function (idx, value) {
-							console.log('idx',idx)
-							console.log('value',value)
+
 							self.renderMember_GD1(value);
 						});
 
@@ -569,13 +567,13 @@ define(function (require) {
 
 
 						self.applyBindings();
-
-
 						self.LapBienBan();
 						self.ketthuc_thanhtra();
 						self.updateStepStatus();
 						self.hoso_luutru();
 						self.renderUpload();
+						self.getThanhVienThanhTra();
+
 					},
 					error: function (xhr, status, error) {
 						try {
@@ -602,7 +600,21 @@ define(function (require) {
 
 
 		},
-		
+		// New Get thanh vien thanh tra
+		getThanhVienThanhTra: function () {
+			var self = this;
+			var dsThanhVienThanhTra = self.model.get("danhsach_thanhvien");
+			self.$el.find("#select_nguoigiamsat").html("");
+			for (var i = 0; i < dsThanhVienThanhTra.length; i++) {
+				var item = dsThanhVienThanhTra[i];
+				var data_str = encodeURIComponent(JSON.stringify(item));
+				var option_elm = $('<option>').attr({ 'value': item.id, 'data-ck': data_str }).html(item.hoten)
+				self.$el.find("#select_nguoigiamsat").append(option_elm);
+			}
+			var maNguoiGiamSat = self.model.get("manguoigiamsat");
+			self.$el.find("#select_nguoigiamsat").selectpicker('val', maNguoiGiamSat);
+		},
+		// END New Get thanh vien thanh tra
 
 		renderUpload() {
 			var self = this;
@@ -637,7 +649,6 @@ define(function (require) {
 					self.$el.find("#download-" + key).show();
 
 				} else {
-					// console.log(key, attr_value);
 					self.$el.find("#upload-" + key).show();
 					self.$el.find("#download-" + key).hide();
 
@@ -718,7 +729,6 @@ define(function (require) {
 				for (var i = 0; i < quyetDinhXuPhat.length; i++) {
 					if (i != x) {
 						quyetDinhXuPhat[i].style.display = 'none';
-						console.log(i);
 					}
 				}
 			}
@@ -790,11 +800,9 @@ define(function (require) {
 					self.$el.find(".content_14step").css("opacity", "1");
 					// self.getApp().router.refresh();
 					Backbone.history.history.back();
-					// console.log('xxxxxxxxxxxxxxxxxxxxx',location.href)
 
 					// self.getApp().getRouter().navigate(location.href)
 
-					// console.log('xxxxxxxxxxxxxxxxxxxxx',location.href)
 				})
 
 			})
@@ -1114,10 +1122,10 @@ define(function (require) {
 		},
 		saveModel: function () {
 			var self = this;
-			
+
 			var kiemTraKetThucThanhTra = self.model.get("ketthucthanhtra");
-			console.log(self.model);
 			if (kiemTraKetThucThanhTra != 1) {
+				console.log(self.model)
 				self.model.save(null, {
 					success: function (model, response, options) {
 						self.getApp().notify("Lưu thông tin thành công");
@@ -1144,7 +1152,6 @@ define(function (require) {
 		},
 		renderMember_GD1: function (data) {
 			var self = this;
-			console.log('renderMember_GD1-data',data)
 			self.$el.find("#header_del_member").removeClass("d-none");
 			//    		gd1-danhsachthanhvien
 
@@ -1154,16 +1161,12 @@ define(function (require) {
 			}
 
 			memberView.render();
-			console.log('memberView',memberView)
-			// console.log("memberView====", memberView.$el);
 			self.$el.find("#danhsach_thanhvien").append(memberView.$el);
 			memberView.on("change", function (event) {
 				var ds_member = self.model.get("danhsach_thanhvien");
-				console.log('ds_member',ds_member)
 				if (ds_member === null) {
 					ds_member = [];
 					ds_member.push(event.data)
-					console.log("event.data",event.data)
 				}
 				for (var i = 0; i < ds_member.length; i++) {
 					if (ds_member[i].id === event.oldData.id) {
@@ -1171,7 +1174,6 @@ define(function (require) {
 						break;
 					}
 				}
-				console.log("ds_member",ds_member)
 				self.model.set("danhsach_thanhvien", ds_member);
 				self.applyBinding("danhsach_thanhvien");
 			});
@@ -1393,6 +1395,7 @@ define(function (require) {
 						var item = data.objects[i];
 						var data_str = encodeURIComponent(JSON.stringify(item));
 						var option_elm = $('<option>').attr({ 'value': item.id, 'data-ck': data_str }).html(item.name)
+
 						self.$el.find("#multiselect_donvidoanhnghiep").append(option_elm);
 					}
 					var madoanhnghiep = self.model.get("madoanhnghiep");
@@ -1483,7 +1486,6 @@ define(function (require) {
 					}
 				}, false);
 				http.addEventListener('error', function () {
-					// console.log("Upload error!");
 				}, false);
 
 				http.onreadystatechange = function () {
@@ -1527,7 +1529,17 @@ define(function (require) {
 				http.send(fd);
 			});
 
-
+			self.$el.find('#select_nguoigiamsat').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+				var data_ck = self.$el.find('#select_nguoigiamsat option:selected').attr('data-ck');
+				console.log( 'data_ck',data_ck)
+				if (data_ck !== undefined && data_ck !== null) {
+					var my_object = JSON.parse(decodeURIComponent(data_ck));
+					if (my_object !== null) {
+						self.model.set("manguoigiamsat", my_object.id);
+						self.model.set("tennguoigiamsat", my_object.hoten);
+					}
+				}
+			});
 
 
 
@@ -1626,7 +1638,6 @@ define(function (require) {
 			var arr_timeline_capphong = ["send_review_pct", "cancel_reviewed_pct", "send_approved", "approved", "cancel_approved", "checked"]
 			if (data.trangthai != "new" && data.trangthai != "send_review_truongphong" &&
 				data.trangthai != "cancel_reviewed_truongphong") {
-				// console.log("timeline truong phong");
 				var el_status_capphong = self.$el.find("#timeline .kehoach_send_review_capphong");
 				el_status_capphong.addClass("complete");
 				el_status_capphong.find('.author').html(data.username_phongduyet || "&nbsp;");

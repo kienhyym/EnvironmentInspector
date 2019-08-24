@@ -136,7 +136,10 @@
     "quyetdinh_trungcau_giamdinh_attachment": {
         "type": "string"
     },
-    "nguoigiamsat": {
+    "manguoigiamsat": {
+        "type": "string"
+    },
+    "tennguoigiamsat": {
         "type": "string"
     },
     "so_vanban_kehoach": {

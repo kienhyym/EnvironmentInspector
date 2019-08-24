@@ -192,7 +192,8 @@ class KeHoachThanhTra(CommonModel):
     so_quyetdinh_trungcau_giamdinh = db.Column(String)
     ngay_quyetdinh_trungcau_giamdinh = db.Column(BigInteger())
     quyetdinh_trungcau_giamdinh_attachment = db.Column(String)
-    nguoigiamsat = db.Column(String)
+    manguoigiamsat = db.Column(String)
+    tennguoigiamsat = db.Column(String)
     
     #Step2 -OK
     so_vanban_kehoach = db.Column(String)

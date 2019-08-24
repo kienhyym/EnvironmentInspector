@@ -170,15 +170,12 @@ define(function (require) {
 				contentType: "application/json",
 				success: function (data) {
 					var x = data.objects
-					console.log('-----------------------',x);
 					// var dataSource = lodash.orderBy(x, ['created_at'], ['asc']);
 					// _.orderBy(x, [ 'created_at'], ['desc']);
 
-					// console.log('x',x)
 					
 					
 
-					console.log('success',status)
 
 					self.render_grid(status, data.objects);
 
@@ -204,7 +201,6 @@ define(function (require) {
 			var element = null;
 			if (status == 0) {
 				element = self.$el.find("#grid_new");
-				console.log(element)
 			} else if (status === 1) {
 				element = self.$el.find("#grid_review");
 			} else if (status === 2) {
@@ -355,7 +351,6 @@ define(function (require) {
 				},
 				events: {
 					"rowclick": function (e) {
-						console.log("rowclick", e);
 						self.getApp().getRouter().navigate("kehoachthanhtra/model?id=" + e.rowId);
 
 
