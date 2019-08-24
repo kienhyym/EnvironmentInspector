@@ -79,6 +79,30 @@ define(function (require) {
 				// 		url: "/api/v1/upload/file",
 				// 	}
 				// },
+				{
+					field: "trangthai_vanban_lan1",
+					uicontrol: "combobox",
+					textField: "text",
+					valueField: "value",
+					cssClass: "form-control",
+					dataSource: [
+						{ value: 1, text: "Duyệt" },
+						{ value: 0, text: "Không duyệt" },
+						
+					],
+				},
+				{
+					field: "trangthai_vanban_lan2",
+					uicontrol: "combobox",
+					textField: "text",
+					valueField: "value",
+					cssClass: "form-control",
+					dataSource: [
+						{ value: 1, text: "Duyệt" },
+						{ value: 0, text: "Không duyệt" },
+						
+					],
+				},
 
 				{
 					field: "ngay_quyetdinh_thanhtra",
@@ -1182,7 +1206,6 @@ define(function (require) {
 
 			var kiemTraKetThucThanhTra = self.model.get("ketthucthanhtra");
 			if (kiemTraKetThucThanhTra != 1) {
-				console.log(self.model)
 				self.model.save(null, {
 					success: function (model, response, options) {
 						self.getApp().notify("Lưu thông tin thành công");
@@ -1588,7 +1611,6 @@ define(function (require) {
 
 			self.$el.find('#select_nguoigiamsat').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
 				var data_ck = self.$el.find('#select_nguoigiamsat option:selected').attr('data-ck');
-				console.log( 'data_ck',data_ck)
 				if (data_ck !== undefined && data_ck !== null) {
 					var my_object = JSON.parse(decodeURIComponent(data_ck));
 					if (my_object !== null) {
@@ -1600,7 +1622,6 @@ define(function (require) {
 
 			self.$el.find('#select_nguoisoanthao').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
 				var data_ck = self.$el.find('#select_nguoisoanthao option:selected').attr('data-ck');
-				console.log( 'data_ck',data_ck)
 				if (data_ck !== undefined && data_ck !== null) {
 					var my_object = JSON.parse(decodeURIComponent(data_ck));
 					if (my_object !== null) {
@@ -1614,7 +1635,6 @@ define(function (require) {
 
 			self.$el.find('#select_nguoixemxet').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
 				var data_ck = self.$el.find('#select_nguoixemxet option:selected').attr('data-ck');
-				console.log( 'data_ck',data_ck)
 				if (data_ck !== undefined && data_ck !== null) {
 					var my_object = JSON.parse(decodeURIComponent(data_ck));
 					if (my_object !== null) {
@@ -1628,7 +1648,6 @@ define(function (require) {
 
 			self.$el.find('#select_nguoipheduyet').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
 				var data_ck = self.$el.find('#select_nguoipheduyet option:selected').attr('data-ck');
-				console.log( 'data_ck',data_ck)
 				if (data_ck !== undefined && data_ck !== null) {
 					var my_object = JSON.parse(decodeURIComponent(data_ck));
 					if (my_object !== null) {
