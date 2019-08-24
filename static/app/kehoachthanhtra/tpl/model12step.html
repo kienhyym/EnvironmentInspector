@@ -8,16 +8,16 @@
 		color: #999 !important;
 	}
 </style>
-<div class="card notify-ketthuc-thanhtra" >
-		<div class="card-body">
-			<h5 class="card-title">Thông báo</h5>
-			<p class="card-text">Bạn có chắc chắn muốn kết thúc thanh tra.</p>
-			<a href="#" class="btn btn-primary" id="yes-ketthuc" >Có</a>
-			<a href="#" class="btn btn-primary" id="no-ketthuc">không</a>
-		</div>
+<div class="card notify-ketthuc-thanhtra">
+	<div class="card-body">
+		<h5 class="card-title">Thông báo</h5>
+		<p class="card-text">Bạn có chắc chắn muốn kết thúc thanh tra.</p>
+		<a href="#" class="btn btn-primary" id="yes-ketthuc">Có</a>
+		<a href="#" class="btn btn-primary" id="no-ketthuc">không</a>
 	</div>
+</div>
 <div block-bind="content" class="content_14step">
-	
+
 
 
 	<div class="container py-2">
@@ -225,7 +225,9 @@
 						<div class="row">
 							<div class="form-group col-6 required">
 								<label>Người giám sát</label>
-								<select required  class="selectpicker form-control" id="select_nguoigiamsat" data-live-search="true" data-noneSelectedText="Chọn người giám sát" title="Chọn người giám sát">
+								<select required class="selectpicker form-control" id="select_nguoigiamsat"
+									data-live-search="true" data-noneSelectedText="Chọn người giám sát"
+									title="Chọn người giám sát">
 								</select>
 							</div>
 						</div>
@@ -287,19 +289,26 @@
 												<p class="form-control-static">Họ tên</p>
 											</td>
 											<td>
-												<input required type="text"
-													data-bind="value:username_nguoisoanthao_kehoach"
-													placeholder="Người soạn kế hoạch" class="form-control">
+
+												<select required class="selectpicker form-control"
+													id="select_nguoisoanthao" data-live-search="true"
+													data-noneSelectedText="Chọn người soạn thảo"
+													title="Chọn người soạn thảo">
+												</select>
 											</td>
 											<td>
-												<input required type="text"
-													data-bind="value:username_nguoixemxet_kehoach"
-													placeholder="Người xem xét kế hoạch" class="form-control">
+												<select required class="selectpicker form-control"
+													id="select_nguoixemxet" data-live-search="true"
+													data-noneSelectedText="Chọn người xem xét"
+													title="Chọn người xem xét">
+												</select>
 											</td>
 											<td>
-												<input required type="text"
-													data-bind="value:username_nguoiduyet_kehoach"
-													placeholder="Người duyệt" class="form-control">
+												<select required class="selectpicker form-control"
+													id="select_nguoipheduyet" data-live-search="true"
+													data-noneSelectedText="Chọn người phê duyệt"
+													title="Chọn người phê duyệt">
+												</select>
 											</td>
 										</tr>
 										<tr>
@@ -307,16 +316,15 @@
 												<p class="form-control-static">Chức vụ</p>
 											</td>
 											<td>
-												<input required type="text"
-													data-bind="value:chucvu_nguoisoanthao_kehoach" placeholder="..."
-													class="form-control">
-											</td>
-											<td>
-												<input required type="text" data-bind="value:chucvu_nguoixemxet_kehoach"
+												<input required type="text" data-bind="value:vaitronguoisoanthao"
 													placeholder="..." class="form-control">
 											</td>
 											<td>
-												<input required type="text" data-bind="value:chucvu_nguoiduyet_kehoach"
+												<input required type="text" data-bind="value:vaitronguoixemxet"
+													placeholder="..." class="form-control">
+											</td>
+											<td>
+												<input required type="text" data-bind="value:vaitronguoipheduyet"
 													placeholder="..." class="form-control">
 											</td>
 										</tr>
@@ -747,7 +755,8 @@
 						<div class="row">
 							<div class="form-group col-4">
 								<label>Số văn bản dự thảo</label>
-								<input required type="text" data-bind="value:so_vanban_duthao_lan1" placeholder="Thêm trường" class="form-control">
+								<input required type="text" data-bind="value:so_vanban_duthao_lan1"
+									placeholder="Thêm trường" class="form-control">
 							</div>
 							<div class="form-group col-4 required">
 								<label>Ngày dự thảo</label>
@@ -755,7 +764,8 @@
 									placeholder="Ngày ra quyết định" class="form-control"> </div>
 							<div class="form-group col-4 required">
 								<label>Trạng thái (Phê duyệt)</label>
-								<input type="text" data-bind="value:trangthai_vanban_lan1" placeholder="Thêm trường - (Phê duyệt)" class="form-control">
+								<input type="text" data-bind="value:trangthai_vanban_lan1"
+									placeholder="Thêm trường - (Phê duyệt)" class="form-control">
 							</div>
 						</div>
 						<div class="row">
@@ -845,15 +855,18 @@
 						<div class="row">
 							<div class="form-group col-5">
 								<label>Số văn bản dự thảo</label>
-								<input required type="text" data-bind="value:so_vanban_duthao_lan2" placeholder="Thêm trường" class="form-control">
+								<input required type="text" data-bind="value:so_vanban_duthao_lan2"
+									placeholder="Thêm trường" class="form-control">
 							</div>
 							<div class="form-group col-5 required">
 								<label>Ngày dự thảo</label>
-								<input required type="text" data-bind="value:ngay_duthao_vanban_lan2" placeholder="Thêm trường" class="form-control">
+								<input required type="text" data-bind="value:ngay_duthao_vanban_lan2"
+									placeholder="Thêm trường" class="form-control">
 							</div>
 							<div class="form-group col-2 required">
 								<label>Trạng thái</label>
-								<input type="text" data-bind="value:trangthai_vanban_lan2" placeholder="Thêm trường" class="form-control">
+								<input type="text" data-bind="value:trangthai_vanban_lan2" placeholder="Thêm trường"
+									class="form-control">
 							</div>
 						</div>
 						<div class="row">

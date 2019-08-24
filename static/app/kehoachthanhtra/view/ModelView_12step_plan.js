@@ -572,7 +572,10 @@ define(function (require) {
 						self.updateStepStatus();
 						self.hoso_luutru();
 						self.renderUpload();
-						self.getThanhVienThanhTra();
+						self.GetNguoiGiamSat();
+						self.GetNguoiSoanThao();
+						self.GetNguoiXemXet();
+						self.GetNguoiPheDuyet();
 
 					},
 					error: function (xhr, status, error) {
@@ -600,8 +603,8 @@ define(function (require) {
 
 
 		},
-		// New Get thanh vien thanh tra
-		getThanhVienThanhTra: function () {
+		// New Get người giám sát
+		GetNguoiGiamSat: function () {
 			var self = this;
 			var dsThanhVienThanhTra = self.model.get("danhsach_thanhvien");
 			self.$el.find("#select_nguoigiamsat").html("");
@@ -614,7 +617,61 @@ define(function (require) {
 			var maNguoiGiamSat = self.model.get("manguoigiamsat");
 			self.$el.find("#select_nguoigiamsat").selectpicker('val', maNguoiGiamSat);
 		},
-		// END New Get thanh vien thanh tra
+		// END New Get người giám sát
+
+		
+		// New Get người soạn thảo
+		GetNguoiSoanThao: function () {
+			var self = this;
+			var dsThanhVienThanhTra = self.model.get("danhsach_thanhvien");
+			self.$el.find("#select_nguoisoanthao").html("");
+			for (var i = 0; i < dsThanhVienThanhTra.length; i++) {
+				var item = dsThanhVienThanhTra[i];
+				var data_str = encodeURIComponent(JSON.stringify(item));
+				var option_elm = $('<option>').attr({ 'value': item.id, 'data-ck': data_str }).html(item.hoten)
+				self.$el.find("#select_nguoisoanthao").append(option_elm);
+			}
+			var maNguoiSoanThao = self.model.get("manguoisoanthao");
+			self.$el.find("#select_nguoisoanthao").selectpicker('val', maNguoiSoanThao);
+			// self.$el.find("#vaitro_nguoisoanthao").val(vaitronguoisoanthao);
+		},
+		// END New  Get người soạn thảo
+
+
+		// New Get người xem xet
+		GetNguoiXemXet: function () {
+			var self = this;
+			var dsThanhVienThanhTra = self.model.get("danhsach_thanhvien");
+			self.$el.find("#select_nguoixemxet").html("");
+			for (var i = 0; i < dsThanhVienThanhTra.length; i++) {
+				var item = dsThanhVienThanhTra[i];
+				var data_str = encodeURIComponent(JSON.stringify(item));
+				var option_elm = $('<option>').attr({ 'value': item.id, 'data-ck': data_str }).html(item.hoten)
+				self.$el.find("#select_nguoixemxet").append(option_elm);
+			}
+			var maNguoiXemXet = self.model.get("manguoixemxet");
+			self.$el.find("#select_nguoixemxet").selectpicker('val', maNguoiXemXet);
+		},
+		// END New  Get người xem xet
+
+
+
+		// New Get người phê duyêt
+		GetNguoiPheDuyet: function () {
+			var self = this;
+			var dsThanhVienThanhTra = self.model.get("danhsach_thanhvien");
+			self.$el.find("#select_nguoipheduyet").html("");
+			for (var i = 0; i < dsThanhVienThanhTra.length; i++) {
+				var item = dsThanhVienThanhTra[i];
+				var data_str = encodeURIComponent(JSON.stringify(item));
+				var option_elm = $('<option>').attr({ 'value': item.id, 'data-ck': data_str }).html(item.hoten)
+				self.$el.find("#select_nguoipheduyet").append(option_elm);
+			}
+			var maNguoiPheDuyet = self.model.get("manguoipheduyet");
+			self.$el.find("#select_nguoipheduyet").selectpicker('val', maNguoiPheDuyet);
+		},
+		// END New  Get người phê duyêt
+
 
 		renderUpload() {
 			var self = this;
@@ -1537,6 +1594,48 @@ define(function (require) {
 					if (my_object !== null) {
 						self.model.set("manguoigiamsat", my_object.id);
 						self.model.set("tennguoigiamsat", my_object.hoten);
+					}
+				}
+			});
+
+			self.$el.find('#select_nguoisoanthao').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+				var data_ck = self.$el.find('#select_nguoisoanthao option:selected').attr('data-ck');
+				console.log( 'data_ck',data_ck)
+				if (data_ck !== undefined && data_ck !== null) {
+					var my_object = JSON.parse(decodeURIComponent(data_ck));
+					if (my_object !== null) {
+						self.model.set("manguoisoanthao", my_object.id);
+						self.model.set("tennguoisoanthao", my_object.hoten);
+						self.model.set("vaitronguoisoanthao", my_object.vaitro);
+
+					}
+				}
+			});
+
+			self.$el.find('#select_nguoixemxet').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+				var data_ck = self.$el.find('#select_nguoixemxet option:selected').attr('data-ck');
+				console.log( 'data_ck',data_ck)
+				if (data_ck !== undefined && data_ck !== null) {
+					var my_object = JSON.parse(decodeURIComponent(data_ck));
+					if (my_object !== null) {
+						self.model.set("manguoixemxet", my_object.id);
+						self.model.set("tennguoixemxet", my_object.hoten);
+						self.model.set("vaitronguoixemxet", my_object.vaitro);
+
+					}
+				}
+			});
+
+			self.$el.find('#select_nguoipheduyet').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+				var data_ck = self.$el.find('#select_nguoipheduyet option:selected').attr('data-ck');
+				console.log( 'data_ck',data_ck)
+				if (data_ck !== undefined && data_ck !== null) {
+					var my_object = JSON.parse(decodeURIComponent(data_ck));
+					if (my_object !== null) {
+						self.model.set("manguoipheduyet", my_object.id);
+						self.model.set("tennguoipheduyet", my_object.hoten);
+						self.model.set("vaitronguoipheduyet", my_object.vaitro);
+
 					}
 				}
 			});

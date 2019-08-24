@@ -194,6 +194,20 @@ class KeHoachThanhTra(CommonModel):
     quyetdinh_trungcau_giamdinh_attachment = db.Column(String)
     manguoigiamsat = db.Column(String)
     tennguoigiamsat = db.Column(String)
+
+    manguoisoanthao = db.Column(String)
+    tennguoisoanthao = db.Column(String)
+    vaitronguoisoanthao = db.Column(String)
+
+    manguoipheduyet = db.Column(String)
+    tennguoipheduyet = db.Column(String)
+    vaitronguoipheduyet = db.Column(String)
+
+
+    manguoixemxet = db.Column(String)
+    tennguoixemxet = db.Column(String)
+    vaitronguoixemxet = db.Column(String)
+
     
     #Step2 -OK
     so_vanban_kehoach = db.Column(String)

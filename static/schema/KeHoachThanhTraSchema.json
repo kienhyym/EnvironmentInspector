@@ -142,6 +142,33 @@
     "tennguoigiamsat": {
         "type": "string"
     },
+    "manguoisoanthao": {
+        "type": "string"
+    },
+    "tennguoisoanthao": {
+        "type": "string"
+    },
+    "vaitronguoisoanthao": {
+        "type": "string"
+    },
+    "manguoipheduyet": {
+        "type": "string"
+    },
+    "tennguoipheduyet": {
+        "type": "string"
+    },
+    "vaitronguoipheduyet": {
+        "type": "string"
+    },
+    "manguoixemxet": {
+        "type": "string"
+    },
+    "tennguoixemxet": {
+        "type": "string"
+    },
+    "vaitronguoixemxet": {
+        "type": "string"
+    },
     "so_vanban_kehoach": {
         "type": "string"
     },
