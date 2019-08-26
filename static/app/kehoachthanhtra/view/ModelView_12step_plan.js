@@ -593,8 +593,8 @@ define(function (require) {
 						self.applyBindings();
 						self.LapBienBan();
 						self.ketthuc_thanhtra();
+						self.thanhtra_trolai();
 						self.updateStepStatus();
-						self.hoso_luutru();
 						self.renderUpload();
 						self.GetNguoiGiamSat();
 						self.GetNguoiSoanThao();
@@ -847,22 +847,24 @@ define(function (require) {
 		ketthuc_thanhtra: function () {
 			var self = this;
 			var btnSave = self.$el.find(".btn-save")
-
 			var btnYesKetThuc = self.$el.find("#yes-ketthuc")
 			var btnNoKetThuc = self.$el.find("#no-ketthuc")
 			var thongbaoketthuc = self.$el.find(".notify-ketthuc-thanhtra")
+			
+
 			self.$el.find(".btn-end-exit").unbind('click').bind('click', function () {
+				var kiemTraKetThucThanhTra = self.model.get("trangthai");
+				if (kiemTraKetThucThanhTra != "end_checked") {
 				self.$el.find(".content_14step").css("opacity", "0.33333")
 				thongbaoketthuc.show();
 				btnYesKetThuc.unbind('click').bind('click', function () {
 					thongbaoketthuc.hide();
 					self.$el.find(".content_14step").css("opacity", "1")
-					self.model.set("ketthucthanhtra", 1)
+					self.model.set("trangthai", "end_checked")
 					self.model.save(null, {
 						success: function (model, response, options) {
 							self.getApp().notify("Đã kết thúc thanh tra");
 							self.getApp().router.refresh();
-
 
 						},
 						error: function (xhr, status, error) {
@@ -886,14 +888,21 @@ define(function (require) {
 					self.$el.find(".content_14step").css("opacity", "1");
 					// self.getApp().router.refresh();
 					Backbone.history.history.back();
-
 					// self.getApp().getRouter().navigate(location.href)
 
 				})
+			}
+			
+		else {
+			self.getApp().notify("Đã kết thúc thanh tra");
+			self.getApp().router.refresh();
+
+		}
 
 			})
-			var ketThucThanhTraTrangThai = self.model.get("ketthucthanhtra");
-			if (ketThucThanhTraTrangThai != null) {
+		
+			var ketThucThanhTraTrangThai = self.model.get("trangthai");
+			if (ketThucThanhTraTrangThai === "end_checked") {
 				btnSave.each(function () {
 					btnSave.hide();
 				})
@@ -901,14 +910,80 @@ define(function (require) {
 			}
 
 		},
+		thanhtra_trolai:function(){
+			var self = this;
+			var currentUser = self.getApp().currentUser;
+			var ketThucThanhTraTrangThai = self.model.get("trangthai");
+			if (ketThucThanhTraTrangThai !== "end_checked") {
+				self.$el.find(".btn-back-continued").hide();
+			}
+		
+			if (!!currentUser && currentUser.hasRole("ChuyenVien")) {
+				console.log("ChuyenVien");
+				self.$el.find(".btn-back-continued").hide();
 
+			}
+			if (!!currentUser && currentUser.hasRole("TruongPhong")) {
+				console.log("TruongPhong");
+				self.$el.find(".btn-back-continued").hide();
+			}
+			if (!!currentUser && currentUser.hasRole("CucTruong")) {
+				console.log("CucTruong");
+				self.$el.find(".btn-back-continued").unbind('click').bind('click', function () {
+					self.model.set("trangthai","approved")
+					self.model.save(null, {
+						success: function (model, response, options) {
+							self.getApp().notify("Thanh tra trở lại");
+							self.getApp().router.refresh();
+						},
+						error: function (xhr, status, error) {
+							try {
+								if (($.parseJSON(error.xhr.responseText).error_code) === "SESSION_EXPIRED") {
+									self.getApp().notify("Hết phiên làm việc, vui lòng đăng nhập lại!");
+									self.getApp().getRouter().navigate("login");
+								} else {
+									self.getApp().notify({ message: $.parseJSON(error.xhr.responseText).error_message }, { type: "danger", delay: 1000 });
+								}
+							}
+							catch (err) {
+								self.getApp().notify({ message: "Lưu thông tin không thành công" }, { type: "danger", delay: 1000 });
+							}
+						}
+					});
 
-		hoso_luutru: function () {
-			var self = this
-
-			self.$el.find("#danhsach_hoso_luutru").append("")
+				});
+			}
+			if (!!currentUser && currentUser.hasRole("CucPho")) {
+				console.log("CucPho");
+				self.$el.find(".btn-back-continued").unbind('click').bind('click', function () {
+					self.model.set("trangthai","approved")
+					self.model.save(null, {
+						success: function (model, response, options) {
+							self.getApp().notify("Thanh tra trở lại");
+							self.getApp().router.refresh();
+						},
+						error: function (xhr, status, error) {
+							try {
+								if (($.parseJSON(error.xhr.responseText).error_code) === "SESSION_EXPIRED") {
+									self.getApp().notify("Hết phiên làm việc, vui lòng đăng nhập lại!");
+									self.getApp().getRouter().navigate("login");
+								} else {
+									self.getApp().notify({ message: $.parseJSON(error.xhr.responseText).error_message }, { type: "danger", delay: 1000 });
+								}
+							}
+							catch (err) {
+								self.getApp().notify({ message: "Lưu thông tin không thành công" }, { type: "danger", delay: 1000 });
+							}
+						}
+					});
+				});
+			}
+			
+			
+			
 		},
 
+		
 
 
 
@@ -1209,8 +1284,9 @@ define(function (require) {
 		saveModel: function () {
 			var self = this;
 
-			var kiemTraKetThucThanhTra = self.model.get("ketthucthanhtra");
-			if (kiemTraKetThucThanhTra != 1) {
+			var kiemTraKetThucThanhTra = self.model.get("trangthai");
+			if (kiemTraKetThucThanhTra != "end_checked") {
+				console.log(self.model)
 				self.model.save(null, {
 					success: function (model, response, options) {
 						self.getApp().notify("Lưu thông tin thành công");

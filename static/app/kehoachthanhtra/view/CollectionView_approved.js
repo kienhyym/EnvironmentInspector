@@ -18,6 +18,10 @@ define(function (require) {
 		render: function () {
 
 			var self = this;
+			
+
+
+
 			var currentUser = self.getApp().currentUser;
 			self.bindEvent();
 			if (!currentUser) {
@@ -34,9 +38,12 @@ define(function (require) {
 			var filters_common = {
 				"$and": [{ "trangthai": { "$ne": "complete" } },
 				{
-					"$or": [{ "trangthai": { "$eq": "approved" } },
+					"$or": [
+					{"trangthai": { "$eq": "approved" } },
 					{ "trangthai": { "$eq": "checked" } },
-					{ "trangthai": { "$eq": "result_checked" } }]
+					{ "trangthai": { "$eq": "result_checked" }},
+					{ "trangthai": { "$eq": "end_checked" }
+				}]
 				}]
 			};
 			self.getDataSource(2, filters_common, 1, 100);
@@ -70,6 +77,7 @@ define(function (require) {
 		render_grid: function (status, dataSource) {
 			var self = this;
 			var element = self.$el.find("#grid_approve");
+
 			element.grid({
 				showSortingIndicator: true,
 				orderByMode: "client",
@@ -121,7 +129,9 @@ define(function (require) {
 							{ value: "approved", text: "CT đã duyệt quyết định" },
 							{ value: "checked", text: "Đã kiểm tra" },
 							{ value: "result_checked", text: "Đã có kết luận" },
-							{ value: "completed", text: "Hoàn thành" }
+							{ value: "completed", text: "Hoàn thành" },
+							{ value: "end_checked", text: "Đã kết thúc thanh tra" }
+
 						],
 					},
 				],
@@ -134,7 +144,7 @@ define(function (require) {
 				},
 				events: {
 					"rowclick": function (e) {
-						console.log("rowclick", e);
+						console.log("rowclick", e.rowId);
 						self.getApp().getRouter().navigate("kehoachthanhtra/model_step_plan?id=" + e.rowId);
 
 
