@@ -20,12 +20,21 @@ define(function (require) {
 		foreignField: "kehoach_id",
 		uiControl: {
 			fields: [
-
+				{
+					field: "trangthai",
+					uicontrol: "combobox",
+					textField: "text",
+					valueField: "value",
+					cssClass: "form-control",
+					dataSource: [
+						{ value: 1, text: "Hoàn thành" },
+						{ value: 0, text: "Chưa hoàn thành" },
+					],
+				},
 			]
 		},
 		render: function () {
 			var self = this;
-			console.log('model', self.model)
 			
 			self.$el.find('#select_nguoiduocphancong').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
 				var data_ck = self.$el.find('#select_nguoiduocphancong option:selected').attr('data-ck');
@@ -51,7 +60,6 @@ define(function (require) {
 		GetNguoiDuocPhanCong: function () {
 			var self =this;
 			var id = this.getApp().getRouter().getParam("id");
-			console.log("id", id)
 			
 			$.ajax({
 				url: self.getApp().serviceURL + "/api/v1/kehoachthanhtra",
@@ -63,7 +71,6 @@ define(function (require) {
 					for (var i = 0; i < data.objects.length; i++) {
 						if (data.objects[i].id == id) {
 							var x = data.objects[i].danhsach_thanhvien.length;
-							console.log(x)
 							self.$el.find("#select_nguoiduocphancong").html("");
 							for (var j = 0; j < x; j++) {
 								var item = data.objects[i].danhsach_thanhvien[j];

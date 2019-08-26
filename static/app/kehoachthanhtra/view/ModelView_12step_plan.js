@@ -748,17 +748,24 @@ define(function (require) {
 					linkDownload[i].style.display = "none";
 				}
 				else {
-					arr.push(linkDownload[i].href)
+					var obj={
+						text: textDownload[i].textContent,
+						link: linkDownload[i].href 
+					};
+
+					
+					arr.push(obj)
 				}
 
 			}
 
 			let ans = deduplicate(arr);
-
+			
 			function deduplicate(arr) {
 				let isExist = (arr, x) => {
+					
 					for (let i = 0; i < arr.length; i++) {
-						if (arr[i] === x) return true;
+						if (arr[i].text === x.text) return true;
 					}
 					return false;
 				}
@@ -768,13 +775,11 @@ define(function (require) {
 					if (!isExist(ans, element)) ans.push(element);
 				});
 				return ans;
-			}
+			}	
 
 			for (var i = 0; i < ans.length; i++) {
-				hoso.after("<span>&nbsp;&nbsp;" + ans[i].slice(41) + "</span><a href='" + ans[i] + "'>download</a><br>")
-
+				hoso.before("<tr><td>" + i+ "</td><td>" + ans[i].text.slice(16) + "</span></td><td><a href='" + ans[i].link + "'>download</a></td></tr>")			
 			}
-
 		},
 
 		LapBienBan: function () {
@@ -1550,11 +1555,11 @@ define(function (require) {
 			self.$el.find(".upload_files").on("change", function () {
 				var http = new XMLHttpRequest();
 				var fd = new FormData();
+				console.log('-----------http-----------',http)
+				console.log('----------fd------------',fd)
 
 				var data_attr = $(this).attr("data-attr");
 				fd.append('file', this.files[0]);
-
-				//fd.append('file', self.$el.find("#upload_files")[0].files[0]);
 
 				http.open('POST', '/api/v1/upload/file');
 
@@ -1572,8 +1577,8 @@ define(function (require) {
 					if (http.status === 200) {
 						if (http.readyState === 4) {
 							var data_file = JSON.parse(http.responseText), link, p, t;
+							
 							self.getApp().notify("Tải file thành công");
-
 							self.model.set(data_attr, data_file.link);
 							self.saveModel();
 
