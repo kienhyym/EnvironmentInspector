@@ -36,16 +36,12 @@ define(function (require) {
 			var self = this;
 			var currentUser = self.getApp().currentUser;
 			var filters_common = {
-				"$and": [{ "trangthai": { "$ne": "complete" } },
-				{
-					"$or": [
-					{"trangthai": { "$eq": "approved" } },
-					{ "trangthai": { "$eq": "checked" } },
-					{ "trangthai": { "$eq": "result_checked" }},
-					{ "trangthai": { "$eq": "end_checked" }
-				}]
-				}]
-			};
+						"$or": [
+							{ "trangthai": { "$eq": "approved" } },
+							{ "trangthai": { "$eq": "checked" } },
+							{ "trangthai": { "$eq": "end_checked" }},
+							{ "trangthai": { "$eq": "result_checked" } }]
+					};
 			self.getDataSource(2, filters_common, 1, 100);
 		},
 		getDataSource: function (status, filters, page, results_per_page) {

@@ -63,9 +63,15 @@ define(function (require) {
 			var self = this;
 			var currentUser = self.getApp().currentUser;
 			self.$el.find("#kehoach-new-tab").unbind('click').bind('click', function () {
-				var filters_common = { "$and": [{ "trangthai": { "$eq": "new" } }, { "userid_nguoisoanthao": { "$eq": currentUser.id } }] };
+				var filters_common = "";
+				if (!!currentUser && currentUser.hasRole("ChuyenVien")) {
+				filters_common = { 
+					"$or": [
+					{ "trangthai": { "$eq": "new" } },
+					] 
+				};
 				self.getDataSource(0, filters_common, 1, 100);
-
+			};
 			});
 
 			self.$el.find("#kehoach-review-tab").unbind('click').bind('click', function () {
@@ -100,7 +106,7 @@ define(function (require) {
 								{ "trangthai": { "$eq": "send_review_pct" } },
 								{ "trangthai": { "$eq": "send_approved" } }]
 						},
-						{ "userid_nguoisoanthao": { "$eq": currentUser.id } }]
+						]
 					};
 				} else {
 					self.getApp().notify("Phiên làm việc hết hạn, vui lòng đăng nhập lại!");
@@ -115,43 +121,35 @@ define(function (require) {
 					filters_common = {
 						"$or": [{ "trangthai": { "$eq": "approved" } },
 						{ "trangthai": { "$eq": "checked" } },
+						{ "trangthai": { "$eq": "end_checked" }},
 						{ "trangthai": { "$eq": "result_checked" } }]
 					};
 				} else if (!!currentUser && currentUser.hasRole("CucPho")) {
 					filters_common = {
 						"$or": [
-							//		    			{"trangthai":{"$eq": "send_approved"}}, 
-							//		    			{"trangthai":{"$eq": "cancel_approved"}},
 							{ "trangthai": { "$eq": "approved" } },
 							{ "trangthai": { "$eq": "checked" } },
+							{ "trangthai": { "$eq": "end_checked" }},
 							{ "trangthai": { "$eq": "result_checked" } }]
 					};
 				} else if (!!currentUser && currentUser.hasRole("TruongPhong")) {
 					filters_common = {
 						"$or": [
-							//		    			 	{"trangthai":{"$eq": "cancel_reviewed_pct"}}, 
-							//			    			{"trangthai":{"$eq": "send_review_pct"}},
-							//			    			{"trangthai":{"$eq": "send_approved"}}, 
-							//			    			{"trangthai":{"$eq": "cancel_approved"}},
 							{ "trangthai": { "$eq": "approved" } },
 							{ "trangthai": { "$eq": "checked" } },
+							{ "trangthai": { "$eq": "end_checked" }},
 							{ "trangthai": { "$eq": "result_checked" } }]
 					};
 				} else if (!!currentUser && currentUser.hasRole("ChuyenVien")) {
 					filters_common = {
 						"$and": [{
 							"$or": [
-								//			    		 {"trangthai":{"$eq": "send_review_truongphong"}},
-								//			    		 {"trangthai":{"$eq": "cancel_reviewed_truongphong"}},
-								//			    		 {"trangthai":{"$eq": "cancel_reviewed_pct"}}, 
-								//		    			 {"trangthai":{"$eq": "send_review_pct"}},
-								//		    			 {"trangthai":{"$eq": "send_approved"}}, 
-								//		    			 {"trangthai":{"$eq": "cancel_approved"}},
 								{ "trangthai": { "$eq": "approved" } },
 								{ "trangthai": { "$eq": "checked" } },
+								{ "trangthai": { "$eq": "end_checked" }},
 								{ "trangthai": { "$eq": "result_checked" } }]
 						},
-						{ "userid_nguoisoanthao": { "$eq": currentUser.id } }]
+						]
 					};
 				}
 				self.getDataSource(2, filters_common, 1, 100);
@@ -163,17 +161,17 @@ define(function (require) {
 		},
 		getDataSource: function (status, filters, page, results_per_page) {
 			var self = this;
+
 			$.ajax({
 				url: self.getApp().serviceURL + "/api/v1/kehoachthanhtra",
 				method: "GET",
-				data: { data: JSON.stringify({ "filters": filters, "order_by": [{ "field": "updated_at", "direction": "desc" }], "page": page, "results_per_page": results_per_page }) },
+				data: { "q": JSON.stringify({ "filters": filters, "order_by": [{ "field": "updated_at", "direction": "desc" }], "page": page, "results_per_page": results_per_page }) },
 				contentType: "application/json",
 				success: function (data) {
 					var x = data.objects
 					// var dataSource = lodash.orderBy(x, ['created_at'], ['asc']);
 					// _.orderBy(x, [ 'created_at'], ['desc']);
 
-					
 					
 
 
@@ -259,7 +257,8 @@ define(function (require) {
 							{ value: "approved", text: "CT đã duyệt quyết định" },
 							{ value: "checked", text: "Đã kiểm tra" },
 							{ value: "result_checked", text: "Đã có kết luận" },
-							{ value: "completed", text: "Hoàn thành" }
+							{ value: "completed", text: "Hoàn thành" },
+							{ value: "end_checked", text: "Đã kết thúc thanh tra" }
 						],
 					},
 					//              	{
