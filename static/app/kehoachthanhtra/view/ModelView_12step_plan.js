@@ -1544,17 +1544,17 @@ define(function (require) {
 		check_gd1_sucees: function () {
 			var self = this;
 
-			if (self.model.get("danhsach_thanhvien") !== null || self.model.get("danhsach_thanhvien") !== []
-				&& self.model.get("soquyetdinh") !== null || self.model.get("soquyetdinh") !== ""
-				&& self.model.get("ngayquyetdinh") !== null || self.model.get("ngayquyetdinh") !== "") {
+			if (self.model.get("danhsach_thanhvien") !== null 
+				&& self.model.get("so_quyetdinh_thanhtra") !== null
+				&& self.model.get("ngay_quyetdinh_thanhtra") !== null) {
 				return "success"
 			}
 			return "light";
 		},
 		check_gd2_sucees: function () {
 			var self = this;
-			if (self.model.get("sokehoach") !== null
-				&& self.model.get("ngaylenkehoach") !== null) {
+			if (self.model.get("so_vanban_kehoach") !== null
+				&& self.model.get("ngay_vanban_kehoach") !== null) {
 				return "success"
 			}
 			return "light";
@@ -1572,8 +1572,8 @@ define(function (require) {
 
 		check_gd4_sucees: function () {
 			var self = this;
-			if (self.model.get("socongvan_yeucau") !== null
-				&& self.model.get("ngayguicongvan_yeucau") !== null) {
+			if (self.model.get("so_congvan_yeucau_doituong_baocao") !== null
+				&& self.model.get("ngay_congvan_yeucau_doituong_baocao") !== null) {
 				return "success"
 			}
 			return "light";
