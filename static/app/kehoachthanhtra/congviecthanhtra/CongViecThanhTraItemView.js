@@ -31,78 +31,47 @@ define(function (require) {
 						{ value: 0, text: "Chưa hoàn thành" },
 					],
 				},
+				{
+					field: "nguoiduocphancong",
+					uicontrol: "combobox",
+					textField: "hoten",
+					valueField: "id",
+					cssClass: "form-control",
+					dataSource: []
+				},
 			]
 		},
 		render: function () {
 			var self = this;
 			
-			self.$el.find('#select_nguoiduocphancong').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
-				var data_ck = self.$el.find('#select_nguoiduocphancong option:selected').attr('data-ck');
-				if (data_ck !== undefined && data_ck !== null) {
-					var my_object = JSON.parse(decodeURIComponent(data_ck));
-					if (my_object !== null) {
-						self.model.set("id", my_object.id);
-						self.model.set("nguoiduocphancong", my_object.hoten);
-
-					}
+			for (var i = 0; i < self.uiControl.fields.length; i++){
+				if (self.uiControl.fields[i].field == "nguoiduocphancong"){
+					self.uiControl.fields[i].dataSource = self.viewData.danhsachthanhvien;
+					break;
 				}
-			});
+			}
 
+			
 			if (self.model.get("id") == null) {
 				self.model.set("id", gonrin.uuid());
 			}
-			this.applyBindings();
-			self.GetNguoiDuocPhanCong();
+			self.applyBindings();
+			self.model.on("change", function () {
+				self.trigger("change", {
+					"oldData": self.model.previousAttributes(),
+					"data": self.model.toJSON()
+				});
+			});
+			
+
 			self.$el.find("#itemRemove").unbind("click").bind("click", function () {
 				self.remove(true);
 			});
+
+			//console.log(self.getFieldElement("nguoiduocphancong"));
+
+			// self.getFieldElement("nguoiduocphancong").data("gonrin").setDataSource(self.viewData.danhsachthanhvien);
 		},
-		GetNguoiDuocPhanCong: function () {
-			var self =this;
-			var id = this.getApp().getRouter().getParam("id");
-			
-			$.ajax({
-				url: self.getApp().serviceURL + "/api/v1/kehoachthanhtra",
-				method: "GET",
-				data: { "data": JSON.stringify({ "order_by": [{ "field": "danhsach_thanhvien", "direction": "desc" }], "page": 1, "results_per_page": 10000 }) },
-				contentType: "application/json",
-				success: function (data) {
-
-					for (var i = 0; i < data.objects.length; i++) {
-						if (data.objects[i].id == id) {
-							var x = data.objects[i].danhsach_thanhvien.length;
-							self.$el.find("#select_nguoiduocphancong").html("");
-							for (var j = 0; j < x; j++) {
-								var item = data.objects[i].danhsach_thanhvien[j];
-								var data_str = encodeURIComponent(JSON.stringify(item));
-								var option_elm = $('<option>').attr({ 'value': item.id, 'data-ck': data_str }).html(item.hoten)
-
-								self.$el.find("#select_nguoiduocphancong").append(option_elm);
-							}
-							var maNguoiDuocPhanCong = self.model.get("id");
-							self.$el.find("#select_nguoiduocphancong").selectpicker('val', maNguoiDuocPhanCong);
-
-
-
-
-						}
-					}
-				},
-				error: function (xhr, status, error) {
-					try {
-						if (($.parseJSON(error.xhr.responseText).error_code) === "SESSION_EXPIRED") {
-							self.getApp().notify("Hết phiên làm việc, vui lòng đăng nhập lại!");
-							self.getApp().getRouter().navigate("login");
-						} else {
-							self.getApp().notify({ message: $.parseJSON(error.xhr.responseText).error_message }, { type: "danger", delay: 1000 });
-						}
-					} catch (err) {
-						self.getApp().notify({ message: "Lỗi không lấy được dữ liệu" }, { type: "danger", delay: 1000 });
-					}
-				}
-			});
-
-		}
 	});
 
 });

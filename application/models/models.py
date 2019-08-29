@@ -228,7 +228,8 @@ class KeHoachThanhTra(CommonModel):
     
     #GD3 - OK
     danhsach_congviec_thanhtra = db.Column(JSONB)
-    
+
+        
     #GD4 - OK
     so_congvan_yeucau_doituong_baocao = db.Column(String)
     ngay_congvan_yeucau_doituong_baocao = db.Column(BigInteger())

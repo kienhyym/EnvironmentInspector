@@ -171,10 +171,6 @@ define(function (require) {
 					var x = data.objects
 					// var dataSource = lodash.orderBy(x, ['created_at'], ['asc']);
 					// _.orderBy(x, [ 'created_at'], ['desc']);
-
-					
-
-
 					self.render_grid(status, data.objects);
 
 				},

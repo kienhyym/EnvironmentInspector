@@ -6,6 +6,9 @@
     "hangmuccongviec": {
         "type": "string"
     },
+    "nguoiduocphancong_id": {
+        "type": "string"
+    },
     "nguoiduocphancong": {
         "type": "string"
     },
