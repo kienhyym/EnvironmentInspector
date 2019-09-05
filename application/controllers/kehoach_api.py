@@ -162,8 +162,8 @@ sqlapimanager.create_api(DanhMucLinhVuc, max_results_per_page=1000000,
 sqlapimanager.create_api(KeHoachThanhTra, max_results_per_page=1000000,
     methods=['GET', 'POST', 'DELETE', 'PUT'],
     url_prefix='/api/v1',
-    preprocess=dict(GET_SINGLE=[response_getmany_kehoachthanhtra], GET_MANY=[response_getmany_kehoachthanhtra], POST=[response_getmany_kehoachthanhtra], PUT_SINGLE=[response_getmany_kehoachthanhtra]),
-    postprocess=dict(POST=[response_getmany_kehoachthanhtra], PUT_SINGLE=[response_getmany_kehoachthanhtra], DELETE_SINGLE=[response_getmany_kehoachthanhtra], GET_MANY =[response_getmany_kehoachthanhtra]),
+    preprocess=dict(GET_SINGLE=[response_getmany_kehoachthanhtra,auth_func], GET_MANY=[response_getmany_kehoachthanhtra,auth_func], POST=[response_getmany_kehoachthanhtra,auth_func], PUT_SINGLE=[response_getmany_kehoachthanhtra,auth_func]),
+    postprocess=dict(POST=[response_getmany_kehoachthanhtra,auth_func], PUT_SINGLE=[response_getmany_kehoachthanhtra,auth_func], DELETE_SINGLE=[response_getmany_kehoachthanhtra,auth_func], GET_MANY =[response_getmany_kehoachthanhtra,auth_func]),
     collection_name='kehoachthanhtra')
 
     

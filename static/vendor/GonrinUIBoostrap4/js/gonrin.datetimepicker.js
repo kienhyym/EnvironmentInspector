@@ -2414,7 +2414,7 @@
             
             var prevEl = element.prev('input');
             if((prevEl.length == 0 ) || !($(prevEl[0]).hasClass('datetimepicker-input'))){
-            	prevEl = $('<input class="form-control datetimepicker-input" type="text">');
+            	prevEl = $('<input class="form-control datetimepicker-input" type="text" readonly style="background-color:white">');
             	var classList = element.attr("class").split(' ');
             	$.each(classList, function(idx, clz){
             		prevEl.addClass(clz);

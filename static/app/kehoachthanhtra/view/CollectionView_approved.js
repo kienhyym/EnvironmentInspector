@@ -40,6 +40,7 @@ define(function (require) {
 							{ "trangthai": { "$eq": "approved" } },
 							{ "trangthai": { "$eq": "checked" } },
 							{ "trangthai": { "$eq": "end_checked" }},
+							{ "trangthai": { "$eq": "completed" }},
 							{ "trangthai": { "$eq": "result_checked" } }]
 					};
 			self.getDataSource(2, filters_common, 1, 100);

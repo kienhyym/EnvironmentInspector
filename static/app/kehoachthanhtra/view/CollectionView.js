@@ -121,7 +121,7 @@ define(function (require) {
 					filters_common = {
 						"$or": [{ "trangthai": { "$eq": "approved" } },
 						{ "trangthai": { "$eq": "checked" } },
-						{ "trangthai": { "$eq": "end_checked" }},
+						// { "trangthai": { "$eq": "end_checked" }},
 						{ "trangthai": { "$eq": "result_checked" } }]
 					};
 				} else if (!!currentUser && currentUser.hasRole("CucPho")) {
@@ -129,7 +129,7 @@ define(function (require) {
 						"$or": [
 							{ "trangthai": { "$eq": "approved" } },
 							{ "trangthai": { "$eq": "checked" } },
-							{ "trangthai": { "$eq": "end_checked" }},
+							// { "trangthai": { "$eq": "end_checked" }},
 							{ "trangthai": { "$eq": "result_checked" } }]
 					};
 				} else if (!!currentUser && currentUser.hasRole("TruongPhong")) {
@@ -137,7 +137,7 @@ define(function (require) {
 						"$or": [
 							{ "trangthai": { "$eq": "approved" } },
 							{ "trangthai": { "$eq": "checked" } },
-							{ "trangthai": { "$eq": "end_checked" }},
+							// { "trangthai": { "$eq": "end_checked" }},
 							{ "trangthai": { "$eq": "result_checked" } }]
 					};
 				} else if (!!currentUser && currentUser.hasRole("ChuyenVien")) {
@@ -146,8 +146,9 @@ define(function (require) {
 							"$or": [
 								{ "trangthai": { "$eq": "approved" } },
 								{ "trangthai": { "$eq": "checked" } },
-								{ "trangthai": { "$eq": "end_checked" }},
-								{ "trangthai": { "$eq": "result_checked" } }]
+								// { "trangthai": { "$eq": "end_checked" }},
+								{ "trangthai": { "$eq": "result_checked" } }
+							]
 						},
 						]
 					};
@@ -155,7 +156,12 @@ define(function (require) {
 				self.getDataSource(2, filters_common, 1, 100);
 			});
 			self.$el.find("#kehoach-finish-tab").unbind('click').bind('click', function () {
-				var filter_finish = { "trangthai": { "$eq": "completed" } };
+				// var filter_finish = { "trangthai": { "$eq": "completed" } };
+				var filter_finish = {
+					"$or": [
+						{ "trangthai": { "$eq": "end_checked" }},
+						{ "trangthai": { "$eq": "completed" } }]
+				};
 				self.getDataSource(3, filter_finish, 1, 100);
 			});
 		},

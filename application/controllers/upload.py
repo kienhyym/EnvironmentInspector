@@ -83,13 +83,14 @@ async def upload_file(request):
         file = request.files.get('file', None)
 
         image = request.files.get('image')
-  
+
         if file :
             rand = ''.join(random.choice(string.digits) for _ in range(15))
             file_name = os.path.splitext(file.name)[0]
             extname = os.path.splitext(file.name)[1]
 #             newfilename = file_name + "-" + rand + extname
-            newfilename = file_name
+            newfilename = file_name + extname 
+
             print(newfilename)
             async with aiofiles.open(fsroot + newfilename, 'wb+') as f:
                 await f.write(file.body)
@@ -103,8 +104,9 @@ async def upload_file(request):
                     "filename_organization":file_name,
                     "extname":extname
                 }, status=200)
-       
+    
     return json({
         "error_code": "Upload Error",
         "error_message": "Could not upload file to store"
     }, status=520)
+

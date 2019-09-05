@@ -518,10 +518,12 @@ define(function (require) {
 		},
 		render: function () {
 			var self = this;
+			var dem = 0;
 
 			self.getDoanhNghiep();
 			self.bindEventSelect();
 			self.updateStepStatus();
+
 
 
 			var id = this.getApp().getRouter().getParam("id");
@@ -610,7 +612,12 @@ define(function (require) {
 						self.GetNguoiSoanThao();
 						self.GetNguoiXemXet();
 						self.GetNguoiPheDuyet();
+						self.checkAllSucees();
 						//self.getNguoiDuocPhanCong();
+
+
+
+
 
 
 
@@ -651,6 +658,81 @@ define(function (require) {
 			}
 
 
+		},
+		checkAllSucees: function () {
+			var self = this;
+			var dem = 0;
+			if (self.check_gd1_sucees() === "success") {
+				dem++;
+			}
+			if (self.check_gd2_sucees() === "success") {
+				dem++;
+			}
+			if (self.check_gd3_sucees() === "success") {
+				dem++;
+			}
+			if (self.check_gd4_sucees() === "success") {
+				dem++;
+			}
+			if (self.check_gd5_sucees() === "success") {
+				dem++;
+			}
+			if (self.check_gd6_sucees() === "success") {
+				dem++;
+			}
+			if (self.check_gd7_sucees() === "success") {
+				dem++;
+			}
+			if (self.check_gd8_sucees() === "success") {
+				dem++;
+			} if (self.check_gd9_sucees() === "success") {
+				dem++;
+			}
+
+			if (self.check_gd10_sucees() === "success") {
+				dem++;
+			}
+			if (self.check_gd11_sucees() === "success") {
+				dem++;
+			}
+			if (self.check_gd12_sucees() === "success") {
+				dem++;
+			}
+			if (self.check_gd13_sucees() === "success") {
+				dem++;
+			}
+			// if (self.check_gd14_sucees() === "success") {
+			// 	dem++;
+			// }
+			console.log(dem)
+
+			if (dem == 13) {
+				self.$el.find(".btn-save-gd14").unbind("click").bind("click", function () {
+					self.model.set("trangthai", "completed")
+					self.model.save(null, {
+						success: function (model, response, options) {
+							self.getApp().notify("Đã hoàn thành thanh tras");
+							self.getApp().router.refresh();
+						},
+
+						error: function (xhr, status, error) {
+							try {
+								if (($.parseJSON(error.xhr.responseText).error_code) === "SESSION_EXPIRED") {
+									self.getApp().notify("Hết phiên làm việc, vui lòng đăng nhập lại!");
+									self.getApp().getRouter().navigate("login");
+								} else {
+									self.getApp().notify({ message: $.parseJSON(error.xhr.responseText).error_message }, { type: "danger", delay: 1000 });
+								}
+							}
+							catch (err) {
+								self.getApp().notify({ message: "kêt thúc thanh tra không thành công" }, { type: "danger", delay: 1000 });
+							}
+						}
+					});
+					console.log(self.model)
+				})
+				
+			}
 		},
 		// New Get người giám sát
 		GetNguoiGiamSat: function () {
@@ -931,8 +1013,8 @@ define(function (require) {
 							success: function (model, response, options) {
 								self.getApp().notify("Đã kết thúc thanh tra");
 								self.getApp().router.refresh();
-
 							},
+
 							error: function (xhr, status, error) {
 								try {
 									if (($.parseJSON(error.xhr.responseText).error_code) === "SESSION_EXPIRED") {
@@ -964,7 +1046,6 @@ define(function (require) {
 					self.getApp().router.refresh();
 
 				}
-
 			})
 
 			var ketThucThanhTraTrangThai = self.model.get("trangthai");
@@ -974,7 +1055,6 @@ define(function (require) {
 				})
 				self.$el.find(".notify-end").attr("style", "display:block");
 			}
-
 		},
 		thanhtra_trolai: function () {
 			var self = this;
@@ -991,6 +1071,7 @@ define(function (require) {
 			if (!!currentUser && currentUser.hasRole("TruongPhong")) {
 				self.$el.find(".btn-back-continued").hide();
 			}
+
 			if (!!currentUser && currentUser.hasRole("CucTruong")) {
 				self.$el.find(".btn-back-continued").unbind('click').bind('click', function () {
 					self.model.set("trangthai", "approved")
@@ -1355,6 +1436,36 @@ define(function (require) {
 				//    			}
 				self.saveModel();
 			});
+			//13
+			self.$el.find(".btn-save-gd13").unbind('click').bind('click', function () {
+				//    			var sokehoach = self.model.get("sokehoach");
+				//    			if(sokehoach === null || sokehoach===""){
+				//    				self.getApp().notify("Vui lòng nhập số kế hoạch thanh tra");
+				//    				return;
+				//    			}
+				//    			
+				//    			var ngaylenkehoach = self.model.get("ngaylenkehoach");
+				//    			if(ngaylenkehoach === null || ngaylenkehoach===""){
+				//    				self.getApp().notify("Vui lòng nhập ngày lên kế hoạch thanh tra");
+				//    				return;
+				//    			}
+				self.saveModel();
+			});
+			//14
+			// self.$el.find(".btn-save-gd14").unbind('click').bind('click', function () {
+			// 	//    			var sokehoach = self.model.get("sokehoach");
+			// 	//    			if(sokehoach === null || sokehoach===""){
+			// 	//    				self.getApp().notify("Vui lòng nhập số kế hoạch thanh tra");
+			// 	//    				return;
+			// 	//    			}
+			// 	//    			
+			// 	//    			var ngaylenkehoach = self.model.get("ngaylenkehoach");
+			// 	//    			if(ngaylenkehoach === null || ngaylenkehoach===""){
+			// 	//    				self.getApp().notify("Vui lòng nhập ngày lên kế hoạch thanh tra");
+			// 	//    				return;
+			// 	//    			}
+			// 	self.saveModel();
+			// });
 		},
 		saveModel: function () {
 			var self = this;
@@ -1481,7 +1592,6 @@ define(function (require) {
 			var self = this;
 			var currentUser = self.getApp().currentUser;
 			var trangthai = self.model.get("trangthai");
-
 			self.updateStepUI(1, self.check_gd1_sucees());
 			self.updateStepUI(2, self.check_gd2_sucees());
 
@@ -1500,6 +1610,8 @@ define(function (require) {
 			self.updateStepUI(13, self.check_gd13_sucees());
 			self.updateStepUI(14, self.check_gd14_sucees());
 		},
+
+
 		updateStepUI: function (step, status) {
 			var self = this;
 
@@ -1544,13 +1656,14 @@ define(function (require) {
 		check_gd1_sucees: function () {
 			var self = this;
 
-			if (self.model.get("danhsach_thanhvien") !== null 
+			if (self.model.get("danhsach_thanhvien") !== null
 				&& self.model.get("so_quyetdinh_thanhtra") !== null
 				&& self.model.get("ngay_quyetdinh_thanhtra") !== null) {
 				return "success"
 			}
 			return "light";
 		},
+
 		check_gd2_sucees: function () {
 			var self = this;
 			if (self.model.get("so_vanban_kehoach") !== null
@@ -1697,6 +1810,8 @@ define(function (require) {
 			}
 			return "light";
 		},
+
+
 		getDoanhNghiep: function () {
 			var self = this;
 			$.ajax({
@@ -1767,6 +1882,7 @@ define(function (require) {
 					},
 					complete: function () {
 						self.updateStepStatus();
+
 					}
 				});
 

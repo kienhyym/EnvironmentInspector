@@ -28,7 +28,7 @@ define(function (require) {
 					cssClass: "form-control",
 					dataSource: [
 						{ value: 1, text: "Hoàn thành" },
-						{ value: 0, text: "Chưa hoàn thành" },
+						{ value: 2, text: "Chưa hoàn thành" },
 					],
 				},
 				{

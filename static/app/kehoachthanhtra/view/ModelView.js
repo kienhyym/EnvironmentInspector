@@ -285,6 +285,11 @@ define(function (require) {
 					self.$el.find("#btn_cancel").hide();
 					self.$el.find("#btn_review").hide();
 				}
+
+
+
+
+
 			}
 			if (currentUser.hasRole('CucTruong')) {
 				self.$el.find('.card-header').hide();
@@ -418,14 +423,14 @@ define(function (require) {
 					}
 				}
 			});
-			console.log('self.model.toJSON()',self.model.toJSON());
+			console.log('self.model.toJSON()', self.model.toJSON());
 			self.$el.find("#btn_save").unbind("click").bind("click", function () {
 				self.model.save(null, {
 					success: function (model, response, options) {
 						self.updateUITimeline(self.model.toJSON());
 						self.updateUIPermission();
 						self.getApp().notify("Lưu thông tin thành công");
-						
+
 					},
 					error: function (xhr, status, error) {
 						// console.log('error',xhr)
@@ -452,13 +457,14 @@ define(function (require) {
 			});
 			self.$el.find("#btn_cancel").unbind("click").bind("click", function () {
 				self.cancel_kehoach();
+				self.getApp().getRouter().refresh();
 			});
-			
+
 
 		},
 		saveModel: function () {
 			var self = this;
-			
+
 			self.model.save(null, {
 				success: function (model, response, options) {
 					self.getApp().notify("Lưu thông tin thành công");
