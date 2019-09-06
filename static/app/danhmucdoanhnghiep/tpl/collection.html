@@ -7,18 +7,82 @@
 </div>
 <!-- End Page Header -->
 
-<div class="col-md-6 mt-3 mb-3" >
-		<input type='text' id='combobox' placeholder="select..."/>
-</div>
 
-<div class="col">
-	<div class="card  card-small mb-4">
-		<div class="card-header">
-			<div block-bind="toolbar"></div>
-		</div>
-		<div class="card-body">
-			<div id="grid" data-bind='collection:$collection'></div>
-		</div>
+<div class="row">
+	<div class="col">
+			<div style="width:100%">
+				<label>Lọc theo lĩnh vực </label>
+					<div style="width:50%;" id="mutil_selecter">
+						<input type='text'  id='combobox' />
+						<input type='text' id="value_select" value="Select . . " readonly/>
+
+						<!-- <label id="value_select" value=>Select . . .</label> -->
+					</div>
+				</div>
+				
+				<br>
+
+
+
+
+		<!-- <ul class="nav nav-pills mb-3" id="kehoach" role="tablist">
+				<li class="nav-item">
+					<a class="nav-link active" id="btn-all" data-toggle="pill" href="#tab-content-new" role="tab"
+						aria-selected="true">TẤT CẢ</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="btn-nuocsach" data-toggle="pill" href="#tab-content-review" role="tab"
+						aria-selected="false">NƯỚC SẠCH</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="btn-hoachat" data-toggle="pill" href="#tab-content-approved" role="tab"
+						aria-selected="false">HÓA CHẤT</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="btn-chatthaiyte" data-toggle="pill" href="#tab-content-finish" role="tab"
+						aria-selected="false">CHẤT THẢI Y TẾ</a>
+				</li>
+			</ul> -->
+		
+		<div class="tab-content" id="kehoach-tabContent">
+				<div class="tab-pane fade show active" id="tab-content-new" role="tabpanel"
+					aria-labelledby="tab-content-new">
+					<div class="card  card-small mb-4 h-100">
+						<div class="card-header">
+							<div block-bind="toolbar"></div>
+						</div>
+						<div class="card-body">
+							<div id="grid_all"></div>
+						</div>
+					</div>
+				</div>
+
+				<!-- <div class="tab-pane fade" id="tab-content-review" role="tabpanel" aria-labelledby="tab-content-review">
+					<div class="card  card-small mb-4 h-100">
+						<div class="card-body">
+							<div id="grid_nuocsach"></div>
+						</div>
+					</div>
+				</div>
+
+				<div class="tab-pane fade" id="tab-content-approved" role="tabpanel" aria-labelledby="tab-content-approved">
+					<div class="card  card-small mb-4 h-100">
+						<div class="card-body">
+							<div id="grid_hoachat"></div>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade" id="tab-content-finish" role="tabpanel" aria-labelledby="tab-content-finish">
+					<div class="card  card-small mb-4 h-100">
+						<div class="card-body">
+							<div id="grid_chatthaiyte"></div>
+						</div>
+					</div>
+				</div> -->
+			</div>
+
+
+
+
 	</div>
-</div>
 </div>

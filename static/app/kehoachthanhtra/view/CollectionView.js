@@ -167,7 +167,7 @@ define(function (require) {
 		},
 		getDataSource: function (status, filters, page, results_per_page) {
 			var self = this;
-
+			console.log('filter',filters);
 			$.ajax({
 				url: self.getApp().serviceURL + "/api/v1/kehoachthanhtra",
 				method: "GET",
@@ -175,6 +175,7 @@ define(function (require) {
 				contentType: "application/json",
 				success: function (data) {
 					var x = data.objects
+					console.log('data',x)
 					// var dataSource = lodash.orderBy(x, ['created_at'], ['asc']);
 					// _.orderBy(x, [ 'created_at'], ['desc']);
 					self.render_grid(status, data.objects);

@@ -55,7 +55,10 @@ define(function (require) {
 		},
 		render: function () {
 			var self = this;
-		
+			self.$el.find(".close").unbind('click').bind('click', function () {
+				console.log("xxxxxxxxx")
+				self.$el.find("#grid_search input").val("")
+			})
 			//    		var currentUser = this.getApp().currentUser;
 			//	    	 if (this.getApp().data("quanhuyen_id") !== null) {
 			//               this.uiControl.filters = { "quanhuyen_id": { "$eq": this.getApp().data("quanhuyen_id") } };
@@ -63,7 +66,7 @@ define(function (require) {
 			self.uiControl.orderBy = [{ "field": "ten", "direction": "desc" }];
 			var filter = new CustomFilterView({
 				el: self.$el.find("#grid_search"),
-				// sessionKey: self.collectionName + "_filter"
+				sessionKey: self.collectionName + "_filter"
 			});
 			filter.render();
 
