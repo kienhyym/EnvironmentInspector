@@ -143,6 +143,9 @@ define(function (require) {
 				this.model.set('id', id);
 				this.model.fetch({
 					success: function (data) {
+						
+						
+
 						self.$el.find("#form-content").find("input").prop("disabled", true);
 						self.$el.find("#trangthai").removeClass("hidden");
 						var danhsachfile = self.model.get("tailieulienquan");
@@ -263,6 +266,8 @@ define(function (require) {
 					self.$el.find("#btn_cancel").hide();
 					self.$el.find("#btn_review").hide();
 				}
+
+				
 			}
 			if (currentUser.hasRole('CucPho')) {
 				self.$el.find('.card-header').hide();
@@ -451,9 +456,12 @@ define(function (require) {
 			});
 			self.$el.find("#btn_review").unbind("click").bind("click", function () {
 				self.confirm_kehoach();
+				self.getApp().getRouter().refresh();
 			});
 			self.$el.find("#btn_approve").unbind("click").bind("click", function () {
 				self.confirm_kehoach();
+				self.getApp().getRouter().refresh();
+
 			});
 			self.$el.find("#btn_cancel").unbind("click").bind("click", function () {
 				self.cancel_kehoach();

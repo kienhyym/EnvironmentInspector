@@ -711,7 +711,7 @@ define(function (require) {
 					self.model.set("trangthai", "completed")
 					self.model.save(null, {
 						success: function (model, response, options) {
-							self.getApp().notify("Đã hoàn thành thanh tras");
+							self.getApp().notify("Đã hoàn thành thanh tra");
 							self.getApp().router.refresh();
 						},
 
@@ -733,6 +733,15 @@ define(function (require) {
 				})
 				
 			}
+			var x = self.model.get('trangthai');
+			if(x == "completed"){
+				self.$el.find('.btn-save').hide();
+				self.$el.find('.btn-end-exit').hide();
+
+				self.$el.find('.upload_files').hide();
+				self.$el.find('.notify-sucssec').show();
+			}
+			
 		},
 		// New Get người giám sát
 		GetNguoiGiamSat: function () {
