@@ -42,11 +42,11 @@ define(function(require) {
 				}, 700);
     		});
 
-    		$textEl.unbind("keypress").bind("keypress", function($event) {
-    			if (timer) {
-    				clearTimeout(timer);
-    			}
-    		});
+    		// $textEl.unbind("keypress").bind("keypress", function($event) {
+    		// 	if (timer) {
+    		// 		clearTimeout(timer);
+    		// 	}
+    		// });
     	}
     });
 });

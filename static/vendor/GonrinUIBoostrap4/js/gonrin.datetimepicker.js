@@ -16,8 +16,8 @@
         factory(jQuery, moment);
     }
 }(function ($, moment) {
-	
-	'use strict';
+
+    'use strict';
     if (!moment) {
         throw new Error('gonrin.datetimepicker requires Moment.js to be loaded first');
     }
@@ -178,41 +178,41 @@
 
             getDatePickerTemplate = function () {
                 var headTemplate = $('<thead>')
-                        .append($('<tr>')
-                            .append($('<th>').addClass('prev').attr('data-action', 'previous')
-                                .append($('<i>').addClass(options.icons.previous))
-                                )
-                            .append($('<th>').addClass('picker-switch').attr('data-action', 'pickerSwitch').attr('colspan', (options.calendarWeeks ? '6' : '5')))
-                            .append($('<th>').addClass('next').attr('data-action', 'next')
-                                .append($('<i>').addClass(options.icons.next))
-                                )
-                            ),
+                    .append($('<tr>')
+                        .append($('<th>').addClass('prev').attr('data-action', 'previous')
+                            .append($('<i>').addClass(options.icons.previous))
+                        )
+                        .append($('<th>').addClass('picker-switch').attr('data-action', 'pickerSwitch').attr('colspan', (options.calendarWeeks ? '6' : '5')))
+                        .append($('<th>').addClass('next').attr('data-action', 'next')
+                            .append($('<i>').addClass(options.icons.next))
+                        )
+                    ),
                     contTemplate = $('<tbody>')
                         .append($('<tr>')
                             .append($('<td>').attr('colspan', (options.calendarWeeks ? '8' : '7')))
-                            );
+                        );
 
                 return [
                     $('<div>').addClass('datepicker-days')
                         .append($('<table>').addClass('table-condensed')
                             .append(headTemplate)
                             .append($('<tbody>'))
-                            ),
+                        ),
                     $('<div>').addClass('datepicker-months')
                         .append($('<table>').addClass('table-condensed')
                             .append(headTemplate.clone())
                             .append(contTemplate.clone())
-                            ),
+                        ),
                     $('<div>').addClass('datepicker-years')
                         .append($('<table>').addClass('table-condensed')
                             .append(headTemplate.clone())
                             .append(contTemplate.clone())
-                            ),
+                        ),
                     $('<div>').addClass('datepicker-decades')
                         .append($('<table>').addClass('table-condensed')
                             .append(headTemplate.clone())
                             .append(contTemplate.clone())
-                            )
+                        )
                 ];
             },
 
@@ -274,7 +274,7 @@
 
             getTimePickerTemplate = function () {
                 var hoursView = $('<div>').addClass('timepicker-hours')
-                        .append($('<table>').addClass('table-condensed')),
+                    .append($('<table>').addClass('table-condensed')),
                     minutesView = $('<div>').addClass('timepicker-minutes')
                         .append($('<table>').addClass('table-condensed')),
                     secondsView = $('<div>').addClass('timepicker-seconds')
@@ -394,11 +394,11 @@
                     vertical = options.widgetPositioning.vertical,
                     horizontal = options.widgetPositioning.horizontal,
                     parent;
-            
+
                 if (options.widgetParent) {
                     parent = options.widgetParent.append(widget);
                 } else if (element.is('input')) {
-                	//gonrin inject
+                    //gonrin inject
                     parent = element.after(widget).parent();
                     position = textElement.position();
                 } else if (options.inline) {
@@ -408,7 +408,7 @@
                     parent = element;
                     element.children().first().after(widget);
                 }
-                
+
                 // Top and bottom logic
                 if (vertical === 'auto') {
                     if (offset.top + widget.height() * 1.5 >= $(window).height() + $(window).scrollTop() &&
@@ -420,14 +420,14 @@
                 }
 
                 // Left and right logic
-                
+
                 if (horizontal === 'auto') {
-                	if (parent.width() < offset.left + widget.outerWidth() / 2 &&
-                        widget.outerWidth() > offset.left + (!!component ? component.outerWidth(): 0) &&
+                    if (parent.width() < offset.left + widget.outerWidth() / 2 &&
+                        widget.outerWidth() > offset.left + (!!component ? component.outerWidth() : 0) &&
                         textoffset.left + widget.outerWidth() < $(window).width()) {
                         horizontal = 'left';
                     }
-                	else if (parent.width() < offset.left + widget.outerWidth() / 2 &&
+                    else if (parent.width() < offset.left + widget.outerWidth() / 2 &&
                         offset.left + widget.outerWidth() > $(window).width()) {
                         horizontal = 'right';
                     } else {
@@ -467,7 +467,7 @@
             },
 
             notifyEvent = function (e) {
-                if ((e.type === 'change.gonrin')  && ((e.date && e.date.isSame(e.oldDate)) || (!e.date && !e.oldDate))) {
+                if ((e.type === 'change.gonrin') && ((e.date && e.date.isSame(e.oldDate)) || (!e.date && !e.oldDate))) {
                     return;
                 }
                 element.trigger(e);
@@ -869,15 +869,15 @@
                     date = targetMoment;
                     viewDate = date.clone();
                     if (options.parseOutputDate === undefined) {
-                    	input.val(date.format(actualFormat));
+                        input.val(date.format(actualFormat));
                     } else {
-                    	input.val(options.parseOutputDate(date));
+                        input.val(options.parseOutputDate(date));
                     }
-//                    input.val(date.format(actualFormat));
-                    
+                    //                    input.val(date.format(actualFormat));
+
                     //textElement here
                     textElement.val(date.format(textFormat));
-                    
+
                     element.data('date', date.format(actualFormat));
                     unset = false;
                     update();
@@ -886,12 +886,12 @@
                         date: date.clone(),
                         oldDate: oldDate
                     });
-//                    hide();
+                    //                    hide();
                 } else {
                     if (!options.keepInvalid) {
                         input.val(unset ? '' : date.format(actualFormat));
                         textElement.val(unset ? '' : date.format(textFormat));
-                        
+
                     } else {
                         notifyEvent({
                             type: 'change.gonrin',
@@ -1205,7 +1205,7 @@
                             return m.seconds(0);
                         }
                     };
-               
+
                 if (input.prop('disabled') || (!options.ignoreReadonly && input.prop('readonly')) || widget || (!options.ignoreReadonly && options.readonly)) {
                     return picker;
                 }
@@ -1333,7 +1333,7 @@
             },
 
             attachDatePickerElementEvents = function () {
-                
+
                 textElement.on({
                     'change': change,
                     'blur': options.debug ? '' : hide,
@@ -1347,7 +1347,7 @@
                         'focus': show
                     });
                 };*/
-                
+
                 if (component) {
                     component.on('click', toggle);
                     component.on('mousedown', false);
@@ -1362,7 +1362,7 @@
                     'keyup': keyup,
                     'focus': options.allowInputToggle ? hide : ''
                 });*/
-                
+
                 textElement.off({
                     'change': change,
                     'blur': options.debug ? '' : hide,
@@ -1376,7 +1376,7 @@
                         'focus': show
                     });
                 }*/
-                
+
                 if (component) {
                     component.off('click', toggle);
                     component.off('mousedown', false);
@@ -1423,7 +1423,7 @@
                 if (parseFormats.indexOf(format) < 0 && parseFormats.indexOf(actualFormat) < 0) {
                     parseFormats.push(actualFormat);
                 }
-                
+
                 textFormat = options.textFormat || actualFormat;
 
                 use24Hours = (actualFormat.toLowerCase().indexOf('a') < 1 && actualFormat.replace(/\[.*?\]/g, '').indexOf('h') < 1);
@@ -1514,7 +1514,7 @@
                     picker[key](value);
                 } else {
                     //throw new TypeError('option ' + key + ' is not recognized!');
-                	//console.log('gonrin.datetimepicker: option ' + key + ' is not recognized!');
+                    //console.log('gonrin.datetimepicker: option ' + key + ' is not recognized!');
                 }
             });
             return picker;
@@ -1562,7 +1562,7 @@
             }
             return picker;
         };
-        
+
         picker.textFormat = function (newTextFormat) {
             if (arguments.length === 0) {
                 return options.textFormat;
@@ -2353,17 +2353,17 @@
             return picker;
         };
         picker.getDate = function () {
-        	if(!!date){
-        		return date.clone().toDate();
-        	}
+            if (!!date) {
+                return date.clone().toDate();
+            }
             return null;
         };
-        picker.setValue = function(newDate){
-        	if(newDate == null){
+        picker.setValue = function (newDate) {
+            if (newDate == null) {
                 setValue(null);
-            }else if($.type(newDate) === "string"){
+            } else if ($.type(newDate) === "string") {
                 setValue(parseInputDate(newDate.trim()));
-            }else{
+            } else {
                 setValue(parseInputDate(newDate));
                 //setValue(newDate);
             }
@@ -2373,17 +2373,17 @@
         		return date.clone().toDate();
         	}
             return null;*/
-        	if(!!date){
-        		if (options.parseOutputDate === undefined) {
-        			return date.clone().format(actualFormat);
+            if (!!date) {
+                if (options.parseOutputDate === undefined) {
+                    return date.clone().format(actualFormat);
                 } else {
-                	return options.parseOutputDate(date.clone());
+                    return options.parseOutputDate(date.clone());
                 }
-        		
-        	}else if (input.is('input') && input.val().trim().length !== 0) {
-            	return input.val().trim();
-        	}
-        	return null;
+
+            } else if (input.is('input') && input.val().trim().length !== 0) {
+                return input.val().trim();
+            }
+            return null;
         };
 
         // initializing element and component attributes
@@ -2391,39 +2391,39 @@
             input = element;
             //gonrin inject input element
             var inputGroupSpan;
-            
+
             var parentEl = element.parent();
-            
-            if(parentEl.is('div') && parentEl.hasClass('date-group')){
-            	inputGroupSpan = parentEl;
-            }else{
-            	element.wrap( '<div class="input-group date-group"></div>' );
+
+            if (parentEl.is('div') && parentEl.hasClass('date-group')) {
+                inputGroupSpan = parentEl;
+            } else {
+                element.wrap('<div class="input-group date-group"></div>');
                 inputGroupSpan = element.parent();
             }
-            
+
             //component
             var componentButton = element.nextAll('span:first');
-            
-            if((componentButton.length == 0 ) || !($(componentButton[0]).hasClass('input-group-append'))){
-            	componentButton = $('<span class="input-group-append">').html('<span class="btn btn-outline-secondary input-group-addon"><i class="fa fa-calendar"></i></span>');
+
+            if ((componentButton.length == 0) || !($(componentButton[0]).hasClass('input-group-append'))) {
+                componentButton = $('<span class="input-group-append">').html('<span class="btn btn-outline-secondary input-group-addon"><i class="fa fa-calendar"></i></span>');
                 inputGroupSpan.append(componentButton);
             }
-            
+
             component = componentButton;
             element.addClass("form-control");
-            
+
             var prevEl = element.prev('input');
-            if((prevEl.length == 0 ) || !($(prevEl[0]).hasClass('datetimepicker-input'))){
-            	prevEl = $('<input class="form-control datetimepicker-input" type="text" readonly style="background-color:white">');
-            	var classList = element.attr("class").split(' ');
-            	$.each(classList, function(idx, clz){
-            		prevEl.addClass(clz);
-            	});
+            if ((prevEl.length == 0) || !($(prevEl[0]).hasClass('datetimepicker-input'))) {
+                prevEl = $('<input class="form-control datetimepicker-input" type="text" readonly style="background-color:white">');
+                var classList = element.attr("class").split(' ');
+                $.each(classList, function (idx, clz) {
+                    prevEl.addClass(clz);
+                });
                 element.before(prevEl);
             }
             textElement = prevEl;
             element.css("display", "none");
-        }else{
+        } else {
             throw new Error('Could not initialize DateTimePicker without an input element');
         }
         /*} else {
@@ -2470,11 +2470,11 @@
         else if (options.defaultDate && input.attr('placeholder') === undefined) {
             setValue(options.defaultDate);
         }
-        
-        if(!options.ignoreReadonly && options.readonly){
-        	textElement.prop('readonly', true);
+
+        if (!options.ignoreReadonly && options.readonly) {
+            textElement.prop('readonly', true);
         }
-        
+
         if (options.inline) {
             show();
         }
@@ -2483,7 +2483,7 @@
 
     /********************************************************************************************/
 
-   
+
     $.fn.datetimepicker = function (options) {
         options = options || {};
 
@@ -2529,7 +2529,7 @@
         format: false,
         dayViewHeaderFormat: 'MMMM YYYY',
         extraFormats: false,
-        textFormat:false,
+        textFormat: false,
         stepping: 1,
         minDate: false,
         maxDate: false,

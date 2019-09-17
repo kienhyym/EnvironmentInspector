@@ -82,7 +82,7 @@ define(function (require) {
 							]
 						}
 					}
-
+					console.log(filters)
 					$.ajax({
 						url: self.getApp().serviceURL + "/api/v1/kehoachthanhtra",
 						method: "GET",

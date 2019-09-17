@@ -154,6 +154,8 @@ define(function (require) {
 
 			var id = this.getApp().getRouter().getParam("id");
 			var currentUser = self.getApp().currentUser;
+			console.log("currentUser===", currentUser.hasRole('CucTruong'));
+
 			console.log("currentUser===", currentUser);
 			console.log("currentUser.hasRole('CucTruong')==", currentUser.hasRole('CucTruong'));
 			if (currentUser && currentUser.hasRole('CucTruong')) {

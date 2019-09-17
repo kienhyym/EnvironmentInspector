@@ -74,7 +74,6 @@ define(function (require) {
 		render_grid: function (status, dataSource) {
 			var self = this;
 			var element = self.$el.find("#grid_approve");
-
 			element.grid({
 				showSortingIndicator: true,
 				orderByMode: "client",
@@ -91,6 +90,10 @@ define(function (require) {
 					{
 						field: "tenkehoach",
 						label: "Tên kế hoạch",
+					},
+					{
+						field: "tendoanhnghiep",
+						label: "Tên doanh nghiệp",
 					},
 					{
 						field: "ngaythanhtra", label: "Ngày thanh tra",

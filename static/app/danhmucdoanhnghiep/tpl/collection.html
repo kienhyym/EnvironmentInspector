@@ -8,56 +8,62 @@
 <!-- End Page Header -->
 
 
+<div class="row col-md-12">
+	<div class="col-md-6">
+		<label>Lọc theo lĩnh vực </label>
+		<div id="linhvuc_selecter">
+			<input type='text' id='combobox' />
+			<!-- <input type='text' id="value_select" value="chọn lĩnh vực. . " readonly /> -->
+			<label for="combobox" id="value_select" class="m-0 p-0">
+					Chọn lĩnh vực
+				</label>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<label>Lọc theo tỉnh thành </label>
+		<div id="tinhthanh_selecter">
+			<input type='text' id='tinhthanh_combobox' />
+			<label for="tinhthanh_combobox" id="cotent-label" class="m-0 p-0">
+				<!-- Chọn tỉnh thành -->
+			</label>
+		</div>
+	</div>
+</div>
+<br>
+<div class="row col-md-12">
+	<div class="col-md-6">
+		<label>Lọc các đơn vị theo số lần đã thanh tra </label>
+		<div id="soLanThanhTra_selecter" class="row col-md-12 m-0 p-0">
+			<input  type="number"  id='soLanThanhTra_combobox'  name="quantity" min="1" max="100" class="form-control col-md-10">
+			<button type="button" class="btn btn-primary locTheoSoLanThanhTra col-md-2" >Lọc</button>
+		</div>
+	</div>
+	<div class="col-md-6">
+			<label>Lọc các đơn vị chưa thanh tra gần đây(số năm nhất)</label>
+			<div id="chuaThanhTraGanDay_selecter" class="row col-md-12 m-0 p-0">
+				<input  type="number"  id='chuathanhtraganday_combobox'  name="quantity" min="1" max="10" class="form-control col-md-10">
+				<button type="button" class="btn btn-primary loctheochuathanhtraganday col-md-2" >Lọc</button>
+			</div>
+		</div>
+</div>
+<br>
 <div class="row">
 	<div class="col">
-			<div style="width:100%">
-				<label>Lọc theo lĩnh vực </label>
-					<div style="width:50%;" id="mutil_selecter">
-						<input type='text'  id='combobox' />
-						<input type='text' id="value_select" value="Select . . " readonly/>
 
-						<!-- <label id="value_select" value=>Select . . .</label> -->
-					</div>
-				</div>
-				
-				<br>
-
-
-
-
-		<!-- <ul class="nav nav-pills mb-3" id="kehoach" role="tablist">
-				<li class="nav-item">
-					<a class="nav-link active" id="btn-all" data-toggle="pill" href="#tab-content-new" role="tab"
-						aria-selected="true">TẤT CẢ</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" id="btn-nuocsach" data-toggle="pill" href="#tab-content-review" role="tab"
-						aria-selected="false">NƯỚC SẠCH</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" id="btn-hoachat" data-toggle="pill" href="#tab-content-approved" role="tab"
-						aria-selected="false">HÓA CHẤT</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" id="btn-chatthaiyte" data-toggle="pill" href="#tab-content-finish" role="tab"
-						aria-selected="false">CHẤT THẢI Y TẾ</a>
-				</li>
-			</ul> -->
-		
 		<div class="tab-content" id="kehoach-tabContent">
-				<div class="tab-pane fade show active" id="tab-content-new" role="tabpanel"
-					aria-labelledby="tab-content-new">
-					<div class="card  card-small mb-4 h-100">
-						<div class="card-header">
-							<div block-bind="toolbar"></div>
-						</div>
-						<div class="card-body">
-							<div id="grid_all"></div>
-						</div>
+			<div class="tab-pane fade show active" id="tab-content-new" role="tabpanel"
+				aria-labelledby="tab-content-new">
+				<div class="card  card-small mb-4 h-100">
+					<div class="card-header">
+						<div block-bind="toolbar"></div>
+					</div>
+					<div class="card-body">
+						<div id="grid_all"></div>
 					</div>
 				</div>
+			</div>
 
-				<!-- <div class="tab-pane fade" id="tab-content-review" role="tabpanel" aria-labelledby="tab-content-review">
+			<!-- <div class="tab-pane fade" id="tab-content-review" role="tabpanel" aria-labelledby="tab-content-review">
 					<div class="card  card-small mb-4 h-100">
 						<div class="card-body">
 							<div id="grid_nuocsach"></div>
@@ -79,7 +85,7 @@
 						</div>
 					</div>
 				</div> -->
-			</div>
+		</div>
 
 
 

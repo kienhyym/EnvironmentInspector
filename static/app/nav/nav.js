@@ -92,6 +92,8 @@ define(function (require) {
 			"route": "user/collection",
 			"$ref": "app/user/view/CollectionView",
 			"visible": function () {
+				console.log('xxxxxxxxxxx',this.userHasRole("CucTruong"))
+
 				return this.userHasRole("CucTruong");
 			}
 		},

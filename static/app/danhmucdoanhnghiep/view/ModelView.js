@@ -62,7 +62,8 @@ define(function (require) {
 							self.model.save(null, {
 								success: function (model, respose, options) {
 									self.getApp().notify("Lưu thông tin thành công");
-									self.getApp().getRouter().navigate(self.collectionName + "/collection");
+									// self.getApp().getRouter().navigate(self.collectionName + "/collection");
+									self.getApp().getRouter().refresh();
 
 								},
 								error: function (xhr, status, error) {
@@ -198,6 +199,7 @@ define(function (require) {
 
 
 						self.model.on("change:tinhthanh_id", function () {
+							console.log("change tinh thanhxxxxxxxxxxxxxxxxxx");
 							self.getFieldElement("quanhuyen").data("gonrin").setFilters({ "tinhthanh_id": { "$eq": self.model.get("tinhthanh_id") } });
 						});
 						self.model.on("change:quanhuyen_id", function () {

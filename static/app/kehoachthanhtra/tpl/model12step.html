@@ -118,12 +118,17 @@
 
 						<h5>Quyết định thanh tra</h5>
 						<div class="row">
-							<div class="form-group col-6 required">
+							<div class="form-group col-4 required">
+								<label>Doanh nghiệp</label>
+								<input required type="text" data-bind="value:tendoanhnghiep" readonly
+									class="form-control">
+							</div>
+							<div class="form-group col-4 required">
 								<label>Số quyết định thanh tra</label>
 								<input required type="text" data-bind="value:so_quyetdinh_thanhtra"
 									placeholder="Nhập số quyết định" class="form-control">
 							</div>
-							<div class="form-group col-6 required">
+							<div class="form-group col-3 required">
 								<label>Ngày quyết định</label>
 								<input required type="text" data-bind="value:ngay_quyetdinh_thanhtra"
 									placeholder="Ngày ra quyết định" class="form-control">
@@ -1414,27 +1419,27 @@
 								<div class="card-body">
 									<h4 class="card-title">14: Bàn giao bộ phận lưu trữ hồ sơ</h4>
 									<div class="row">
-										
-											<div class="form-group col-6">
-												<label>Ngày bàn giao</label>
-												<input required type="text" data-bind="value:ngay_bangiao_luutru"
-													class="form-control">
-											</div>
-											<div class="form-group col-12">
-												<label>Danh sách hồ sơ bàn giao</label>
-												<div style="background-color: #f3f3f3;border-radius: 10px;">
-														<table class=" table table-bordered w-100">
-															<tr class="text-center">
-																<th>STT</th>
-																<th>Tên tài liệu</th>
-																<th>Tải về</th>
-															</tr>
-															<tbody class="danhsachhoso_bangiao"></tbody>
-														</table>
 
-												</div>
+										<div class="form-group col-6">
+											<label>Ngày bàn giao</label>
+											<input required type="text" data-bind="value:ngay_bangiao_luutru"
+												class="form-control">
+										</div>
+										<div class="form-group col-12">
+											<label>Danh sách hồ sơ bàn giao</label>
+											<div style="background-color: #f3f3f3;border-radius: 10px;">
+												<table class=" table table-bordered w-100">
+													<tr class="text-center">
+														<th>STT</th>
+														<th>Tên tài liệu</th>
+														<th>Tải về</th>
+													</tr>
+													<tbody class="danhsachhoso_bangiao"></tbody>
+												</table>
+
 											</div>
-										
+										</div>
+
 									</div>
 
 									<button class="btn btn-success btn-save btn-save-gd14">Lưu</button>
