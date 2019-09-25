@@ -15,16 +15,16 @@ define(function (require) {
 			"$ref": "app/danhmucdoanhnghiep/view/ModelView",
 		},
 
-		{
-			"collectionName": "danhmuclinhvuc",
-			"route": "danhmuclinhvuc/collection",
-			"$ref": "app/danhmuclinhvuc/js/CollectionView",
-		},
-		{
-			"collectionName": "danhmuclinhvuc",
-			"route": "danhmuclinhvuc/model(/:id)",
-			"$ref": "app/danhmuclinhvuc/js/ModelView",
-		},
+		// {
+		// 	"collectionName": "danhmuclinhvuc",
+		// 	"route": "danhmuclinhvuc/collection",
+		// 	"$ref": "app/danhmuclinhvuc/js/CollectionView",
+		// },
+		// {
+		// 	"collectionName": "danhmuclinhvuc",
+		// 	"route": "danhmuclinhvuc/model(/:id)",
+		// 	"$ref": "app/danhmuclinhvuc/js/ModelView",
+		// },
 
 
 		{

@@ -45,7 +45,7 @@ async def kehoach_review(request):
             kehoach.userid_quyetdinh = currentUser.id
             kehoach.username_quyetdinh = currentUser.name
             kehoach.ngaypheduyet_quyetdinh = floor(time.time())
-        elif currentUser.has_role("CucPho"):
+        elif currentUser.has_role("PhoCucTruong"):
             kehoach.trangthai = KeHoach_ThanhTra_TrangThai["send_approved"]
             kehoach.userid_pctduyet = currentUser.id
             kehoach.username_pctduyet = currentUser.name
@@ -81,7 +81,7 @@ async def cancel_kehoach(request):
     if kehoach is not None:
         if currentUser.has_role("CucTruong"):
             kehoach.trangthai = KeHoach_ThanhTra_TrangThai["cancel_approved"]
-        elif currentUser.has_role("CucPho"):
+        elif currentUser.has_role("PhoCucTruong"):
             kehoach.trangthai = KeHoach_ThanhTra_TrangThai["cancel_reviewed_pct"]
         elif currentUser.has_role("TruongPhong"):
             kehoach.trangthai = KeHoach_ThanhTra_TrangThai["cancel_reviewed_truongphong"]

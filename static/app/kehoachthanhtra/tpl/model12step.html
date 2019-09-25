@@ -121,7 +121,7 @@
 						<h5>Quyết định thanh tra</h5>
 						<div class="row">
 							<div class="form-group col-4 required">
-								<label>Doanh nghiệp</label>
+								<label>Đối tượng thanh tra</label>
 								<input required type="text" data-bind="value:tendoanhnghiep" readonly
 									class="form-control">
 							</div>
@@ -266,7 +266,7 @@
 				<div class="card border-success shadow">
 					<div class="card-body">
 						<div class="float-right text-success d-none"></div>
-						<h4 class="card-title text-success">2: Xây dựng kế hoạch thanh tra</h4>
+						<h4 class="card-title text-success">2: Xây dựng kế hoạch đoàn thanh tra</h4>
 						<div class="row">
 							<div class="form-group col-6 required">
 								<label>Số văn bản kế hoạch</label>
@@ -566,7 +566,7 @@
 				<div class="card">
 					<div class="card-body">
 						<div class="float-right text-muted d-none"></div>
-						<h4 class="card-title">6: Công bố quyết định thanh tra tại Doanh Nghiệp</h4>
+						<h4 class="card-title">6: Công bố quyết định thanh tra tại đối tượng thanh tra</h4>
 						<div class="row">
 							<div class="form-group col-6 required">
 								<label>Số văn bản quyết định</label>
@@ -577,6 +577,23 @@
 								<label>Ngày công bố quyết định</label>
 								<input required type="text" data-bind="value:ngay_vanban_congbo_quyetdinh"
 									placeholder="Ngày công bố quyết định" class="form-control">
+							</div>
+						</div>
+						<div class="row">
+							<div class="form-group col">
+								<label>Tài liệu đính kèm</label>
+								<div id="upload-congbo_quyetdinhthanhtra_attachment">
+									<div class="custom-file">
+										<input type="file" class="custom-file-input upload_files" id="upload_files"
+											data-attr="congbo_quyetdinhthanhtra_attachment" lang="vi">
+										<label class="custom-file-label">Chọn file tải lên</label>
+									</div>
+								</div>
+								<div id="download-congbo_quyetdinhthanhtra_attachment"
+									class="form-group col col-md-12 col-sm-12 linkdownload_and_button">
+									<span class="textDownload" data-bind="text:congbo_quyetdinhthanhtra_attachment" />
+									<a class="linkDownload">Download</a>
+								</div>
 							</div>
 						</div>
 						<button class="btn btn-success btn-save btn-save-gd6">Lưu</button>

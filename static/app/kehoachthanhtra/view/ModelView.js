@@ -7,6 +7,8 @@ define(function (require) {
 	var template = require('text!app/kehoachthanhtra/tpl/model.html'),
 		schema = require('json!schema/KeHoachThanhTraSchema.json');
 	var TinhThanhSelectView = require('app/DanhMuc/TinhThanh/view/SelectView');
+
+	var DonViSelectView = require('app/danhmuclinhvuc/js/SelectView');
 	var TemplateHelper = require('app/base/view/TemplateHelper');
 
 	return Gonrin.ModelView.extend({
@@ -96,6 +98,13 @@ define(function (require) {
 					parseOutputDate: function (date) {
 						return date.unix()
 					}
+				},{
+					field: "danhmuclinhvuc",
+					uicontrol: "ref",
+					textField: "tenlinhvuc",
+					foreignRemoteField: "id",
+					foreignField: "danhmuclinhvuc_id",
+					dataSource: DonViSelectView
 				},
 				{
 					field: "ngayketthuc",
@@ -220,7 +229,7 @@ define(function (require) {
 			//    		console.log("trangthai===",trangthai);
 			//    		console.log('chuyenvien===',currentUser.hasRole('ChuyenVien'));
 			//    		console.log('TruongPhong===',currentUser.hasRole('TruongPhong'));
-			//    		console.log('CucPho===',currentUser.hasRole('CucPho'));
+			//    		console.log('PhoCucTruong===',currentUser.hasRole('PhoCucTruong'));
 			//    		console.log('CucTruong===',currentUser.hasRole('CucTruong'));
 
 			if (currentUser.hasRole('ChuyenVien')) {
@@ -269,7 +278,7 @@ define(function (require) {
 
 				
 			}
-			if (currentUser.hasRole('CucPho')) {
+			if (currentUser.hasRole('PhoCucTruong')) {
 				self.$el.find('.card-header').hide();
 				self.$el.find("#btn_approve").hide();
 				if (trangthai === "send_review_pct") {
@@ -596,14 +605,14 @@ define(function (require) {
 				var ngaypheduyet_phong = template_helper.datetimeFormat(data.ngaypheduyet_phong, "DD/MM/YYYY");
 				el_status_capphong.find('.date').html(ngaypheduyet_phong || "&nbsp;");
 			}
-			var arr_timeline_cucpho = ["completed", "result_checked", "checked", "cancel_approved", "approved", "send_approved"]
-			if (arr_timeline_cucpho.indexOf(data.trangthai) >= 0) {
-				var el_status_cucpho = self.$el.find("#timeline .kehoach_send_review_pct");
-				el_status_cucpho.addClass("complete");
-				el_status_cucpho.find('.author').html(data.username_pctduyet || "&nbsp;");
+			var arr_timeline_PhoCucTruong = ["completed", "result_checked", "checked", "cancel_approved", "approved", "send_approved"]
+			if (arr_timeline_PhoCucTruong.indexOf(data.trangthai) >= 0) {
+				var el_status_PhoCucTruong = self.$el.find("#timeline .kehoach_send_review_pct");
+				el_status_PhoCucTruong.addClass("complete");
+				el_status_PhoCucTruong.find('.author').html(data.username_pctduyet || "&nbsp;");
 				var template_helper = new TemplateHelper();
-				var ngaypheduyet_cucpho = template_helper.datetimeFormat(data.ngaypheduyet_pct, "DD/MM/YYYY");
-				el_status_cucpho.find('.date').html(ngaypheduyet_cucpho || "&nbsp;");
+				var ngaypheduyet_PhoCucTruong = template_helper.datetimeFormat(data.ngaypheduyet_pct, "DD/MM/YYYY");
+				el_status_PhoCucTruong.find('.date').html(ngaypheduyet_PhoCucTruong || "&nbsp;");
 				self.$el.find(".ngayketthuc").removeClass("d-none");
 			}
 			var arr_timeline_cuctruong = ["completed", "result_checked", "checked", "approved"]

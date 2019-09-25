@@ -38,29 +38,50 @@ define(function (require) {
 				return false;
 			}
 		},
+		// {
+		// 	"text": "Danh sách lĩnh vực",
+		// 	"icon": "fa fa-home",
+		// 	"type": "view",
+		// 	"collectionName": "danhmuclinhvuc",
+		// 	"route": "danhmuclinhvuc/collection",
+		// 	"$ref": "app/danhmuclinhvuc/js/CollectionView",
+		// 	"visible": function () {
+		// 		return true;
+		// 	}
+		// },
+		// {
+		// 	"text": "Chi tiết lĩnh vực",
+		// 	"icon": "fa fa-home",
+		// 	"type": "view",
+		// 	"collectionName": "danhmuclinhvuc",
+		// 	"route": "danhmuclinhvuc/model(/:id)",
+		// 	"$ref": "app/danhmuclinhvuc/js/ModelView",
+		// 	"visible": function () {
+		// 		return false;
+		// 	}
+		// },
 		{
-			"text": "Danh sách lĩnh vực",
-			"icon": "fa fa-home",
+			"text": "Danh sách người dùng",
+			"icon": "fa fa-book",
 			"type": "view",
-			"collectionName": "danhmuclinhvuc",
-			"route": "danhmuclinhvuc/collection",
-			"$ref": "app/danhmuclinhvuc/js/CollectionView",
+			"collectionName": "user",
+			"route": "user/collection",
+			"$ref": "app/user/view/CollectionView",
 			"visible": function () {
-				return true;
+				return this.userHasRole("CucTruong");
 			}
 		},
 		{
-			"text": "Chi tiết lĩnh vực",
-			"icon": "fa fa-home",
+			"text": "Thông tin người dùng",
+			"icon": "fa fa-book",
 			"type": "view",
-			"collectionName": "danhmuclinhvuc",
-			"route": "danhmuclinhvuc/model(/:id)",
-			"$ref": "app/danhmuclinhvuc/js/ModelView",
+			"collectionName": "user",
+			"route": "user/model",
+			"$ref": "app/user/view/ModelView",
 			"visible": function () {
 				return false;
 			}
 		},
-
 
 		{
 			"text": "Xây dựng kế hoạch ",
@@ -84,30 +105,7 @@ define(function (require) {
 				return false;
 			}
 		},
-		{
-			"text": "Danh sách người dùng",
-			"icon": "fa fa-book",
-			"type": "view",
-			"collectionName": "user",
-			"route": "user/collection",
-			"$ref": "app/user/view/CollectionView",
-			"visible": function () {
-				console.log('xxxxxxxxxxx',this.userHasRole("CucTruong"))
-
-				return this.userHasRole("CucTruong");
-			}
-		},
-		{
-			"text": "Thông tin người dùng",
-			"icon": "fa fa-book",
-			"type": "view",
-			"collectionName": "user",
-			"route": "user/model",
-			"$ref": "app/user/view/ModelView",
-			"visible": function () {
-				return false;
-			}
-		},
+		
 		{
 			"text": "Triển khai cuộc thanh tra",
 			"icon": "fa fa-book",

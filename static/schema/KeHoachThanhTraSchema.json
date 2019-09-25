@@ -88,15 +88,6 @@
     "chucvu_duyetquyetdinh": {
         "type": "string"
     },
-    "loaithanhtra": {
-        "type": "string"
-    },
-    "doanthanhtra": {
-        "type": "string"
-    },
-    "truongdoanthanhtra": {
-        "type": "string"
-    },
     "ngaythanhtra": {
         "type": "number"
     },
@@ -110,6 +101,9 @@
         "type": "number"
     },
     "taokehoach_attachment": {
+        "type": "string"
+    },
+    "danhmuclinhvuc_id": {
         "type": "string"
     },
     "so_quyetdinh_thanhtra": {
@@ -240,6 +234,9 @@
     },
     "ngay_vanban_congbo_quyetdinh": {
         "type": "number"
+    },
+    "congbo_quyetdinhthanhtra_attachment": {
+        "type": "string"
     },
     "so_thongbao_ketthuc_thanhtra": {
         "type": "string"
@@ -399,5 +396,8 @@
     },
     "trangthai": {
         "type": "string"
+    },
+    "danhmuclinhvuc": {
+        "type": "dict"
     }
 }

@@ -43,7 +43,7 @@ define(function (require) {
 			var currentUser = self.getApp().currentUser;
 			self.bindEvent();
 			if (!!currentUser && (currentUser.hasRole("CucTruong") ||
-				currentUser.hasRole("CucPho") ||
+				currentUser.hasRole("PhoCucTruong") ||
 				currentUser.hasRole("TruongPhong"))) {
 				self.$el.find("#kehoach-new-tab").parent('li').hide();
 				self.$el.find("#kehoach-review-tab").click();
@@ -82,7 +82,7 @@ define(function (require) {
 							{ "trangthai": { "$eq": "send_approved" } },
 							{ "trangthai": { "$eq": "cancel_approved" } }]
 					};
-				} else if (!!currentUser && currentUser.hasRole("CucPho")) {
+				} else if (!!currentUser && currentUser.hasRole("PhoCucTruong")) {
 					filters_common = {
 						"$or": [
 							{ "trangthai": { "$eq": "send_review_pct" } },
@@ -124,7 +124,7 @@ define(function (require) {
 						// { "trangthai": { "$eq": "end_checked" }},
 						{ "trangthai": { "$eq": "result_checked" } }]
 					};
-				} else if (!!currentUser && currentUser.hasRole("CucPho")) {
+				} else if (!!currentUser && currentUser.hasRole("PhoCucTruong")) {
 					filters_common = {
 						"$or": [
 							{ "trangthai": { "$eq": "approved" } },

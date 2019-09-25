@@ -20,7 +20,7 @@ from application import run_app
 from application.database import db
 from application.extensions import auth
 import os
-from application.models import Role, User, QuocGia, TinhThanh, QuanHuyen, XaPhuong, DanToc
+from application.models import Role, User, QuocGia, TinhThanh, QuanHuyen, XaPhuong, DanToc,DanhMucLinhVuc
 from application.controllers.helper import generator_salt
 # Instance
 manager = Manager()
@@ -101,17 +101,30 @@ def generate_schema(path = None, exclude = None, prettyprint = True):
         else:
             with open(path + '/' + classname + 'Schema.json', 'w') as outfile:
                 json.dump(schema,  outfile,)
+@manager.command
+def create_default_models_linhvuc(): 
+    lv1 = DanhMucLinhVuc(malinhvuc='NS',tenlinhvuc='Nước sạch')
+    db.session.add(lv1)
+    lv2 = DanhMucLinhVuc(malinhvuc='HC',tenlinhvuc='Hóa chất')
+    db.session.add(lv2)
+    lv3 = DanhMucLinhVuc(malinhvuc='CTYT',tenlinhvuc='Chất thải y tế')
+    db.session.add(lv3)
+    lv4 = DanhMucLinhVuc(malinhvuc='YTMT',tenlinhvuc='Y tế môi trường')
+    db.session.add(lv4)
+    db.session.flush()
+    #add linh vuc 
+    db.session.commit()
 
 @manager.command
 def create_default_models(): 
     #add role
-    role1 = Role(name='CucTruong')
+    role1 = Role(name='CucTruong',description='Cục Trưởng')
     db.session.add(role1)
-    role3 = Role(name='CucPho')
+    role3 = Role(name='PhoCucTruong',description='Phó Cục Trưởng')
     db.session.add(role3)
-    role4 = Role(name='TruongPhong')
+    role4 = Role(name='TruongPhong',description='Trưởng Phòng')
     db.session.add(role4)
-    role5 = Role(name='ChuyenVien')
+    role5 = Role(name='ChuyenVien',description='Chuyên Viên')
     db.session.add(role5)
     db.session.flush()
 
@@ -120,7 +133,22 @@ def create_default_models():
     user1 = User(email='cuctruong@gmail.com', name='Cục Trưởng',  password=auth.encrypt_password('123456', salt1), salt=salt1 ,active=True)
     user1.roles.append(role1)
     db.session.add(user1)
-    
+
+    salt2 = generator_salt()  
+    user2 = User(email='phocuctruong@gmail.com', name='Phó cục trưởng',  password=auth.encrypt_password('123456', salt2), salt=salt2 ,active=True)
+    user2.roles.append(role3)
+    db.session.add(user2)
+
+    salt3 = generator_salt()  
+    user3 = User(email='truongphong@gmail.com', name='trưởng Phòng',  password=auth.encrypt_password('123456', salt3), salt=salt3 ,active=True)
+    user3.roles.append(role4)
+    db.session.add(user3)
+
+    salt4 = generator_salt()  
+    user4 = User(email='chuyenvien@gmail.com', name='chuyên viên',  password=auth.encrypt_password('123456', salt4), salt=salt4 ,active=True)
+    user4.roles.append(role5)
+    db.session.add(user4)
+
     db.session.commit()
     
 
@@ -195,6 +223,7 @@ def run():
     role = db.session.query(Role).filter(Role.name == 'CucTruong').first()
     if role is None:
         create_default_models()
+        create_default_models_linhvuc()
         add_danhsach_quocgia_tinhthanh()
         add_danhsach_quanhuyen()
         add_danhsach_xaphuong()

@@ -172,15 +172,15 @@ class KeHoachThanhTra(CommonModel):
     username_quyetdinh = db.Column(String)
     ngaypheduyet_quyetdinh = db.Column(BigInteger())
     chucvu_duyetquyetdinh = db.Column(String)
-    
-    loaithanhtra = db.Column(String)
-    doanthanhtra = db.Column(String)
-    truongdoanthanhtra = db.Column(String)
+
     ngaythanhtra = db.Column(BigInteger())
     ketquathanhtra = db.Column(String)
     ketluanthanhtra = db.Column(String)
     ngayketthuc = db.Column(BigInteger())
     taokehoach_attachment = db.Column(String)
+    danhmuclinhvuc_id = db.Column(UUID(as_uuid=True),db.ForeignKey('danhmuclinhvuc.id'), nullable=True)
+    danhmuclinhvuc = db.relationship('DanhMucLinhVuc', viewonly=True)
+
 
     #step1
     so_quyetdinh_thanhtra = db.Column(String)
@@ -247,7 +247,8 @@ class KeHoachThanhTra(CommonModel):
     #GD6 -ok
     so_vanban_congbo_quyetdinh = db.Column(String)
     ngay_vanban_congbo_quyetdinh = db.Column(BigInteger())
-    
+    congbo_quyetdinhthanhtra_attachment = db.Column(String)
+
     #GD7 -OK
     so_thongbao_ketthuc_thanhtra = db.Column(String)
     ngay_congvan_ketthuc_thanhtra = db.Column(BigInteger())

@@ -212,7 +212,7 @@ define(function (require) {
 					for (var i = 0; i < data.objects.length; i++) {
 						var item = data.objects[i];
 						var data_str = encodeURIComponent(JSON.stringify(item));
-						var option_elm = $('<option>').attr({ 'value': item.id, 'data-ck': data_str }).html(item.name)
+						var option_elm = $('<option>').attr({ 'value': item.id, 'data-ck': data_str }).html(item.description)
 						self.$el.find("#multiselect_roles").append(option_elm);
 					}
 					$.fn.selectpicker.Constructor.DEFAULTS.multipleSeparator = ' | ';
