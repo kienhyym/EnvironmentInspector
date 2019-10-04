@@ -62,7 +62,16 @@ define(function (require) {
 			"route": "kehoachthanhtra/model_step_plan(/:id)",
 			"$ref": "app/kehoachthanhtra/view/ModelView_12step_plan",
 		},
-		
+		{
+			"collectionName": "kehoachnamsau",
+			"route": "kehoachnamsau/collection",
+			"$ref": "app/kehoachnamsau/view/CollectionView",
+		},
+		{
+			"collectionName": "kehoachnamsau",
+			"route": "kehoachnamsau/model(/:id)",
+			"$ref": "app/kehoachnamsau/view/ModelView",
+		},
 	];
 
 });

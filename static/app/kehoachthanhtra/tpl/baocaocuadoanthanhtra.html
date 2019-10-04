@@ -1,0 +1,55 @@
+<div class="row ">
+    <h5 class="mb-0">Công văn giải trình của đối tượng thanh tra lần </h5>&nbsp;<input class="solan" type="text"
+        style="width: 15px;border: none;">
+</div>
+<div class="row outFocus">
+    <div class="form-group col-6 ">
+        <label>Ngày gửi bảo cáo giải trình  </label>
+        <input type="text" baocaocuadoanthanhtra-bind="value:ngayguibaocaogiaitrinh"
+            placeholder="Ngày gửi báo cáo giải trình" class="form-control">
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col">
+        <label>Báo cáo tổng hợp của đoàn thanh tra  </label>
+        <div id="upload-vanbangiaitrinh_attachment">
+            <div class="custom-file">
+                <input type="file" class="custom-file-input upload_files" id="upload_files"
+                    data-attr="vanbangiaitrinh_attachment" lang="vi">
+                <label class="custom-file-label">Chọn file tải lên</label>
+            </div>
+        </div>
+        <div id="download-vanbangiaitrinh_attachment"
+            class="form-group col col-md-12 col-sm-12 linkdownload_and_button">
+            <span class="textDownload" baocaocuadoanthanhtra-bind="text:vanbangiaitrinh_attachment" />
+            <a class="linkDownload">Download</a>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-6 ">
+        <label>Ngày gửi bảo cáo của đoàn thanh tra  </label>
+        <input required type="text" baocaocuadoanthanhtra-bind="value:ngayguibaocaocuadoanthanhtra"
+            placeholder="Ngày gửi báo cáo giải trình" class="form-control">
+    </div>
+</div>
+<div class="row outFocus">
+    <div class="form-group col">
+        <label>Báo cáo tổng hợp của đoàn thanh tra  </label>
+        <div id="upload-baocaotonghopcuadoanthanhtra_attachment">
+            <div class="custom-file">
+                <input type="file" class="custom-file-input upload_files" id="upload_files"
+                    data-attr="baocaotonghopcuadoanthanhtra_attachment" lang="vi">
+                <label class="custom-file-label">Chọn file tải lên</label>
+            </div>
+        </div>
+        <div id="download-baocaotonghopcuadoanthanhtra_attachment"
+            class="form-group col col-md-12 col-sm-12 linkdownload_and_button">
+            <span class="textDownload" baocaocuadoanthanhtra-bind="text:baocaotonghopcuadoanthanhtra_attachment" />
+            <a class="linkDownload">Download</a>
+        </div>
+    </div>
+</div>
+<button type="button" class="btn btn-success btn-luu">Lưu</button>
+<button type="button" class="btn btn-danger btn-xoa">Xóa</button>
+<hr>

@@ -1,0 +1,55 @@
+<div block-bind="content">
+	<!-- Page Header -->
+	<div class="page-header row no-gutters py-4">
+		<div class="col-12 col-md-10 col-sm-4 text-center text-sm-left mb-0">
+			<span class="text-uppercase page-subtitle"> </span>
+			<h3 class="page-title text-uppercase">Danh sách đơn vị thanh tra cho năm sau</h3>
+		</div>
+	</div>
+	<!-- End Page Header -->
+	<div class="row">
+		<div class="col-lg-8 col-md-12">
+			<div class="card  card-small mb-4">
+				<div class="card-header  border-bottom">
+					<div class="row">
+						<div class="col-md-7">
+							<h6 class="m-0">Thông tin chi tiết</h6>
+						</div>
+						<div class="col-md-5 text-right">
+							<div block-bind="toolbar"></div>
+						</div>
+					</div>
+
+
+				</div>
+				<div class="card-body">
+						<div class="row">
+							<div class="col-md-6 mb-3">
+								<label>Năm</label>
+								<input type="text" class="form-control" data-bind="value:nam"
+									placeholder="Nhập lĩnh vực" required="">
+							</div>
+						</div>
+						<div class="table-responsive">
+							<table class="table-bordered text-center">
+								<tr >
+								<th>STT</th>
+								<th>tên đơn vị</th>
+								<th>Thông tin đơn vị</th>
+								<th>Tạo kế hoạch</th>
+								<th></th>
+								</tr>
+								
+								<tbody id="space_danhsachdonvikehoachnamsau"></tbody>
+
+							</table>
+						</div>
+						<button id="btn_add_danhsachdonvikehoachnamsau_field" class="btn btn-outline-success btn-sm">
+								<span class="fa fa-plus"></span>
+							</button>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>

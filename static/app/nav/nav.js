@@ -84,7 +84,7 @@ define(function (require) {
 		},
 
 		{
-			"text": "Xây dựng kế hoạch ",
+			"text": "Tạo kế hoạch thanh tra",
 			"icon": "fa fa-book",
 			"type": "view",
 			"collectionName": "kehoachthanhtra",
@@ -124,6 +124,26 @@ define(function (require) {
 			"collectionName": "kehoachthanhtra",
 			"route": "kehoachthanhtra/model_approved",
 			"$ref": "app/kehoachthanhtra/view/ModelView_12step_plan",
+			"visible": function () {
+				return false;
+			}
+		},
+		{
+			"text": "kế hoạch năm sau",
+			"icon": "fa fa-book",
+			"type": "view",
+			"collectionName": "kehoachnamsau",
+			"route": "kehoachnamsau/collection",
+			"$ref": "app/kehoachnamsau/view/CollectionView",
+			"visible": function () {
+				return true;
+			}
+		},
+		{
+			"type": "view",
+			"collectionName": "kehoachnamsau",
+			"route": "kehoachnamsau/model",
+			"$ref": "app/kehoachnamsau/view/ModelView",
 			"visible": function () {
 				return false;
 			}

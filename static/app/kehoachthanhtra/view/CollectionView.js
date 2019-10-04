@@ -241,8 +241,8 @@ define(function (require) {
 						},
 					},
 					{
-						field: "truongdoanthanhtra",
-						label: "Trưởng đoàn"
+						field: "tendoanhnghiep",
+						label: "Đối tượng thanh tra"
 					},
 					{
 						field: "trangthai",

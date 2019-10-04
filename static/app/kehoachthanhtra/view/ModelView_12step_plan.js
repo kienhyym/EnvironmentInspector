@@ -11,6 +11,8 @@ define(function (require) {
 	var ThanhVienThanhTraItemView = require('app/kehoachthanhtra/thanhvienthanhtra/ThanhVienThanhTraItem');
 	var CongViecThanhTraItemView = require('app/kehoachthanhtra/congviecthanhtra/CongViecThanhTraItemView');
 	var CongViecThanhTraThucHienItemView = require('app/kehoachthanhtra/congviecthanhtra/CongViecThanhTraThucHienItemView');
+	var BaoCaoCuaDoanThanhTraItemView = require('app/kehoachthanhtra/view/BaoCaoCuaDoanThanhTraView');
+	var VanBanDuThaoItemView = require('app/kehoachthanhtra/view/VanBanDuThaoView');
 
 
 	return Gonrin.ModelView.extend({
@@ -79,30 +81,33 @@ define(function (require) {
 				// 		url: "/api/v1/upload/file",
 				// 	}
 				// },
+
 				{
-					field: "trangthai_vanban_lan1",
+					field: "codauhieu_hinhsu",
 					uicontrol: "combobox",
 					textField: "text",
 					valueField: "value",
 					cssClass: "form-control",
 					dataSource: [
-						{ value: 1, text: "Duyệt" },
-						{ value: 0, text: "Không duyệt" },
-
+						{ value: "co", text: "Có" },
+						{ value: "khong", text: "Không" },
 					],
 				},
-				{
-					field: "trangthai_vanban_lan2",
-					uicontrol: "combobox",
-					textField: "text",
-					valueField: "value",
-					cssClass: "form-control",
-					dataSource: [
-						{ value: 1, text: "Duyệt" },
-						{ value: 0, text: "Không duyệt" },
-
-					],
-				},
+				// {
+				// 	field: "baocaocuadoanthanhtrafield",
+				// 	uicontrol: false,
+				// 	itemView: BaoCaoCuaDoanThanhTraItemView,
+				// 	tools: [{
+				// 		name: "create",
+				// 		type: "button",
+				// 		buttonClass: "btn btn-outline-success btn-sm",
+				// 		label: "<span class='fa fa-plus'></span>",
+				// 		command: "create"
+				// 	}],
+				// 	toolEl: "#add_row"
+				// },
+				
+				
 
 				{
 					field: "ngay_quyetdinh_thanhtra",
@@ -441,6 +446,18 @@ define(function (require) {
 						return date.unix()
 					}
 				},
+				{
+					field: "ngay_ketqua_trungcau_ykien",
+					uicontrol: "datetimepicker",
+					textFormat: "DD/MM/YYYY",
+					extraFormats: ["DDMMYYYY"],
+					parseInputDate: function (val) {
+						return moment.unix(val)
+					},
+					parseOutputDate: function (date) {
+						return date.unix()
+					}
+				},
 
 				{
 					field: "ngay_baocao_doituong_thuchien",
@@ -523,7 +540,7 @@ define(function (require) {
 			self.getDoanhNghiep();
 			self.bindEventSelect();
 			self.updateStepStatus();
-
+		
 
 
 			var id = this.getApp().getRouter().getParam("id");
@@ -533,6 +550,31 @@ define(function (require) {
 				this.model.set('id', id);
 				this.model.fetch({
 					success: function (data) {
+						self.baoCaoCuaDoanThanhTra();
+						self.vanBanDuThao();
+						// var arr = self.$el.find(".solan")
+						// var dem = 0;
+						// for(var i=0 ; i<arr.length;i++){
+						// 	if(i%5 == 0){
+						// 		dem++;
+						// 	}
+						// 	arr[i].value = dem;
+							
+						// }
+
+
+						var arr1 = self.$el.find(".stt")
+						arr1.each(function(item, index){
+							index.value = item+1;
+						})
+						var arr = self.$el.find(".solan")
+						arr.each(function(item, index){
+							index.value = item+1;
+						})
+						// arr.each(function(item,index){
+
+						// 	index.value = item+1;
+						// })
 						self.$el.find("#form-content").find("input").prop("disabled", true);
 						self.$el.find("#trangthai").removeClass("hidden");
 						var danhsachfile = self.model.get("tailieulienquan");
@@ -613,6 +655,7 @@ define(function (require) {
 						self.GetNguoiXemXet();
 						self.GetNguoiPheDuyet();
 						self.checkAllSucees();
+						self.coDauHieuHinhSu();
 						//self.getNguoiDuocPhanCong();
 
 
@@ -731,17 +774,17 @@ define(function (require) {
 					});
 					console.log(self.model)
 				})
-				
+
 			}
 			var x = self.model.get('trangthai');
-			if(x == "completed"){
+			if (x == "completed") {
 				self.$el.find('.btn-save').hide();
 				self.$el.find('.btn-end-exit').hide();
 
 				self.$el.find('.upload_files').hide();
 				self.$el.find('.notify-sucssec').show();
 			}
-			
+
 		},
 		// New Get người giám sát
 		GetNguoiGiamSat: function () {
@@ -863,10 +906,8 @@ define(function (require) {
 				"congvan_yeucau_doituong_baocao_attachment",
 				"vanban_doituong_baocao_attachment",
 				"congbo_quyetdinhthanhtra_attachment",
-				"vanban_duthao_duthao_lan1_attachment",
-				"congvan_giaitrinh_cua_doituong_thanhtra_attachment",
-				"tham_khao_y_kien_attachment",
-				"vanban_duthao_duthao_lan2_attachment",
+				"codauhieu_hinhsu_attachment",
+				"ketqua_trungcau_ykien_attachment",
 				"bienban_hanhchinh_attachment",
 				"quyetdinh_xuphat_attachment",
 				"ketluan_thanhtra_attachment",
@@ -880,12 +921,16 @@ define(function (require) {
 			];
 			$.each(keys, function (i, key) {
 				var attr_value = self.model.get(key);
+
 				var linkDownload = self.$el.find(".linkDownload");
 
 				if (!!attr_value) {
 					linkDownload[i].href = attr_value;
+					console.log(linkDownload[i])
+
 					self.$el.find("#upload-" + key).hide();
 					self.$el.find("#download-" + key).show();
+					console.log("#download-" + key)
 
 				} else {
 					self.$el.find("#upload-" + key).show();
@@ -1045,7 +1090,7 @@ define(function (require) {
 						thongbaoketthuc.hide();
 						self.$el.find(".content_14step").css("opacity", "1");
 						// self.getApp().router.refresh();
-						Backbone.history.history.back();
+						// Backbone.history.history.back();
 						// self.getApp().getRouter().navigate(location.href)
 
 					})
@@ -1136,6 +1181,17 @@ define(function (require) {
 
 		},
 
+		coDauHieuHinhSu: function () {
+			self = this;
+			var coDauHieuHinhSu = self.model.get("codauhieu_hinhsu");
+			var kiemTraKetThucThanhTra = self.model.get("trangthai");
+			if (kiemTraKetThucThanhTra != "end_checked" && coDauHieuHinhSu === "co") {
+
+				self.$el.find(".btn-end-exit").click();
+			}
+
+
+		},
 
 
 
@@ -1669,6 +1725,8 @@ define(function (require) {
 			if (self.model.get("danhsach_thanhvien") !== null
 				&& self.model.get("so_quyetdinh_thanhtra") !== null
 				&& self.model.get("ngay_quyetdinh_thanhtra") !== null) {
+								self.$el.find(".buoc2").removeClass("buoc2");
+
 				return "success"
 			}
 			return "light";
@@ -1678,6 +1736,8 @@ define(function (require) {
 			var self = this;
 			if (self.model.get("so_vanban_kehoach") !== null
 				&& self.model.get("ngay_vanban_kehoach") !== null) {
+					self.$el.find(".buoc3").removeClass("buoc3");
+
 				return "success"
 			}
 			return "light";
@@ -1688,6 +1748,8 @@ define(function (require) {
 			if (self.model.get("danhsach_congviec_thanhtra") !== null
 				&& self.model.get("danhsach_congviec_thanhtra") !== null
 				&& self.model.get("danhsach_congviec_thanhtra").length > 0) {
+					self.$el.find(".buoc4").removeClass("buoc4");
+
 				return "success"
 			}
 			return "light";
@@ -1697,6 +1759,8 @@ define(function (require) {
 			var self = this;
 			if (self.model.get("so_congvan_yeucau_doituong_baocao") !== null
 				&& self.model.get("ngay_congvan_yeucau_doituong_baocao") !== null) {
+					self.$el.find(".buoc5").removeClass("buoc5");
+
 				return "success"
 			}
 			return "light";
@@ -1705,6 +1769,8 @@ define(function (require) {
 			var self = this;
 			if (self.model.get("sovanban_thongbao_doituong_thanhtra") !== null
 				&& self.model.get("ngay_vanban_thongbao_doituong_thanhtra") !== null) {
+					self.$el.find(".buoc6").removeClass("buoc6");
+
 				return "success"
 			}
 			return "light";
@@ -1736,6 +1802,8 @@ define(function (require) {
 
 			if (self.model.get("sovanban_congbo_quyetdinh") !== null
 				&& self.model.get("ngay_vanban_congbo_quyetdinh") !== null) {
+					self.$el.find(".buoc7").removeClass("buoc7");
+
 				return "success"
 			}
 
@@ -1745,6 +1813,8 @@ define(function (require) {
 			var self = this;
 			if (self.model.get("so_thongbao_ketthuc_thanhtra") !== null
 				&& self.model.get("ngay_thongbao_ketthuc_thanhtra") !== null) {
+					self.$el.find(".buoc8").removeClass("buoc8");
+
 				return "success"
 			}
 			return "light";
@@ -1756,6 +1826,8 @@ define(function (require) {
 			if (self.model.get("danhsach_congviec_thanhtra") !== null
 				&& self.model.get("danhsach_congviec_thanhtra") !== null
 				&& self.model.get("danhsach_congviec_thanhtra").length > 0) {
+					self.$el.find(".buoc9").removeClass("buoc9");
+
 				return "success"
 			}
 
@@ -1776,30 +1848,52 @@ define(function (require) {
 			var self = this;
 			if (self.model.get("sovanban_giaitrinh") !== null
 				&& self.model.get("ngay_vanban_doituong_giaitrinh") !== null) {
+					self.$el.find(".buoc10").removeClass("buoc10");
+
 				return "success"
 			}
 			return "light";
 		},
 		check_gd10_sucees: function () {
 			var self = this;
-			if (self.model.get("so_quyetdinh_ketluanthanhtra") !== null
-				&& self.model.get("ngay_quyetdinh_ketluanthanhtra") !== null) {
-				return "success"
-			}
+			// if (self.model.get("so_vanban_duthao_lan1") !== null
+			// 	&& self.model.get("ngay_duthao_vanban_lan1") !== null) {
+			// 		self.$el.find(".buoc11").removeClass("buoc11");
+
+			// 	return "success"
+			// }
+			var mangVanBanDuThao = self.model.get("vanbanduthaofield");
+			var dem =0;
+			mangVanBanDuThao.forEach(function(item,index){
+				if(item.trangthai_vanban == 1){
+					dem++;
+				}
+			})
+				if(dem!=0){
+					self.$el.find(".buoc11").removeClass("buoc11");
+					return "success" ;
+				}
+			//
 			return "light";
 		},
 		check_gd11_sucees: function () {
 			var self = this;
 			if (self.model.get("so_ketluan_thanhtra") !== null
 				&& self.model.get("ngay_ketluan_thanhtra") !== null) {
+					
+					self.$el.find(".buoc12").removeClass("buoc12");
+
 				return "success"
 			}
 			return "light";
 		},
+		
 		check_gd12_sucees: function () {
 			var self = this;
 			if (self.model.get("so_bienban_congbo_ketluan") !== null
 				&& self.model.get("ngay_bienban_congbo_ketluan") !== null) {
+					self.$el.find(".buoc13").removeClass("buoc13");
+
 				return "success"
 			}
 			return "light";
@@ -1809,6 +1903,8 @@ define(function (require) {
 			if (self.model.get("coquan_congvan_yeucau_baocao_thuchien") !== null
 				&& self.model.get("so_congvan_yeucau_baocao_thuchien") !== null
 				&& self.model.get("ngay_congvan_yeucau_baocao_thuchien") !== null) {
+					self.$el.find(".buoc14").removeClass("buoc14");
+
 				return "success"
 			}
 			return "light";
@@ -2174,6 +2270,174 @@ define(function (require) {
 			} else {
 				return false;
 			}
+		},
+		baoCaoCuaDoanThanhTra: function () {
+			var self = this;
+
+			var ds_baoCaoCuaDoanThanhTra = self.model.get("baocaocuadoanthanhtrafield");
+			if (!ds_baoCaoCuaDoanThanhTra) {
+				ds_baoCaoCuaDoanThanhTra = [];
+			}
+			var containerEl = self.$el.find("#space_baocaocuadoanthanhtrafield");
+			containerEl.empty();
+
+			// var dataSource = lodash.orderBy(ds_baoCaoCuaDoanThanhTra, ['created_at'], ['asc']);
+			ds_baoCaoCuaDoanThanhTra.forEach((item, index) => {
+				var view = new BaoCaoCuaDoanThanhTraItemView();
+				view.model.set(item);
+				
+				view.render();
+				$(view.el).hide().appendTo(containerEl).fadeIn();
+				view.on("change", (data) => {
+					var ds_baoCaoCuaDoanThanhTra = self.model.get("baocaocuadoanthanhtrafield");
+					ds_baoCaoCuaDoanThanhTra.forEach((item, index) => {
+						if (item.id == data.id) {
+							ds_baoCaoCuaDoanThanhTra[index] = data;
+						}
+					});
+					self.model.set("baocaocuadoanthanhtrafield", ds_baoCaoCuaDoanThanhTra);
+					
+				});
+			});
+			self.$el.find("#btn_add_baocaocuadoanthanhtrafield").on("click", (eventClick) => {
+				var view = new BaoCaoCuaDoanThanhTraItemView();
+
+
+				view.model.save(null, {
+					success: function (model, respose, options) {
+						view.model.set(respose);
+						view.render();
+						$(view.el).hide().appendTo(containerEl).fadeIn();
+
+						// PUSH THE CHILD TO LIST
+						var ds_baoCaoCuaDoanThanhTra = self.model.get("baocaocuadoanthanhtrafield");
+						if (!ds_baoCaoCuaDoanThanhTra) {
+							ds_baoCaoCuaDoanThanhTra = [];
+						}
+						ds_baoCaoCuaDoanThanhTra.push(view.model.toJSON());
+						self.model.set("baocaocuadoanthanhtrafield", ds_baoCaoCuaDoanThanhTra);
+						self.model.save(null, {
+							success: function (model, respose, options) {
+								// NOTIFY TO GRANPARENT
+								self.trigger("change", self.model.toJSON());
+							},
+							error: function (xhr, status, error) {
+							}
+						});
+
+						view.on("change", (data) => {
+							var ds_baoCaoCuaDoanThanhTra = self.model.get("baocaocuadoanthanhtrafield");
+							if (!ds_baoCaoCuaDoanThanhTra) {
+								ds_baoCaoCuaDoanThanhTra = [];
+							}
+							ds_baoCaoCuaDoanThanhTra.forEach((item, index) => {
+								if (item.id == data.id) {
+									ds_baoCaoCuaDoanThanhTra[index] = data;
+								}
+							});
+
+							self.model.set("baocaocuadoanthanhtrafield", ds_baoCaoCuaDoanThanhTra);
+							self.model.save(null, {
+								success: function (model, respose, options) {
+									// NOTIFY TO GRANPARENT
+									self.trigger("change", self.model.toJSON());
+								},
+								error: function (xhr, status, error) {
+								}
+							});
+						});
+						self.getApp().router.refresh();
+
+					},
+					error: function (xhr, status, error) {
+						// HANDLE ERROR
+					}
+				});
+			});
+		},
+		vanBanDuThao: function () {
+			var self = this;
+
+			var ds_VanBanDuThao = self.model.get("vanbanduthaofield");
+			if (!ds_VanBanDuThao) {
+				ds_VanBanDuThao = [];
+			}
+			var containerEl = self.$el.find("#space_vanbanduthaofield");
+			containerEl.empty();
+
+			// var dataSource = lodash.orderBy(ds_VanBanDuThao, ['created_at'], ['asc']);
+			ds_VanBanDuThao.forEach((item, index) => {
+				var view = new VanBanDuThaoItemView();
+				view.model.set(item);
+				
+				view.render();
+				$(view.el).hide().appendTo(containerEl).fadeIn();
+				view.on("change", (data) => {
+					var ds_VanBanDuThao = self.model.get("vanbanduthaofield");
+					ds_VanBanDuThao.forEach((item, index) => {
+						if (item.id == data.id) {
+							ds_VanBanDuThao[index] = data;
+						}
+					});
+					self.model.set("vanbanduthaofield", ds_VanBanDuThao);
+					
+				});
+			});
+			self.$el.find("#btn_add_vanbanduthaofield").on("click", (eventClick) => {
+				var view = new VanBanDuThaoItemView();
+
+
+				view.model.save(null, {
+					success: function (model, respose, options) {
+						view.model.set(respose);
+						view.render();
+						$(view.el).hide().appendTo(containerEl).fadeIn();
+
+						// PUSH THE CHILD TO LIST
+						var ds_VanBanDuThao = self.model.get("vanbanduthaofield");
+						if (!ds_VanBanDuThao) {
+							ds_VanBanDuThao = [];
+						}
+						ds_VanBanDuThao.push(view.model.toJSON());
+						self.model.set("vanbanduthaofield", ds_VanBanDuThao);
+						self.model.save(null, {
+							success: function (model, respose, options) {
+								// NOTIFY TO GRANPARENT
+								self.trigger("change", self.model.toJSON());
+							},
+							error: function (xhr, status, error) {
+							}
+						});
+
+						view.on("change", (data) => {
+							var ds_VanBanDuThao = self.model.get("vanbanduthaofield");
+							if (!ds_VanBanDuThao) {
+								ds_VanBanDuThao = [];
+							}
+							ds_VanBanDuThao.forEach((item, index) => {
+								if (item.id == data.id) {
+									ds_VanBanDuThao[index] = data;
+								}
+							});
+
+							self.model.set("vanbanduthaofield", ds_VanBanDuThao);
+							self.model.save(null, {
+								success: function (model, respose, options) {
+									// NOTIFY TO GRANPARENT
+									self.trigger("change", self.model.toJSON());
+								},
+								error: function (xhr, status, error) {
+								}
+							});
+						});
+						self.getApp().router.refresh();
+
+					},
+					error: function (xhr, status, error) {
+						// HANDLE ERROR
+					}
+				});
+			});
 		},
 
 

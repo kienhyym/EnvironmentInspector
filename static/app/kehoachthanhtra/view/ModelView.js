@@ -147,6 +147,12 @@ define(function (require) {
 			self.bindEventSelect();
 			self.updateUIPermission();
 
+			var link = window.location.href;
+			console.log(link.slice(-36));
+			
+			// console.log('x',id)
+			self.model.set("madoanhnghiep",link.slice(-36))
+			
 			var id = this.getApp().getRouter().getParam("id");
 			if (id) {
 				this.model.set('id', id);
@@ -166,9 +172,9 @@ define(function (require) {
 
 							self.$el.find(".highlight").removeClass('d-none');
 						}
-						for (var i = 0; i < danhsachfile.length; i++) {
-							self.render_list_file(danhsachfile[i], self);
-						}
+						// for (var i = 0; i < danhsachfile.length; i++) {
+						// 	self.render_list_file(danhsachfile[i], self);
+						// }
 						self.applyBindings();
 						self.$el.find("#multiselect_donvidoanhnghiep").selectpicker('val', self.model.get("madoanhnghiep"));
 						self.updateUITimeline(self.model.toJSON());
@@ -361,7 +367,6 @@ define(function (require) {
 					}
 					var madoanhnghiep = self.model.get("madoanhnghiep");
 					self.$el.find("#multiselect_donvidoanhnghiep").selectpicker('val', madoanhnghiep);
-
 
 				},
 				error: function (xhr, status, error) {

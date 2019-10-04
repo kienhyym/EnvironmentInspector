@@ -12,16 +12,11 @@
     "nguoiduocphancong": {
         "type": "string"
     },
-    "trangthai": {
-        "type": "string"
-    },
     "thoigianhoanthanh": {
         "type": "datetime"
     },
-    "dinhkem": {
-        "type": "string"
-    },
-    "ghichu": {
+    "tailieu": {
         "type": "string"
     }
+
 }

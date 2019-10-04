@@ -114,6 +114,7 @@
 				<div class="card">
 					<div class="card-body">
 						<div class="float-right text-muted d-none"></div>
+<div class="buoc1" > 
 						<h4 class="card-title">1: Ra quyết định thanh tra</h4>
 
 
@@ -246,8 +247,11 @@
 				</div>
 			</div>
 		</div>
+</div>		
 		<!--/row-->
 		<!-- timeline GD 2 -->
+<div class="buoc2">
+
 		<div class="row gd2">
 			<div class="col-auto text-center flex-column d-none d-sm-flex">
 				<div class="row h-50">
@@ -361,8 +365,11 @@
 				</div>
 			</div>
 		</div>
+</div>		
 		<!--/row-->
 		<!-- timeline item 3 -->
+<div class="buoc3">
+
 		<div class="row gd3">
 			<div class="col-auto text-center flex-column d-none d-sm-flex">
 				<div class="row h-50">
@@ -406,8 +413,11 @@
 				</div>
 			</div>
 		</div>
+</div>
 		<!--/row-->
 		<!-- timeline GD 4 -->
+<div class="buoc4">
+
 		<div class="row gd4">
 			<div class="col-auto text-center flex-column d-none d-sm-flex">
 				<div class="row h-50">
@@ -497,8 +507,10 @@
 			</div>
 		</div>
 		<!--/row-->
-
+</div>
 		<!-- timeline GD 5 -->
+<div class="buoc5">
+
 		<div class="row gd5">
 			<div class="col-auto text-center flex-column d-none d-sm-flex">
 				<div class="row h-50">
@@ -546,8 +558,11 @@
 				</div>
 			</div>
 		</div>
+</div>		
 		<!--/row-->
 		<!-- timeline GD 6 -->
+<div class="buoc6">
+
 		<div class="row gd6">
 			<div class="col-auto text-center flex-column d-none d-sm-flex">
 				<div class="row h-50">
@@ -602,9 +617,12 @@
 				</div>
 			</div>
 		</div>
+</div>		
 		<!--/row-->
 
 		<!-- timeline GD 7 -->
+<div class="buoc7">
+
 		<div class="row gd7">
 			<div class="col-auto text-center flex-column d-none d-sm-flex">
 				<div class="row h-50">
@@ -622,7 +640,7 @@
 			<div class="col py-2">
 				<div class="card">
 					<div class="card-body">
-						<h4 class="card-title">7: Tiến hành thanh tra tại đơn vị</h4>
+						<h4 class="card-title">7: Tiến hành thanh tra tại địa chỉ đối tượng thanh tra</h4>
 						<div class="row">
 							<div class="col-6">
 								<div class="form-group required">
@@ -641,10 +659,20 @@
 									<label>Có dấu hiệu hình sự?</label>
 									<input required type="text" data-bind="value:codauhieu_hinhsu" class="form-control">
 								</div>
-								<div class="form-group">
-									<label>Ghi chú</label>
-									<textarea rows="2" data-bind="value:ghichu_codauhieu_hinhsu" placeholder="ghi chú"
-										class="form-control"></textarea>
+								<div class="form-group col m-0 p-0">
+									<label>Tài liệu đính kèm</label>
+									<div id="upload-codauhieu_hinhsu_attachment">
+										<div class="custom-file">
+											<input type="file" class="custom-file-input upload_files" id="upload_files"
+												data-attr="codauhieu_hinhsu_attachment" lang="vi">
+											<label class="custom-file-label">Chọn file tải lên</label>
+										</div>
+									</div>
+									<div id="download-codauhieu_hinhsu_attachment"
+										class="form-group col col-md-12 col-sm-12 linkdownload_and_button">
+										<span class="textDownload" data-bind="text:codauhieu_hinhsu_attachment" />
+										<a class="linkDownload">Download</a>
+									</div>
 								</div>
 							</div>
 
@@ -654,8 +682,11 @@
 				</div>
 			</div>
 		</div>
+</div>		
 		<!--/row-->
 		<!-- timeline GD 8 -->
+<div class="buoc8">
+		
 		<div class="row gd8">
 			<div class="col-auto text-center flex-column d-none d-sm-flex">
 				<div class="row h-50">
@@ -682,8 +713,8 @@
 										<th>Hạng mục</th>
 										<th>Người thực hiện</th>
 										<th>Ngày hoàn hành</th>
-										<th>Ghi chú</th>
-										<th>Trạng thái</th>
+										<!-- <th>Ghi chú</th> -->
+										<th>Tài liệu</th>
 									</tr>
 								</thead>
 								<tbody id="danhsachphancongviec8_grid" data-bind="list:danhsach_congviec_thuchien">
@@ -693,16 +724,48 @@
 							</table>
 
 						</div>
+						<div class="row">
+							<div class="form-group col-6 ">
+								<label>Số kết quả trưng cầu</label>
+								<input required type="text" data-bind="value:so_ketqua_trungcau_ykien"
+									placeholder="Nhập số văn bản quyết định" class="form-control">
+							</div>
+							<div class="form-group col-6 ">
+								<label>Ngày nhận kết quả trưng cầu</label>
+								<input required type="text" data-bind="value:ngay_ketqua_trungcau_ykien"
+									placeholder="Ngày công bố quyết định" class="form-control">
+							</div>
+						</div>
+						<div class="row">
 
+							<div class="form-group col m-0 p-0">
+								<label>Tài liệu đính kèm</label>
+								<div id="upload-ketqua_trungcau_ykien_attachment">
+									<div class="custom-file">
+										<input type="file" class="custom-file-input upload_files" id="upload_files"
+											data-attr="ketqua_trungcau_ykien_attachment" lang="vi">
+										<label class="custom-file-label">Chọn file tải lên</label>
+									</div>
+								</div>
+								<div id="download-ketqua_trungcau_ykien_attachment"
+									class="form-group col col-md-12 col-sm-12 linkdownload_and_button">
+									<span class="textDownload" data-bind="text:ketqua_trungcau_ykien_attachment" />
+									<a class="linkDownload" style="display: block">Download</a>
+								</div>
+							</div>
+							</div>
 						<button class="btn btn-success btn-save btn-save-gd8">Lưu</button>
 						<i><span class="danger-reason"></span></i>
 					</div>
 				</div>
 			</div>
 		</div>
+</div>		
 		<!--/row-->
 
 		<!-- timeline GD 9 -->
+<div class="buoc9">
+		
 		<div class="row gd9">
 			<div class="col-auto text-center flex-column d-none d-sm-flex">
 				<div class="row h-50">
@@ -721,44 +784,19 @@
 				<div class="card">
 					<div class="card-body">
 						<h4 class="card-title">9: Báo cáo của đoàn thanh tra</h4>
-						<div class="row">
-
-							<div class="form-group col-6">
-								<label>Số văn bản</label>
-								<input required type="text" data-bind="value:so_vanban_doituong_giaitrinh"
-									placeholder="Nhập số văn bản giải trình" class="form-control">
-							</div>
-							<div class="form-group col-6 required">
-								<label>Ngày gửi bảo cáo giải trình</label>
-								<input required type="text" data-bind="value:ngay_vanban_doituong_giaitrinh"
-									placeholder="Ngày gửi báo cáo giải trình" class="form-control">
-							</div>
-						</div>
-						<hr>
-						<h5>Công văn giải trình của đối tượng thanh tra</h5>
-						<div class="row">
-
-							<div class="form-group col-6">
-								<label>Số văn bản</label>
-								<input required type="text" data-bind="value:so_vanban_doituong_giaitrinh"
-									placeholder="Nhập số văn bản giải trình" class="form-control">
-							</div>
-							<div class="form-group col-6 required">
-								<label>Ngày gửi bảo cáo giải trình</label>
-								<input required type="text" data-bind="value:ngay_vanban_doituong_giaitrinh"
-									placeholder="Ngày gửi báo cáo giải trình" class="form-control">
-							</div>
-						</div>
-
-						<button class="btn btn-success btn-save btn-save-gd9">Lưu</button>
+						<div id="space_baocaocuadoanthanhtrafield"></div>
+						<button type="button" id="btn_add_baocaocuadoanthanhtrafield" class="btn btn-primary btn-sm">Thêm báo cáo của đoàn thanh tra</button>
+						
 					</div>
 				</div>
 			</div>
 		</div>
 		<!--/row-->
-
+</div>
 
 		<!-- timeline GD 10 -->
+<div class="buoc10">
+
 		<div class="row gd10">
 			<div class="col-auto text-center flex-column d-none d-sm-flex">
 				<div class="row h-50">
@@ -777,141 +815,9 @@
 				<div class="card">
 					<div class="card-body">
 						<h4 class="card-title ">10: Xây dựng dự thảo kết luận thanh tra</h4>
-						<h5>Văn bản dự thảo lần 1</h5>
-						<div class="row">
-							<div class="form-group col-4">
-								<label>Số văn bản dự thảo</label>
-								<input required type="text" data-bind="value:so_vanban_duthao_lan1"
-									placeholder="Thêm trường" class="form-control">
-							</div>
-							<div class="form-group col-4 required">
-								<label>Ngày dự thảo</label>
-								<input required type="text" data-bind="value:ngay_duthao_vanban_lan1"
-									placeholder="Ngày ra quyết định" class="form-control"> </div>
-							<div class="form-group col-4 required">
-								<label>Trạng thái (Phê duyệt)</label>
-								<input type="text" data-bind="value:trangthai_vanban_lan1"
-									placeholder="Thêm trường - (Phê duyệt)" class="form-control">
-							</div>
-						</div>
-						<div class="row">
-							<div class="form-group col">
-								<label>Tài liệu đính kèm</label>
-								<div id="upload-vanban_duthao_duthao_lan1_attachment">
-									<div class="custom-file">
-										<input type="file" class="custom-file-input upload_files" id="upload_files"
-											data-attr="vanban_duthao_duthao_lan1_attachment" lang="vi">
-										<label class="custom-file-label">Chọn file tải lên</label>
-									</div>
-								</div>
-								<div id="download-vanban_duthao_duthao_lan1_attachment"
-									class="form-group col col-md-12 col-sm-12 linkdownload_and_button">
-									<span class="textDownload" data-bind="text:vanban_duthao_duthao_lan1_attachment" />
-									<a class="linkDownload">Download</a>
-								</div>
-							</div>
-						</div>
-						<hr>
-						<h5>Công văn giải trình của đối tượng thanh tra</h5>
-						<div class="row">
-
-							<div class="form-group col-6">
-								<label>Số văn bản</label>
-								<input required type="text" data-bind="value:so_congvan_giaitrinh"
-									placeholder="Nhập số văn bản giải trình" class="form-control">
-							</div>
-							<div class="form-group col-6 required">
-								<label>Ngày gửi bảo cáo giải trình</label>
-								<input required type="text" data-bind="value:ngay_gui_congvan_giaitrinh"
-									placeholder="Ngày gửi báo cáo giải trình" class="form-control">
-							</div>
-						</div>
-						<div class="row">
-							<div class="form-group col">
-								<label>Tài liệu đính kèm</label>
-								<div id="upload-congvan_giaitrinh_cua_doituong_thanhtra_attachment">
-									<div class="custom-file">
-										<input type="file" class="custom-file-input upload_files" id="upload_files"
-											data-attr="congvan_giaitrinh_cua_doituong_thanhtra_attachment" lang="vi">
-										<label class="custom-file-label">Chọn file tải lên</label>
-									</div>
-								</div>
-								<div id="download-congvan_giaitrinh_cua_doituong_thanhtra_attachment"
-									class="form-group col col-md-12 col-sm-12 linkdownload_and_button">
-									<span class="textDownload"
-										data-bind="text:congvan_giaitrinh_cua_doituong_thanhtra_attachment" />
-									<a class="linkDownload">Download</a>
-								</div>
-							</div>
-						</div>
-
-						<hr />
-						<h5>Tham khảo ý kiến</h5>
-						<div class="row">
-							<div class="form-group col-6">
-								<label>Số văn bản phản hồi</label>
-								<input required type="text" data-bind="value:so_vanban_thamkhao_ykien"
-									class="form-control">
-							</div>
-							<div class="form-group col-6 required">
-								<label>Ngày nhận văn bản phản hồi</label>
-								<input required type="text" data-bind="value:ngay_vanban_thamkhao_ykien"
-									class="form-control">
-							</div>
-						</div>
-						<div class="row">
-							<div class="form-group col">
-								<label>Tài liệu đính kèm</label>
-								<div id="upload-tham_khao_y_kien_attachment">
-									<div class="custom-file">
-										<input type="file" class="custom-file-input upload_files" id="upload_files"
-											data-attr="tham_khao_y_kien_attachment" lang="vi">
-										<label class="custom-file-label">Chọn file tải lên</label>
-									</div>
-								</div>
-								<div id="download-tham_khao_y_kien_attachment"
-									class="form-group col col-md-12 col-sm-12 linkdownload_and_button">
-									<span class="textDownload" data-bind="text:tham_khao_y_kien_attachment" />
-									<a class="linkDownload">Download</a>
-								</div>
-							</div>
-						</div>
-						<hr />
-						<h5>Văn bản dự thảo lần 2</h5>
-						<div class="row">
-							<div class="form-group col-5">
-								<label>Số văn bản dự thảo</label>
-								<input required type="text" data-bind="value:so_vanban_duthao_lan2"
-									placeholder="Thêm trường" class="form-control">
-							</div>
-							<div class="form-group col-5 required">
-								<label>Ngày dự thảo</label>
-								<input required type="text" data-bind="value:ngay_duthao_vanban_lan2"
-									placeholder="Thêm trường" class="form-control">
-							</div>
-							<div class="form-group col-2 required">
-								<label>Trạng thái</label>
-								<input type="text" data-bind="value:trangthai_vanban_lan2" placeholder="Thêm trường"
-									class="form-control">
-							</div>
-						</div>
-						<div class="row">
-							<div class="form-group col">
-								<label>Tài liệu đính kèm</label>
-								<div id="upload-vanban_duthao_duthao_lan2_attachment">
-									<div class="custom-file">
-										<input type="file" class="custom-file-input upload_files" id="upload_files"
-											data-attr="vanban_duthao_duthao_lan2_attachment" lang="vi">
-										<label class="custom-file-label">Chọn file tải lên</label>
-									</div>
-								</div>
-								<div id="download-vanban_duthao_duthao_lan2_attachment"
-									class="form-group col col-md-12 col-sm-12 linkdownload_and_button">
-									<span class="textDownload" data-bind="text:vanban_duthao_duthao_lan2_attachment" />
-									<a class="linkDownload">Download</a>
-								</div>
-							</div>
-						</div>
+						
+						<div id="space_vanbanduthaofield"></div>
+						<button type="button" id="btn_add_vanbanduthaofield" class="btn btn-primary btn-sm">Thêm đợt dự thảo</button>
 						<div class="QuyetDinhXuPhat">
 							<hr />
 							<h5>Biên bản vi phạm hành chính</h5>
@@ -954,15 +860,24 @@
 							<h5>Quyết định xử phạt</h5>
 							<div class="row">
 								<div class="form-group col-6">
-									<label>Cơ quan xử phạt</label>
-									<input required type="text" data-bind="value:coquan_xuphat" class="form-control">
+									<label>Người ra quyết định</label>
+									<input required type="text" data-bind="value:coquan_xuphat"
+										class="form-control">
 								</div>
-								<div class="form-group col-3">
+								<div class="form-group col-6">
 									<label>Số quyết định xử phạt</label>
 									<input required type="text" data-bind="value:so_bienban_xuphat"
 										class="form-control">
 								</div>
-								<div class="form-group col-3 required">
+								
+							</div>
+							<div class="row">
+								<div class="form-group col-6 required">
+									<label>Số tiền</label>
+									<input required type="text" data-bind="value:sotien"
+										class="form-control">
+								</div>
+								<div class="form-group col-6 required">
 									<label>Ngày xử phạt</label>
 									<input required type="text" data-bind="value:ngay_bienban_xuphat"
 										class="form-control">
@@ -995,8 +910,10 @@
 			</div>
 		</div>
 		<!--/row-->
-
+</div>
 		<!-- timeline GD 11 -->
+<div class="buoc11">
+
 		<div class="row gd11">
 			<div class="col-auto text-center flex-column d-none d-sm-flex">
 				<div class="row h-50">
@@ -1088,15 +1005,24 @@
 							<h5>Quyết định xử phạt</h5>
 							<div class="row">
 								<div class="form-group col-6">
-									<label>Cơ quan xử phạt</label>
-									<input required type="text" data-bind="value:coquan_xuphat" class="form-control">
+									<label>Người ra quyết định</label>
+									<input required type="text" data-bind="value:coquan_xuphat"
+										class="form-control">
 								</div>
-								<div class="form-group col-3">
+								<div class="form-group col-6">
 									<label>Số quyết định xử phạt</label>
 									<input required type="text" data-bind="value:so_bienban_xuphat"
 										class="form-control">
 								</div>
-								<div class="form-group col-3 required">
+								
+							</div>
+							<div class="row">
+								<div class="form-group col-6 required">
+									<label>Số tiền</label>
+									<input required type="text" data-bind="value:sotien"
+										class="form-control">
+								</div>
+								<div class="form-group col-6 required">
 									<label>Ngày xử phạt</label>
 									<input required type="text" data-bind="value:ngay_bienban_xuphat"
 										class="form-control">
@@ -1124,15 +1050,17 @@
 
 
 						<button class="btn btn-success btn-save btn-save-gd11">Lưu</button>
-						<button class="btn btn-danger lap_bien_ban_xuphat" id=" lap_bien_ban_xuphat_btn"
+						<button class="btn btn-danger lap_bien_ban_xuphat"  id=" lap_bien_ban_xuphat_btn"
 							data-step-id="11"">Lập biên bản và xử phạt</button>
                 </div>
             </div>
         </div>
     </div>
     <!--/row-->
-    
-    <!-- timeline GD 12 -->
+ </div>   
+	<!-- timeline GD 12 -->
+<div class="buoc12">
+
     <div class=" row gd12">
 							<div class="col-auto text-center flex-column d-none d-sm-flex">
 								<div class="row h-50">
@@ -1186,7 +1114,7 @@
 										</div>
 
 										<hr />
-										<h5>Công bố, công khai kết luận thanh tra</h5>
+										<h5>Công khai kết luận thanh tra</h5>
 										<div class="row">
 											<div class="col-6">
 												<div class="form-group">
@@ -1276,16 +1204,24 @@
 											<h5>Quyết định xử phạt</h5>
 											<div class="row">
 												<div class="form-group col-6">
-													<label>Cơ quan xử phạt</label>
+													<label>Người ra quyết định</label>
 													<input required type="text" data-bind="value:coquan_xuphat"
 														class="form-control">
 												</div>
-												<div class="form-group col-3">
+												<div class="form-group col-6">
 													<label>Số quyết định xử phạt</label>
 													<input required type="text" data-bind="value:so_bienban_xuphat"
 														class="form-control">
 												</div>
-												<div class="form-group col-3 required">
+												
+											</div>
+											<div class="row">
+												<div class="form-group col-6 required">
+													<label>Số tiền</label>
+													<input required type="text" data-bind="value:sotien"
+														class="form-control">
+												</div>
+												<div class="form-group col-6 required">
 													<label>Ngày xử phạt</label>
 													<input required type="text" data-bind="value:ngay_bienban_xuphat"
 														class="form-control">
@@ -1319,8 +1255,10 @@
 							</div>
 					</div>
 					<!--/row-->
-
+</div>
 					<!-- timeline GD 13 -->
+<div class="buoc13">
+
 					<div class="row gd13">
 						<div class="col-auto text-center flex-column d-none d-sm-flex">
 							<div class="row h-50">
@@ -1417,8 +1355,10 @@
 						</div>
 					</div>
 
-
+</div>
 					<!-- timeline GD 14 -->
+<div class="buoc14">
+
 					<div class="row gd14">
 						<div class="col-auto text-center flex-column d-none d-sm-flex">
 							<div class="row h-50">
@@ -1460,7 +1400,19 @@
 										</div>
 
 									</div>
-
+									<div class="row">
+										<div class="form-group col-6">
+											<label>Người giao</label>
+											<input required type="text" data-bind="value:nguoigiao"
+												class="form-control">
+										</div>
+										<div class="form-group col-6">
+											<label>Người nhận</label>
+											<input required type="text" data-bind="value:nguoinhan"
+												class="form-control">
+										</div>
+									
+									</div>
 									<button class="btn btn-success btn-save btn-save-gd14">Lưu</button>
 									<button class="btn btn-danger btn-end-exit">Kết thúc thanh tra</button>
 									<button class="btn btn-primary btn-back-continued">Tiếp tục thanh tra</button>
@@ -1469,6 +1421,7 @@
 						</div>
 					</div>
 					<!--/row-->
+</div>
 
 				</div>
 				<!--container-->

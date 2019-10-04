@@ -159,6 +159,15 @@ sqlapimanager.create_api(DanhMucLinhVuc, max_results_per_page=1000000,
     postprocess=dict(POST=[], PUT_SINGLE=[], DELETE_SINGLE=[], GET_MANY =[]),
     collection_name='danhmuclinhvuc')
 
+sqlapimanager.create_api(LichSuThanhTra, max_results_per_page=1000000,
+    methods=['GET', 'POST', 'DELETE', 'PUT'],
+    url_prefix='/api/v1',
+    preprocess=dict(GET_SINGLE=[auth_func], GET_MANY=[auth_func], POST=[auth_func], PUT_SINGLE=[auth_func]),
+    postprocess=dict(POST=[auth_func], PUT_SINGLE=[auth_func], DELETE_SINGLE=[auth_func], GET_MANY =[auth_func]),
+    collection_name='lichsuthanhtra')
+
+
+
 sqlapimanager.create_api(KeHoachThanhTra, max_results_per_page=1000000,
     methods=['GET', 'POST', 'DELETE', 'PUT'],
     url_prefix='/api/v1',
@@ -167,4 +176,31 @@ sqlapimanager.create_api(KeHoachThanhTra, max_results_per_page=1000000,
     collection_name='kehoachthanhtra')
 
     
+sqlapimanager.create_api(BaoCaoCuaDoanThanhTra, max_results_per_page=1000000,
+    methods=['GET', 'POST', 'DELETE', 'PUT'],
+    url_prefix='/api/v1',
+    preprocess=dict(GET_SINGLE=[auth_func], GET_MANY=[auth_func], POST=[auth_func], PUT_SINGLE=[auth_func]),
+    postprocess=dict(POST=[auth_func], PUT_SINGLE=[auth_func], DELETE_SINGLE=[auth_func], GET_MANY =[auth_func]),
+    collection_name='baocaocuadoanthanhtra')
 
+
+sqlapimanager.create_api(KeHoachNamSau, max_results_per_page=1000000,
+    methods=['GET', 'POST', 'DELETE', 'PUT'],
+    url_prefix='/api/v1',
+    preprocess=dict(GET_SINGLE=[auth_func], GET_MANY=[auth_func], POST=[auth_func], PUT_SINGLE=[auth_func]),
+    postprocess=dict(POST=[auth_func], PUT_SINGLE=[auth_func], DELETE_SINGLE=[auth_func], GET_MANY =[auth_func]),
+    collection_name='kehoachnamsau')
+
+sqlapimanager.create_api(DanhSachDonViKeHoachNamSau, max_results_per_page=1000000,
+    methods=['GET', 'POST', 'DELETE', 'PUT'],
+    url_prefix='/api/v1',
+    preprocess=dict(GET_SINGLE=[auth_func], GET_MANY=[auth_func], POST=[auth_func], PUT_SINGLE=[auth_func]),
+    postprocess=dict(POST=[auth_func], PUT_SINGLE=[auth_func], DELETE_SINGLE=[auth_func], GET_MANY =[auth_func]),
+    collection_name='danhsachdonvikehoachnamsau')
+
+sqlapimanager.create_api(VanBanDuThao, max_results_per_page=1000000,
+    methods=['GET', 'POST', 'DELETE', 'PUT'],
+    url_prefix='/api/v1',
+    preprocess=dict(GET_SINGLE=[auth_func], GET_MANY=[auth_func], POST=[auth_func], PUT_SINGLE=[auth_func]),
+    postprocess=dict(POST=[auth_func], PUT_SINGLE=[auth_func], DELETE_SINGLE=[auth_func], GET_MANY =[auth_func]),
+    collection_name='vanbanduthao')

@@ -7,23 +7,40 @@
 		</div>
 	</div>
 	<!-- End Page Header -->
+
 	<div class="row">
 		<div class="col-lg-8 col-md-12">
 			<div class="card  card-small mb-4">
 				<div class="card-header  border-bottom">
 					<div class="row">
-						<div class="col-md-7">
+						<div class="col-md-4">
 							<h6 class="m-0">Thông tin chi tiết</h6>
 						</div>
-						<div class="col-md-5 text-right">
+						<div  class="col-md-4">
+								<button class="btn btn-primary" id="themvaonamsau">Thêm vào kế hoạch năm sau</button>
+							</div>
+						<div class="col-md-4 text-right">
 							<div block-bind="toolbar"></div>
 						</div>
+						
 					</div>
 
 
 				</div>
 				<div class="card-body">
 					<form class="needs-validation" novalidate="">
+						<div class="form-row mt-3">
+							<div class="col-md-12">
+								<label> linh Vực</label>
+								<select class="selectpicker form-control" id="multiselect_linhvuc" multiple
+									data-live-search="true" data-actions-box="true"
+									data-noneSelectedText="Chọn lĩnh vực" title="Chọn lĩnh vực">
+								</select>
+								<div class="invalid-feedback">
+									Vui lòng chọn loại lĩnh vực
+								</div>
+							</div>
+						</div>
 						<div class="row">
 							<div class="col-md-6 mb-3">
 								<label>Mã Đơn Vị</label>
@@ -64,9 +81,10 @@
 
 
 						<div class="row">
-							<div class="col-md-6 mb-3">
+							<div class="col-md-6 mb-3 quymodonvi">
 								<label>Quy mô đơn vị</label>
-								<input type="text" class="form-control" data-bind="value:quymodonvi" placeholder="..." required="">
+								<input type="text" class="form-control" data-bind="value:quymodonvi" placeholder="..."
+									required="">
 							</div>
 							<div class="col-md-6 mb-3">
 								<label>Chỉ số tuân thủ pháp luật</label>
@@ -74,12 +92,24 @@
 									data-bind="value:tuanthuphapluat_chiso" required="">
 							</div>
 						</div>
+						<label>Bảng lịch sử thanh tra</label>
+						<div class="table responsive mb-0 text-center">
+							<table class="table-bordered">
+								<tr class="text-center">
+									<th>STT</th>
+									<th>Năm</th>
+									<th>Triển khai kế hoạch</th>
+									<th></th>
 
-						<div class="mb-3">
-							<label>Ghi chú về chỉ số tuân thủ pháp luật</label>
-							<textarea rows="3" class="form-control" data-bind="value:tuanthuphapluat_chiso_ghichu"
-								placeholder="..." required=""></textarea>
+								</tr>
+								
+								<tbody id="space_lichsuthanhtra" ></tbody>
+
+							</table>
 						</div>
+								<button id="btn_add_lichsuthanhtra_field" class="btn btn-outline-success btn-sm">
+									<span class="fa fa-plus"></span>
+								</button>
 						<div class="row">
 							<div class="col-md-6 mb-3">
 								<label for="cc-name">Tỉnh/Thành phố</label>
@@ -100,22 +130,11 @@
 						</div>
 						<div class="mb-3">
 							<label for="cc-expiration">Địa chỉ</label>
-							<textarea rows="3" class="form-control" data-bind="value:diachi" id="diachitruso" placeholder="..."
-								required=""></textarea>
+							<textarea rows="3" class="form-control" data-bind="value:diachi" id="diachitruso"
+								placeholder="..." required=""></textarea>
 						</div>
 
-						<div class="form-row mt-3">
-							<div class="col-md-12">
-								<label> linh Vực</label>
-								<select class="selectpicker form-control" id="multiselect_linhvuc" multiple
-									data-live-search="true" data-actions-box="true"
-									data-noneSelectedText="Chọn lĩnh vực" title="Chọn lĩnh vực">
-								</select>
-								<div class="invalid-feedback">
-									Vui lòng chọn loại lĩnh vực
-								</div>
-							</div>
-						</div>
+
 						<!-- <hr class="mb-4"> -->
 						<!-- <button id="btn_save_info" class="btn btn-info btn-lg btn-block" type="submit">Lưu thông
 							tin</button> -->
@@ -125,16 +144,16 @@
 							<label class="pt-1 pl-1">Danh sách chi nhánh </label>
 						</div>
 						<div class="row">
-								<div class="col-md-6 mb-3">
-										<input type="text" class="form-control" id="trusochinh" value="Trụ sở chính" disabled>
-									</div>
+							<div class="col-md-6 mb-3">
+								<input type="text" class="form-control" id="trusochinh" value="Trụ sở chính" disabled>
+							</div>
 							<div class="col-md-6 mb-3" id="tinhthanhtruso">
 								<input type="text" class="form-control" data-bind="dict:tinhthanh" disabled>
 							</div>
 						</div>
 						<div class="mb-12 mb-5">
-								<textarea rows="3" class="form-control" id="diachitrusochinh" disabled></textarea>
-							</div>
+							<textarea rows="3" class="form-control" id="diachitrusochinh" disabled></textarea>
+						</div>
 						<div data-bind="list:danhsachchinhanhdonvi_field"></div>
 					</form>
 				</div>

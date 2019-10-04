@@ -11,6 +11,7 @@ define(function (require) {
 	var TinhThanhSelectView = require('app/DanhMuc/TinhThanh/view/SelectView');
 
 	var DanhSachChiNhanhDonViItemView = require('app/danhmucdoanhnghiep/view/DanhSachChiNhanhDonViView');
+	var LichSuThanhTraItemView = require('app/danhmucdoanhnghiep/view/LichSuThanhTraView');
 
 	return Gonrin.ModelView.extend({
 		template: template,
@@ -57,13 +58,12 @@ define(function (require) {
 								}
 							});
 							self.model.set("danhmuclinhvuc_foreign", danhmuclinhvuc_foreign);
-							console.log('self.model.set("danhmuclinhvuc_foreign", danhmuclinhvuc_foreign)', self.model.set("danhmuclinhvuc_foreign", danhmuclinhvuc_foreign))
 
 							self.model.save(null, {
 								success: function (model, respose, options) {
 									self.getApp().notify("Lưu thông tin thành công");
-									// self.getApp().getRouter().navigate(self.collectionName + "/collection");
-									self.getApp().getRouter().refresh();
+									self.getApp().getRouter().navigate(self.collectionName + "/collection");
+									// self.getApp().getRouter().refresh();
 
 								},
 								error: function (xhr, status, error) {
@@ -147,11 +147,9 @@ define(function (require) {
 					textField: "text",
 					valueField: "value",
 					dataSource: [
-						{ "value": 1, "text": "1 sao" },
-						{ "value": 2, "text": "2 sao" },
-						{ "value": 3, "text": "3 sao" },
-						{ "value": 4, "text": "4 sao" },
-						{ "value": 5, "text": "5 sao" },
+						{ "value": 1, "text": "Báo cáo đầy đủ" },
+						{ "value": 2, "text": "Báo cáo không đầy đủ" },
+						{ "value": 3, "text": "Không báo cáo" },
 					],
 
 
@@ -162,9 +160,9 @@ define(function (require) {
 					textField: "text",
 					valueField: "value",
 					dataSource: [
-						{ "value": 1, "text": "dưới 50 lao động" },
-						{ "value": 2, "text": "từ 51 đến 200 lao động" },
-						{ "value": 3, "text": "trên 200 lao động" },
+						{ "value": 1, "text": "Trên 1000m3" },
+						{ "value": 2, "text": "Dưới 1000m3" },
+
 
 					],
 				},
@@ -186,17 +184,22 @@ define(function (require) {
 		render: function () {
 			var self = this;
 			var id = this.getApp().getRouter().getParam("id");
+			self.$el.find(".filter-option-inner-inner").selectpicker("810810af-c49e-4e37-b9e5-c66fb986bbf5")
 
 			self.getLinhvucs();
+			self.checkLinhVuc();
+			// self.lichSuThanhTra();
 
 			if (id) {
 				this.model.set('id', id);
 				this.model.fetch({
 					success: function (data) {
-					
-						
-						self.applyBindings();
 
+						self.applyBindings();
+						
+						self.checkLinhVuc();
+						self.lichSuThanhTra();
+						self.themVaoKeHoachNamSau();
 
 						self.model.on("change:tinhthanh_id", function () {
 							console.log("change tinh thanhxxxxxxxxxxxxxxxxxx");
@@ -217,25 +220,31 @@ define(function (require) {
 						var x;
 						var y;
 						var z;
-						if(self.model.get('xaphuong')== null){
+						if (self.model.get('xaphuong') == null) {
 							y = "";
 						}
-						else{
+						else {
 							y = self.model.get('xaphuong').ten;
 						}
-						if(self.model.get('quanhuyen')== null){
+						if (self.model.get('quanhuyen') == null) {
 							z = "";
 						}
-						else{
+						else {
 							z = self.model.get('quanhuyen').ten;
 						}
-						if(self.model.get('diachi')== null){
+						if (self.model.get('diachi') == null) {
 							x = "";
 						}
-						else{
+						else {
 							x = self.model.get('diachi');
-						}					
-						self.$el.find("#diachitrusochinh").val(x+' '+y+' '+z );
+						}
+						self.$el.find("#diachitrusochinh").val(x + ' ' + y + ' ' + z);
+
+						var arr = self.$el.find("tr td #stt")
+						console.log('arr',arr)
+						arr.each(function(item,index){
+							index.value = item+1;
+						})
 					},
 					error: function (xhr, status, error) {
 						try {
@@ -271,6 +280,7 @@ define(function (require) {
 				method: "GET",
 				contentType: "application/json",
 				success: function (data) {
+
 					self.$el.find("#multiselect_linhvuc").html("");
 					for (var i = 0; i < data.objects.length; i++) {
 						var item = data.objects[i];
@@ -285,7 +295,7 @@ define(function (require) {
 						for (var i = 0; i < danhmuclinhvuc_foreign.length; i++) {
 							val_danhmuclinhvuc_foreign.push(danhmuclinhvuc_foreign[i].id);
 						}
-					}
+					}-
 					self.$el.find("#multiselect_linhvuc").selectpicker('val', val_danhmuclinhvuc_foreign);
 				},
 				error: function (xhr, status, error) {
@@ -313,6 +323,262 @@ define(function (require) {
 				return false;
 			}
 		},
+		checkLinhVuc: function () {
+			var self = this;
+			var linhvuc = self.$el.find("#multiselect_linhvuc");
+			var linhVucID = self.model.get("danhmuclinhvuc_foreign");
+			var dem = 0;
+			linhVucID.forEach(function (item) {
+				if (item.malinhvuc == "NS") {
+					dem++;
+				}
+				if (dem > 0) {
+					self.$el.find(".quymodonvi").show();
+				}
+				else {
+					self.$el.find(".quymodonvi").hide();
+					self.model.set("quymodonvi", null)
+				}
+			})
+			var url = self.getApp().serviceURL + "/api/v1/danhmuclinhvuc";
+			$.ajax({
+				url: url,
+				method: "GET",
+				contentType: "application/json",
+				success: function (data) {
+					data.objects.forEach(function (item, index) {
+						if (item.malinhvuc == "NS") {
+
+							linhvuc.on("change", function () {
+								var linhVucID2 = linhvuc.val();
+								var dem2 = 0;
+								linhVucID2.forEach(function (item2, index) {
+									if (item.id == item2) {
+										dem2++;
+									}
+									if (dem2 > 0) {
+										self.$el.find(".quymodonvi").show();
+									}
+									else {
+										self.$el.find(".quymodonvi").hide();
+										self.model.set("quymodonvi", null)
+
+									}
+								});
+							});
+
+
+
+
+						}
+					})
+				},
+				error: function (xhr, status, error) {
+					console.log("Không lấy được dữ liệu linh vuc");
+				},
+			});
+
+
+		},
+		lichSuThanhTra: function () {
+			var self = this;
+			var dvHienTai = self.model.get("code");
+			$.ajax({
+				url: self.getApp().serviceURL + "/api/v1/kehoachthanhtra",
+				method: "GET",
+				contentType: "application/json",
+				success: function (data) {
+					data.objects.forEach(function (item, index) {
+						if (item.doanhnghiep.code === dvHienTai) {
+
+							var demsll = 0;
+							$.ajax({
+								url: self.getApp().serviceURL + "/api/v1/lichsuthanhtra",
+								method: "GET",
+								contentType: "application/json",
+								success: function (data) {
+									data.objects.forEach(function (itemLSTT, index) {
+
+										if (parseInt(itemLSTT.nam) == moment(item.ngaythanhtra * 1000).year() && itemLSTT.danhmucdoanhnghiep_id == self.model.get("id")) {
+											demsll++;
+										}
+
+									})
+									if (demsll == 0) {
+										var param = {
+											id: gonrin.uuid(),
+											nam: moment(item.ngaythanhtra * 1000).year(),
+											kehoachthanhtra_id: item.id,
+											danhmucdoanhnghiep_id: self.model.get("id")
+										};
+										$.ajax({
+											url: self.getApp().serviceURL + "/api/v1/lichsuthanhtra",
+											type: 'POST',
+											data: JSON.stringify(param),
+											headers: {
+												'content-type': 'application/json'
+											},
+											dataType: 'json',
+											success: function (data) {
+
+											},
+											error: function (request, textStatus, errorThrown) {
+												console.log(request);
+											}
+										})
+									}
+								},
+								error: function (xhr, status, error) {
+									console.log("Không lấy được dữ liệu");
+								},
+							});
+
+
+
+
+						}
+					})
+				},
+				error: function (xhr, status, error) {
+					console.log("Không lấy được dữ liệu");
+				},
+			});
+
+
+
+
+
+			var ds_lichSuThanhTra = self.model.get("lichsuthanhtra_field");
+			if (!ds_lichSuThanhTra) {
+				ds_lichSuThanhTra = [];
+			}
+			var containerEl = self.$el.find("#space_lichsuthanhtra");
+			containerEl.empty();
+
+			// var dataSource = lodash.orderBy(ds_lichSuThanhTra, ['created_at'], ['asc']);
+			ds_lichSuThanhTra.forEach((item, index) => {
+				var view = new LichSuThanhTraItemView();
+				view.model.set(item);
+				view.render();
+				$(view.el).hide().appendTo(containerEl).fadeIn();
+				view.on("change", (data) => {
+					var ds_lichSuThanhTra = self.model.get("lichsuthanhtra_field");
+					ds_lichSuThanhTra.forEach((item, index) => {
+						if (item.id == data.id) {
+							ds_lichSuThanhTra[index] = data;
+						}
+					});
+					self.model.set("lichsuthanhtra_field", ds_lichSuThanhTra);
+				});
+			});
+			self.$el.find("#btn_add_lichsuthanhtra_field").on("click", (eventClick) => {
+				var view = new LichSuThanhTraItemView();
+
+
+				view.model.save(null, {
+					success: function (model, respose, options) {
+						view.model.set(respose);
+						view.render();
+						$(view.el).hide().appendTo(containerEl).fadeIn();
+
+						// PUSH THE CHILD TO LIST
+						var ds_lichSuThanhTra = self.model.get("lichsuthanhtra_field");
+						if (!ds_lichSuThanhTra) {
+							ds_lichSuThanhTra = [];
+						}
+						ds_lichSuThanhTra.push(view.model.toJSON());
+						self.model.set("lichsuthanhtra_field", ds_lichSuThanhTra);
+						self.model.save(null, {
+							success: function (model, respose, options) {
+								// NOTIFY TO GRANPARENT
+								self.trigger("change", self.model.toJSON());
+							},
+							error: function (xhr, status, error) {
+							}
+						});
+
+						view.on("change", (data) => {
+							var ds_lichSuThanhTra = self.model.get("lichsuthanhtra_field");
+							if (!ds_lichSuThanhTra) {
+								ds_lichSuThanhTra = [];
+							}
+							ds_lichSuThanhTra.forEach((item, index) => {
+								if (item.id == data.id) {
+									ds_lichSuThanhTra[index] = data;
+								}
+							});
+
+							self.model.set("lichsuthanhtra_field", ds_lichSuThanhTra);
+							self.model.save(null, {
+								success: function (model, respose, options) {
+									// NOTIFY TO GRANPARENT
+									self.trigger("change", self.model.toJSON());
+								},
+								error: function (xhr, status, error) {
+								}
+							});
+						});
+					},
+					error: function (xhr, status, error) {
+						// HANDLE ERROR
+					}
+				});
+			});
+		},
+		themVaoKeHoachNamSau: function () {
+
+			var self = this;
+			self.$el.find("#themvaonamsau").unbind("click").on("click", function () {
+				var d = new Date();
+				var year = d.getFullYear();
+				$.ajax({
+					url: self.getApp().serviceURL + "/api/v1/kehoachnamsau",
+					method: "GET",
+					contentType: "application/json",
+					success: function (data) {
+						data.objects.forEach(function (item) {
+							if (item.nam == year + 1) {
+								
+
+									var param = {
+										id: gonrin.uuid(),
+										tendonvi: self.model.get("name"),
+										donvi_id: self.model.get("id"),
+										kehoachnamsau_id: item.id,
+									};
+									$.ajax({
+										url: self.getApp().serviceURL + "/api/v1/danhsachdonvikehoachnamsau",
+										type: 'POST',
+										data: JSON.stringify(param),
+										headers: {
+											'content-type': 'application/json'
+										},
+										dataType: 'json',
+										success: function (data) {
+											self.getApp().notify("Đã thêm vào năm sau thành công");
+
+										},
+										error: function (request, textStatus, errorThrown) {
+										}
+									})
+								
+
+
+
+
+							}
+						})
+					},
+					error: function (xhr, status, error) {
+					},
+				});
+
+			})
+
+
+		}
+
+
 
 
 	});

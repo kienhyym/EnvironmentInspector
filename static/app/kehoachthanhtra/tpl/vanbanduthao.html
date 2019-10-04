@@ -1,0 +1,103 @@
+<div class="row"><h5 class="mb-0">Văn bản dự thảo lần </h5>&nbsp;<input class="stt" type="text" style="border: none;width: 20px;" readonly ></div>
+						<div class="row">
+							<div class="form-group col-4">
+								<label>Số văn bản dự thảo</label>
+								<input required type="text" vanbanduthao-bind="value:so_vanban_duthao"
+									placeholder="Thêm trường" class="form-control">
+							</div>
+							<div class="form-group col-4 required">
+								<label>Ngày dự thảo</label>
+								<input required type="text" vanbanduthao-bind="value:ngay_duthao_vanban"
+									placeholder="Ngày ra quyết định" class="form-control"> </div>
+							<div class="form-group col-4 required">
+								<label>Trạng thái (Phê duyệt)</label>
+								<input type="text" vanbanduthao-bind="value:trangthai_vanban"
+									placeholder="(Phê duyệt)" class="form-control">
+							</div>
+						</div>
+						<div class="row">
+							<div class="form-group col">
+								<label>Tài liệu đính kèm</label>
+								<div id="upload-vanban_duthao_duthao_attachment">
+									<div class="custom-file">
+										<input type="file" class="custom-file-input upload_files" id="upload_files"
+											data-attr="vanban_duthao_duthao_attachment" lang="vi">
+										<label class="custom-file-label">Chọn file tải lên</label>
+									</div>
+								</div>
+								<div id="download-vanban_duthao_duthao_attachment"
+									class="form-group col col-md-12 col-sm-12 linkdownload_and_button">
+									<span class="textDownload" vanbanduthao-bind="text:vanban_duthao_duthao_attachment" />
+									<a class="linkDownload">Download</a>
+								</div>
+							</div>
+						</div>
+						<hr>
+						<h5>Công văn giải trình
+							kết luận của đối tượng thanh tra</h5>
+						<div class="row">
+
+							<div class="form-group col-6">
+								<label>Số văn bản</label>
+								<input required type="text" vanbanduthao-bind="value:so_congvan_giaitrinh"
+									placeholder="Nhập số văn bản giải trình" class="form-control">
+							</div>
+							<div class="form-group col-6 required">
+								<label>Ngày giải trình</label>
+								<input required type="text" vanbanduthao-bind="value:ngay_gui_congvan_giaitrinh"
+									placeholder="Ngày gửi báo cáo giải trình" class="form-control">
+							</div>
+						</div>
+						<div class="row">
+							<div class="form-group col">
+								<label>Tài liệu đính kèm</label>
+								<div id="upload-congvan_giaitrinh_cua_doituong_thanhtra_attachment">
+									<div class="custom-file">
+										<input type="file" class="custom-file-input upload_files" id="upload_files"
+											data-attr="congvan_giaitrinh_cua_doituong_thanhtra_attachment" lang="vi">
+										<label class="custom-file-label">Chọn file tải lên</label>
+									</div>
+								</div>
+								<div id="download-congvan_giaitrinh_cua_doituong_thanhtra_attachment"
+									class="form-group col col-md-12 col-sm-12 linkdownload_and_button">
+									<span class="textDownload"
+										vanbanduthao-bind="text:congvan_giaitrinh_cua_doituong_thanhtra_attachment" />
+									<a class="linkDownload">Download</a>
+								</div>
+							</div>
+						</div>
+
+						<hr />
+						<h5>Tham khảo ý kiến</h5>
+						<div class="row">
+							<div class="form-group col-6">
+								<label>Số văn bản phản hồi</label>
+								<input required type="text" vanbanduthao-bind="value:so_vanban_thamkhao_ykien"
+									class="form-control">
+							</div>
+							<div class="form-group col-6 required">
+								<label>Ngày nhận văn bản phản hồi</label>
+								<input required type="text" vanbanduthao-bind="value:ngay_vanban_thamkhao_ykien"
+									class="form-control">
+							</div>
+						</div>
+						<div class="row">
+							<div class="form-group col">
+								<label>Tài liệu đính kèm</label>
+								<div id="upload-tham_khao_y_kien_attachment">
+									<div class="custom-file">
+										<input type="file" class="custom-file-input upload_files" id="upload_files"
+											data-attr="tham_khao_y_kien_attachment" lang="vi">
+										<label class="custom-file-label">Chọn file tải lên</label>
+									</div>
+								</div>
+								<div id="download-tham_khao_y_kien_attachment"
+									class="form-group col col-md-12 col-sm-12 linkdownload_and_button">
+									<span class="textDownload" vanbanduthao-bind="text:tham_khao_y_kien_attachment" />
+									<a class="linkDownload">Download</a>
+								</div>
+							</div>
+						</div>
+						<button type="button" class="btn btn-success btn-luu">Lưu</button>
+						<button type="button" class="btn btn-danger btn-xoa">Xóa</button>
+						<hr />

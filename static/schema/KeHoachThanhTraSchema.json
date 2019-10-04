@@ -247,64 +247,19 @@
     "codauhieu_hinhsu": {
         "type": "string"
     },
-    "ghichu_codauhieu_hinhsu": {
+    "codauhieu_hinhsu_attachment": {
         "type": "string"
     },
     "danhsach_congviec_thuchien": {
         "type": "json"
     },
-    "so_baocao_doanthanhtra": {
+    "so_ketqua_trungcau_ykien": {
         "type": "string"
     },
-    "ngay_baocao_doanthanhtra": {
+    "ngay_ketqua_trungcau_ykien": {
         "type": "number"
     },
-    "so_vanban_doituong_giaitrinh": {
-        "type": "string"
-    },
-    "ngay_vanban_doituong_giaitrinh": {
-        "type": "number"
-    },
-    "so_vanban_duthao_lan1": {
-        "type": "string"
-    },
-    "ngay_duthao_vanban_lan1": {
-        "type": "number"
-    },
-    "trangthai_vanban_lan1": {
-        "type": "number"
-    },
-    "vanban_duthao_duthao_lan1_attachment": {
-        "type": "string"
-    },
-    "so_congvan_giaitrinh": {
-        "type": "string"
-    },
-    "ngay_gui_congvan_giaitrinh": {
-        "type": "number"
-    },
-    "congvan_giaitrinh_cua_doituong_thanhtra_attachment": {
-        "type": "string"
-    },
-    "so_vanban_thamkhao_ykien": {
-        "type": "string"
-    },
-    "ngay_vanban_thamkhao_ykien": {
-        "type": "number"
-    },
-    "tham_khao_y_kien_attachment": {
-        "type": "string"
-    },
-    "so_vanban_duthao_lan2": {
-        "type": "string"
-    },
-    "ngay_duthao_vanban_lan2": {
-        "type": "number"
-    },
-    "trangthai_vanban_lan2": {
-        "type": "number"
-    },
-    "vanban_duthao_duthao_lan2_attachment": {
+    "ketqua_trungcau_ykien_attachment": {
         "type": "string"
     },
     "coquan_lapbienban_hanhchinh": {
@@ -321,6 +276,9 @@
     },
     "coquan_xuphat": {
         "type": "string"
+    },
+    "sotien": {
+        "type": "number"
     },
     "so_bienban_xuphat": {
         "type": "string"
@@ -391,6 +349,12 @@
     "ngay_bangiao_luutru": {
         "type": "number"
     },
+    "nguoigiao": {
+        "type": "string"
+    },
+    "nguoinhan": {
+        "type": "string"
+    },
     "ketthucthanhtra": {
         "type": "number"
     },
@@ -399,5 +363,11 @@
     },
     "danhmuclinhvuc": {
         "type": "dict"
+    },
+    "baocaocuadoanthanhtrafield": {
+        "type": "list"
+    },
+    "vanbanduthaofield": {
+        "type": "list"
     }
 }

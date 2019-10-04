@@ -1,5 +1,24 @@
 <td><input type="text" class="form-control" data-task-bind="value:hangmuccongviec" /></td>
 <td><input type="text" class="form-control" data-task-bind="value:nguoiduocphancong" /></td>
 <td><input type="text" class="form-control" data-task-bind="value:thoigianhoanthanh" /></td>
-<td><input type="text" class="form-control" data-task-bind="value:ghichu" /></td>
-<td><input type="text" class="form-control" data-task-bind="value:trangthai" /></td>
+<!-- <td><input type="text" class="form-control" data-task-bind="value:ghichu" /></td> -->
+<td>
+    <!-- <input type="text" class="form-control" data-task-bind="value:trangthai" /> -->
+    <div class="form-group col">
+            <div id="upload-tailieu">
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input upload_files" id="upload_files"
+                        data-attr="tailieu" lang="vi">
+                    <label class="custom-file-label"></label>
+                </div>
+            </div>
+            <div id="download-tailieu"
+                class="form-group col col-md-12 col-sm-12 linkdownload_and_button">
+                <span class="textDownload" data-task-bind="text:tailieu" />
+                <a class="linkDownload">Download</a>
+            </div>
+        </div>
+        <div>
+            <span class="hienthilink"></span>
+        </div>
+</td>

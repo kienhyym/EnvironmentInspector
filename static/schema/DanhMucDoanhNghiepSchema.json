@@ -72,13 +72,19 @@
     "quymodonvi": {
         "type": "number"
     },
+    "solanthanhtra": {
+        "type": "number"
+    },
+    "namchuathanhtraganday": {
+        "type": "number"
+    },
     "tuanthuphapluat_chiso": {
         "type": "number"
     },
-    "tuanthuphapluat_chiso_ghichu": {
-        "type": "string"
-    },
     "danhsachchinhanhdonvi_field": {
+        "type": "list"
+    },
+    "lichsuthanhtra_field": {
         "type": "list"
     },
     "danhmuclinhvuc_foreign": {

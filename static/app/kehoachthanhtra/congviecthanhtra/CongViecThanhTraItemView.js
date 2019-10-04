@@ -3,12 +3,8 @@ define(function (require) {
 	var $ = require('jquery'),
 		_ = require('underscore'),
 		Gonrin = require('gonrin');
-
 	var template = require('text!app/kehoachthanhtra/congviecthanhtra/tpl/item.html'),
 		schema = require('json!app/kehoachthanhtra/congviecthanhtra/Schema.json');
-
-
-
 	return Gonrin.ItemView.extend({
 		template: template,
 		tagName: 'tr',
@@ -50,7 +46,6 @@ define(function (require) {
 					break;
 				}
 			}
-
 			
 			if (self.model.get("id") == null) {
 				self.model.set("id", gonrin.uuid());
@@ -63,15 +58,11 @@ define(function (require) {
 				});
 			});
 			
-
 			self.$el.find("#itemRemove").unbind("click").bind("click", function () {
 				self.remove(true);
 			});
-
 			//console.log(self.getFieldElement("nguoiduocphancong"));
-
 			// self.getFieldElement("nguoiduocphancong").data("gonrin").setDataSource(self.viewData.danhsachthanhvien);
 		},
 	});
-
 });

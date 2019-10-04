@@ -3,34 +3,98 @@ define(function (require) {
     var $ = require('jquery'),
         _ = require('underscore'),
         Gonrin = require('gonrin');
+    var itemTemplate = require('text!app/kehoachthanhtra/tpl/vanbanduthao.html'),
+        itemSchema = require('json!schema/VanBanDuThaoSchema.json');
 
-    var template = require('text!app/kehoachthanhtra/congviecthanhtra/tpl/thuchienitem.html'),
-        CongViecView = require('app/kehoachthanhtra/congviecthanhtra/CongViecThanhTraItemView');
+    return Gonrin.ItemView.extend({
+        bindings: "vanbanduthao-bind",
+        template: itemTemplate,
+        tagName: 'div',
+        modelSchema: itemSchema,
+        urlPrefix: "/api/v1/",
+        collectionName: "vanbanduthao",
+        foreignRemoteField: "id",
+        foreignField: "kehoachthanhtra_id",
+        uiControl: {
+            fields: [
+                {
+					field: "trangthai_vanban",
+					uicontrol: "combobox",
+					textField: "text",
+					valueField: "value",
+					cssClass: "form-control",
+					dataSource: [
+						{ value: 1, text: "Duyệt" },
+						{ value: 2, text: "Không duyệt" },
 
+					],
+				},
 
+                {
+                    field: "ngay_duthao_vanban",
+                    uicontrol: "datetimepicker",
+                    textFormat: "DD/MM/YYYY",
+                    extraFormats: ["DDMMYYYY"],
+                    parseInputDate: function (val) {
+                        return moment.unix(val)
+                    },
+                    parseOutputDate: function (date) {
+                        return date.unix()
+                    }
+                },
+                {
+                    field: "ngay_gui_congvan_giaitrinh",
+                    uicontrol: "datetimepicker",
+                    textFormat: "DD/MM/YYYY",
+                    extraFormats: ["DDMMYYYY"],
+                    parseInputDate: function (val) {
+                        return moment.unix(val)
+                    },
+                    parseOutputDate: function (date) {
+                        return date.unix()
+                    }
+                },
+                {
+                    field: "ngay_vanban_thamkhao_ykien",
+                    uicontrol: "datetimepicker",
+                    textFormat: "DD/MM/YYYY",
+                    extraFormats: ["DDMMYYYY"],
+                    parseInputDate: function (val) {
+                        return moment.unix(val)
+                    },
+                    parseOutputDate: function (date) {
+                        return date.unix()
+                    }
+                },
 
+            ]
+        },
 
-    return CongViecView.extend({
-        template: template,
         render: function () {
             var self = this;
+           
+
+           
+            if (!self.model.get("id")) {
+                self.model.set("id", gonrin.uuid())
+            }
             self.bindEventSelect();
             self.applyBindings();
             self.renderUpload();
-            if (self.model.get("id") == null) {
-                self.model.set("id", gonrin.uuid());
-            }
-            console.log(self.model)
-
-
-            self.$el.find("#itemRemove").unbind("click").bind("click", function () {
+            self.$el.find(".btn-luu").bind("click",function(){
+                self.saveModel();
+            })
+            self.$el.find(".btn-xoa").unbind("click").bind("click", function () {
                 self.remove(true);
             });
         },
         renderUpload() {
             var self = this;
             var keys = [
-                "tailieu"
+                "vanban_duthao_duthao_attachment",
+                "congvan_giaitrinh_cua_doituong_thanhtra_attachment",
+                "tham_khao_y_kien_attachment"
+
             ];
             $.each(keys, function (i, key) {
                 var attr_value = self.model.get(key);
@@ -38,7 +102,7 @@ define(function (require) {
 
                 if (!!attr_value) {
                     linkDownload[i].href = attr_value;
-                     self.$el.find("#upload-" + key).hide();
+                    self.$el.find("#upload-" + key).hide();
                     self.$el.find("#download-" + key).show();
 
                 } else {
@@ -51,7 +115,7 @@ define(function (require) {
         },
         saveModel: function () {
             var self = this;
-            console.log("tai lieuiữ", self.model.get("tailieu"))
+
 
             self.model.save(null, {
                 success: function (model, response, options) {
@@ -77,7 +141,6 @@ define(function (require) {
         bindEventSelect: function () {
             var self = this;
             self.$el.find(".upload_files").on("change", function () {
-                
                 var http = new XMLHttpRequest();
                 var fd = new FormData();
 
@@ -102,11 +165,7 @@ define(function (require) {
                             var data_file = JSON.parse(http.responseText), link, p, t;
                             self.getApp().notify("Tải file thành công");
                             self.model.set(data_attr, data_file.link);
-                            var mdel = self.model.get("tailieu");
-                console.log("xxxxxxx",mdel)
-
-				self.$el.find(".hienthilink").html(mdel);
-                            // self.saveModel();
+                            self.saveModel();
                         }
                     } else {
                         self.getApp().notify("Không thể tải tệp tin lên máy chủ");
@@ -115,7 +174,5 @@ define(function (require) {
                 http.send(fd);
             });
         },
-
     });
-
 });
