@@ -2,7 +2,7 @@ body {
   font-size: .875rem;
 }
 .buoc2,.buoc3,.buoc4,.buoc5,.buoc6,.buoc7,.buoc8,.buoc9,.buoc10,.buoc11,.buoc12,.buoc13,.buoc14{
-  /* pointer-events: none */
+  pointer-events: none
 }
 .notify-ketthuc-thanhtra{
   position: fixed;

@@ -457,6 +457,7 @@ define(function (require) {
 
 			// var dataSource = lodash.orderBy(ds_lichSuThanhTra, ['created_at'], ['asc']);
 			ds_lichSuThanhTra.forEach((item, index) => {
+				
 				var view = new LichSuThanhTraItemView();
 				view.model.set(item);
 				view.render();
@@ -465,6 +466,7 @@ define(function (require) {
 					var ds_lichSuThanhTra = self.model.get("lichsuthanhtra_field");
 					ds_lichSuThanhTra.forEach((item, index) => {
 						if (item.id == data.id) {
+
 							ds_lichSuThanhTra[index] = data;
 						}
 					});

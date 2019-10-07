@@ -1862,6 +1862,8 @@ define(function (require) {
 
 			// 	return "success"
 			// }
+		
+			
 			var mangVanBanDuThao = self.model.get("vanbanduthaofield");
 			var dem =0;
 			mangVanBanDuThao.forEach(function(item,index){
@@ -2278,10 +2280,13 @@ define(function (require) {
 			if (!ds_baoCaoCuaDoanThanhTra) {
 				ds_baoCaoCuaDoanThanhTra = [];
 			}
+			console.log('ds_baoCaoCuaDoanThanhTra',ds_baoCaoCuaDoanThanhTra)
+
 			var containerEl = self.$el.find("#space_baocaocuadoanthanhtrafield");
 			containerEl.empty();
-
+			
 			// var dataSource = lodash.orderBy(ds_baoCaoCuaDoanThanhTra, ['created_at'], ['asc']);
+			console.log('ds_baoCaoCuaDoanThanhTra',ds_baoCaoCuaDoanThanhTra)
 			ds_baoCaoCuaDoanThanhTra.forEach((item, index) => {
 				var view = new BaoCaoCuaDoanThanhTraItemView();
 				view.model.set(item);
@@ -2364,12 +2369,10 @@ define(function (require) {
 			}
 			var containerEl = self.$el.find("#space_vanbanduthaofield");
 			containerEl.empty();
-
 			// var dataSource = lodash.orderBy(ds_VanBanDuThao, ['created_at'], ['asc']);
 			ds_VanBanDuThao.forEach((item, index) => {
 				var view = new VanBanDuThaoItemView();
 				view.model.set(item);
-				
 				view.render();
 				$(view.el).hide().appendTo(containerEl).fadeIn();
 				view.on("change", (data) => {

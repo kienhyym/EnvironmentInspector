@@ -14,7 +14,7 @@ define(function (require) {
 		modelSchema: schema,
 		urlPrefix: "/api/v1/",
 		collectionName: "danhmucdoanhnghiep",
-	
+		
 
 		render: function () {
 			var self = this;
@@ -63,7 +63,23 @@ define(function (require) {
 					"$and": []
 				}
 			}
-
+			//GET DATA CHI SO TUAN THU PHAP LUAT 
+			self.$el.find('#rate_chiso').combobox({
+				textField: "text",
+				valueField: "id",
+				dataSource: [
+					{ text: "Báo cáo đầy đủ", id: 1 },
+					{ text: "Báo cáo không đầy đủ", id: 2 },
+					{ text: "Không báo cáo", id: 3 },
+					
+				],
+			});
+			self.$el.find('#rate_chiso').on('change.gonrin', function (e) {
+				var filters_common = $('#rate_chiso').data('gonrin').getValue();
+				filters['filters']['$and'].push({
+					tuanthuphapluat_chiso: { "$eq": filters_common }
+				});
+			});
 			// GET DATA TINH THANH
 			$.ajax({
 				url: self.getApp().serviceURL + "/api/v1/tinhthanh",
