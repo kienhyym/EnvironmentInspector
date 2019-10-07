@@ -91,10 +91,6 @@ class User(CommonModel):
     quanhuyen = db.Column(JSONB)
     xaphuong_id = db.Column(String, nullable=True)
     xaphuong = db.Column(JSONB)
-
-    tinhthanh_id2 = db.Column(UUID(as_uuid=True),db.ForeignKey('tinhthanh.id'), nullable=True)
-    tinhthanh2 = db.relationship('TinhThanh', viewonly=True)
-
     type = db.Column(db.String())
     captren_id = db.Column(db.String())
     captren_name = db.Column(db.String())
