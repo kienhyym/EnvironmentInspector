@@ -171,7 +171,7 @@ define(function (require) {
 
 			// GET DATA TINH THANH
 			$.ajax({
-				url: self.getApp().serviceURL + "/api/v1/tinhthanh",
+				url: self.getApp().serviceURL + "/api/v1/tinhthanh?results_per_page=100&max_results_per_page=100",
 				method: "GET",
 				success: function (data) {
 					self.$el.find('#tinhthanh_combobox').combobox({
