@@ -32,7 +32,15 @@ define(function (require) {
 						command: function () {
 							var self = this;
 							if (self.getApp().currentUser.hasRole("CucTruong")) {
-								self.getApp().getRouter().navigate(self.collectionName + "/collection");
+								self.getApp().getRouter().navigate(self.collectionName + "/collection" +
+									"?id=null"+
+									"&tinhthanh_ID=" + self.getApp().getRouter().getParam("tinhthanh_ID") +
+									"&chisotuanthu=" + self.getApp().getRouter().getParam("chisotuanthu") +
+									"&linhvuc_ID=" + self.getApp().getRouter().getParam("linhvuc_ID") +
+									"&sonamchuathanhtra=" + self.getApp().getRouter().getParam("sonamchuathanhtra") +
+									"&solanthanhtra=" + self.getApp().getRouter().getParam("solanthanhtra")
+
+								);
 							}
 						},
 						visible: function () {
@@ -58,7 +66,24 @@ define(function (require) {
 								}
 							});
 							self.model.set("danhmuclinhvuc_foreign", danhmuclinhvuc_foreign);
+							self.model.set("solanthanhtra",(self.model.get("lichsuthanhtra_field").length));
+							var mangNam =[];
+							self.model.get("lichsuthanhtra_field").forEach(function(item,index){
+								mangNam.push(item.nam)
+							})
+							if(self.model.get("namchuathanhtraganday")== null){
+								self.model.set("namchuathanhtraganday",0);
 
+							}
+							else{
+								var year = new Date();
+								var namhientai = year.getFullYear();
+	
+								self.model.set("namchuathanhtraganday",namhientai-Math.max.apply(Math, mangNam));
+	
+	
+							}
+						
 							self.model.save(null, {
 								success: function (model, respose, options) {
 									self.getApp().notify("Lưu thông tin thành công");
@@ -186,6 +211,7 @@ define(function (require) {
 			var id = this.getApp().getRouter().getParam("id");
 			self.$el.find(".filter-option-inner-inner").selectpicker("810810af-c49e-4e37-b9e5-c66fb986bbf5")
 
+			
 			self.getLinhvucs();
 			self.checkLinhVuc();
 			// self.lichSuThanhTra();
@@ -196,7 +222,7 @@ define(function (require) {
 					success: function (data) {
 
 						self.applyBindings();
-						
+
 						self.checkLinhVuc();
 						self.lichSuThanhTra();
 						self.themVaoKeHoachNamSau();
@@ -241,9 +267,8 @@ define(function (require) {
 						self.$el.find("#diachitrusochinh").val(x + ' ' + y + ' ' + z);
 
 						var arr = self.$el.find("tr td #stt")
-						console.log('arr',arr)
-						arr.each(function(item,index){
-							index.value = item+1;
+						arr.each(function (item, index) {
+							index.value = item + 1;
 						})
 					},
 					error: function (xhr, status, error) {
@@ -295,8 +320,8 @@ define(function (require) {
 						for (var i = 0; i < danhmuclinhvuc_foreign.length; i++) {
 							val_danhmuclinhvuc_foreign.push(danhmuclinhvuc_foreign[i].id);
 						}
-					}-
-					self.$el.find("#multiselect_linhvuc").selectpicker('val', val_danhmuclinhvuc_foreign);
+					} -
+						self.$el.find("#multiselect_linhvuc").selectpicker('val', val_danhmuclinhvuc_foreign);
 				},
 				error: function (xhr, status, error) {
 					console.log("Không lấy được dữ liệu linh vuc");
@@ -457,7 +482,7 @@ define(function (require) {
 
 			// var dataSource = lodash.orderBy(ds_lichSuThanhTra, ['created_at'], ['asc']);
 			ds_lichSuThanhTra.forEach((item, index) => {
-				
+
 				var view = new LichSuThanhTraItemView();
 				view.model.set(item);
 				view.render();
@@ -540,30 +565,30 @@ define(function (require) {
 					success: function (data) {
 						data.objects.forEach(function (item) {
 							if (item.nam == year + 1) {
-								
 
-									var param = {
-										id: gonrin.uuid(),
-										tendonvi: self.model.get("name"),
-										donvi_id: self.model.get("id"),
-										kehoachnamsau_id: item.id,
-									};
-									$.ajax({
-										url: self.getApp().serviceURL + "/api/v1/danhsachdonvikehoachnamsau",
-										type: 'POST',
-										data: JSON.stringify(param),
-										headers: {
-											'content-type': 'application/json'
-										},
-										dataType: 'json',
-										success: function (data) {
-											self.getApp().notify("Đã thêm vào năm sau thành công");
 
-										},
-										error: function (request, textStatus, errorThrown) {
-										}
-									})
-								
+								var param = {
+									id: gonrin.uuid(),
+									tendonvi: self.model.get("name"),
+									donvi_id: self.model.get("id"),
+									kehoachnamsau_id: item.id,
+								};
+								$.ajax({
+									url: self.getApp().serviceURL + "/api/v1/danhsachdonvikehoachnamsau",
+									type: 'POST',
+									data: JSON.stringify(param),
+									headers: {
+										'content-type': 'application/json'
+									},
+									dataType: 'json',
+									success: function (data) {
+										self.getApp().notify("Đã thêm vào năm sau thành công");
+
+									},
+									error: function (request, textStatus, errorThrown) {
+									}
+								})
+
 
 
 

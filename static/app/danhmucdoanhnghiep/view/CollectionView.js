@@ -18,19 +18,101 @@ define(function (require) {
 
 		render: function () {
 			var self = this;
+			
 			self.filterDataTinhThanh();
+			var linhvuc_ID =  self.getApp().getRouter().getParam("linhvuc_ID");
+			var tinhthanh_ID= self.getApp().getRouter().getParam("tinhthanh_ID");
+			var chisotuanthu= self.getApp().getRouter().getParam("chisotuanthu");
+			var solanthanhtra= self.getApp().getRouter().getParam("solanthanhtra");
+			var sonamchuathanhtra= self.getApp().getRouter().getParam("sonamchuathanhtra");
+			if((linhvuc_ID == null || linhvuc_ID === "undefined")
+				&&  (tinhthanh_ID == null || tinhthanh_ID === "undefined")
+				&& (chisotuanthu ==null || chisotuanthu === "undefined")
+				&& (solanthanhtra==null || solanthanhtra === "undefined")
+				&& (sonamchuathanhtra ==null || sonamchuathanhtra === "undefined")
+				 ){
+				self.khoitao();
 
-			self.khoitao();
-			self.$el.find("#soLanThanhTra").unbind("click").bind("click", function () {
-				self.soLanThanhTra();
-				self.chuaThanhTraGanDay();
+			}
+			else{
+				let filters = {
+					"filters": {
+						"$and": []
+					}
+				}
+				var loc = linhvuc_ID;
+				if(tinhthanh_ID != "null" && tinhthanh_ID !=="undefined"){
+					filters['filters']['$and'].push({
+						tinhthanh_id: { "$eq": tinhthanh_ID }
+					});
+				}
+				if(chisotuanthu != "null" && chisotuanthu !=="undefined" ){
+					filters['filters']['$and'].push({
+						tuanthuphapluat_chiso: { "$eq": chisotuanthu }
+					});
+				}
+				if(solanthanhtra!= "null" && solanthanhtra !=="undefined"){
+					filters['filters']['$and'].push({
+						solanthanhtra: { "$eq": solanthanhtra }
+					});
+				}
+				if(sonamchuathanhtra!="null" && sonamchuathanhtra !=="undefined"){
+					filters['filters']['$and'].push({
+						namchuathanhtraganday: { "$eq": sonamchuathanhtra }
+					});
+				}
+				
 
-			});
+
+				var mangNew = [];
+				$.ajax({
+					url: self.getApp().serviceURL + "/api/v1/danhmucdoanhnghiep",
+					method: "GET",
+					data: "q=" + JSON.stringify(filters),
+					success: function (data) {
+						for (var i = 0; i < data.objects.length; i++) {
+							var dem = 0;
+							for (var j = 0; j < data.objects[i].danhmuclinhvuc_foreign.length; j++) {
+								if (data.objects[i].danhmuclinhvuc_foreign[j].id == loc) {
+									dem++;
+								}
+							}
+							if(dem!=0){
+								mangNew.push(data.objects[i])
+							}
+
+						}
+						if(loc === "undefined" || loc ==null ){
+							self.render_grid2(0,data.objects);
+
+						}
+						else{
+							self.render_grid2(0,mangNew);
+
+						}
+						filters = {
+							"filters": {
+								"$and": []
+							}
+						}
+					},
+				});
+
+
+			}
+
+
+
+
+
+
+			
 			
 		},
 
 		khoitao: function () {
 			var self = this;
+			
 
 			$.ajax({
 				url: self.getApp().serviceURL + "/api/v1/danhmucdoanhnghiep",
@@ -63,6 +145,11 @@ define(function (require) {
 					"$and": []
 				}
 			}
+			var locChiSo;
+			var loctinhhthanh;
+			var locsolanbaocao;
+			var locsonamchuabaocao;
+			var loclinhvuc;
 			//GET DATA CHI SO TUAN THU PHAP LUAT 
 			self.$el.find('#rate_chiso').combobox({
 				textField: "text",
@@ -76,10 +163,12 @@ define(function (require) {
 			});
 			self.$el.find('#rate_chiso').on('change.gonrin', function (e) {
 				var filters_common = $('#rate_chiso').data('gonrin').getValue();
+				locChiSo = filters_common
 				filters['filters']['$and'].push({
 					tuanthuphapluat_chiso: { "$eq": filters_common }
 				});
 			});
+
 			// GET DATA TINH THANH
 			$.ajax({
 				url: self.getApp().serviceURL + "/api/v1/tinhthanh",
@@ -93,20 +182,7 @@ define(function (require) {
 
 					self.$el.find('#tinhthanh_combobox').on('change.gonrin', function (e) {
 						var filters_common = $('#tinhthanh_combobox').data('gonrin').getValue();
-						if ( typeof(Storage) !== 'undefined') {
-							// Khởi tạo sesionStorage
-							sessionStorage.setItem('tinhthanh_ID',filters_common );
-							// get sessionStorage
-							// sessionStorage.getItem('name');
-							// // lấy ra số lượng session đã lưu trữ
-							// sessionStorage.length;
-							// // xóa 1 item localStorage
-							// sessionStorage.removeItem('name');
-							// // xóa tất cả item trong sessionStorage
-							// sessionStorage.clear();
-						} else {
-							alert('Trình duyệt của bạn không hỗ trợ!');
-						}
+						loctinhhthanh = filters_common;
 						filters['filters']['$and'].push({
 							tinhthanh_id: { "$eq": filters_common }
 						});
@@ -114,7 +190,7 @@ define(function (require) {
 				},
 				error: function (xhr, status, error) { }
 			});
-
+			
 
 
 
@@ -133,36 +209,24 @@ define(function (require) {
 					self.$el.find('#linhvuc_combobox').on('change.gonrin', function (e) {
 						var filter = $('#linhvuc_combobox').data('gonrin').getValue();
 						loc = filter;
-						if ( typeof(Storage) !== 'undefined') {
-							// Khởi tạo sesionStorage
-							sessionStorage.setItem('linhvuc_ID',loc );
-							// get sessionStorage
-							// sessionStorage.getItem('name');
-							// // lấy ra số lượng session đã lưu trữ
-							// sessionStorage.length;
-							// // xóa 1 item localStorage
-							// sessionStorage.removeItem('name');
-							// // xóa tất cả item trong sessionStorage
-							// sessionStorage.clear();
-						} else {
-							alert('Trình duyệt của bạn không hỗ trợ!');
-						}
-						// filters['filters']['$and'].push({
-						// 	linhvuc_id: { "$eq": filters_common }
-						// });
+						loclinhvuc = loc;
+						
 					});
 					
 					self.$el.find("#loc").unbind("click").bind("click", function () {
-
-
+						sessionStorage.clear();
 						self.getApp().getRouter().refresh();
+						sessionStorage.setItem('chisotuanthu',locChiSo );
+						sessionStorage.setItem('tinhthanh_ID',loctinhhthanh );
+						sessionStorage.setItem('solanthanhtra',locsolanbaocao );
+						sessionStorage.setItem('sonamchuathanhtra',locsonamchuabaocao );
+						sessionStorage.setItem('linhvuc_ID',loclinhvuc );
 						var mangNew = [];
 						$.ajax({
 							url: self.getApp().serviceURL + "/api/v1/danhmucdoanhnghiep",
 							method: "GET",
 							data: "q=" + JSON.stringify(filters),
 							success: function (data) {
-								console.log('loc', loc)
 								for (var i = 0; i < data.objects.length; i++) {
 									var dem = 0;
 									for (var j = 0; j < data.objects[i].danhmuclinhvuc_foreign.length; j++) {
@@ -170,19 +234,17 @@ define(function (require) {
 											dem++;
 										}
 									}
-									console.log(i,dem)
 									if(dem!=0){
 										mangNew.push(data.objects[i])
 									}
 
 								}
-								console.log(mangNew)
-								if(mangNew!=0){
-									self.render_grid2(0,mangNew);
+								if(loc == undefined){
+									self.render_grid2(0,data.objects);
 
 								}
 								else{
-									self.render_grid2(0,data.objects);
+									self.render_grid2(0,mangNew);
 
 								}
 								filters = {
@@ -200,8 +262,8 @@ define(function (require) {
 
 			self.$el.find('#soLanThanhTra_combobox').on('change.gonrin', function (e) {
 				var filters_common = self.$el.find('#soLanThanhTra_combobox').val();
-
 				
+				locsolanbaocao =filters_common;
 				filters['filters']['$and'].push({
 					solanthanhtra: { "$eq": filters_common }
 				});
@@ -209,20 +271,8 @@ define(function (require) {
 		
 			self.$el.find('#chuathanhtraganday_combobox').on('change.gonrin', function (e) {
 				var filters_common = self.$el.find('#chuathanhtraganday_combobox').val();
-				if ( typeof(Storage) !== 'undefined') {
-					// Khởi tạo sesionStorage
-					sessionStorage.setItem('solannamchuathanhtra',filters_common );
-					// get sessionStorage
-					// sessionStorage.getItem('name');
-					// // lấy ra số lượng session đã lưu trữ
-					// sessionStorage.length;
-					// // xóa 1 item localStorage
-					// sessionStorage.removeItem('name');
-					// // xóa tất cả item trong sessionStorage
-					// sessionStorage.clear();
-				} else {
-					alert('Trình duyệt của bạn không hỗ trợ!');
-				}
+				
+				locsonamchuabaocao = filters_common;
 				filters['filters']['$and'].push({
 					namchuathanhtraganday: { "$eq": filters_common }
 				});
@@ -233,134 +283,134 @@ define(function (require) {
 
 		},
 
-		soLanThanhTra: function () {
-			var self = this;
+		// soLanThanhTra: function () {
+		// 	var self = this;
+		// 	$.ajax({
+		// 		url: self.getApp().serviceURL + "/api/v1/danhmucdoanhnghiep",
+		// 		method: "GET",
+		// 		success: function (data) {
+		// 			var arr = [];
+		// 			(data.objects).forEach(function (item, index) { 
+		// 				console.log(item)
+		// 				if (item.trangthai == "end_checked" || item.trangthai == "completed")
+		// 					arr.push(item.madoanhnghiep);
+		// 			});
 
-			$.ajax({
-				url: self.getApp().serviceURL + "/api/v1/kehoachthanhtra",
-				method: "GET",
-				success: function (data) {
-					var arr = [];
-					(data.objects).forEach(function (item, index) {
-						if (item.trangthai == "end_checked")
-							arr.push(item.madoanhnghiep);
-					});
-					let ans = deduplicate(arr);
+		// 			let ans = deduplicate(arr);
 
-					function deduplicate(arr) {
-						let isExist = (arr, x) => {
-							for (let i = 0; i < arr.length; i++) {
-								if (arr[i] === x) return true;
-							}
-							return false;
-						}
+		// 			function deduplicate(arr) {
+		// 				let isExist = (arr, x) => {
+		// 					for (let i = 0; i < arr.length; i++) {
+		// 						if (arr[i] === x) return true;
+		// 					}
+		// 					return false;
+		// 				}
 
-						let ans = [];
-						arr.forEach(element => {
-							if (!isExist(ans, element)) ans.push(element);
-						});
-						return ans;
-					}
+		// 				let ans = [];
+		// 				arr.forEach(element => {
+		// 					if (!isExist(ans, element)) ans.push(element);
+		// 				});
+		// 				return ans;
+		// 			}
 
-					for (var i = 0; i < ans.length; i++) {
-						var dem = 0;
-						for (var j = 0; j < arr.length; j++) {
-							if (ans[i] == arr[j]) {
-								dem++;
-							}
-						}
-						var param = {
-							solanthanhtra: dem
-						}
-						$.ajax({
-							url: self.getApp().serviceURL + "/api/v1/danhmucdoanhnghiep/" + ans[i],
-							type: 'PUT',
-							data: JSON.stringify(param),
-							headers: {
-								'content-type': 'application/json'
-							},
-							dataType: 'json',
-							success: function (data) {
+		// 			for (var i = 0; i < ans.length; i++) {
+		// 				var dem = 0;
+		// 				for (var j = 0; j < arr.length; j++) {
+		// 					if (ans[i] == arr[j]) {
+		// 						dem++;
+		// 					}
+		// 				}
+		// 				var param = {
+		// 					solanthanhtra: dem
+		// 				}
+		// 				$.ajax({
+		// 					url: self.getApp().serviceURL + "/api/v1/danhmucdoanhnghiep/" + ans[i],
+		// 					type: 'PUT',
+		// 					data: JSON.stringify(param),
+		// 					headers: {
+		// 						'content-type': 'application/json'
+		// 					},
+		// 					dataType: 'json',
+		// 					success: function (data) {
 
-							},
-							error: function (request, textStatus, errorThrown) {
-								console.log(request);
-							}
-						})
-					}
-				},
-			})
-		},
-		chuaThanhTraGanDay: function () {
-			var self = this;
+		// 					},
+		// 					error: function (request, textStatus, errorThrown) {
+		// 						console.log(request)
+		// 					}
+		// 				})
+		// 			}
+		// 		},
+		// 	})
+		// },
+		// chuaThanhTraGanDay: function () {
+		// 	var self = this;
 
-			$.ajax({
-				url: self.getApp().serviceURL + "/api/v1/kehoachthanhtra",
-				method: "GET",
-				success: function (data) {
-					var arr = [];
-					(data.objects).forEach(function (item, index) {
-						if (item.trangthai == "end_checked")
-							arr.push({
-								"ma": item.madoanhnghiep,
-								"namsoanthao": moment(item.ngaythanhtra * 1000).year()
-							});
-					});
-					var mangNamGanNhat = [];
+		// 	$.ajax({
+		// 		url: self.getApp().serviceURL + "/api/v1/kehoachthanhtra",
+		// 		method: "GET",
+		// 		success: function (data) {
+		// 			var arr = [];
+		// 			(data.objects).forEach(function (item, index) {
+		// 				if (item.trangthai == "end_checked"|| item.trangthai == "completed"  )
+		// 					arr.push({
+		// 						"ma": item.madoanhnghiep,
+		// 						"namsoanthao": moment(item.ngaythanhtra * 1000).year()
+		// 					});
+		// 			});
+		// 			var mangNamGanNhat = [];
 
-					for (var i = 0; i < arr.length; i++) {
-						var mangMax = arr[i];
-						for (var j = 0; j < arr.length; j++) {
-							if (arr[i].ma == arr[j].ma && arr[i].namsoanthao < arr[j].namsoanthao) {
-								mangMax = arr[j];
-							}
-						}
-						mangNamGanNhat.push(mangMax);
-					}
-					let ans = deduplicate(mangNamGanNhat);
+		// 			for (var i = 0; i < arr.length; i++) {
+		// 				var mangMax = arr[i];
+		// 				for (var j = 0; j < arr.length; j++) {
+		// 					if (arr[i].ma == arr[j].ma && arr[i].namsoanthao < arr[j].namsoanthao) {
+		// 						mangMax = arr[j];
+		// 					}
+		// 				}
+		// 				mangNamGanNhat.push(mangMax);
+		// 			}
+		// 			let ans = deduplicate(mangNamGanNhat);
 
-					function deduplicate(arr) {
-						let isExist = (arr, x) => {
-							for (let i = 0; i < arr.length; i++) {
-								if (arr[i] === x) return true;
-							}
-							return false;
-						}
+		// 			function deduplicate(arr) {
+		// 				let isExist = (arr, x) => {
+		// 					for (let i = 0; i < arr.length; i++) {
+		// 						if (arr[i] === x) return true;
+		// 					}
+		// 					return false;
+		// 				}
 
-						let ans = [];
-						arr.forEach(element => {
-							if (!isExist(ans, element)) ans.push(element);
-						});
-						return ans;
-					}
-					var year = new Date();
-					var namhientai = year.getFullYear();
+		// 				let ans = [];
+		// 				arr.forEach(element => {
+		// 					if (!isExist(ans, element)) ans.push(element);
+		// 				});
+		// 				return ans;
+		// 			}
+		// 			var year = new Date();
+		// 			var namhientai = year.getFullYear();
 
-					ans.forEach(function (item) {
-						var param = {
-							namchuathanhtraganday: namhientai - item.namsoanthao
-						}
-						$.ajax({
-							url: self.getApp().serviceURL + "/api/v1/danhmucdoanhnghiep/" + item.ma,
-							type: 'PUT',
-							data: JSON.stringify(param),
-							headers: {
-								'content-type': 'application/json'
-							},
-							dataType: 'json',
-							success: function (data) {
+		// 			ans.forEach(function (item) {
+		// 				var param = {
+		// 					namchuathanhtraganday: namhientai - item.namsoanthao
+		// 				}
+		// 				$.ajax({
+		// 					url: self.getApp().serviceURL + "/api/v1/danhmucdoanhnghiep/" + item.ma,
+		// 					type: 'PUT',
+		// 					data: JSON.stringify(param),
+		// 					headers: {
+		// 						'content-type': 'application/json'
+		// 					},
+		// 					dataType: 'json',
+		// 					success: function (data) {
 
-							},
-							error: function (request, textStatus, errorThrown) {
-								console.log(request);
-							}
-						})
-					})
+		// 					},
+		// 					error: function (request, textStatus, errorThrown) {
+		// 					}
+		// 				})
+		// 			})
 
-				}
+		// 		}
 
-			})
-		},
+		// 	})
+		// },
 
 
 
@@ -421,10 +471,13 @@ define(function (require) {
 				},
 				events: {
 					"rowclick": function (e) {
-						self.getApp().getRouter().navigate("danhmucdoanhnghiep/model?id=" + e.rowId);
-
-
-
+						self.getApp().getRouter().navigate("danhmucdoanhnghiep/model?id=" + e.rowId+
+						"&tinhthanh_ID="+sessionStorage.getItem('tinhthanh_ID')+
+						"&chisotuanthu="+sessionStorage.getItem('chisotuanthu')+
+						"&linhvuc_ID="+sessionStorage.getItem('linhvuc_ID')+
+						"&sonamchuathanhtra="+sessionStorage.getItem('sonamchuathanhtra')+
+						"&solanthanhtra="+sessionStorage.getItem('solanthanhtra')
+						);
 					},
 				},
 			});
