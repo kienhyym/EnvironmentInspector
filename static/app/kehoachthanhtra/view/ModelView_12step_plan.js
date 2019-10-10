@@ -1104,9 +1104,13 @@ define(function (require) {
 			})
 
 			var ketThucThanhTraTrangThai = self.model.get("trangthai");
-			if (ketThucThanhTraTrangThai === "end_checked") {
+			if (ketThucThanhTraTrangThai === "end_checked" || ketThucThanhTraTrangThai === "completed") {
+				self.$el.find(".buoc9").css("pointer-events","none")
+				self.$el.find(".buoc10").css("pointer-events","none")
 				btnSave.each(function () {
 					btnSave.hide();
+					
+
 				})
 				self.$el.find(".notify-end").attr("style", "display:block");
 			}
@@ -1846,8 +1850,8 @@ define(function (require) {
 		},
 		check_gd9_sucees: function () {
 			var self = this;
-			if (self.model.get("sovanban_giaitrinh") !== null
-				&& self.model.get("ngay_vanban_doituong_giaitrinh") !== null) {
+			console.log(self.model)
+			if (self.model.get("baocaocuadoanthanhtrafield").length !== 0) {
 					self.$el.find(".buoc10").removeClass("buoc10");
 
 				return "success"

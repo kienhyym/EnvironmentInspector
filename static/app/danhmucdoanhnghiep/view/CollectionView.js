@@ -18,7 +18,8 @@ define(function (require) {
 
 		render: function () {
 			var self = this;
-			
+		
+
 			self.filterDataTinhThanh();
 			var linhvuc_ID =  self.getApp().getRouter().getParam("linhvuc_ID");
 			var tinhthanh_ID= self.getApp().getRouter().getParam("tinhthanh_ID");
@@ -174,14 +175,36 @@ define(function (require) {
 				url: self.getApp().serviceURL + "/api/v1/tinhthanh?results_per_page=100&max_results_per_page=100",
 				method: "GET",
 				success: function (data) {
-					self.$el.find('#tinhthanh_combobox').combobox({
-						textField: "ten",
-						valueField: "id",
-						dataSource: data.objects,
-					});
+					var tinhthanh_timkiem = [];
+					self.$el.find("#input_gia").keyup(function () {
+		
+						data.objects.forEach(function(item,index){
+							// console.log(self.$el.find("#input_gia").val());
+
+							// console.log((item.ten).indexOf(self.$el.find("#input_gia").val()));
+							if ((item.ten).indexOf(self.$el.find("#input_gia").val()) !== -1) {
+								tinhthanh_timkiem.push(item)
+							}
+						});
+						console.log(tinhthanh_timkiem)
+
+						self.$el.find('#tinhthanh_combobox').combobox({
+							textField: "ten",
+							valueField: "id",
+							dataSource: tinhthanh_timkiem,
+							refresh:true
+
+						});
+						self.$el.find("#tinhthanh_selecter div div .dropdown-menu").css("display", "block")
+						tinhthanh_timkiem = [];
+		
+					})
+
+					
 
 					self.$el.find('#tinhthanh_combobox').on('change.gonrin', function (e) {
 						var filters_common = $('#tinhthanh_combobox').data('gonrin').getValue();
+						self.$el.find("#input_gia").val($('#tinhthanh_combobox').data('gonrin').getText());
 						loctinhhthanh = filters_common;
 						filters['filters']['$and'].push({
 							tinhthanh_id: { "$eq": filters_common }

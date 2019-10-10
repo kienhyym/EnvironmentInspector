@@ -33,7 +33,7 @@ define(function (require) {
 							var self = this;
 							if (self.getApp().currentUser.hasRole("CucTruong")) {
 								self.getApp().getRouter().navigate(self.collectionName + "/collection" +
-									"?id=null"+
+									"?id=null" +
 									"&tinhthanh_ID=" + self.getApp().getRouter().getParam("tinhthanh_ID") +
 									"&chisotuanthu=" + self.getApp().getRouter().getParam("chisotuanthu") +
 									"&linhvuc_ID=" + self.getApp().getRouter().getParam("linhvuc_ID") +
@@ -66,24 +66,26 @@ define(function (require) {
 								}
 							});
 							self.model.set("danhmuclinhvuc_foreign", danhmuclinhvuc_foreign);
-							self.model.set("solanthanhtra",(self.model.get("lichsuthanhtra_field").length));
-							var mangNam =[];
-							self.model.get("lichsuthanhtra_field").forEach(function(item,index){
+							self.model.set("solanthanhtra", (self.model.get("lichsuthanhtra_field").length));
+							var mangNam = [];
+							self.model.get("lichsuthanhtra_field").forEach(function (item, index) {
 								mangNam.push(item.nam)
 							})
-							if(self.model.get("namchuathanhtraganday")== null){
-								self.model.set("namchuathanhtraganday",0);
+							if (self.model.get("namchuathanhtraganday") == null) {
+								self.model.set("namchuathanhtraganday", 0);
 
 							}
-							else{
+							if (self.model.get("solanthanhtra") == null) {
+								self.model.set("solanthanhtra", 0);
+
+							}
+							else {
 								var year = new Date();
 								var namhientai = year.getFullYear();
-	
-								self.model.set("namchuathanhtraganday",namhientai-Math.max.apply(Math, mangNam));
-	
-	
+
+								self.model.set("namchuathanhtraganday", namhientai - Math.max.apply(Math, mangNam));
 							}
-						
+
 							self.model.save(null, {
 								success: function (model, respose, options) {
 									self.getApp().notify("Lưu thông tin thành công");
@@ -211,7 +213,7 @@ define(function (require) {
 			var id = this.getApp().getRouter().getParam("id");
 			self.$el.find(".filter-option-inner-inner").selectpicker("810810af-c49e-4e37-b9e5-c66fb986bbf5")
 
-			
+
 			self.getLinhvucs();
 			self.checkLinhVuc();
 			// self.lichSuThanhTra();
@@ -484,6 +486,18 @@ define(function (require) {
 			ds_lichSuThanhTra.forEach((item, index) => {
 
 				var view = new LichSuThanhTraItemView();
+				view.$el.find("#itemRemove").on("click", function () {
+					var arr = [];
+					self.model.get("lichsuthanhtra_field").forEach(function (item2, index2) {
+						if (item2.id != item.id) {
+							arr.push(item2)
+						}
+					})
+					self.model.set("lichsuthanhtra_field", arr)
+					self.model.set("solanthanhtra", (self.model.get("lichsuthanhtra_field").length));
+					$(view.el).hide()
+				})
+
 				view.model.set(item);
 				view.render();
 				$(view.el).hide().appendTo(containerEl).fadeIn();
@@ -498,6 +512,8 @@ define(function (require) {
 					self.model.set("lichsuthanhtra_field", ds_lichSuThanhTra);
 				});
 			});
+
+
 			self.$el.find("#btn_add_lichsuthanhtra_field").on("click", (eventClick) => {
 				var view = new LichSuThanhTraItemView();
 
@@ -551,6 +567,17 @@ define(function (require) {
 					}
 				});
 			});
+
+
+			// var viewLichSu = new LichSuThanhTraItemView();
+			// self.$el.find("tr td #itemRemove").each(function (item,index) {  
+			// 	self.$el.find("#"+index.id).on("click",function () {
+			// 		console.log("xxxx",item)
+			// 	})
+			// 					
+			// })
+
+
 		},
 		themVaoKeHoachNamSau: function () {
 
@@ -563,7 +590,69 @@ define(function (require) {
 					method: "GET",
 					contentType: "application/json",
 					success: function (data) {
+						var dem = 0;
 						data.objects.forEach(function (item) {
+							console.log(year + 1)
+							console.log(item.nam)
+
+							if (item.nam == year + 1) {
+								dem++;
+							}
+						})
+
+						console.log(dem)
+						var param = {
+							id: gonrin.uuid(),
+							nam: year + 1
+						};
+						if (dem == 0) {
+							self.$el.find("#namsau").text(year + 1)
+							self.$el.find("#namsau").css("font-weight", "bold")
+							self.$el.find(".notify-taokehoachnamsau").css({ "display": "block", "position": "fixed", "top": "150px", "left": "350px", "z-index": "999999" });
+							self.$el.find("#yes-taongay").unbind("click").on("click", function () {
+								$.ajax({
+									url: self.getApp().serviceURL + "/api/v1/kehoachnamsau",
+									type: 'POST',
+									data: JSON.stringify(param),
+									headers: {
+										'content-type': 'application/json'
+									},
+									dataType: 'json',
+									success: function (data) {
+										self.getApp().notify("Giờ bạn có thể thêm đơn vị vào kế hoạch năm sau");
+										self.$el.find(".notify-taokehoachnamsau").css({ "display": "none", "position": "fixed", "top": "150px", "left": "350px", "z-index": "999999" });
+
+
+									},
+									error: function (request, textStatus, errorThrown) {
+									}
+								})
+							})
+							self.$el.find("#no-khongtao").unbind("click").on("click", function () {
+								self.$el.find(".notify-taokehoachnamsau").css({ "display": "none", "position": "fixed", "top": "150px", "left": "350px", "z-index": "999999" });
+							})
+						}
+						else {
+							self.getApp().notify("đã có kế hoạch năm sau rồi");
+
+						}
+					},
+					error: function (xhr, status, error) {
+					},
+				});
+
+
+
+
+
+				$.ajax({
+					url: self.getApp().serviceURL + "/api/v1/kehoachnamsau",
+					method: "GET",
+					contentType: "application/json",
+					success: function (data) {
+						data.objects.forEach(function (item) {
+
+
 							if (item.nam == year + 1) {
 
 

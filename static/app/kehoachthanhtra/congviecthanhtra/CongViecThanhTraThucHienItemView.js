@@ -100,16 +100,15 @@ define(function (require) {
                     if (http.status === 200) {
                         if (http.readyState === 4) {
                             var data_file = JSON.parse(http.responseText), link, p, t;
-                            self.getApp().notify("Tải file thành công");
+                            // self.getApp().notify("Tải file thành công");
                             self.model.set(data_attr, data_file.link);
                             var mdel = self.model.get("tailieu");
-                console.log("xxxxxxx",mdel)
 
 				self.$el.find(".hienthilink").html(mdel);
                             // self.saveModel();
                         }
                     } else {
-                        self.getApp().notify("Không thể tải tệp tin lên máy chủ");
+                        // self.getApp().notify("Không thể tải tệp tin lên máy chủ");
                     }
                 };
                 http.send(fd);
