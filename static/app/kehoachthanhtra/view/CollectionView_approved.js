@@ -109,10 +109,10 @@ define(function (require) {
 							return "";
 						},
 					},
-					{
-						field: "truongdoanthanhtra",
-						label: "Trưởng đoàn"
-					},
+					// {
+					// 	field: "truongdoanthanhtra",
+					// 	label: "Trưởng đoàn"
+					// },
 					{
 						field: "trangthai",
 						label: "Trạng thái",
