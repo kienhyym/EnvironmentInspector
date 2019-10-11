@@ -632,10 +632,7 @@ define(function (require) {
 								self.$el.find(".notify-taokehoachnamsau").css({ "display": "none", "position": "fixed", "top": "150px", "left": "350px", "z-index": "999999" });
 							})
 						}
-						else {
-							self.getApp().notify("đã có kế hoạch năm sau rồi");
-
-						}
+					
 					},
 					error: function (xhr, status, error) {
 					},

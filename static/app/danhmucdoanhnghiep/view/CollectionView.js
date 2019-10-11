@@ -175,9 +175,11 @@ define(function (require) {
 				url: self.getApp().serviceURL + "/api/v1/tinhthanh?results_per_page=100&max_results_per_page=100",
 				method: "GET",
 				success: function (data) {
-					var tinhthanh_timkiem = [];
+					var tinhthanh_timkiem = data.objects;
+				
+					
 					self.$el.find("#input_gia").keyup(function () {
-		
+
 						data.objects.forEach(function(item,index){
 							// console.log(self.$el.find("#input_gia").val());
 
@@ -185,8 +187,8 @@ define(function (require) {
 							if ((item.ten).indexOf(self.$el.find("#input_gia").val()) !== -1) {
 								tinhthanh_timkiem.push(item)
 							}
-						});
-						console.log(tinhthanh_timkiem)
+						});	
+						
 
 						self.$el.find('#tinhthanh_combobox').combobox({
 							textField: "ten",
@@ -195,11 +197,12 @@ define(function (require) {
 							refresh:true
 
 						});
+						
 						self.$el.find("#tinhthanh_selecter div div .dropdown-menu").css("display", "block")
 						tinhthanh_timkiem = [];
 		
 					})
-
+					
 					
 
 					self.$el.find('#tinhthanh_combobox').on('change.gonrin', function (e) {
@@ -209,7 +212,12 @@ define(function (require) {
 						filters['filters']['$and'].push({
 							tinhthanh_id: { "$eq": filters_common }
 						});
+						self.$el.find("#input_gia").focusout(function(){
+							self.$el.find("#tinhthanh_selecter div div .dropdown-menu").css("display", "none")
+						});
 					});
+					
+
 				},
 				error: function (xhr, status, error) { }
 			});

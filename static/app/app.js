@@ -33,7 +33,7 @@ require.config({
 
 
 require(['jquery', 'gonrin', 'app/router', 'app/nav/NavbarView', 'text!app/base/tpl/mobilelayout.html', 'i18n!app/nls/app', 'vendor/store', 'vendor/lodash-4.17.10'],
-	function ($, Gonrin, Router, Nav, layout, lang, lodash, storejs) {
+	function ($, Gonrin, Router, Nav, layout, lang, storejs, lodash) {
 		$.ajaxSetup({
 			headers: {
 				'content-type': 'application/json'

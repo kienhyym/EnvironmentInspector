@@ -563,13 +563,18 @@ define(function (require) {
 						// }
 
 
-						var arr1 = self.$el.find(".stt")
+						var arr1 = self.$el.find(".solan")
 						arr1.each(function(item, index){
-							index.value = item+1;
-						})
-						var arr = self.$el.find(".solan")
-						arr.each(function(item, index){
-							index.value = item+1;
+							index.append(item+1);
+												})
+						// var arr = self.$el.find(".solan")
+						// arr.each(function(item, index){
+						// 	index.value = item+1;
+						// })
+
+						var arr2 = self.$el.find(".solann")
+						arr2.each(function(item, index){
+							index.append(item+1);
 						})
 						// arr.each(function(item,index){
 
@@ -747,7 +752,6 @@ define(function (require) {
 			// if (self.check_gd14_sucees() === "success") {
 			// 	dem++;
 			// }
-			console.log(dem)
 
 			if (dem == 13) {
 				self.$el.find(".btn-save-gd14").unbind("click").bind("click", function () {
@@ -772,7 +776,6 @@ define(function (require) {
 							}
 						}
 					});
-					console.log(self.model)
 				})
 
 			}
@@ -926,11 +929,9 @@ define(function (require) {
 
 				if (!!attr_value) {
 					linkDownload[i].href = attr_value;
-					console.log(linkDownload[i])
 
 					self.$el.find("#upload-" + key).hide();
 					self.$el.find("#download-" + key).show();
-					console.log("#download-" + key)
 
 				} else {
 					self.$el.find("#upload-" + key).show();
@@ -1542,7 +1543,6 @@ define(function (require) {
 
 			var kiemTraKetThucThanhTra = self.model.get("trangthai");
 			if (kiemTraKetThucThanhTra != "end_checked") {
-				// console.log(self.model)
 				self.model.save(null, {
 					success: function (model, response, options) {
 						self.getApp().notify("Lưu thông tin thành công");
@@ -1598,7 +1598,6 @@ define(function (require) {
 				var ds_member = self.model.get("danhsach_thanhvien");
 				for (var i = 0; i < ds_member.length; i++) {
 					if (ds_member[i].id === memberView.model.get("id")) {
-						// console.log("xxxxx",i)
 
 						ds_member.splice(i, 1);
 					}
@@ -1850,7 +1849,6 @@ define(function (require) {
 		},
 		check_gd9_sucees: function () {
 			var self = this;
-			console.log(self.model)
 			if (self.model.get("baocaocuadoanthanhtrafield").length !== 0) {
 					self.$el.find(".buoc10").removeClass("buoc10");
 
@@ -2284,17 +2282,16 @@ define(function (require) {
 			if (!ds_baoCaoCuaDoanThanhTra) {
 				ds_baoCaoCuaDoanThanhTra = [];
 			}
-			console.log('ds_baoCaoCuaDoanThanhTra',ds_baoCaoCuaDoanThanhTra)
 
 			var containerEl = self.$el.find("#space_baocaocuadoanthanhtrafield");
 			containerEl.empty();
 			
-			// var dataSource = lodash.orderBy(ds_baoCaoCuaDoanThanhTra, ['created_at'], ['asc']);
-			console.log('ds_baoCaoCuaDoanThanhTra',ds_baoCaoCuaDoanThanhTra)
-			ds_baoCaoCuaDoanThanhTra.forEach((item, index) => {
+
+			var dataSource = lodash.orderBy(ds_baoCaoCuaDoanThanhTra, ['created_at'], ['asc']);
+			dataSource.forEach((item, index) => {
+
 				var view = new BaoCaoCuaDoanThanhTraItemView();
 				view.model.set(item);
-				
 				view.render();
 				$(view.el).hide().appendTo(containerEl).fadeIn();
 				view.on("change", (data) => {
@@ -2373,8 +2370,8 @@ define(function (require) {
 			}
 			var containerEl = self.$el.find("#space_vanbanduthaofield");
 			containerEl.empty();
-			// var dataSource = lodash.orderBy(ds_VanBanDuThao, ['created_at'], ['asc']);
-			ds_VanBanDuThao.forEach((item, index) => {
+			var dataSource = lodash.orderBy(ds_VanBanDuThao, ['created_at'], ['asc']);
+			dataSource.forEach((item, index) => {
 				var view = new VanBanDuThaoItemView();
 				view.model.set(item);
 				view.render();
