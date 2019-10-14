@@ -98,7 +98,7 @@ define(function (require) {
             ];
             $.each(keys, function (i, key) {
                 var attr_value = self.model.get(key);
-                var linkDownload = self.$el.find(".linkDownload");
+                var linkDownload = self.$el.find(".linkDownloadVanBanDuThao");
 
                 if (!!attr_value) {
                     linkDownload[i].href = attr_value;

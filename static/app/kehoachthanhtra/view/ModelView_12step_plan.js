@@ -938,8 +938,95 @@ define(function (require) {
 
 			})
 
+
+			var linkDownloadTinhHinhThanhTra = self.$el.find(".linkDownloadTinhHinhThanhTra");
+			var textDownloadTinhHinhThanhTra = self.$el.find(".textDownloadTinhHinhThanhTra");
+
+			var danhsachhoso_bangiao_buoc8 = self.$el.find(".danhsachhoso_bangiao_buoc8");
+			var danhsachhoso_buoc8 = [];
+
+			for (var i = 0; i < textDownloadTinhHinhThanhTra.length; i++) {
+				console.log('linkDownloadTinhHinhThanhTra',textDownloadTinhHinhThanhTra[i].textContent)
+
+				if (textDownloadTinhHinhThanhTra[i].textContent === '') {
+					textDownloadTinhHinhThanhTra[i].style.display = "none";
+				}
+				else {
+					var obj4 = {
+						text: textDownloadTinhHinhThanhTra[i].textContent,
+						link: textDownloadTinhHinhThanhTra[i].textContent
+					};
+
+
+					danhsachhoso_buoc8.push(obj4)
+				}
+
+			}
+			for (var i = 0; i < danhsachhoso_buoc8.length; i++) {
+				console.log("danhsachhoso_buoc8",danhsachhoso_buoc8[i].text)
+
+				danhsachhoso_bangiao_buoc8.before("<tr><td>" + i + "</td><td>" + danhsachhoso_buoc8[i].text.slice(16) + "</span></td><td><a href='" + danhsachhoso_buoc8[i].link + "'>download</a></td></tr>")
+			}
+
+
+
+
+			var linkDownloadBaocaoCuaThanhTra = self.$el.find(".linkDownloadBaocaoCuaThanhTra");
+			var textDownloadBaocaoCuaThanhTra = self.$el.find(".textDownloadBaocaoCuaThanhTra");
+
+			var danhsachhoso_bangiao_buoc9 = self.$el.find(".danhsachhoso_bangiao_buoc9");
+			var danhsachhoso_buoc9 = [];
+
+			for (var i = 0; i < linkDownloadBaocaoCuaThanhTra.length; i++) {
+				console.log("link",textDownloadBaocaoCuaThanhTra[i])
+				if (linkDownloadBaocaoCuaThanhTra[i].href === '') {
+					linkDownloadBaocaoCuaThanhTra[i].style.display = "none";
+				}
+				else {
+					var obj3 = {
+						text: textDownloadBaocaoCuaThanhTra[i].textContent,
+						link: textDownloadBaocaoCuaThanhTra[i].textContent
+					};
+
+
+					danhsachhoso_buoc9.push(obj3)
+				}
+
+			}
+			for (var i = 0; i < danhsachhoso_buoc9.length; i++) {
+				danhsachhoso_bangiao_buoc9.before("<tr><td>" + i + "</td><td>" + danhsachhoso_buoc9[i].text.slice(16) + "</span></td><td><a href='" + danhsachhoso_buoc9[i].link + "'>download</a></td></tr>")
+			}
+
+
+
+
+			var linkDownloadVanBanDuThao = self.$el.find(".linkDownloadVanBanDuThao");
+			var textDownloadVanBanDuThao = self.$el.find(".textDownloadVanBanDuThao");
+
+			var hoso2 = self.$el.find(".danhsachhoso_bangiao_buoc10");
+			var arr2 = [];
+
+			for (var i = 0; i < linkDownloadVanBanDuThao.length; i++) {
+				if (linkDownloadVanBanDuThao[i].href === '') {
+					linkDownloadVanBanDuThao[i].style.display = "none";
+				}
+				else {
+					var obj2 = {
+						text: textDownloadVanBanDuThao[i].textContent,
+						link: textDownloadVanBanDuThao[i].textContent
+					};
+
+
+					arr2.push(obj2)
+				}
+
+			}
+			for (var i = 0; i < arr2.length; i++) {
+				hoso2.before("<tr><td>" + i + "</td><td>" + arr2[i].text.slice(16) + "</span></td><td><a href='" + arr2[i].link + "'>download</a></td></tr>")
+			}
+
 			var linkDownload = self.$el.find(".linkDownload2");
-			var textDownload = self.$el.find(".textDownload");
+			var textDownload = self.$el.find(".textDownload2");
 			var link = self.$el.find(".linkdownload_and_button");
 			var hoso = self.$el.find(".danhsachhoso_bangiao");
 			var arr = [];
