@@ -106,8 +106,8 @@ define(function (require) {
 				// 	}],
 				// 	toolEl: "#add_row"
 				// },
-				
-				
+
+
 
 				{
 					field: "ngay_quyetdinh_thanhtra",
@@ -552,7 +552,7 @@ define(function (require) {
 			self.getDoanhNghiep();
 			self.bindEventSelect();
 			self.updateStepStatus();
-		
+
 
 
 			var id = this.getApp().getRouter().getParam("id");
@@ -571,35 +571,35 @@ define(function (require) {
 						// 		dem++;
 						// 	}
 						// 	arr[i].value = dem;
-							
+
 						// }
 						var duyetHayKhong = self.model.get("vanbanduthaofield")
-						var demduyet =0;
-						duyetHayKhong.forEach(function (item,index) {
+						var demduyet = 0;
+						duyetHayKhong.forEach(function (item, index) {
 							console.log(item.trangthai_vanban)
-							if(item.trangthai_vanban == 1){
+							if (item.trangthai_vanban == 1) {
 								demduyet++;
 							}
 						})
-						if(demduyet == 0){
+						if (demduyet == 0) {
 							self.$el.find(".nguoiduyet").hide();
 						}
-						else{
+						else {
 							self.$el.find(".nguoiduyet").show();
 						}
 
 						var arr1 = self.$el.find(".solan")
-						arr1.each(function(item, index){
-							index.append(item+1);
-												})
+						arr1.each(function (item, index) {
+							index.append(item + 1);
+						})
 						// var arr = self.$el.find(".solan")
 						// arr.each(function(item, index){
 						// 	index.value = item+1;
 						// })
 
 						var arr2 = self.$el.find(".solann")
-						arr2.each(function(item, index){
-							index.append(item+1);
+						arr2.each(function (item, index) {
+							index.append(item + 1);
 						})
 						// arr.each(function(item,index){
 
@@ -1211,12 +1211,15 @@ define(function (require) {
 			})
 
 			var ketThucThanhTraTrangThai = self.model.get("trangthai");
+
 			if (ketThucThanhTraTrangThai === "end_checked" || ketThucThanhTraTrangThai === "completed") {
-				self.$el.find(".buoc9").css("pointer-events","none")
-				self.$el.find(".buoc10").css("pointer-events","none")
+				// self.$el.find(".buoc9").css("pointer-events", "none")
+				// self.$el.find(".buoc10").css("pointer-events", "none")
+				self.$el.find(".btn_ketthuchoanthanh").hide();
+				self.$el.find(".btn-them").hide();
 				btnSave.each(function () {
 					btnSave.hide();
-					
+
 
 				})
 				self.$el.find(".notify-end").attr("style", "display:block");
@@ -1834,7 +1837,7 @@ define(function (require) {
 			if (self.model.get("danhsach_thanhvien") !== null
 				&& self.model.get("so_quyetdinh_thanhtra") !== null
 				&& self.model.get("ngay_quyetdinh_thanhtra") !== null) {
-								self.$el.find(".buoc2").removeClass("buoc2");
+				self.$el.find(".buoc2").removeClass("buoc2");
 
 				return "success"
 			}
@@ -1845,7 +1848,7 @@ define(function (require) {
 			var self = this;
 			if (self.model.get("so_vanban_kehoach") !== null
 				&& self.model.get("ngay_vanban_kehoach") !== null) {
-					self.$el.find(".buoc3").removeClass("buoc3");
+				self.$el.find(".buoc3").removeClass("buoc3");
 
 				return "success"
 			}
@@ -1857,7 +1860,7 @@ define(function (require) {
 			if (self.model.get("danhsach_congviec_thanhtra") !== null
 				&& self.model.get("danhsach_congviec_thanhtra") !== null
 				&& self.model.get("danhsach_congviec_thanhtra").length > 0) {
-					self.$el.find(".buoc4").removeClass("buoc4");
+				self.$el.find(".buoc4").removeClass("buoc4");
 
 				return "success"
 			}
@@ -1868,7 +1871,7 @@ define(function (require) {
 			var self = this;
 			if (self.model.get("so_congvan_yeucau_doituong_baocao") !== null
 				&& self.model.get("ngay_congvan_yeucau_doituong_baocao") !== null) {
-					self.$el.find(".buoc5").removeClass("buoc5");
+				self.$el.find(".buoc5").removeClass("buoc5");
 
 				return "success"
 			}
@@ -1878,7 +1881,7 @@ define(function (require) {
 			var self = this;
 			if (self.model.get("sovanban_thongbao_doituong_thanhtra") !== null
 				&& self.model.get("ngay_vanban_thongbao_doituong_thanhtra") !== null) {
-					self.$el.find(".buoc6").removeClass("buoc6");
+				self.$el.find(".buoc6").removeClass("buoc6");
 
 				return "success"
 			}
@@ -1911,7 +1914,7 @@ define(function (require) {
 
 			if (self.model.get("sovanban_congbo_quyetdinh") !== null
 				&& self.model.get("ngay_vanban_congbo_quyetdinh") !== null) {
-					self.$el.find(".buoc7").removeClass("buoc7");
+				self.$el.find(".buoc7").removeClass("buoc7");
 
 				return "success"
 			}
@@ -1922,7 +1925,7 @@ define(function (require) {
 			var self = this;
 			if (self.model.get("so_thongbao_ketthuc_thanhtra") !== null
 				&& self.model.get("ngay_thongbao_ketthuc_thanhtra") !== null) {
-					self.$el.find(".buoc8").removeClass("buoc8");
+				self.$el.find(".buoc8").removeClass("buoc8");
 
 				return "success"
 			}
@@ -1930,16 +1933,28 @@ define(function (require) {
 		},
 		check_gd8_sucees: function () {
 			var self = this;
+			var dem = 0;
 			var ngay_vanban_congbo_quyetdinh = self.model.get("ngay_vanban_congbo_quyetdinh");
 			var ngay_vanban_doituong_giaitrinh = self.model.get("ngay_vanban_doituong_giaitrinh");
-			if (self.model.get("danhsach_congviec_thanhtra") !== null
-				&& self.model.get("danhsach_congviec_thanhtra") !== null
-				&& self.model.get("danhsach_congviec_thanhtra").length > 0) {
-					self.$el.find(".buoc9").removeClass("buoc9");
+			if (self.model.get("danhsach_congviec_thanhtra") != null) {
+				self.model.get("danhsach_congviec_thanhtra").forEach(function (item, index) {
+					if (item.thoigianhoanthanh != null) {
+						dem++;
+					}
+				})
+			}
+			// if (self.model.get("danhsach_congviec_thanhtra") !== null
+			// 	&& self.model.get("danhsach_congviec_thanhtra") !== null
+			// 	&& self.model.get("danhsach_congviec_thanhtra").length > 0) {
+			// 		self.$el.find(".buoc9").removeClass("buoc9");
+
+			// 	return "success"
+			// }
+			if (dem != 0) {
+				self.$el.find(".buoc9").removeClass("buoc9");
 
 				return "success"
 			}
-
 			if (!!ngay_vanban_congbo_quyetdinh) {
 				var checkngay = moment().unix();
 				if (!!ngay_vanban_doituong_giaitrinh) {
@@ -1956,7 +1971,7 @@ define(function (require) {
 		check_gd9_sucees: function () {
 			var self = this;
 			if (self.model.get("baocaocuadoanthanhtrafield").length !== 0) {
-					self.$el.find(".buoc10").removeClass("buoc10");
+				self.$el.find(".buoc10").removeClass("buoc10");
 
 				return "success"
 			}
@@ -1970,19 +1985,19 @@ define(function (require) {
 
 			// 	return "success"
 			// }
-		
-			
+
+
 			var mangVanBanDuThao = self.model.get("vanbanduthaofield");
-			var dem =0;
-			mangVanBanDuThao.forEach(function(item,index){
-				if(item.trangthai_vanban == 1){
+			var dem = 0;
+			mangVanBanDuThao.forEach(function (item, index) {
+				if (item.trangthai_vanban == 1) {
 					dem++;
 				}
 			})
-				if(dem!=0){
-					self.$el.find(".buoc11").removeClass("buoc11");
-					return "success" ;
-				}
+			if (dem != 0) {
+				self.$el.find(".buoc11").removeClass("buoc11");
+				return "success";
+			}
 			//
 			return "light";
 		},
@@ -1990,19 +2005,19 @@ define(function (require) {
 			var self = this;
 			if (self.model.get("so_ketluan_thanhtra") !== null
 				&& self.model.get("ngay_ketluan_thanhtra") !== null) {
-					
-					self.$el.find(".buoc12").removeClass("buoc12");
+
+				self.$el.find(".buoc12").removeClass("buoc12");
 
 				return "success"
 			}
 			return "light";
 		},
-		
+
 		check_gd12_sucees: function () {
 			var self = this;
 			if (self.model.get("so_bienban_congbo_ketluan") !== null
 				&& self.model.get("ngay_bienban_congbo_ketluan") !== null) {
-					self.$el.find(".buoc13").removeClass("buoc13");
+				self.$el.find(".buoc13").removeClass("buoc13");
 
 				return "success"
 			}
@@ -2013,7 +2028,7 @@ define(function (require) {
 			if (self.model.get("coquan_congvan_yeucau_baocao_thuchien") !== null
 				&& self.model.get("so_congvan_yeucau_baocao_thuchien") !== null
 				&& self.model.get("ngay_congvan_yeucau_baocao_thuchien") !== null) {
-					self.$el.find(".buoc14").removeClass("buoc14");
+				self.$el.find(".buoc14").removeClass("buoc14");
 
 				return "success"
 			}
@@ -2391,7 +2406,7 @@ define(function (require) {
 
 			var containerEl = self.$el.find("#space_baocaocuadoanthanhtrafield");
 			containerEl.empty();
-			
+
 
 			var dataSource = lodash.orderBy(ds_baoCaoCuaDoanThanhTra, ['created_at'], ['asc']);
 			dataSource.forEach((item, index) => {
@@ -2408,7 +2423,7 @@ define(function (require) {
 						}
 					});
 					self.model.set("baocaocuadoanthanhtrafield", ds_baoCaoCuaDoanThanhTra);
-					
+
 				});
 			});
 			self.$el.find("#btn_add_baocaocuadoanthanhtrafield").on("click", (eventClick) => {
@@ -2490,7 +2505,7 @@ define(function (require) {
 						}
 					});
 					self.model.set("vanbanduthaofield", ds_VanBanDuThao);
-					
+
 				});
 			});
 			self.$el.find("#btn_add_vanbanduthaofield").on("click", (eventClick) => {
