@@ -576,7 +576,6 @@ define(function (require) {
 						var duyetHayKhong = self.model.get("vanbanduthaofield")
 						var demduyet = 0;
 						duyetHayKhong.forEach(function (item, index) {
-							console.log(item.trangthai_vanban)
 							if (item.trangthai_vanban == 1) {
 								demduyet++;
 							}
@@ -962,6 +961,9 @@ define(function (require) {
 				}
 
 			})
+			self.$el.find(".textDownload2").each(function(index,item){
+				item.textContent = item.textContent.slice(16)
+			})
 			self.danhSachTaiLieu();
 			
 			var linkDownloadTinhHinhThanhTra = self.$el.find(".linkDownloadTinhHinhThanhTra");
@@ -1048,7 +1050,7 @@ define(function (require) {
 			}
 			var x = self.$el.find("tr .stt")
 			x.each(function(item,index){
-				console.log("item,index",item,index.textContent = item+1)
+			index.textContent = item+1
 			})
 			// var linkDownload = self.$el.find(".linkDownload2");
 			// var textDownload = self.$el.find(".textDownload2");
@@ -2606,7 +2608,6 @@ define(function (require) {
 			for (var i = 1; i < 14; i++) {
 				var linkDownloadBuoc1 = self.$el.find(".linkDownloadBuoc" + i);
 				var textDownloadBuoc1 = self.$el.find(".textDownloadBuoc" + i);
-				console.log('textDownloadBuoc1', linkDownloadBuoc1)
 
 				var hoso = self.$el.find(".danhsachhoso_bangiao_buoc" + i);
 				var arr = [];
