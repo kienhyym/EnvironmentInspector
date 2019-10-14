@@ -129,7 +129,7 @@ define(function (require) {
 			}
 		},
 		{
-			"text": "kế hoạch năm sau",
+			"text": "Danh sách kế hoạch năm",
 			"icon": "fa fa-book",
 			"type": "view",
 			"collectionName": "kehoachnamsau",

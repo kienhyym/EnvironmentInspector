@@ -962,12 +962,12 @@ define(function (require) {
 				}
 
 			})
-
-
+			self.danhSachTaiLieu();
+			
 			var linkDownloadTinhHinhThanhTra = self.$el.find(".linkDownloadTinhHinhThanhTra");
 			var textDownloadTinhHinhThanhTra = self.$el.find(".textDownloadTinhHinhThanhTra");
 
-			var danhsachhoso_bangiao_buoc8 = self.$el.find(".danhsachhoso_bangiao_buoc8");
+			var danhsachhoso_bangiao_buoc8 = self.$el.find(".danhsachhoso_bangiao_buoc8_2");
 			var danhsachhoso_buoc8 = [];
 
 			for (var i = 0; i < textDownloadTinhHinhThanhTra.length; i++) {
@@ -988,7 +988,7 @@ define(function (require) {
 			}
 			for (var i = 0; i < danhsachhoso_buoc8.length; i++) {
 
-				danhsachhoso_bangiao_buoc8.before("<tr><td>" + i + "</td><td>" + danhsachhoso_buoc8[i].text.slice(16) + "</span></td><td><a href='" + danhsachhoso_buoc8[i].link + "'>download</a></td></tr>")
+				danhsachhoso_bangiao_buoc8.before("<tr><td class='stt text-center'>" + i + "</td><td>" + danhsachhoso_buoc8[i].text.slice(16) + "</span></td><td class='text-center'><a href='" + danhsachhoso_buoc8[i].link + "'>download</a></td></tr>")
 			}
 
 
@@ -1016,7 +1016,7 @@ define(function (require) {
 
 			}
 			for (var i = 0; i < danhsachhoso_buoc9.length; i++) {
-				danhsachhoso_bangiao_buoc9.before("<tr><td>" + i + "</td><td>" + danhsachhoso_buoc9[i].text.slice(16) + "</span></td><td><a href='" + danhsachhoso_buoc9[i].link + "'>download</a></td></tr>")
+				danhsachhoso_bangiao_buoc9.before("<tr><td class='stt text-center'>" + i + "</td><td>" + danhsachhoso_buoc9[i].text.slice(16) + "</span></td><td class='text-center'><a href='" + danhsachhoso_buoc9[i].link + "'>download</a></td></tr>")
 			}
 
 
@@ -1025,7 +1025,7 @@ define(function (require) {
 			var linkDownloadVanBanDuThao = self.$el.find(".linkDownloadVanBanDuThao");
 			var textDownloadVanBanDuThao = self.$el.find(".textDownloadVanBanDuThao");
 
-			var hoso2 = self.$el.find(".danhsachhoso_bangiao_buoc10");
+			var hoso2 = self.$el.find(".danhsachhoso_bangiao_buoc10_2");
 			var arr2 = [];
 
 			for (var i = 0; i < linkDownloadVanBanDuThao.length; i++) {
@@ -1044,52 +1044,55 @@ define(function (require) {
 
 			}
 			for (var i = 0; i < arr2.length; i++) {
-				hoso2.before("<tr><td>" + i + "</td><td>" + arr2[i].text.slice(16) + "</span></td><td><a href='" + arr2[i].link + "'>download</a></td></tr>")
+				hoso2.before("<tr><td class='stt text-center'>" + i + "</td><td>" + arr2[i].text.slice(16) + "</span></td><td class='text-center'><a href='" + arr2[i].link + "'>download</a></td></tr>")
 			}
+			var x = self.$el.find("tr .stt")
+			x.each(function(item,index){
+				console.log("item,index",item,index.textContent = item+1)
+			})
+			// var linkDownload = self.$el.find(".linkDownload2");
+			// var textDownload = self.$el.find(".textDownload2");
+			// var link = self.$el.find(".linkdownload_and_button");
+			// var hoso = self.$el.find(".danhsachhoso_bangiao");
+			// var arr = [];
 
-			var linkDownload = self.$el.find(".linkDownload2");
-			var textDownload = self.$el.find(".textDownload2");
-			var link = self.$el.find(".linkdownload_and_button");
-			var hoso = self.$el.find(".danhsachhoso_bangiao");
-			var arr = [];
-
-			for (var i = 0; i < linkDownload.length; i++) {
-				if (linkDownload[i].href === '') {
-					linkDownload[i].style.display = "none";
-				}
-				else {
-					var obj = {
-						text: textDownload[i].textContent,
-						link: linkDownload[i].href
-					};
+			// for (var i = 0; i < linkDownload.length; i++) {
+			// 	if (linkDownload[i].href === '') {
+			// 		linkDownload[i].style.display = "none";
+			// 	}
+			// 	else {
+			// 		var obj = {
+			// 			text: textDownload[i].textContent,
+			// 			link: linkDownload[i].href
+			// 		};
 
 
-					arr.push(obj)
-				}
+			// 		arr.push(obj)
+			// 	}
 
-			}
+			// }
 
-			let ans = deduplicate(arr);
+			// let ans = deduplicate(arr);
 
-			function deduplicate(arr) {
-				let isExist = (arr, x) => {
+			// function deduplicate(arr) {
+			// 	let isExist = (arr, x) => {
 
-					for (let i = 0; i < arr.length; i++) {
-						if (arr[i].text === x.text) return true;
-					}
-					return false;
-				}
+			// 		for (let i = 0; i < arr.length; i++) {
+			// 			if (arr[i].text === x.text) return true;
+			// 		}
+			// 		return false;
+			// 	}
 
-				let ans = [];
-				arr.forEach(element => {
-					if (!isExist(ans, element)) ans.push(element);
-				});
-				return ans;
-			}
+			// 	let ans = [];
+			// 	arr.forEach(element => {
+			// 		if (!isExist(ans, element)) ans.push(element);
+			// 	});
+			// 	return ans;
+			// }
 
-			for (var i = 0; i < ans.length; i++) {
-				hoso.before("<tr><td>" + i + "</td><td>" + ans[i].text.slice(16) + "</span></td><td><a href='" + ans[i].link + "'>download</a></td></tr>")
-			}
+			// for (var i = 0; i < ans.length; i++) {
+			// 	hoso.before("<tr><td>" + i + "</td><td>" + ans[i].text.slice(16) + "</span></td><td><a href='" + ans[i].link + "'>download</a></td></tr>")
+			// }
 		},
 
 		LapBienBan: function () {
@@ -2564,6 +2567,79 @@ define(function (require) {
 				});
 			});
 		},
+		danhSachTaiLieu: function () {
+			var self = this;
+		
+			
+		
+
+			var x = self.model.get("vitriannutxuphat");
+			if (x == 0) {
+				self.$el.find(".text11").removeClass("textDownloadBuoc11");
+				self.$el.find(".text12").removeClass("textDownloadBuoc12");
+
+				
+				self.$el.find(".link11").removeClass("linkDownloadBuoc11");
+				self.$el.find(".link12").removeClass("linkDownloadBuoc12");
+
+
+			}
+			if (x == 1) {
+				self.$el.find(".text10").removeClass("textDownloadBuoc10");
+				self.$el.find(".text12").removeClass("textDownloadBuoc12");
+
+				
+				self.$el.find(".link10").removeClass("linkDownloadBuoc10");
+				self.$el.find(".link12").removeClass("linkDownloadBuoc12");
+
+			}
+			if (x == 2) {
+				self.$el.find(".text11").removeClass("textDownloadBuoc11");
+				self.$el.find(".text10").removeClass("textDownloadBuoc10");
+
+				
+				self.$el.find(".link11").removeClass("linkDownloadBuoc11");
+				self.$el.find(".link10").removeClass("linkDownloadBuoc10");
+
+			}
+			
+			for (var i = 1; i < 14; i++) {
+				var linkDownloadBuoc1 = self.$el.find(".linkDownloadBuoc" + i);
+				var textDownloadBuoc1 = self.$el.find(".textDownloadBuoc" + i);
+				console.log('textDownloadBuoc1', linkDownloadBuoc1)
+
+				var hoso = self.$el.find(".danhsachhoso_bangiao_buoc" + i);
+				var arr = [];
+
+				for (var j = 0; j < linkDownloadBuoc1.length; j++) {
+					if (linkDownloadBuoc1[j].href === '') {
+						linkDownloadBuoc1[j].style.display = "none";
+					}
+					else {
+						var obj = {
+							text: textDownloadBuoc1[j].textContent,
+							link: textDownloadBuoc1[j].textContent
+						};
+
+
+						arr.push(obj)
+					}
+
+				}
+				for (var q = 0; q < arr.length; q++) {
+					hoso.before("<tr><td class='stt text-center'>" + q + "</td><td>" + arr[q].text.slice(16) + "</span></td><td class='text-center'><a href='" + arr[q].link + "'>download</a></td></tr>")
+				}
+				
+
+
+			
+
+
+			}
+		
+
+
+		}
 
 
 	});
