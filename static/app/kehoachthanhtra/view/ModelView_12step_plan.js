@@ -924,24 +924,21 @@ define(function (require) {
 			];
 			$.each(keys, function (i, key) {
 				var attr_value = self.model.get(key);
-
-				var linkDownload = self.$el.find(".linkDownload");
+				var linkDownload = self.$el.find(".linkDownload2");
 
 				if (!!attr_value) {
 					linkDownload[i].href = attr_value;
-
 					self.$el.find("#upload-" + key).hide();
 					self.$el.find("#download-" + key).show();
 
 				} else {
 					self.$el.find("#upload-" + key).show();
 					self.$el.find("#download-" + key).hide();
-
 				}
 
 			})
 
-			var linkDownload = self.$el.find(".linkDownload");
+			var linkDownload = self.$el.find(".linkDownload2");
 			var textDownload = self.$el.find(".textDownload");
 			var link = self.$el.find(".linkdownload_and_button");
 			var hoso = self.$el.find(".danhsachhoso_bangiao");
