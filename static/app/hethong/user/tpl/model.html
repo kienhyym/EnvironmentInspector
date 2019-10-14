@@ -25,14 +25,14 @@
 	            <div class="form-row mt-3">
 	            	<div class="col-md-6">
 	              		<label>Họ và tên</label>
-	                	<input type="text" class="form-control" data-hoso-bind="value:name" placeholder="Nhập họ và tên" required>
+	                	<input type="text" class="form-control"required data-hoso-bind="value:name" placeholder="Nhập họ và tên" required>
 	              		<div class="invalid-feedback">
 			                Vui lòng nhập Họ và tên
 			            </div>
 	              	</div>
 	              	<div class="col-md-6">
 	              		<label>Số điện thoại</label>
-	                	<input type="text" class="form-control" data-hoso-bind="value:phone_number" placeholder="Nhập số điện thoại" required>
+	                	<input type="text" class="form-control" required data-hoso-bind="value:phone_number" placeholder="Nhập số điện thoại" required>
 	              		<div class="invalid-feedback">
 			                Vui lòng nhập Số điện thoại
 			            </div>
@@ -41,7 +41,7 @@
 	            <div class="form-row mt-3">
 	            	<div class="col-md-6">
 	              		<label>Vai trò</label>
-	              		<select  class="selectpicker form-control" id="multiselect_roles" multiple data-live-search="true" data-actions-box="true" data-noneSelectedText="Chọn vai trò" title="Chọn vai trò">
+	              		<select  class="selectpicker form-control" required id="multiselect_roles" multiple data-live-search="true" data-actions-box="true" data-noneSelectedText="Chọn vai trò" title="Chọn vai trò">
 						</select>
 	              		<div class="invalid-feedback">
 			                Vui lòng chọn loại vai trò
@@ -49,13 +49,13 @@
 	              	</div>
 	              	<div class="col-md-6">
 	              		<label>Email</label>
-	              		<input type="email" class="form-control" id="email" data-hoso-bind="value:email" placeholder="...">
+	              		<input type="email" class="form-control" required id="email" data-hoso-bind="value:email" placeholder="...">
 	              	</div>
 	            </div>
 	            <div class="form-row mt-3">
 	            	<div class="col-6" id="password">
 	              		<label>Mật khẩu đăng nhập</label>
-	                	<input  type="password" class="form-control" data-hoso-bind="value:password" placeholder="...">
+	                	<input id="passwordNay" type="password" required class="form-control" data-hoso-bind="value:password" placeholder="...">
 	              		<div class="invalid-feedback">
 			                Vui lòng nhập mật khẩu đăng nhập
 			            </div>

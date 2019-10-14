@@ -282,6 +282,12 @@ class KeHoachThanhTra(CommonModel):
     vanbanduthaofield = db.relationship('VanBanDuThao', cascade="all, delete-orphan")
 
 
+    nguoiquyetdinh = db.Column(String)
+    soquyetdinh = db.Column(String)
+    ngayduyetvanban = db.Column(BigInteger())
+
+
+    so_vanban_quyetdinh = db.Column(String)
 
     coquan_lapbienban_hanhchinh = db.Column(String)
     so_bienban_hanhchinh = db.Column(String)

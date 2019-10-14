@@ -102,6 +102,9 @@ define(function (require) {
 			self.$el.find("#create_partner").unbind('click').bind('click', function () {
 				//validate
 				var check_validate = true;
+				if(self.$el.find("#passwordNay")== null || self.$el.find("#passwordNay")== ''){
+					return false
+				}
 				var forms = document.getElementsByClassName('needs-validation');
 				// Loop over them and prevent submission
 				var validation = Array.prototype.filter.call(forms, function (form) {

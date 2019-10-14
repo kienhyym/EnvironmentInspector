@@ -122,6 +122,18 @@ define(function (require) {
 					}
 				},
 				{
+					field: "ngayduyetvanban",
+					uicontrol: "datetimepicker",
+					textFormat: "DD/MM/YYYY",
+					extraFormats: ["DDMMYYYY"],
+					parseInputDate: function (val) {
+						return moment.unix(val)
+					},
+					parseOutputDate: function (date) {
+						return date.unix()
+					}
+				},
+				{
 					field: "ngay_quyetdinh_trungcau_giamdinh",
 					uicontrol: "datetimepicker",
 					textFormat: "DD/MM/YYYY",
@@ -561,7 +573,20 @@ define(function (require) {
 						// 	arr[i].value = dem;
 							
 						// }
-
+						var duyetHayKhong = self.model.get("vanbanduthaofield")
+						var demduyet =0;
+						duyetHayKhong.forEach(function (item,index) {
+							console.log(item.trangthai_vanban)
+							if(item.trangthai_vanban == 1){
+								demduyet++;
+							}
+						})
+						if(demduyet == 0){
+							self.$el.find(".nguoiduyet").hide();
+						}
+						else{
+							self.$el.find(".nguoiduyet").show();
+						}
 
 						var arr1 = self.$el.find(".solan")
 						arr1.each(function(item, index){
@@ -946,7 +971,6 @@ define(function (require) {
 			var danhsachhoso_buoc8 = [];
 
 			for (var i = 0; i < textDownloadTinhHinhThanhTra.length; i++) {
-				console.log('linkDownloadTinhHinhThanhTra',textDownloadTinhHinhThanhTra[i].textContent)
 
 				if (textDownloadTinhHinhThanhTra[i].textContent === '') {
 					textDownloadTinhHinhThanhTra[i].style.display = "none";
@@ -963,7 +987,6 @@ define(function (require) {
 
 			}
 			for (var i = 0; i < danhsachhoso_buoc8.length; i++) {
-				console.log("danhsachhoso_buoc8",danhsachhoso_buoc8[i].text)
 
 				danhsachhoso_bangiao_buoc8.before("<tr><td>" + i + "</td><td>" + danhsachhoso_buoc8[i].text.slice(16) + "</span></td><td><a href='" + danhsachhoso_buoc8[i].link + "'>download</a></td></tr>")
 			}
@@ -978,7 +1001,6 @@ define(function (require) {
 			var danhsachhoso_buoc9 = [];
 
 			for (var i = 0; i < linkDownloadBaocaoCuaThanhTra.length; i++) {
-				console.log("link",textDownloadBaocaoCuaThanhTra[i])
 				if (linkDownloadBaocaoCuaThanhTra[i].href === '') {
 					linkDownloadBaocaoCuaThanhTra[i].style.display = "none";
 				}

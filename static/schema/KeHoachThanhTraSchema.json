@@ -262,6 +262,18 @@
     "ketqua_trungcau_ykien_attachment": {
         "type": "string"
     },
+    "nguoiquyetdinh": {
+        "type": "string"
+    },
+    "soquyetdinh": {
+        "type": "string"
+    },
+    "ngayduyetvanban": {
+        "type": "number"
+    },
+    "so_vanban_quyetdinh": {
+        "type": "string"
+    },
     "coquan_lapbienban_hanhchinh": {
         "type": "string"
     },
