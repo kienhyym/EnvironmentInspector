@@ -208,6 +208,19 @@ define(function (require) {
 			// var dataSource = lodash.orderBy(ds_donvithanhtranamsau, ['created_at'], ['asc']);
 			ds_donvithanhtranamsau.forEach((item, index) => {
 				var view = new DanhSachDonViKeHoachNamSauItemView();
+
+				view.$el.find("#itemRemove").on("click", function () {
+					var arr = [];
+					self.model.get("danhsachdonvikehoachnamsau_field").forEach(function (item2, index2) {
+						if (item2.id != item.id) {
+							arr.push(item2)
+						}
+					})
+					self.model.set("danhsachdonvikehoachnamsau_field", arr)
+					$(view.el).hide()
+				})
+
+
 				view.model.set(item);
 				view.render();
 				$(view.el).hide().appendTo(containerEl).fadeIn();

@@ -35,9 +35,9 @@ define(function (require) {
             self.model.on("change", () => {
                 self.trigger("change", self.model.toJSON());
             });     
-            self.$el.find("#itemRemove").unbind("click").bind("click", function () {
-                self.remove(true);
-            });
+            // self.$el.find("#itemRemove").unbind("click").bind("click", function () {
+            //     self.remove(true);
+            // });
            
         }
     });
