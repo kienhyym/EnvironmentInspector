@@ -175,7 +175,7 @@ define(function (require) {
 				url: self.getApp().serviceURL + "/api/v1/tinhthanh?results_per_page=100&max_results_per_page=100",
 				method: "GET",
 				success: function (data) {
-					var tinhthanh_timkiem = data.objects;
+					var tinhthanh_timkiem =[];
 				
 					
 					self.$el.find("#input_gia").keyup(function () {
