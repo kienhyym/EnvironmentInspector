@@ -1439,7 +1439,7 @@ define(function (require) {
 
 
 			self.$el.find(".btn-save-gd1").unbind('click').bind('click', function () {
-				var soquyetdinh = self.model.get("soquyetdinh");
+				var soquyetdinh = self.model.get("so_quyetdinh_thanhtra");
 				if (soquyetdinh === null || soquyetdinh === "") {
 					self.getApp().notify("Vui lòng nhập số quyết định thanh tra");
 					return;
