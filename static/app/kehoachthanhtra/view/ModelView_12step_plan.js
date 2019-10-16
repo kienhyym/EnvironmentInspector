@@ -2628,7 +2628,7 @@ define(function (require) {
 
 				}
 				for (var q = 0; q < arr.length; q++) {
-					hoso.before("<tr><td class='stt text-center'>" + q + "</td><td>" + arr[q].text + "</span></td><td class='text-center'><a href='" + arr[q].link + "'>download</a></td></tr>")
+					hoso.before("<tr><td class='stt text-center'>" + q + "</td><td>" + arr[q].text + "</span></td><td class='text-center'><a href='/static/uploads/" + arr[q].text + "'>download</a></td></tr>")
 				}
 				
 
