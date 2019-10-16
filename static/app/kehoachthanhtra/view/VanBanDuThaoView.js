@@ -113,7 +113,7 @@ define(function (require) {
 
             })
             self.$el.find(".textDownloadVanBanDuThao").each(function(index,item){
-				item.textContent = item.textContent.slice(16)
+				item.textContent = item.textContent
 			})
         },
         saveModel: function () {

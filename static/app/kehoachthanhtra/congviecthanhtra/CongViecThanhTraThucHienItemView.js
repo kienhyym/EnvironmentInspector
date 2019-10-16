@@ -49,7 +49,7 @@ define(function (require) {
 
             })
             self.$el.find(".textDownloadTinhHinhThanhTra").each(function(index,item){
-				item.textContent = item.textContent.slice(16)
+				item.textContent = item.textContent
 			})
         },
         saveModel: function () {
