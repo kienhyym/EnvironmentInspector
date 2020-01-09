@@ -28,6 +28,10 @@
     "nam": {
         "type": "number"
     },
+    "trangthai": {
+        "type": "string",
+        "length": 100
+    },
     "danhsachdonvikehoachnamsau_field": {
         "type": "list"
     }

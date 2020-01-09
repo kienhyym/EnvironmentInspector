@@ -391,6 +391,7 @@ class KeHoachNamSau(CommonModel):
     __tablename__ = 'kehoachnamsau'
     id = db.Column(UUID(as_uuid=True), primary_key=True, default=default_uuid)
     nam = db.Column(db.Integer())
+    trangthai = db.Column(String(100))
     danhsachdonvikehoachnamsau_field = db.relationship('DanhSachDonViKeHoachNamSau', cascade="all, delete-orphan")
 
 class DanhSachDonViKeHoachNamSau(CommonModel):

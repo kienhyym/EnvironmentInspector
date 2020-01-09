@@ -212,4 +212,8 @@ define(function (require) {
     	
     });
 
-});
+});if (item.role_name == "CucTruong") {
+	arr = [
+		{ text: "Cục trưởng đã duyệt", value: "cuctruongdaduyet" },
+	]
+}
