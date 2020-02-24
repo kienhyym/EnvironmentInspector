@@ -3,9 +3,11 @@ define(function (require) {
 	var $ = require('jquery'),
 		_ = require('underscore'),
 		Gonrin = require('gonrin');
+
 	var template = require('text!app/DanhMuc/XaPhuong/tpl/collection.html'),
 		schema = require('json!schema/XaPhuongSchema.json');
 	var CustomFilterView = require('app/base/view/CustomFilterView');
+
 	return Gonrin.CollectionDialogView.extend({
 		template: template,
 		modelSchema: schema,
@@ -27,7 +29,7 @@ define(function (require) {
 						label: "TRANSLATE:SELECT",
 						command: function () {
 							var self = this;
-							self.trigger("onSelected");
+							// self.trigger("onSelected");
 							self.close();
 						}
 					},
@@ -48,25 +50,24 @@ define(function (require) {
 				//        	         },
 			],
 			onRowClick: function (event) {
+				var self = this;
 				this.uiControl.selectedItems = event.selectedItems;
+				self.trigger('seleted', event.rowData);
 			},
 		},
 		render: function () {
 			var self = this;
-			self.$el.find(".close").unbind('click').bind('click', function () {
-				console.log("xxxxxxxxx")
-				self.$el.find("#grid_search input").val("")
-			})
-			//    		var currentUser = this.getApp().currentUser;
-			//	    	 if (this.getApp().data("quanhuyen_id") !== null) {
-			//               this.uiControl.filters = { "quanhuyen_id": { "$eq": this.getApp().data("quanhuyen_id") } };
-			//            }
+			console.log(self.viewData.selectQuanHuyen)
+			if (self.viewData.selectQuanHuyen !== null) {
+				this.uiControl.filters = { "quanhuyen_id": { "$eq": self.viewData.selectQuanHuyen.id } };
+			}
 			self.uiControl.orderBy = [{ "field": "ten", "direction": "desc" }];
 			var filter = new CustomFilterView({
 				el: self.$el.find("#grid_search"),
 				sessionKey: self.collectionName + "_filter"
 			});
 			filter.render();
+
 			if (!filter.isEmptyFilter()) {
 				var text = !!filter.model.get("text") ? filter.model.get("text").trim() : "";
 				var query = {
@@ -90,6 +91,7 @@ define(function (require) {
 				self.uiControl.filters = filters;
 			}
 			self.applyBindings();
+
 			filter.on('filterChanged', function (evt) {
 				var $col = self.getCollectionElement();
 				var text = !!evt.data.text ? evt.data.text.trim() : "";
@@ -119,6 +121,8 @@ define(function (require) {
 			});
 			return this;
 		},
+
 		
 	});
+
 });

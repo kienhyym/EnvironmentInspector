@@ -3,15 +3,17 @@ define(function (require) {
 	var $ = require('jquery'),
 		_ = require('underscore'),
 		Gonrin = require('gonrin');
-	var template = require('text!app/DanhMuc/XaPhuong/tpl/collection.html'),
-		schema = require('json!schema/XaPhuongSchema.json');
+
+	var template = require('text!app/DanhMuc/QuanHuyen/tpl/collection.html'),
+		schema = require('json!schema/QuanHuyenSchema.json');
 	var CustomFilterView = require('app/base/view/CustomFilterView');
+
 	return Gonrin.CollectionDialogView.extend({
 		template: template,
 		modelSchema: schema,
 		urlPrefix: "/api/v1/",
-		collectionName: "xaphuong",
-		bindings: "data-xaphuong-bind",
+		collectionName: "quanhuyen",
+		bindings: "data-quanhuyen-bind",
 		textField: "ten",
 		valueField: "id",
 		tools: [
@@ -27,7 +29,7 @@ define(function (require) {
 						label: "TRANSLATE:SELECT",
 						command: function () {
 							var self = this;
-							self.trigger("onSelected");
+							// self.trigger("onSelected");
 							self.close();
 						}
 					},
@@ -39,34 +41,33 @@ define(function (require) {
 				{ field: "ma", label: "Mã", width: 150 },
 				{ field: "ten", label: "Tên", width: 250 },
 				//    		     	{
-				//        	        	 field: "quanhuyen_id", 
-				//        	        	 label: "Quận huyện",
-				//        	        	 foreign: "quanhuyen",
+				//        	        	 field: "tinhthanh_id", 
+				//        	        	 label: "Tỉnh thành",
+				//        	        	 foreign: "tinhthanh",
 				//        	        	 foreignValueField: "id",
 				//        	        	 foreignTextField: "ten",
 				//        	        	 width:250
 				//        	         },
 			],
 			onRowClick: function (event) {
+				var self = this;
 				this.uiControl.selectedItems = event.selectedItems;
+				self.trigger('seleted', event.rowData);
 			},
 		},
 		render: function () {
 			var self = this;
-			self.$el.find(".close").unbind('click').bind('click', function () {
-				console.log("xxxxxxxxx")
-				self.$el.find("#grid_search input").val("")
-			})
-			//    		var currentUser = this.getApp().currentUser;
-			//	    	 if (this.getApp().data("quanhuyen_id") !== null) {
-			//               this.uiControl.filters = { "quanhuyen_id": { "$eq": this.getApp().data("quanhuyen_id") } };
-			//            }
+			if (self.viewData.selectTinhThanh !== null) {
+				this.uiControl.filters = { "tinhthanh_id": { "$eq": self.viewData.selectTinhThanh.id } };
+			}
+
 			self.uiControl.orderBy = [{ "field": "ten", "direction": "desc" }];
 			var filter = new CustomFilterView({
 				el: self.$el.find("#grid_search"),
 				sessionKey: self.collectionName + "_filter"
 			});
 			filter.render();
+
 			if (!filter.isEmptyFilter()) {
 				var text = !!filter.model.get("text") ? filter.model.get("text").trim() : "";
 				var query = {
@@ -74,10 +75,6 @@ define(function (require) {
 						{ "ten": { "$likeI": text } },
 					]
 				};
-				//				var filters = {"$and": [
-				//					{"quanhuyen_id": {"$eq": this.getApp().data("quanhuyen_id")}},
-				//					query
-				//				]};
 				var filters = query;
 				if (self.uiControl.filters !== null) {
 					filters = {
@@ -87,6 +84,7 @@ define(function (require) {
 						]
 					};
 				}
+
 				self.uiControl.filters = filters;
 			}
 			self.applyBindings();
@@ -98,8 +96,11 @@ define(function (require) {
 						var query = {
 							"$or": [
 								{ "ten": { "$likeI": text } },
+								{ "ma": { "$likeI": text } },
 							]
 						};
+						// console.log("tinhthanh===", this.getApp().data("tinhthanh_id"));
+						// if (this.uiControl.filters && this.uiControl.filters !== null){
 						var filters = query;
 						if (self.uiControl.filters !== null) {
 							filters = {
@@ -109,16 +110,17 @@ define(function (require) {
 								]
 							};
 						}
+						// }
 						$col.data('gonrin').filter(filters);
-						//self.uiControl.filters = filters;
+						self.uiControl.filters = filters;
 					} else {
-						self.uiControl.filters = null;
+						//						self.uiControl.filters = null;
 					}
 				}
 				self.applyBindings();
 			});
 			return this;
 		},
-		
 	});
+
 });

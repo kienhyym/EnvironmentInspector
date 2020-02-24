@@ -41,26 +41,20 @@
     "dienthoai": {
         "type": "string"
     },
+    "nguoidaidienphapluat": {
+        "type": "string"
+    },
     "diachi": {
         "type": "string"
-    },
-    "tinhthanh_id": {
-        "type": "string"
-    },
-    "tinhthanh": {
-        "type": "json"
-    },
-    "quanhuyen_id": {
-        "type": "string"
-    },
-    "quanhuyen": {
-        "type": "json"
     },
     "xaphuong_id": {
         "type": "string"
     },
-    "xaphuong": {
-        "type": "json"
+    "quanhuyen_id": {
+        "type": "string"
+    },
+    "tinhthanh_id": {
+        "type": "string"
     },
     "type": {
         "type": "string"
@@ -81,6 +75,15 @@
     "tuanthuphapluat_chiso": {
         "type": "number"
     },
+    "xaphuong": {
+        "type": "dict"
+    },
+    "quanhuyen": {
+        "type": "dict"
+    },
+    "tinhthanh": {
+        "type": "dict"
+    },
     "danhsachchinhanhdonvi_field": {
         "type": "list"
     },
@@ -88,6 +91,9 @@
         "type": "list"
     },
     "danhmuclinhvuc_foreign": {
+        "type": "list"
+    },
+    "kehoachthanhtra_foreign": {
         "type": "list"
     }
 }

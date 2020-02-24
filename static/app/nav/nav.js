@@ -38,28 +38,28 @@ define(function (require) {
 				return false;
 			}
 		},
-		// {
-		// 	"text": "Danh sách lĩnh vực",
-		// 	"icon": "fa fa-home",
-		// 	"type": "view",
-		// 	"collectionName": "danhmuclinhvuc",
-		// 	"route": "danhmuclinhvuc/collection",
-		// 	"$ref": "app/danhmuclinhvuc/js/CollectionView",
-		// 	"visible": function () {
-		// 		return true;
-		// 	}
-		// },
-		// {
-		// 	"text": "Chi tiết lĩnh vực",
-		// 	"icon": "fa fa-home",
-		// 	"type": "view",
-		// 	"collectionName": "danhmuclinhvuc",
-		// 	"route": "danhmuclinhvuc/model(/:id)",
-		// 	"$ref": "app/danhmuclinhvuc/js/ModelView",
-		// 	"visible": function () {
-		// 		return false;
-		// 	}
-		// },
+		{
+			"text": "Danh sách lĩnh vực",
+			"icon": "fa fa-home",
+			"type": "view",
+			"collectionName": "danhmuclinhvuc",
+			"route": "danhmuclinhvuc/collection",
+			"$ref": "app/danhmuclinhvuc/js/CollectionView",
+			"visible": function () {
+				return true;
+			}
+		},
+		{
+			"text": "Chi tiết lĩnh vực",
+			"icon": "fa fa-home",
+			"type": "view",
+			"collectionName": "danhmuclinhvuc",
+			"route": "danhmuclinhvuc/model(/:id)",
+			"$ref": "app/danhmuclinhvuc/js/ModelView",
+			"visible": function () {
+				return false;
+			}
+		},
 		{
 			"text": "Danh sách người dùng",
 			"icon": "fa fa-book",

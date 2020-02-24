@@ -10,6 +10,11 @@ define(function (require) {
 	var QuanHuyenSelectView = require('app/DanhMuc/QuanHuyen/view/SelectView');
 	var TinhThanhSelectView = require('app/DanhMuc/TinhThanh/view/SelectView');
 
+	var XaPhuongDialogView = require('app/DanhMuc/XaPhuong/view/DialogView');
+	var QuanHuyenDialogView = require('app/DanhMuc/QuanHuyen/view/DialogView');
+	var TinhThanhDialogView = require('app/DanhMuc/TinhThanh/view/DialogView');
+
+
 	var DanhSachChiNhanhDonViItemView = require('app/danhmucdoanhnghiep/view/DanhSachChiNhanhDonViView');
 	var LichSuThanhTraItemView = require('app/danhmucdoanhnghiep/view/LichSuThanhTraView');
 
@@ -18,6 +23,8 @@ define(function (require) {
 		modelSchema: schema,
 		urlPrefix: "/api/v1/",
 		collectionName: "danhmucdoanhnghiep",
+		selectTinhThanh: null,
+
 		tools: [
 			{
 				name: "defaultgr",
@@ -177,6 +184,7 @@ define(function (require) {
 						{ "value": 1, "text": "Báo cáo đầy đủ" },
 						{ "value": 2, "text": "Báo cáo không đầy đủ" },
 						{ "value": 3, "text": "Không báo cáo" },
+						{ "value": 4, "text": "Vi phạm hành chính" },
 					],
 
 
@@ -193,44 +201,26 @@ define(function (require) {
 
 					],
 				},
-				{
-					field: "danhsachchinhanhdonvi_field",
-					uicontrol: false,
-					itemView: DanhSachChiNhanhDonViItemView,
-					tools: [{
-						name: "create",
-						type: "button",
-						buttonClass: "btn btn-outline-secondary btn-fw btn-sm create-item",
-						label: "<span class='fa fa-plus'></span>",
-						command: "create"
-					}],
-					toolEl: "#add_row"
-				},
 			]
 		},
 		render: function () {
 			var self = this;
 			var id = this.getApp().getRouter().getParam("id");
 			self.$el.find(".filter-option-inner-inner").selectpicker("810810af-c49e-4e37-b9e5-c66fb986bbf5")
-
-
 			self.getLinhvucs();
 			self.checkLinhVuc();
-			// self.lichSuThanhTra();
-
+			self.themChiNhanh();
 			if (id) {
 				this.model.set('id', id);
 				this.model.fetch({
 					success: function (data) {
-
+						self.lichSuThucHienThanhTra();
 						self.applyBindings();
-
 						self.checkLinhVuc();
-						self.lichSuThanhTra();
+						self.danhSachChiNhanh();
+						self.themChiNhanh();
 						self.themVaoKeHoachNamSau();
-
 						self.model.on("change:tinhthanh_id", function () {
-							console.log("change tinh thanhxxxxxxxxxxxxxxxxxx");
 							self.getFieldElement("quanhuyen").data("gonrin").setFilters({ "tinhthanh_id": { "$eq": self.model.get("tinhthanh_id") } });
 						});
 						self.model.on("change:quanhuyen_id", function () {
@@ -288,13 +278,13 @@ define(function (require) {
 				});
 			} else {
 				self.applyBindings();
+				self.$el.find('.bangdanhsachchinhanh').hide()
+				self.$el.find('.banglichsuthanhtra').hide()
 				self.model.on("change:tinhthanh_id", function () {
-					console.log("change tinh thanh", self.model.get("tinhthanh_id"));
 					self.getFieldElement("quanhuyen").data("gonrin").setFilters({ "tinhthanh_id": { "$eq": self.model.get("tinhthanh_id") } });
 				});
 				self.model.on("change:quanhuyen_id", function () {
 					self.getFieldElement("xaphuong").data("gonrin").setFilters({ "quanhuyen_id": { "$eq": self.model.get("quanhuyen_id") } });
-					console.log("change quanhuyen", self.model.get("quanhuyen_id"));
 				});
 			}
 
@@ -315,6 +305,7 @@ define(function (require) {
 						var option_elm = $('<option>').attr({ 'value': item.id, 'data-ck': data_str }).html(item.tenlinhvuc)
 						self.$el.find("#multiselect_linhvuc").append(option_elm);
 					}
+
 					$.fn.selectpicker.Constructor.DEFAULTS.multipleSeparator = ' | ';
 					var danhmuclinhvuc_foreign = self.model.get("danhmuclinhvuc_foreign");
 					var val_danhmuclinhvuc_foreign = [];
@@ -326,7 +317,7 @@ define(function (require) {
 						self.$el.find("#multiselect_linhvuc").selectpicker('val', val_danhmuclinhvuc_foreign);
 				},
 				error: function (xhr, status, error) {
-					console.log("Không lấy được dữ liệu linh vuc");
+					self.getApp().notify({ message: "Không lấy được dữ liệu" }, { type: "danger", delay: 1000 });
 				},
 			});
 
@@ -393,194 +384,417 @@ define(function (require) {
 									}
 								});
 							});
-
-
-
-
 						}
 					})
 				},
 				error: function (xhr, status, error) {
-					console.log("Không lấy được dữ liệu linh vuc");
+					self.getApp().notify({ message: "Không lấy được dữ liệu" }, { type: "danger", delay: 1000 });
 				},
 			});
 
 
 		},
-		lichSuThanhTra: function () {
+
+		danhSachChiNhanh: function () {
 			var self = this;
-			var dvHienTai = self.model.get("code");
+			self.$el.find('#diachitrusochinh').text(
+				self.model.get('diachi') + ', ' +
+				self.model.get('xaphuong').ten + ', ' +
+				self.model.get('quanhuyen').ten + ', ' +
+				self.model.get('tinhthanh').ten);
+			var filters = {
+				filters: {
+					"$and": [
+						{ "danhmucdoanhnghiep_id": { "$eq": self.model.get('id') } }
+					]
+				},
+				order_by: [{ "field": "created_at", "direction": "asc" }]
+			}
 			$.ajax({
-				url: self.getApp().serviceURL + "/api/v1/kehoachthanhtra",
+				url: self.getApp().serviceURL + "/api/v1/danhsachchinhanhdonvi?results_per_page=100000&max_results_per_page=1000000",
 				method: "GET",
+				data: "q=" + JSON.stringify(filters),
 				contentType: "application/json",
 				success: function (data) {
 					data.objects.forEach(function (item, index) {
-						if (item.doanhnghiep.code === dvHienTai) {
-
-							var demsll = 0;
-							$.ajax({
-								url: self.getApp().serviceURL + "/api/v1/lichsuthanhtra",
-								method: "GET",
-								contentType: "application/json",
-								success: function (data) {
-									data.objects.forEach(function (itemLSTT, index) {
-
-										if (parseInt(itemLSTT.nam) == moment(item.ngaythanhtra * 1000).year() && itemLSTT.danhmucdoanhnghiep_id == self.model.get("id")) {
-											demsll++;
-										}
-
-									})
-									if (demsll == 0) {
-										var param = {
-											id: gonrin.uuid(),
-											nam: moment(item.ngaythanhtra * 1000).year(),
-											kehoachthanhtra_id: item.id,
-											danhmucdoanhnghiep_id: self.model.get("id")
-										};
-										$.ajax({
-											url: self.getApp().serviceURL + "/api/v1/lichsuthanhtra",
-											type: 'POST',
-											data: JSON.stringify(param),
-											headers: {
-												'content-type': 'application/json'
-											},
-											dataType: 'json',
-											success: function (data) {
-
-											},
-											error: function (request, textStatus, errorThrown) {
-												console.log(request);
-											}
-										})
-									}
-								},
-								error: function (xhr, status, error) {
-									console.log("Không lấy được dữ liệu");
-								},
-							});
-
-
-
-
-						}
+						self.$el.find('.bangdanhsachchinhanh').append(`
+						<tr>
+							<td  class = "text-center">${index + 2} </td>
+							<td>${item.tenchinhanh}</td>
+							<td>${item.diachichinhanh}, ${item.xaphuong.ten}, ${item.quanhuyen.ten}, ${item.tinhthanh.ten}</td>
+							<td>
+							<button class = "btn btn-warning p-1 mr-1 suaChiNhanh" data-id ="${item.id}">sửa</bunton>
+							<button class = "btn btn-danger p-1 mr-1 xoaChiNhanh" data-id ="${item.id}" >xóa</bunton>
+							</td>
+						</tr>`
+						)
 					})
+
+					self.xoaChiNhanh();
+					self.suaChiNhanh();
+
 				},
 				error: function (xhr, status, error) {
-					console.log("Không lấy được dữ liệu");
+					self.getApp().notify({ message: "Không lấy được dữ liệu" }, { type: "danger", delay: 1000 });
 				},
 			});
 
-
-
-
-
-			var ds_lichSuThanhTra = self.model.get("lichsuthanhtra_field");
-			if (!ds_lichSuThanhTra) {
-				ds_lichSuThanhTra = [];
-			}
-			var containerEl = self.$el.find("#space_lichsuthanhtra");
-			containerEl.empty();
-
-			// var dataSource = lodash.orderBy(ds_lichSuThanhTra, ['created_at'], ['asc']);
-			ds_lichSuThanhTra.forEach((item, index) => {
-
-				var view = new LichSuThanhTraItemView();
-				view.$el.find("#itemRemove").on("click", function () {
-					var arr = [];
-					self.model.get("lichsuthanhtra_field").forEach(function (item2, index2) {
-						if (item2.id != item.id) {
-							arr.push(item2)
+		},
+		xoaChiNhanh: function () {
+			var self = this;
+			self.$el.find('.xoaChiNhanh').each(function (index, item) {
+				$(item).unbind('click').bind('click', function () {
+					$.ajax({
+						url: self.getApp().serviceURL + "/api/v1/danhsachchinhanhdonvi/" + $(item).attr('data-id'),
+						type: 'DELETE',
+						headers: {
+							'content-type': 'application/json'
+						},
+						success: function (data) {
+							self.getApp().notify("Xóa chi nhánh thành công");
+							self.getApp().getRouter().refresh();
+						},
+						error: function (request, textStatus, errorThrown) {
 						}
 					})
-					self.model.set("lichsuthanhtra_field", arr)
-					self.model.set("solanthanhtra", (self.model.get("lichsuthanhtra_field").length));
-					$(view.el).hide()
 				})
+			})
+		},
+		suaChiNhanh: function () {
+			var self = this;
+			self.$el.find('.suaChiNhanh').each(function (index, item) {
+				$(item).unbind('click').bind('click', function () {
+					self.$el.find('.btn-luu').hide();
+					self.$el.find('.btn-sua').show();
 
-				view.model.set(item);
-				view.render();
-				$(view.el).hide().appendTo(containerEl).fadeIn();
-				view.on("change", (data) => {
-					var ds_lichSuThanhTra = self.model.get("lichsuthanhtra_field");
-					ds_lichSuThanhTra.forEach((item, index) => {
-						if (item.id == data.id) {
-
-							ds_lichSuThanhTra[index] = data;
-						}
+					self.$el.find(".formthemchinhanh").toggle();
+					self.$el.find(".content-main").css('opacity', '0.1');
+					self.$el.find("#them").hide();
+					var filters = {
+						filters: {
+							"$and": [
+								{ "id": { "$eq": $(item).attr('data-id') } }
+							]
+						},
+						order_by: [{ "field": "created_at", "direction": "asc" }]
+					}
+					$.ajax({
+						url: self.getApp().serviceURL + "/api/v1/danhsachchinhanhdonvi?results_per_page=100000&max_results_per_page=1000000",
+						method: "GET",
+						data: "q=" + JSON.stringify(filters),
+						contentType: "application/json",
+						success: function (data) {
+							data.objects.forEach(function (item, index) {
+								self.$el.find("#tenchinhanh").val(item.tenchinhanh);
+								self.$el.find("#tentinhthanh").val(item.tinhthanh.ten);
+								self.$el.find("#tenquanhuyen").val(item.quanhuyen.ten);
+								self.$el.find("#tenxaphuong").val(item.xaphuong.ten);
+								self.$el.find("#diachichinhanh").val(item.diachichinhanh);
+								self.themChiNhanh(item);
+							})
+						},
+						error: function (xhr, status, error) {
+							self.getApp().notify({ message: "Không lấy được dữ liệu" }, { type: "danger", delay: 1000 });
+						},
 					});
-					self.model.set("lichsuthanhtra_field", ds_lichSuThanhTra);
-				});
+				})
+			})
+		},
+		themChiNhanh: function (item) {
+			var self = this;
+			var tinhThanhDialogView = new TinhThanhDialogView();
+			var idXaPhuong = null;
+			var XaPhuong = null;
+			var idQuanHuyen = null;
+			var QuanHuyen = null;
+			var idTinhThanh = null;
+			var TinhThanh = null;
+
+			if (item !== undefined) {
+				idXaPhuong = item.xaphuong_id;
+				XaPhuong = item.xaphuong;
+				idQuanHuyen = item.quanhuyen_id;
+				QuanHuyen = item.quanhuyen;
+				idTinhThanh = item.tinhthanh_id;
+				TinhThanh = item.tinhthanh;
+			}
+
+			self.$el.find('#them').unbind('click').bind('click', function () {
+				self.$el.find(".formthemchinhanh").toggle();
+				self.$el.find(".content-main").css('opacity', '0.1');
+				self.$el.find("#them").hide();
+				self.$el.find('.btn-sua').hide();
+				self.$el.find('.btn-luu').show();
+				self.$el.find("#tenchinhanh").val(null);
+				self.$el.find("#tentinhthanh").val(null);
+				self.$el.find("#tenquanhuyen").val(null);
+				self.$el.find("#tenxaphuong").val(null);
+				self.$el.find("#diachichinhanh").val(null);
+			});
+
+			self.$el.find('.close').unbind('click').bind('click', function () {
+				self.$el.find(".content-main").css('opacity', '1');
+				self.$el.find(".formthemchinhanh").toggle();
+				self.$el.find("#them").show();
 			});
 
 
-			self.$el.find("#btn_add_lichsuthanhtra_field").on("click", (eventClick) => {
-				var view = new LichSuThanhTraItemView();
-
-
-				view.model.save(null, {
-					success: function (model, respose, options) {
-						view.model.set(respose);
-						view.render();
-						$(view.el).hide().appendTo(containerEl).fadeIn();
-
-						// PUSH THE CHILD TO LIST
-						var ds_lichSuThanhTra = self.model.get("lichsuthanhtra_field");
-						if (!ds_lichSuThanhTra) {
-							ds_lichSuThanhTra = [];
-						}
-						ds_lichSuThanhTra.push(view.model.toJSON());
-						self.model.set("lichsuthanhtra_field", ds_lichSuThanhTra);
-						self.model.save(null, {
-							success: function (model, respose, options) {
-								// NOTIFY TO GRANPARENT
-								self.trigger("change", self.model.toJSON());
-							},
-							error: function (xhr, status, error) {
-							}
-						});
-
-						view.on("change", (data) => {
-							var ds_lichSuThanhTra = self.model.get("lichsuthanhtra_field");
-							if (!ds_lichSuThanhTra) {
-								ds_lichSuThanhTra = [];
-							}
-							ds_lichSuThanhTra.forEach((item, index) => {
-								if (item.id == data.id) {
-									ds_lichSuThanhTra[index] = data;
-								}
-							});
-
-							self.model.set("lichsuthanhtra_field", ds_lichSuThanhTra);
-							self.model.save(null, {
-								success: function (model, respose, options) {
-									// NOTIFY TO GRANPARENT
-									self.trigger("change", self.model.toJSON());
-								},
-								error: function (xhr, status, error) {
-								}
-							});
-						});
-					},
-					error: function (xhr, status, error) {
-						// HANDLE ERROR
+			self.$el.find('#selectXaPhuong').unbind('click').bind('click', function () {
+				var xaPhuongDialogView = new XaPhuongDialogView({
+					viewData: {
+						"selectQuanHuyen": self.selectQuanHuyen
 					}
 				});
+				xaPhuongDialogView.dialog();
+				xaPhuongDialogView.on('seleted', (data) => {
+					self.$el.find('#tenxaphuong').val(data.ten)
+					idXaPhuong = data.id;
+					XaPhuong = data;
+					self.$el.find('#tenxaphuong').css('border', '1px solid green');
+				});
+			})
+			
+			self.$el.find('#selectQuanHuyen').unbind('click').bind('click', function () {
+				var quanHuyenDialogView = new QuanHuyenDialogView({
+					viewData: {
+						"selectTinhThanh": self.selectTinhThanh
+					}
+				});
+
+				quanHuyenDialogView.dialog();
+				quanHuyenDialogView.on('seleted', (data) => {
+					self.$el.find('#tenquanhuyen').val(data.ten)
+					idQuanHuyen = data.id;
+					QuanHuyen = data;
+					self.$el.find('#tenquanhuyen').css('border', '1px solid green');
+					self.selectQuanHuyen = data;
+
+				});
 			});
 
 
-			// var viewLichSu = new LichSuThanhTraItemView();
-			// self.$el.find("tr td #itemRemove").each(function (item,index) {  
-			// 	self.$el.find("#"+index.id).on("click",function () {
-			// 		console.log("xxxx",item)
-			// 	})
-			// 					
-			// })
+			self.$el.find('#selectTinhThanh').unbind('click').bind('click', function () {
+				tinhThanhDialogView.dialog();
+				tinhThanhDialogView.on('seleted', (data) => {
+					self.$el.find('#tentinhthanh').val(data.ten)
+					idTinhThanh = data.id;
+					TinhThanh = data;
+					self.$el.find('#tentinhthanh').css('border', '1px solid green');
+					self.selectTinhThanh = data;
+				});
+			})
 
+			//kiểm tra có bỏ trống thông tin không thì đổi màu ô input
+			self.$el.find('.form-thongtinchinhanh').each(function (index, item) {
+				$(item).keyup(function () {
+					if ($(item).val() == null || $(item).val() == "") {
+						$(item).css('border', '1px solid red');
+					} else {
+						$(item).css('border', '1px solid green');
+					}
+				});
+			})
+			//Thêm chi nhánh mới
+			self.$el.find('.btn-luu').unbind('click').bind('click', function () {
+				if (self.kiemTraCanCo() == true) {
+					if (self.model.get('id') == null) {
+						self.model.save(null, {
+							success: function (model, respose, options) {
+								self.getApp().notify("Lưu thông tin thành công");
+								var param = {
+									id: gonrin.uuid(),
+									tenchinhanh: self.$el.find('#tenchinhanh').val(),
+									diachichinhanh: self.$el.find('#diachichinhanh').val(),
+									tinhthanh_id: idTinhThanh,
+									tinhthanh: TinhThanh,
+									quanhuyen_id: idQuanHuyen,
+									quanhuyen: QuanHuyen,
+									xaphuong_id: idXaPhuong,
+									xaphuong: XaPhuong,
+									danhmucdoanhnghiep_id: self.model.get('id')
+								};
+								$.ajax({
+									url: self.getApp().serviceURL + "/api/v1/danhsachchinhanhdonvi",
+									type: 'POST',
+									data: JSON.stringify(param),
+									headers: {
+										'content-type': 'application/json'
+									},
+									dataType: 'json',
+									success: function (data) {
+										self.getApp().notify("Thêm chi nhánh thành công");
+										window.location = self.getApp().serviceURL + "#danhmucdoanhnghiep/model?id=" + respose.id;
+									},
+									error: function (request, textStatus, errorThrown) {
+									}
+								})
+							},
+							error: function (xhr, status, error) {
+								try {
+									if (($.parseJSON(error.xhr.responseText).error_code) === "SESSION_EXPIRED") {
+										self.getApp().notify("Hết phiên làm việc, vui lòng đăng nhập lại!");
+										self.getApp().getRouter().navigate("login");
+									} else {
+										self.getApp().notify({ message: $.parseJSON(error.xhr.responseText).error_message }, { type: "danger", delay: 1000 });
+									}
+								}
+								catch (err) {
+									self.getApp().notify({ message: "Lưu thông tin không thành công" }, { type: "danger", delay: 1000 });
+								}
+							}
+						});
+					}
+					var param = {
+						id: gonrin.uuid(),
+						tenchinhanh: self.$el.find('#tenchinhanh').val(),
+						diachichinhanh: self.$el.find('#diachichinhanh').val(),
+						tinhthanh_id: idTinhThanh,
+						tinhthanh: TinhThanh,
+						quanhuyen_id: idQuanHuyen,
+						quanhuyen: QuanHuyen,
+						xaphuong_id: idXaPhuong,
+						xaphuong: XaPhuong,
+						danhmucdoanhnghiep_id: self.model.get('id')
+					};
+					$.ajax({
+						url: self.getApp().serviceURL + "/api/v1/danhsachchinhanhdonvi",
+						type: 'POST',
+						data: JSON.stringify(param),
+						headers: {
+							'content-type': 'application/json'
+						},
+						dataType: 'json',
+						success: function (data) {
+							self.$el.find(".content-main").css('opacity', '1');
+							self.$el.find(".formthemchinhanh").toggle();
+							self.$el.find("#them").show();
+							self.getApp().notify("Thêm chi nhánh thành công");
+							self.getApp().getRouter().refresh();
+						},
+						error: function (request, textStatus, errorThrown) {
+						}
+					})
+				}
+
+			})
+			//sửa thông tin chi nhánh
+			self.$el.find('.btn-sua').unbind('click').bind('click', function () {
+				var param = {
+					tenchinhanh: self.$el.find('#tenchinhanh').val(),
+					diachichinhanh: self.$el.find('#diachichinhanh').val(),
+					tinhthanh_id: idTinhThanh,
+					tinhthanh: TinhThanh,
+					quanhuyen_id: idQuanHuyen,
+					quanhuyen: QuanHuyen,
+					xaphuong_id: idXaPhuong,
+					xaphuong: XaPhuong,
+				};
+				$.ajax({
+					url: self.getApp().serviceURL + "/api/v1/danhsachchinhanhdonvi/" + item.id,
+					type: 'PUT',
+					data: JSON.stringify(param),
+					headers: {
+						'content-type': 'application/json'
+					},
+					dataType: 'json',
+					success: function (data) {
+						self.$el.find(".content-main").css('opacity', '1');
+						self.$el.find(".formthemchinhanh").toggle();
+						self.$el.find("#them").show();
+						self.getApp().notify(" Sửa thông tin chi nhánh thành công");
+						self.getApp().getRouter().refresh();
+					},
+					error: function (request, textStatus, errorThrown) {
+					}
+				})
+			})
 
 		},
-		themVaoKeHoachNamSau: function () {
+		//kiểm tra xem có để trống ô thông tin chi nhánh nào không? Không thì trả về true/ có thì trả về false
+		kiemTraCanCo: function () {
+			var self = this;
+			var dem = 0;
+			self.$el.find('.form-thongtinchinhanh').each(function (index, item) {
+				if ($(item).val() === null || $(item).val() === "") {
+					$(item).css('border', '1px solid red')
+				} else {
+					$(item).css('border', '1px solid green');
+					dem++;
+				}
+			})
+			if (dem == 5) {
+				return true
+			}
+			else {
+				self.getApp().notify({ message: "Các trường không được bỏ trống, yêu cầu nhập đầy đủ các trường có dấu (*)  hay các ô bị viền đỏ" }, { type: "danger", delay: 1000 });
+				return false
+			}
+		},
 
+		lichSuThucHienThanhTra: function () {
+			var self = this;
+			var arrayLichSu = [];
+			self.model.get('kehoachthanhtra_foreign').forEach(function (item, index) {
+				if (item.trangthai == "approved" || item.trangthai == "end_checked" || item.trangthai == "completed") {
+					item.stt = index + 1;
+					arrayLichSu.push(item)
+				}
+			})
+			self.$el.find('#grid').grid({
+				orderByMode: "client",
+				language: {
+					no_records_found: "Chưa có dữ liệu"
+				},
+				noResultsClass: "alert alert-default no-records-found",
+				fields: [
+					{ field: "stt", label: "STT" },
+					{
+						field: "ngaythanhtra", label: "Ngày thanh tra",
+						template: function (rowData) {
+							if (!!rowData && rowData.ngaythanhtra) {
+								var utcTolocal = function (times, format) {
+									return moment(times * 1000).local().format(format);
+								}
+								return utcTolocal(rowData.ngaythanhtra, "DD/MM/YYYY");
+							}
+							return "";
+						},
+					},
+					{
+						field: "trangthai",
+						label: "Trạng thái",
+						template: function (rowData) {
+							if (rowData.trangthai == "approved") {
+								return "Đang được thanh tra";
+							}
+							if (rowData.trangthai == "end_checked") {
+								return "Thanh tra đã kết thúc";
+							}
+							if (rowData.trangthai == "completed") {
+								return "Đã hoàn thành thanh tra";
+							}
+							return "";
+						}
+					},
+					{ label: "Chi tiết", template: "<div class='badge badge-primary text-center'>xem</div>" },
+				],
+				dataSource: arrayLichSu,
+				primaryField: "id",
+				selectionMode: false,
+				pagination: {
+					page: 1,
+					pageSize: 10
+				},
+				events: {
+					"rowclick": function (e) {
+						self.getApp().getRouter().navigate("kehoachthanhtra/model_step_plan?/model?id=" + e.rowId);
+					},
+				},
+			});
+			self.$el.find('#grid #tbl_container_grid #tbl_grid').removeClass('table-striped')
+			self.$el.find('#grid #tbl_container_grid #tbl_grid').addClass('text-center')
+		},
+		themVaoKeHoachNamSau: function () {
 			var self = this;
 			self.$el.find("#themvaonamsau").unbind("click").on("click", function () {
 				var d = new Date();
@@ -592,15 +806,11 @@ define(function (require) {
 					success: function (data) {
 						var dem = 0;
 						data.objects.forEach(function (item) {
-							console.log(year + 1)
-							console.log(item.nam)
-
 							if (item.nam == year + 1) {
 								dem++;
 							}
 						})
 
-						console.log(dem)
 						var param = {
 							id: gonrin.uuid(),
 							nam: year + 1
@@ -632,7 +842,7 @@ define(function (require) {
 								self.$el.find(".notify-taokehoachnamsau").css({ "display": "none", "position": "fixed", "top": "150px", "left": "350px", "z-index": "999999" });
 							})
 						}
-					
+
 					},
 					error: function (xhr, status, error) {
 					},
@@ -670,6 +880,19 @@ define(function (require) {
 									success: function (data) {
 										self.getApp().notify("Đã thêm vào năm sau thành công");
 
+										tienSuBenhTatBanThanItemView.$el.find("#itemRemove").unbind("click").bind("click", function () {
+
+											var dataTienSuBenhTatBanThan = self.model.get("tiensubenhtatbanthan");
+											for (var i = 0; i < dataTienSuBenhTatBanThan.length; i++) {
+												if (dataTienSuBenhTatBanThan[i].id === tienSuBenhTatBanThanItemView.model.get("id")) {
+													dataTienSuBenhTatBanThan.splice(i, 1);
+												}
+											}
+											self.model.set("tiensubenhtatbanthan", dataTienSuBenhTatBanThan);
+											self.applyBinding("tiensubenhtatbanthan");
+											tienSuBenhTatBanThanItemView.destroy();
+											tienSuBenhTatBanThanItemView.remove();
+										});
 									},
 									error: function (request, textStatus, errorThrown) {
 									}

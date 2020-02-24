@@ -10,7 +10,8 @@
 	<div class="card notify-taokehoachnamsau" style="width: 50% ;display: none">
 		<div class="card-body">
 			<h5 class="card-title">Thông báo</h5>
-			<p class="card-text"><label>Chưa có kế hoạch cho năm </label>&nbsp;<label id="namsau"></label>.<label>Bạn có muốn tạo luôn không?</label></p>
+			<p class="card-text"><label>Chưa có kế hoạch cho năm </label>&nbsp;<label id="namsau"></label>.<label>Bạn có
+					muốn tạo luôn không?</label></p>
 			<a href="#" class="btn btn-primary" id="yes-taongay">Có</a>
 			<a href="#" class="btn btn-primary" id="no-khongtao">không</a>
 		</div>
@@ -23,24 +24,24 @@
 			<div class="card  card-small mb-4">
 				<div class="card-header  border-bottom">
 					<div class="row">
-						<div class="col-md-4">
+						<div class="col-md-6">
 							<h6 class="m-0">Thông tin chi tiết</h6>
 						</div>
-						<div  class="col-md-4">
+						<!-- <div  class="col-md-4">
 								<button class="btn btn-primary" id="themvaonamsau">Thêm vào kế hoạch năm sau</button>
-							</div>
-						<div class="col-md-4 text-right">
+							</div> -->
+						<div class="col-md-6 text-right">
 							<div block-bind="toolbar"></div>
 						</div>
-						
+
 					</div>
 
 
 				</div>
-				<div class="card-body">
+				<div class="card-body content-main">
 					<form class="needs-validation" novalidate="">
-						<div class="form-row mt-3">
-							<div class="col-md-12">
+						<div class="row">
+							<div class="col-md-6">
 								<label>Lĩnh Vực</label>
 								<select class="selectpicker form-control" id="multiselect_linhvuc" multiple
 									data-live-search="true" data-actions-box="true"
@@ -50,10 +51,18 @@
 									Vui lòng chọn loại lĩnh vực
 								</div>
 							</div>
+							<div class="col-md-6 mb-3">
+								<label>Người đại diện theo pháp luật</label>
+								<input type="text" class="form-control" data-bind="value:nguoidaidienphapluat"
+									placeholder="Nhập tên người đại diện pháp luật" value="" required="">
+								<div class="invalid-feedback">
+									Vui lòng nhập tên người đại diện pháp luật.
+								</div>
+							</div>
 						</div>
 						<div class="row">
 							<div class="col-md-6 mb-3">
-								<label>Mã Đơn Vị</label>
+								<label>Mã đăng ký kinh doanh</label>
 								<input type="text" class="form-control" data-bind="value:code"
 									placeholder="Nhập mã đơn vị" value="" required="">
 								<div class="invalid-feedback">
@@ -87,9 +96,6 @@
 							</div>
 
 						</div>
-
-
-
 						<div class="row">
 							<div class="col-md-6 mb-3 quymodonvi">
 								<label>Quy mô đơn vị</label>
@@ -102,7 +108,7 @@
 									data-bind="value:tuanthuphapluat_chiso" required="">
 							</div>
 						</div>
-						<label>Bảng lịch sử thanh tra</label>
+						<!-- <label>Bảng lịch sử thanh tra</label>
 						<div class="table responsive mb-0 text-center">
 							<table class=" table table-bordered text-center">
 								<tr class="text-center">
@@ -112,14 +118,12 @@
 									<th style="width: 10px;"></th>
 
 								</tr>
-								
-								<tbody id="space_lichsuthanhtra" ></tbody>
-
+								<tbody id="space_lichsuthanhtra"></tbody>
 							</table>
 						</div>
-								<button id="btn_add_lichsuthanhtra_field" class="btn btn-outline-success btn-sm">
-									<span class="fa fa-plus"></span>
-								</button>
+						<button id="btn_add_lichsuthanhtra_field" class="btn btn-outline-success btn-sm">
+							<span class="fa fa-plus"></span>
+						</button> -->
 						<div class="row">
 							<div class="col-md-6 mb-3">
 								<label for="cc-name">Tỉnh/Thành phố</label>
@@ -136,42 +140,116 @@
 								<input type="text" class="form-control" id="xaphuong" placeholder="..."
 									data-bind="dict:xaphuong" required="">
 							</div>
+							<div class="mb-3 col-md-6">
+								<label for="cc-expiration">Địa chỉ</label>
+								<input class="form-control" data-bind="value:diachi" id="diachitruso" placeholder="..."
+									required="">
+							</div>
+						</div>
 
-						</div>
-						<div class="mb-3">
-							<label for="cc-expiration">Địa chỉ</label>
-							<textarea rows="3" class="form-control" data-bind="value:diachi" id="diachitruso"
-								placeholder="..." required=""></textarea>
-						</div>
 
 
 						<!-- <hr class="mb-4"> -->
 						<!-- <button id="btn_save_info" class="btn btn-info btn-lg btn-block" type="submit">Lưu thông
 							tin</button> -->
-						<div style="border-bottom:1px solid #c5c5c5" class="mt-5 mb-2"></div>
-						<div class="row col-md-12">
-							<div id="add_row" class="mb-1"></div>
-							<label class="pt-1 pl-1">Danh sách chi nhánh </label>
-						</div>
-						<div class="row">
-							<div class="col-md-6 mb-3">
-								<input type="text" class="form-control" id="trusochinh" value="Trụ sở chính" disabled>
+						<!-- <div style="border-bottom:1px solid #c5c5c5" class="mt-5 mb-2"></div> -->
+						<div class="d-flex justify-content-between">
+							<div>
+								<label>Danh sách chi nhánh </label>
 							</div>
-							<div class="col-md-6 mb-3" id="tinhthanhtruso">
-								<input type="text" class="form-control" data-bind="dict:tinhthanh" disabled>
+							<div>
+								<a id="them" class="badge badge-info mb-2 text-right">Thêm chi nhánh</a>
 							</div>
 						</div>
-						<div class="mb-12 mb-5">
-							<textarea rows="3" class="form-control" id="diachitrusochinh" disabled></textarea>
-						</div>
-						<div data-bind="list:danhsachchinhanhdonvi_field"></div>
 					</form>
+					<table class="table  bangdanhsachchinhanh">
+						<tr>
+							<th class="text-center">STT</th>
+							<th>Tên chi nhánh</th>
+							<th colspan="2">Địa chỉ</th>
+						</tr>
+						<tr>
+							<td class="text-center">1</td>
+							<td id="trusochinh">Trụ sở chính</td>
+							<td colspan="2" id="diachitrusochinh"> Xã Nghĩa Phúc Thị xã Nghĩa Lộ Tỉnh Yên Bái</td>
+						</tr>
+
+					</table>
+					<div class="d-flex justify-content-between">
+						<div>
+							<label class="table  banglichsuthanhtra m-0">Lịch sử thanh tra</label>
+						</div>
+					</div>
+					<div id="grid"></div>
+				</div>
+
+				<div class="card formthemchinhanh"
+					style="display: none;position: fixed;width: 1000px;height: 340px;top: 300px;left: 506px;;margin-top: -100px; margin-left: -250px;">
+					<div class="card-header bg-secondary text-white border-bottom">Thông tin chi nhánh
+						<button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+							<span aria-hidden="true" class="text-white ">&times;</span>
+						</button>
+					</div>
+						<div class="card-body bg-light row col-md-12 m-0">
+							<div class="col-md-12 form-group required">
+								<label class="pt-1 pl-1 title_tenchinhanh">Tên chi nhánh</label>
+								<input type="text" class="form-control form-thongtinchinhanh" placeholder="Tên chi nhánh" 
+									id="tenchinhanh">
+							</div>
+							<div class="col-md-6 form-group required">
+								<label class="pt-1 pl-1">Tỉnh thành</label>
+								<div class="input-group">
+									<input type="text" class="form-control form-thongtinchinhanh" readonly id="tentinhthanh"
+										placeholder="Chọn tỉnh thành">
+									<div class="input-group-append">
+										<button class="btn btn-outline-secondary" type="button" id="selectTinhThanh"><i
+												class="fa fa-sort-desc" aria-hidden="true"></i>
+										</button>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 form-group required">
+								<label class="pt-1 pl-1">Quận huyện</label>
+								<div class="input-group">
+									<input type="text" class="form-control form-thongtinchinhanh" readonly id="tenquanhuyen"
+										placeholder="Chọn quận huyện">
+									<div class="input-group-append">
+										<button class="btn btn-outline-secondary" type="button" id="selectQuanHuyen"><i
+												class="fa fa-sort-desc" aria-hidden="true"></i>
+										</button>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 form-group required">
+								<label class="pt-1 pl-1">Xã phường</label>
+								<div class="input-group">
+									<input type="text" class="form-control form-thongtinchinhanh" readonly id="tenxaphuong"
+										placeholder="Chọn xã phường">
+									<div class="input-group-append">
+										<button class="btn btn-outline-secondary" type="button" id="selectXaPhuong"><i
+												class="fa fa-sort-desc" aria-hidden="true"></i>
+										</button>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 form-group required">
+								<label class="pt-1 pl-1 " >Địa chỉ</label>
+
+								<input class="form-control form-thongtinchinhanh" placeholder="Địa chỉ chi tiết" required=""
+									id="diachichinhanh">
+							</div>
+
+					<div class="col-md-12 text-right mt-2 mb-2">
+						<button class="btn btn-outline-success btn-luu">Thêm</button>
+					</div>
+					<div class="col-md-12 text-right mt-2 mb-2">
+						<button class="btn btn-outline-success btn-sua">Lưu</button>
+					</div>
 				</div>
 			</div>
+
+
 		</div>
-
-
-
-
 	</div>
+</div>
 </div>

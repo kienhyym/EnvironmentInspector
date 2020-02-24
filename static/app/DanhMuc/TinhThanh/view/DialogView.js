@@ -29,7 +29,7 @@ define(function (require) {
 						label: "TRANSLATE:SELECT",
 						command: function () {
 							var self = this;
-							self.trigger("onSelected");
+							// self.trigger("onSelected");
 							self.close();
 						}
 					},
@@ -54,8 +54,9 @@ define(function (require) {
 				//    	         { field: "quocgia", visible:false },
 			],
 			onRowClick: function (event) {
-				console.log("event", event)
+				var self = this;
 				this.uiControl.selectedItems = event.selectedItems;
+				self.trigger('seleted', event.rowData);
 			},
 		},
 		render: function () {

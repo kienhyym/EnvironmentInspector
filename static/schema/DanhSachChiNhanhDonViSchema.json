@@ -31,13 +31,25 @@
     "diachichinhanh": {
         "type": "string"
     },
+    "xaphuong_id": {
+        "type": "string"
+    },
+    "quanhuyen_id": {
+        "type": "string"
+    },
     "tinhthanh_id": {
         "type": "string"
     },
-    "tinhthanh": {
-        "type": "json"
-    },
     "danhmucdoanhnghiep_id": {
         "type": "string"
+    },
+    "xaphuong": {
+        "type": "dict"
+    },
+    "quanhuyen": {
+        "type": "dict"
+    },
+    "tinhthanh": {
+        "type": "dict"
     }
 }

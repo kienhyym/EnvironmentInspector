@@ -34,9 +34,7 @@
         "length": 255
     },
     "madoanhnghiep": {
-        "type": "string",
-        "required": true,
-        "length": 50
+        "type": "string"
     },
     "tendoanhnghiep": {
         "type": "string",

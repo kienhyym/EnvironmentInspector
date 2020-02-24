@@ -43,23 +43,14 @@
     "salt": {
         "type": "string"
     },
-    "tinhthanh_id": {
+    "xaphuong_id": {
         "type": "string"
-    },
-    "tinhthanh": {
-        "type": "json"
     },
     "quanhuyen_id": {
         "type": "string"
     },
-    "quanhuyen": {
-        "type": "json"
-    },
-    "xaphuong_id": {
+    "tinhthanh_id": {
         "type": "string"
-    },
-    "xaphuong": {
-        "type": "json"
     },
     "type": {
         "type": "string"
@@ -76,6 +67,15 @@
     "active": {
         "type": "boolean",
         "default": true
+    },
+    "xaphuong": {
+        "type": "dict"
+    },
+    "quanhuyen": {
+        "type": "dict"
+    },
+    "tinhthanh": {
+        "type": "dict"
     },
     "roles": {
         "type": "list"
