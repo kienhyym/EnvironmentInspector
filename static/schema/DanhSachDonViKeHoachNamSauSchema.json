@@ -25,13 +25,19 @@
         "type": "string",
         "primary": true
     },
-    "tendonvi": {
-        "type": "string"
-    },
     "donvi_id": {
         "type": "string"
     },
-    "kehoachnamsau_id": {
+    "noidungkehoachnamsau_id": {
         "type": "string"
+    },
+    "nam": {
+        "type": "number"
+    },
+    "danhmucdoanhnghiep": {
+        "type": "dict"
+    },
+    "noidungkehoachnamsau": {
+        "type": "dict"
     }
 }

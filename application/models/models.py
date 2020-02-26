@@ -398,15 +398,28 @@ class KeHoachNamSau(CommonModel):
     id = db.Column(UUID(as_uuid=True), primary_key=True, default=default_uuid)
     nam = db.Column(db.Integer())
     trangthai = db.Column(String(100))
-    danhsachdonvikehoachnamsau_field = db.relationship('DanhSachDonViKeHoachNamSau', cascade="all, delete-orphan")
+    noidung = db.Column(String())
 
 class DanhSachDonViKeHoachNamSau(CommonModel):
     __tablename__ = 'danhsachdonvikehoachnamsau'
     id = db.Column(UUID(as_uuid=True), primary_key=True, default=default_uuid)
-    tendonvi = db.Column(String)
-    donvi_id = db.Column(String)
-    kehoachnamsau_id = db.Column(UUID(as_uuid=True), ForeignKey('kehoachnamsau.id'), nullable=True)
+    donvi_id = db.Column(UUID(as_uuid=True), ForeignKey('danhmucdoanhnghiep.id'))
+    danhmucdoanhnghiep = relationship('DanhMucDoanhNghiep', viewonly=True)
+    noidungkehoachnamsau_id = db.Column(UUID(as_uuid=True), ForeignKey('noidungkehoachnamsau.id'))
+    noidungkehoachnamsau = relationship('NoiDungKeHoachNamSau', viewonly=True)
+    nam = db.Column(db.Integer())
 
+class NoiDungKeHoachNamSau(CommonModel):
+    __tablename__ = 'noidungkehoachnamsau'
+    id = db.Column(UUID(as_uuid=True), primary_key=True, default=default_uuid)
+    noidungkehoach= db.Column(String)
+    phamvithanhtratu= db.Column(String)
+    phamvithanhtraden= db.Column(String)
+    thoigiantienhanh= db.Column(String)
+    donvichutri= db.Column(String)
+    donviphoihop= db.Column(String)
+    diachi= db.Column(String)
+    nam = db.Column(db.Integer())
 
 class VanBanDuThao(CommonModel):
     __tablename__ = 'vanbanduthao'

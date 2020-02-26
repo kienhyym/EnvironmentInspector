@@ -24,25 +24,33 @@
 				</div>
 				<div class="card-body">
 						<div class="row">
-							<div class="col-md-6 mb-3">
+							<div class="col-md-2 mb-3">
 								<label>Năm</label>
 								<input type="text" class="form-control" data-bind="value:nam"
 									placeholder="Nhập năm" required="">
 							</div>
-							<div class="col-md-6 mb-3 trangthai2">
+							<div class="col-md-3 mb-3 trangthai2">
 								<label>Trạng thái</label>
 								<input type="text" id="trangthai" class="form-control" data-bind="value:trangthai"
 									placeholder="trạng thái" required="">
+							</div>
+							<div class="col-md-7 mb-3">
+								<label>Nội dung</label>
+								<input type="text" id="noidung" class="form-control" data-bind="value:noidung"
+									placeholder="nội dung chỉnh sửa danh sách" required="">
 							</div>
 						</div>
 						<div class="table-responsive">
 							<table class=" table table-bordered text-center">
 								<tr>
-								<th style="width: 50px;">STT</th>
-								<th style="width: 300px;">tên đơn vị</th>
-								<th style="width: 100px;">Thông tin đơn vị</th>
-								<th style="width: 100px;">Tạo kế hoạch</th>
-								<th  style="width: 50px;"></th>
+								<th style="width: 20px;">STT</th>
+								<th style="width: 200px;">Đối tượng thanh tra</th>
+								<th style="width: 50px;">Nội dung thanh tra</th>
+								<th style="width: 50px;">Phạm vi thanh tra</th>
+								<th style="width: 50px;">Thời gian tiến hành</th>
+								<th style="width: 50px;">Đơn vị chủ trì</th>
+								<th style="width: 50px;">Đơn vị phối hợp</th>
+								<th style="width: 150px;">Địa chỉ</th>
 								</tr>
 								
 								<tbody id="space_danhsachdonvikehoachnamsau"></tbody>
@@ -51,7 +59,9 @@
 						</div>
 						<!-- <button id="btn_add_danhsachdonvikehoachnamsau_field" class="btn btn-outline-success btn-sm"> -->
 								<!-- <span class="fa fa-plus"></span> -->
-							</button>
+							<!-- </button> -->
+					<div id="grid"></div>
+
 				</div>
 			</div>
 		</div>

@@ -11,12 +11,12 @@
 <div class="row col-md-12">
 	<div class="col-md-4">
 		<label>Lọc theo lĩnh vực </label>
-			<input type='text' id='linhvuc_combobox' />
-			<label for="linhvuc_combobox" id="cotent-label" class="m-0 p-0">
-			</label>
+		<input type='text' id='linhvuc_combobox' />
+		<label for="linhvuc_combobox" id="cotent-label" class="m-0 p-0">
+		</label>
 	</div>
-	<div class="col-md-4" >
-		
+	<div class="col-md-4">
+
 		<label>Lọc theo tỉnh thành </label>
 		<div id="tinhthanh_selecter" style="position: relative">
 
@@ -30,75 +30,137 @@
 	</div>
 	<div class="col-md-4 ">
 		<label>Chỉ số tuân thủ pháp luật</label>
-		<input type="text" class="form-control" id="rate_chiso" >
+		<input type="text" class="form-control" id="rate_chiso">
 	</div>
 </div>
 <br>
 <div class="row col-md-12">
-	<div class="col-md-6">
-		<label>Lọc các đơn vị theo số lần đã thanh tra </label>
-		<div id="soLanThanhTra_selecter" class="row col-md-12 m-0 p-0">
-			<input  type="text"  id='soLanThanhTra_combobox'   class="form-control col-md-10">
-			<!-- <button type="button" class="btn btn-primary locTheoSoLanThanhTra col-md-2" >Lọc</button> -->
+	<div class="col-md-4">
+		<label>Số lần đã thanh tra </label>
+		<div id="soLanThanhTra_selecter">
+			<input type="text" id='soLanThanhTra_combobox' class="form-control">
 		</div>
 	</div>
-	<div class="col-md-6">
-			<label>Lọc các đơn vị chưa thanh tra gần đây(số năm gần nhất)</label>
-			<div id="chuaThanhTraGanDay_selecter" class="row col-md-12 m-0 p-0">
-				<input  type="text"  id='chuathanhtraganday_combobox'  class="form-control col-md-10">
-				<!-- <button type="button" class="btn btn-primary loctheochuathanhtraganday col-md-2" >Lọc</button> -->
+	<div class="col-md-4">
+		<label>Số năm chưa thanh tra</label>
+		<div id="chuaThanhTraGanDay_selecter">
+			<input type="text" id='chuathanhtraganday_combobox' class="form-control">
+		</div>
+	</div>
+
+
+	<div class="col-md-1 pr-0">
+		<label>Tìm kiếm</label>
+		<div>
+			<button type="button" class="btn btn-primary " id="loc">Lọc</button>
+		</div>
+	</div>
+	<div class="col-md-3 ">
+		<label>Thêm vào kế hoạch năm:&nbsp;</label><label class="text-danger font-weight-bold tieuDeNamSau">2021</label>
+		<div class="d-flex justify-content-center">
+			<button type="button" class="btn btn-primary w-100" id="themVaoKeHoachNamSau">Thêm</button>
+		</div>
+	</div>
+</div>
+
+<div class="card border-secondary mb-3 w-75 noidungcuocthanhtra"
+	style="position: fixed;top: 81px;right: 68px;z-index:1;display: none;">
+	<div class="card-header border-bottom border-dark d-flex justify-content-between">
+		<div><label>Nội dung kế hoạch</label></div>
+		<div>
+			<button type="button" class="close btn-close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+	</div>
+	<div class="card-body text-secondary">
+		<div class="col-md-12 d-flex justify-content-center">
+			<button class="btn btn-success m-1 btn-taokehoachmoi">Tạo kế hoạch mới</button>
+			<button class="btn btn-info m-1 btn-chonkehoachdaco">Chọn kế hoạch đã có</button>
+		</div>
+
+		<div class="content-kehoach col-md-12 row" style="display: none;">
+
+			<div class="col-md-12 d-flex justify-content-between">
+				<div class="taoKeHoachMoi" style="display: none;">
+					<label class="font-weight-bold">Tạo kế hoạch mới</label>
+					<div>
+						<button class="btn btn-success btn-luu-taokehoachmoi">Lưu</button>
+					</div>
+				</div>
+				<div class="chonKeHoachDaCo" style="display: none;">
+					<label class="font-weight-bold">Chọn kế hoạch đã có</label>
+					<div>
+						<button class="btn btn-info btn-luu-kehoachdaco">Lưu</button>
+						<select class="selectpicker" data-live-search="true"></select>
+					</div>
+				</div>
+				<div class="troLai">
+					<label class="font-weight-bold">&nbsp;</label>
+					<div>
+						<button class="btn btn-secondary btn-trolai">Quay lại</button>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="col-md-12">
+				<label>Nội dung thanh tra:</label>
+				<div>
+					<input type="text" id="noidungkehoach" class="form-control">
+				</div>
+			</div>
+			<div class="col-md-4">
+				<label>Pham vị thanh tra:</label>
+				<div>
+					<input type="text" id='phamvithanhtratu' class="form-control">
+				</div>
+			</div>
+			<div class="col-md-4">
+				<label>&nbsp;</label>
+				<div>
+					<input type="text" id='phamvithanhtraden' class="form-control">
+				</div>
+			</div>
+			<div class="col-md-4">
+				<label>Thời gian tiến hành:</label>
+				<div>
+					<input type="text" id='thoigiantienhanh' class="form-control">
+				</div>
+			</div>
+			<div class="col-md-6">
+				<label>Đơn vị chủ trì:</label>
+				<div>
+					<input type="text" id='donvichutri' class="form-control">
+				</div>
+			</div>
+			<div class="col-md-6">
+				<label>Đơn vị phối hợp:</label>
+				<div>
+					<input type="text" id='donviphoihop' class="form-control">
+				</div>
+			</div>
+			<div class="col-md-12">
+				<label>Địa chỉ:</label>
+				<div>
+					<input type="text" id='diachi' class="form-control">
+				</div>
 			</div>
 		</div>
-		
+	</div>
 </div>
 
-<div class="col-md-12 mt-2">
-	<button type="button" class="btn btn-primary " id="loc">Lọc</button>
 
-</div>
 <br>
-<div class="row">
-	<div class="col">
-
-		<div class="tab-content" id="kehoach-tabContent">
-			<div class="tab-pane fade show active" id="tab-content-new" role="tabpanel"
-				aria-labelledby="tab-content-new">
-				<div class="card  card-small mb-4 h-100">
-					<div class="card-header">
-						<div block-bind="toolbar"></div>
-					</div>
-					<div class="card-body">
-						<div id="grid_all"></div>
-					</div>
-				</div>
+<div class="tab-content" id="kehoach-tabContent">
+	<div class="tab-pane fade show active" id="tab-content-new" role="tabpanel" aria-labelledby="tab-content-new">
+		<div class="card  card-small mb-4 h-100">
+			<div class="card-header pt-3 pb-1">
+				<div block-bind="toolbar"></div>
 			</div>
-
-			<!-- <div class="tab-pane fade" id="tab-content-review" role="tabpanel" aria-labelledby="tab-content-review">
-					<div class="card  card-small mb-4 h-100">
-						<div class="card-body">
-							<div id="grid_nuocsach"></div>
-						</div>
-					</div>
-				</div>
-
-				<div class="tab-pane fade" id="tab-content-approved" role="tabpanel" aria-labelledby="tab-content-approved">
-					<div class="card  card-small mb-4 h-100">
-						<div class="card-body">
-							<div id="grid_hoachat"></div>
-						</div>
-					</div>
-				</div>
-				<div class="tab-pane fade" id="tab-content-finish" role="tabpanel" aria-labelledby="tab-content-finish">
-					<div class="card  card-small mb-4 h-100">
-						<div class="card-body">
-							<div id="grid_chatthaiyte"></div>
-						</div>
-					</div>
-				</div> -->
+			<div class="card-body pt-0">
+				<div id="grid_all"></div>
+			</div>
 		</div>
-
-
-
-
 	</div>
 </div>

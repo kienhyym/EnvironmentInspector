@@ -62,6 +62,21 @@ async def logout(request):
 #     userobj['exprire'] = time.time() + auth.expire
 #     return userobj 
 
+@app.route('/api/v1/themvaokehoachnamsau', methods=['POST'])
+async def themvaokehoachnamsau(request):
+    data = request.json
+    for x in data['daTaDonVi']:
+        danhsachdonvikehoachnamsau = db.session.query(DanhSachDonViKeHoachNamSau).filter(and_(DanhSachDonViKeHoachNamSau.donvi_id == x['id'], DanhSachDonViKeHoachNamSau.nam == data['nam'])).first()
+        if (danhsachdonvikehoachnamsau is None):
+            new_danhsachdonvikehoachnamsau = DanhSachDonViKeHoachNamSau()
+            new_danhsachdonvikehoachnamsau.donvi_id = x['id']
+            new_danhsachdonvikehoachnamsau.noidungkehoachnamsau_id = data['idNoiDungKeHoach']
+            new_danhsachdonvikehoachnamsau.nam = data['nam']
+            db.session.add(new_danhsachdonvikehoachnamsau)
+            db.session.commit()
+    return json({"error_code":"ok","error_message":"Ngon"})
+
+        
 @app.route('api/v1/login', methods=['POST'])
 async def login(request):
     username = request.json.get("data", None)
@@ -142,3 +157,4 @@ sqlapimanager.create_api(Role, max_results_per_page=1000000,
     url_prefix='/api/v1',
     preprocess=dict(GET_SINGLE=[auth_func], GET_MANY=[auth_func], POST=[auth_func], PUT_SINGLE=[auth_func]),
     collection_name='role')
+

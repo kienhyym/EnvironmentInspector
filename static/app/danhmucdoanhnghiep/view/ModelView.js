@@ -13,18 +13,12 @@ define(function (require) {
 	var XaPhuongDialogView = require('app/DanhMuc/XaPhuong/view/DialogView');
 	var QuanHuyenDialogView = require('app/DanhMuc/QuanHuyen/view/DialogView');
 	var TinhThanhDialogView = require('app/DanhMuc/TinhThanh/view/DialogView');
-
-
-	var DanhSachChiNhanhDonViItemView = require('app/danhmucdoanhnghiep/view/DanhSachChiNhanhDonViView');
-	var LichSuThanhTraItemView = require('app/danhmucdoanhnghiep/view/LichSuThanhTraView');
-
 	return Gonrin.ModelView.extend({
 		template: template,
 		modelSchema: schema,
 		urlPrefix: "/api/v1/",
 		collectionName: "danhmucdoanhnghiep",
 		selectTinhThanh: null,
-
 		tools: [
 			{
 				name: "defaultgr",

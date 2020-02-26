@@ -18,13 +18,11 @@ define(function (require) {
 			return isUser;
 		},
 		userHasRole: function (role) {
-			console.log('model', role)
 			var is = gonrinApp().currentUser != null ? gonrinApp().currentUser.hasRole(role) : false;
 			return is;
 		},
 		requireRole: function (role) {
 			var user = gonrinApp().currentUser;
-			console.log("user.role====", user.role);
 			if (!!user && user.role === role) {
 				return true;
 			}
