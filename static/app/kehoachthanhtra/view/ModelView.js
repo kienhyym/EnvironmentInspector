@@ -98,7 +98,7 @@ define(function (require) {
 					parseOutputDate: function (date) {
 						return date.unix()
 					}
-				},{
+				}, {
 					field: "danhmuclinhvuc",
 					uicontrol: "ref",
 					textField: "tenlinhvuc",
@@ -146,20 +146,20 @@ define(function (require) {
 			self.getDoanhNghiep();
 			self.bindEventSelect();
 			self.updateUIPermission();
-
+			self.chonLinhVuc();
 			var link = window.location.href;
 			console.log(link.slice(-36));
-			
+
 			// console.log('x',id)
-			self.model.set("madoanhnghiep",link.slice(-36))
-			
+			self.model.set("madoanhnghiep", link.slice(-36))
+
 			var id = this.getApp().getRouter().getParam("id");
 			if (id) {
 				this.model.set('id', id);
 				this.model.fetch({
 					success: function (data) {
-						
-						
+
+
 
 						self.$el.find("#form-content").find("input").prop("disabled", true);
 						self.$el.find("#trangthai").removeClass("hidden");
@@ -208,6 +208,39 @@ define(function (require) {
 
 			}
 
+		},
+		chonLinhVuc: function () {
+			var self = this;
+			$.ajax({
+				url: self.getApp().serviceURL + "/api/v1/danhmuclinhvuc?results_per_page=100000&max_results_per_page=1000000",
+				method: "GET",
+				contentType: "application/json",
+				success: function (data) {
+					data.objects.forEach(function (item, index) {
+						self.$el.find('.chonlinhvuc select').append(`
+						<option data-id="${item.id}">${item.tenlinhvuc}</option>
+					`)
+					})
+					self.$el.find('.chonlinhvuc select').selectpicker();
+					self.$el.find('.chonlinhvuc select').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+						var arr = [];
+						self.$el.find(".chonlinhvuc div div div ul li").each(function (index, item) {
+							if ($(item).attr('class') == "selected") {
+								arr.push(data.objects[index])
+							}
+						})
+						self.model.set('danhsachlinhvuc',arr)
+					})
+				},
+				error: function (xhr, status, error) {
+					self.getApp().notify({ message: "Không lấy được dữ liệu" }, { type: "danger", delay: 1000 });
+				},
+			});
+
+		},
+		hienThiLinhVucDaChon :function () { 
+			var self = this;
+			
 		},
 		renderUpload() {
 			var self = this;
@@ -282,7 +315,7 @@ define(function (require) {
 					self.$el.find("#btn_review").hide();
 				}
 
-				
+
 			}
 			if (currentUser.hasRole('PhoCucTruong')) {
 				self.$el.find('.card-header').hide();

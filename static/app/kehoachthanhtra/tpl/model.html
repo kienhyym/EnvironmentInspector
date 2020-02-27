@@ -211,9 +211,9 @@
 										placeholder="Nhập mã kế hoạch" class="form-control">
 								</div>
 								<div class="form-group col-6 required">
-									<label>Tên kế hoạch</label>
-									<input required type="text" data-bind="value:tenkehoach"
-										placeholder="Nhập tên kế hoạch" class="form-control">
+									<label>Năm thanh tra</label>
+									<input required type="text" data-bind="value:thanhtranam"
+										placeholder="Năm thanh tra" class="form-control">
 								</div>
 
 							</div>
@@ -223,31 +223,27 @@
 								<div class="col-6">
 									<div class="form-group required">
 										<label>Chọn đối tượng thanh tra</label>
-										<select required class="selectpicker form-control"
+										<select required class="selectpicker form-control border"
 											id="multiselect_donvidoanhnghiep" data-live-search="true"
 											data-noneSelectedText="Chọn đơn vị" title="Chọn đơn vị">
 										</select>
 									</div>
 								</div>
-								<div class="col-6">
-									<div class="form-group required">
-										<label>Loại hình thanh tra</label>
-										<input type="text" data-bind="dict:danhmuclinhvuc" class="form-control">
+								<div class="col-md-6">
+									<label>Lĩnh Vực</label>
+									<div class="form-group required border rounded chonlinhvuc">
+										<select class="selectpicker  col-md-12 m-0 p-0" multiple data-live-search="true">
+										</select>
 									</div>
+
 								</div>
-								<!-- <div class="col-6">
-							       	<div class="form-group required">
-							           <label>Trưởng đoàn thanh tra</label>
-							           <input type="text" data-bind="value:truongdoanthanhtra"  class="form-control">
-							        </div>
-						       	</div> -->
+
 								<div class="col-6">
 									<div class="form-group">
 										<label>Ngày quyết định thanh tra</label>
 										<input type="text" data-bind="value:ngaythanhtra" class="form-control">
 									</div>
 								</div>
-
 							</div>
 
 							<!-- <div class="form-group required">
