@@ -1162,6 +1162,8 @@ define(function (require) {
 
 
 				})
+			}
+			if (ketThucThanhTraTrangThai === "end_checked") {
 				self.$el.find(".notify-end").attr("style", "display:block");
 			}
 		},
@@ -1774,11 +1776,10 @@ define(function (require) {
 		check_gd1_sucees: function () {
 			var self = this;
 
-			if (self.model.get("danhsach_thanhvien") !== null
-				&& self.model.get("so_quyetdinh_thanhtra") !== null
+			if (
+				self.model.get("so_quyetdinh_thanhtra") !== null
 				&& self.model.get("ngay_quyetdinh_thanhtra") !== null) {
 				self.$el.find(".buoc2").removeClass("buoc2");
-
 				return "success"
 			}
 			return "light";

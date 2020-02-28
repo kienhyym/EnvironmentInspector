@@ -97,7 +97,7 @@ define(function (require) {
 					}
 				},
 				{
-					field: "ngaythanhtra",
+					field: "ngay_quyetdinh_thanhtra",
 					uicontrol: "datetimepicker",
 					textFormat: "DD/MM/YYYY",
 					extraFormats: ["DDMMYYYY"],
