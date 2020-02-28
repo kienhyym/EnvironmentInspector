@@ -1251,100 +1251,6 @@ define(function (require) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 		bindEventGD1: function () {
 			var self = this;
 			self.$el.find(".btn-add-member").unbind('click').bind('click', function () {
@@ -1832,21 +1738,23 @@ define(function (require) {
 			var self = this;
 			self.$el.find(".gd6 .danger-reason").html("");
 			var ngay_vanban_congbo_quyetdinh = self.model.get("ngay_vanban_congbo_quyetdinh");
-			var ngayguicongvan_yeucau = self.model.get("ngayguicongvan_yeucau");
-			var ngayquyetdinh = self.model.get("ngayquyetdinh");
+			var ngayquyetdinh = self.model.get("ngay_quyetdinh_thanhtra");
 			var danger = false;
 			var danger_html = "";
 
-			if (!!ngayguicongvan_yeucau && !!ngay_vanban_congbo_quyetdinh) {
-				if ((ngay_vanban_congbo_quyetdinh - ngayguicongvan_yeucau) < 5 * 24 * 60 * 60) {
-					danger_html = danger_html + "Công bố quyết định thanh tra quá sớm";
-					danger = true;
-				}
-				if ((ngay_vanban_congbo_quyetdinh - ngayguicongvan_yeucau) > 15 * 24 * 60 * 60) {
-					danger_html = danger_html + "Công bố quyết định thanh tra muộn hơn 15 ngày";
-					danger = true;
-				}
+			if (!!ngayquyetdinh && !!ngay_vanban_congbo_quyetdinh) {
+				console.log(ngay_vanban_congbo_quyetdinh - ngayquyetdinh,5 * 24 * 60 * 60)
+				if ((ngay_vanban_congbo_quyetdinh - ngayquyetdinh) < 5 * 24 * 60 * 60) {
 
+					danger_html = danger_html + "Công bố quyết định thanh tra quá sớm";
+					self.$el.find(".danger-reason").addClass('text-warning')
+					danger = true;
+				}
+				if ((ngay_vanban_congbo_quyetdinh - ngayquyetdinh) > 15 * 24 * 60 * 60) {
+					danger_html = danger_html + "Công bố quyết định thanh tra muộn hơn 15 ngày";
+					self.$el.find(".danger-reason").addClass('text-danger')
+					danger = true;
+				}
 			}
 			if (danger) {
 				self.$el.find(".gd6 .danger-reason").html(danger_html);

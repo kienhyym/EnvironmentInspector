@@ -185,12 +185,12 @@ define(function (require) {
 							},
 							order_by: [{ "field": "created_at", "direction": "asc" }]
 						}
-						filter = JSON.stringify(filters);
+						filter = "q=" + JSON.stringify(filters);
 					}
 					$.ajax({
 						url: self.getApp().serviceURL + "/api/v1/danhmucdoanhnghiep?results_per_page=100000&max_results_per_page=1000000",
 						method: "GET",
-						data: "q=" + filter,
+						data: filter,
 						contentType: "application/json",
 						success: function (data) {
 							var mangSauLocLinhVuc = data.objects;
@@ -328,44 +328,49 @@ define(function (require) {
 				data: "q=" + JSON.stringify(filters),
 				contentType: "application/json",
 				success: function (data) {
-					data.objects.forEach(function (item, index) {
-						self.$el.find('.selectpicker').append(`
-						<option data-id="${item.id}">${item.noidungkehoach}</option>
-					`)
-					})
-					self.$el.find('select').selectpicker();
-					self.$el.find('select').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
-						self.$el.find('#noidungkehoach').val(data.objects[clickedIndex].noidungkehoach);
-						self.$el.find('#phamvithanhtratu').val(data.objects[clickedIndex].phamvithanhtratu);
-						self.$el.find('#phamvithanhtraden').val(data.objects[clickedIndex].phamvithanhtraden);
-						self.$el.find('#thoigiantienhanh').val(data.objects[clickedIndex].thoigiantienhanh);
-						self.$el.find('#donvichutri').val(data.objects[clickedIndex].donvichutri);
-						self.$el.find('#donviphoihop').val(data.objects[clickedIndex].donviphoihop);
-						self.$el.find('#diachi').val(data.objects[clickedIndex].diachi);
+					if(data.objects.length != 0){
+						data.objects.forEach(function (item, index) {
+							self.$el.find('.chonkehoachdaco select').append(`
+							<option data-id="${item.id}">${item.noidungkehoach}</option>
+						`)
+						})
+						self.$el.find('.chonkehoachdaco select').selectpicker({'width':'700px',});
+						self.$el.find('.chonkehoachdaco select').selectpicker('val', 'deselectAllText');
 
-						self.$el.find('.btn-luu-kehoachdaco').unbind('click').bind('click', function () {
-							var d = new Date();
-							$.ajax({
-								url: self.getApp().serviceURL + "/api/v1/themvaokehoachnamsau",
-								type: 'POST',
-								data: JSON.stringify({
-									'daTaDonVi': arr,
-									'idNoiDungKeHoach': data.objects[clickedIndex].id,
-									'nam': d.getFullYear() + 1,
-								}
-								),
-								headers: {
-									'content-type': 'application/json'
-								},
-								dataType: 'json',
-								success: function (data) {
-									self.getApp().notify("Thêm kế hoạch thành công");
-								},
-								error: function (request, textStatus, errorThrown) {
-								}
+						self.$el.find('.chonkehoachdaco select').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+							self.$el.find('#noidungkehoach').val(data.objects[clickedIndex].noidungkehoach);
+							self.$el.find('#phamvithanhtratu').val(data.objects[clickedIndex].phamvithanhtratu);
+							self.$el.find('#phamvithanhtraden').val(data.objects[clickedIndex].phamvithanhtraden);
+							self.$el.find('#thoigiantienhanh').val(data.objects[clickedIndex].thoigiantienhanh);
+							self.$el.find('#donvichutri').val(data.objects[clickedIndex].donvichutri);
+							self.$el.find('#donviphoihop').val(data.objects[clickedIndex].donviphoihop);
+							self.$el.find('#diachi').val(data.objects[clickedIndex].diachi);
+	
+							self.$el.find('.btn-luu-kehoachdaco').unbind('click').bind('click', function () {
+								var d = new Date();
+								$.ajax({
+									url: self.getApp().serviceURL + "/api/v1/themvaokehoachnamsau",
+									type: 'POST',
+									data: JSON.stringify({
+										'daTaDonVi': arr,
+										'idNoiDungKeHoach': data.objects[clickedIndex].id,
+										'nam': d.getFullYear() + 1,
+									}
+									),
+									headers: {
+										'content-type': 'application/json'
+									},
+									dataType: 'json',
+									success: function (data) {
+										self.getApp().notify("Thêm kế hoạch thành công");
+									},
+									error: function (request, textStatus, errorThrown) {
+									}
+								})
 							})
 						})
-					})
+					}
+					
 				},
 				error: function (xhr, status, error) {
 					self.getApp().notify({ message: "Không lấy được dữ liệu" }, { type: "danger", delay: 1000 });
