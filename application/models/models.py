@@ -51,9 +51,6 @@ roles_users = db.Table('roles_users',
     db.Column('user_id', UUID(as_uuid=True), db.ForeignKey('user.id', ondelete='cascade'), primary_key=True),
     db.Column('role_id', UUID(as_uuid=True), db.ForeignKey('role.id', onupdate='cascade'), primary_key=True))
 
-linhvuc_kehoach = db.Table('linhvuc_kehoach',
-    db.Column('danhmuclinhvuc_id', UUID(as_uuid=True), db.ForeignKey('danhmuclinhvuc.id', ondelete='cascade'), primary_key=True),
-    db.Column('kehoachthanhtra_id', UUID(as_uuid=True), db.ForeignKey('kehoachthanhtra.id', onupdate='cascade'), primary_key=True))
 
 
 class Role(CommonModel):
@@ -127,12 +124,10 @@ class DanhMucDoanhNghiep(CommonModel):
     quanhuyen = relationship('QuanHuyen', viewonly=True)
     tinhthanh_id = db.Column(UUID(as_uuid=True), ForeignKey('tinhthanh.id'))
     tinhthanh = relationship('TinhThanh', viewonly=True)
-    type = db.Column(String)
-    status = db.Column(Integer, default=0)    
     quymodonvi = db.Column(Integer())
-    solanthanhtra = db.Column(Integer())
-    namchuathanhtraganday = db.Column(Integer())
-    tuanthuphapluat_chiso = db.Column(Integer())
+    solanthanhtra = db.Column(Integer, default=0)    
+    namchuathanhtraganday = db.Column(Integer, default=0)    
+    chisotuanthuphapluat = db.Column(String(250))
     danhsachchinhanhdonvi_field = db.relationship('DanhSachChiNhanhDonVi', cascade="all, delete-orphan")
     lichsuthanhtra_field = db.relationship('LichSuThanhTra', cascade="all, delete-orphan")
     danhmuclinhvuc_foreign = db.relationship("DanhMucLinhVuc", secondary=DonVi_LinhVuc,cascade="save-update")
@@ -150,7 +145,9 @@ class DanhMucLinhVuc(CommonModel):
     id = db.Column(UUID(as_uuid =True),primary_key= True,default = default_uuid)
     malinhvuc = db.Column(String)
     tenlinhvuc = db.Column(String)
-    # danhmucdoanhnghiep_foreign = db.relationship("DanhMucDoanhNghiep", secondary=DonVi_LinhVuc)
+    grouplinhvuc = db.Column(String(25))
+    kehoachthanhtra_id = db.Column(UUID(as_uuid=True), ForeignKey('kehoachthanhtra.id'), nullable=True)
+
 
 
 class DanhSachChiNhanhDonVi(CommonModel):
@@ -171,11 +168,9 @@ class KeHoachThanhTra(CommonModel):
     id = db.Column(UUID(as_uuid =True),primary_key= True,default = default_uuid)
     makehoach = db.Column(String(255))
     thanhtranam = db.Column(Integer())
-    madoanhnghiep = db.Column(UUID(as_uuid=True), ForeignKey('danhmucdoanhnghiep.id'), nullable=True)
-    tendoanhnghiep = db.Column(String(50), nullable=False)
-    doanhnghiep = db.Column(JSONB)
+    danhmucdoanhnghiep_id = db.Column(UUID(as_uuid=True), ForeignKey('danhmucdoanhnghiep.id'))
+    danhmucdoanhnghiep = relationship('DanhMucDoanhNghiep', cascade="save-update")
     tailieulienquan = db.Column(JSONB)
-    
     ngaysoanthao = db.Column(BigInteger())
     chucvu_nguoisoanthao = db.Column(String)
     userid_phongduyet = db.Column(String)
@@ -195,7 +190,8 @@ class KeHoachThanhTra(CommonModel):
     ketluanthanhtra = db.Column(String)
     ngayketthuc = db.Column(BigInteger())
     taokehoach_attachment = db.Column(String)
-    danhsachlinhvuc = db.relationship('DanhMucLinhVuc', secondary=linhvuc_kehoach, cascade="save-update")
+
+    danhsachlinhvuc_field = db.relationship('DanhMucLinhVuc', cascade="save-update")
 
 
     #step1

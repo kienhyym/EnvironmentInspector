@@ -3,36 +3,111 @@ define(function (require) {
     var $ = require('jquery'),
         _ = require('underscore'),
         Gonrin = require('gonrin');
+
     var template = require('text!app/danhmucdoanhnghiep/tpl/select.html'),
-        schema = require('json!schema/DanhMucLinhVucSchema.json');
+        schema = require('json!schema/DanhMucDoanhNghiepSchema.json');
+    var CustomFilterView = require('app/base/view/CustomFilterView');
+
     return Gonrin.CollectionDialogView.extend({
         template: template,
         modelSchema: schema,
         urlPrefix: "/api/v1/",
-        collectionName: "danhmuclinhvuc",
-        // textField: "display_name",
+        collectionName: "danhmucdoanhnghiep",
+        bindings: "data-bind",
+        textField: "name",
+        valueField: "id",
         tools: [
             {
-                name: "select",
-                type: "button",
-                buttonClass: "btn btn-info btn-sm font-weight-bold margin-left-5",
-                label: "TRANSLATE:SELECT",
-                command: function () {
-                    this.trigger("onSelected");
-                    this.close();
-                }
-            }
+                name: "defaultgr",
+                type: "group",
+                groupClass: "toolbar-group",
+                buttons: [
+                    {
+                        name: "select",
+                        type: "button",
+                        buttonClass: "btn-success btn-sm",
+                        label: "TRANSLATE:SELECT",
+                        command: function () {
+                            var self = this;
+                            self.trigger("onSelected");
+                            self.close();
+                        }
+                    },
+                ]
+            },
         ],
         uiControl: {
             fields: [
-                { field: "tenlinhvuc", label: "Tên lĩnh vực" },
+                { field: "code", label: "Mã", width: 150 },
+                { field: "name", label: "Tên", width: 250 },
             ],
             onRowClick: function (event) {
                 this.uiControl.selectedItems = event.selectedItems;
             },
         },
         render: function () {
-            this.applyBindings();
-        }
+            var self = this;
+            self.uiControl.orderBy = [{ "field": "name", "direction": "desc" }];
+            var filter = new CustomFilterView({
+                el: self.$el.find("#grid_search"),
+                sessionKey: self.collectionName + "_filter"
+            });
+            filter.render();
+
+            if (!filter.isEmptyFilter()) {
+                var text = !!filter.model.get("text") ? filter.model.get("text").trim() : "";
+                var query = {
+                    "$or": [
+                        { "name": { "$likeI": text } },
+                    ]
+                };
+                var filters = query;
+                if (self.uiControl.filters !== null) {
+                    filters = {
+                        "$and": [
+                            self.uiControl.filters,
+                            query
+                        ]
+                    };
+                }
+
+                self.uiControl.filters = filters;
+            }
+            self.applyBindings();
+
+            filter.on('filterChanged', function (evt) {
+                var $col = self.getCollectionElement();
+                var text = !!evt.data.text ? evt.data.text.trim() : "";
+                if ($col) {
+                    if (text !== null) {
+                        var query = {
+                            "$or": [
+                                { "name": { "$likeI": text } },
+                                { "code": { "$likeI": text } },
+                            ]
+                        };
+                        // console.log("tinhthanh===", this.getApp().data("tinhthanh_id"));
+                        // if (this.uiControl.filters && this.uiControl.filters !== null){
+                        var filters = query;
+                        if (self.uiControl.filters !== null) {
+                            filters = {
+                                "$and": [
+                                    self.uiControl.filters,
+                                    query
+                                ]
+                            };
+                        }
+                        // }
+                        $col.data('gonrin').filter(filters);
+                        self.uiControl.filters = filters;
+                    } else {
+                        //						self.uiControl.filters = null;
+                    }
+                }
+                self.applyBindings();
+            });
+            return this;
+        },
     });
+
 });

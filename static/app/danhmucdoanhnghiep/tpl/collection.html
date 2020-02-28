@@ -8,55 +8,88 @@
 <!-- End Page Header -->
 
 
-<div class="row col-md-12">
+<div class="row col-md-12 noidungtrang">
 	<div class="col-md-4">
-		<label>Lọc theo lĩnh vực </label>
-		<input type='text' id='linhvuc_combobox' />
-		<label for="linhvuc_combobox" id="cotent-label" class="m-0 p-0">
-		</label>
-	</div>
-	<div class="col-md-4">
-
-		<label>Lọc theo tỉnh thành </label>
-		<div id="tinhthanh_selecter" style="position: relative">
-
-			<input type='text' id='tinhthanh_combobox' />
-			<input type="text" id="input_gia" class="form-control" style="position: absolute;top:0px;left:0px">
-
-			<label for="tinhthanh_combobox" id="cotent-label" class="m-0 p-0">
-				<!-- Chọn tỉnh thành -->
-			</label>
+		<label>Lĩnh Vực</label>
+		<div class="form-group required border rounded chonlinhvuc">
+			<select class="selectpicker  col-md-12 m-0 p-0" multiple data-live-search="true">
+			</select>
 		</div>
 	</div>
-	<div class="col-md-4 ">
+	<div class="col-md-4">
+		<label>Tỉnh thành</label>
+		<div class="form-group required border rounded chontinhthanh">
+			<select class="selectpicker  col-md-12 m-0 p-0" data-live-search="true" data-header="Bỏ chọn">
+			</select>
+		</div>
+	</div>
+	<div class="col-md-4">
 		<label>Chỉ số tuân thủ pháp luật</label>
-		<input type="text" class="form-control" id="rate_chiso">
+		<div class="form-group required border rounded chonchiso">
+			<select class="selectpicker  col-md-12 m-0 p-0" data-live-search="true" data-header="Bỏ chọn">
+				<option value="baocaodaydu">Báo cáo đầy đủ</option>
+				<option value="baocaokhongdaydu">Báo cáo không đầy đủ</option>
+				<option value="khongbaocao">Không báo cáo</option>
+				<option value="viphamhanhchinh">Vi phạm hành chính</option>
+			</select>
+		</div>
 	</div>
 </div>
-<br>
-<div class="row col-md-12">
+<div class="row col-md-12 noidungtrang">
 	<div class="col-md-4">
-		<label>Số lần đã thanh tra </label>
-		<div id="soLanThanhTra_selecter">
-			<input type="text" id='soLanThanhTra_combobox' class="form-control">
-		</div>
-	</div>
-	<div class="col-md-4">
-		<label>Số năm chưa thanh tra</label>
-		<div id="chuaThanhTraGanDay_selecter">
-			<input type="text" id='chuathanhtraganday_combobox' class="form-control">
+		<label>Số lần đã thanh tra</label>
+		<div class="form-group required border rounded chonsolanthanhtra">
+			<select class="selectpicker  col-md-12 m-0 p-0" data-live-search="true" data-header="Bỏ chọn">
+				<option value="0">0 lần</option>
+				<option value="1">1 lần</option>
+				<option value="2">2 lần</option>
+				<option value="3">3 lần</option>
+				<option value="4">4 lần</option>
+				<option value="5">5 lần</option>
+				<option value="6">6 lần</option>
+				<option value="7">7 lần</option>
+				<option value="8">8 lần</option>
+				<option value="9">9 lần</option>
+				<option value="10">10 lần</option>
+			</select>
 		</div>
 	</div>
 
+	<div class="col-md-4">
+		<label>Số năm chưa thanh tra</label>
+		<div class="form-group required border rounded chonsonamchuathanhtra">
+			<select class="selectpicker  col-md-12 m-0 p-0" data-live-search="true" data-header="Bỏ chọn">
+				<option value="0">0 năm</option>
+				<option value="1">1 năm</option>
+				<option value="2">2 năm</option>
+				<option value="3">3 năm</option>
+				<option value="4">4 năm</option>
+				<option value="5">5 năm</option>
+				<option value="6">6 năm</option>
+				<option value="7">7 năm</option>
+				<option value="8">8 năm</option>
+				<option value="9">9 năm</option>
+				<option value="10">10 năm</option>
+			</select>
+		</div>
+	</div>
 
 	<div class="col-md-1 pr-0">
 		<label>Tìm kiếm</label>
 		<div>
-			<button type="button" class="btn btn-primary " id="loc">Lọc</button>
+			<button type="button" class="btn btn-primary boloc">Lọc</button>
 		</div>
 	</div>
-	<div class="col-md-3 ">
-		<label>Thêm vào kế hoạch năm:&nbsp;</label><label class="text-danger font-weight-bold tieuDeNamSau">2021</label>
+
+	<div class="col-md-1 pr-0">
+		<label>Xóa lọc</label>
+		<div>
+			<button type="button" class="btn btn-primary xoaloc">Xóa</button>
+		</div>
+	</div>
+
+	<div class="col-md-2 ">
+		<label>Thêm vào năm:&nbsp;</label><label class="text-danger font-weight-bold tieuDeNamSau">2021</label>
 		<div class="d-flex justify-content-center">
 			<button type="button" class="btn btn-primary w-100" id="themVaoKeHoachNamSau">Thêm</button>
 		</div>
@@ -152,7 +185,7 @@
 
 
 <br>
-<div class="tab-content" id="kehoach-tabContent">
+<div class="tab-content noidungtrang" id="kehoach-tabContent">
 	<div class="tab-pane fade show active" id="tab-content-new" role="tabpanel" aria-labelledby="tab-content-new">
 		<div class="card  card-small mb-4 h-100">
 			<div class="card-header pt-3 pb-1">

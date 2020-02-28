@@ -87,14 +87,7 @@ define(function (require) {
 						label: "STT",
 						width: "30px"
 					},
-					{
-						field: "tenkehoach",
-						label: "Tên kế hoạch",
-					},
-					{
-						field: "tendoanhnghiep",
-						label: "Tên doanh nghiệp",
-					},
+					
 					{
 						field: "ngaythanhtra", label: "Ngày thanh tra",
 						template: function (rowData) {
@@ -109,10 +102,16 @@ define(function (require) {
 							return "";
 						},
 					},
-					// {
-					// 	field: "truongdoanthanhtra",
-					// 	label: "Trưởng đoàn"
-					// },
+					{
+						field: "tendoanhnghiep",
+						label: "Đối tượng thanh tra",
+						template: function (rowData) {
+							if (!!rowData && rowData.danhmucdoanhnghiep.name) {
+								return rowData.danhmucdoanhnghiep.name;
+							}
+							return "";
+						},
+					},
 					{
 						field: "trangthai",
 						label: "Trạng thái",

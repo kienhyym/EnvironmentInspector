@@ -138,7 +138,12 @@
 		<div class="col-lg-12 ">
 			<div class="card  card-small mb-4">
 				<div class="card-header  border-bottom">
-					<div block-bind="toolbar"></div>
+					<!-- <div block-bind="toolbar">
+					</div> -->
+					<div class="d-flex justify-content-end">
+						<label class="m-0 p-0 font-weight-bold">Năm:&nbsp;</label>
+						<label class="m-0 p-0 font-weight-bold">2021</label>
+					</div>
 				</div>
 				<div class="card-body">
 					<div class="row" id="timeline">
@@ -203,6 +208,7 @@
 					<div class=" pb-3">
 
 						<form class="needs-validation" novalidate="">
+							<h5 style="padding-bottom: 10px;">Đối tượng thanh tra</h5>
 
 							<div class="row nguoisoanthao">
 								<div class="form-group col-6 required">
@@ -210,32 +216,22 @@
 									<input required type="text" data-bind="value:makehoach"
 										placeholder="Nhập mã kế hoạch" class="form-control">
 								</div>
-								<div class="form-group col-6 required">
-									<label>Năm thanh tra</label>
-									<input required type="text" data-bind="value:thanhtranam"
-										placeholder="Năm thanh tra" class="form-control">
-								</div>
-
-							</div>
-
-
-							<div class="row">
 								<div class="col-6">
 									<div class="form-group required">
-										<label>Chọn đối tượng thanh tra</label>
-										<select required class="selectpicker form-control border"
-											id="multiselect_donvidoanhnghiep" data-live-search="true"
-											data-noneSelectedText="Chọn đơn vị" title="Chọn đơn vị">
-										</select>
+										<label>Tên doanh nghiệp</label>
+										<input type="text" data-bind="dict:danhmucdoanhnghiep">
 									</div>
 								</div>
+							</div>
+
+							<div class="row">
 								<div class="col-md-6">
 									<label>Lĩnh Vực</label>
 									<div class="form-group required border rounded chonlinhvuc">
-										<select class="selectpicker  col-md-12 m-0 p-0" multiple data-live-search="true">
+										<select class="selectpicker  col-md-12 m-0 p-0" multiple
+											data-live-search="true">
 										</select>
 									</div>
-
 								</div>
 
 								<div class="col-6">
@@ -245,123 +241,207 @@
 									</div>
 								</div>
 							</div>
-
-							<!-- <div class="form-group required">
-					              <label>Thành phần đoàn thanh tra</label>
-					              <textarea required rows="2"  data-bind="value:doanthanhtra"  class="form-control" placeholder="Nhập danh sách đoàn thanh tra"></textarea>
-					        </div> -->
-
-							<!-- <div class="form-group">
-					              <label>Tài liệu đính kèm</label>
-					              <div class="custom-file">
-									    <input type="file" class="custom-file-input" id="upload_files" lang="vi">
-									    <label class="custom-file-label" for="upload_files">Chọn file tải lên</label>
+							<div class="form-group col">
+								<label>Tài liệu đính kèm</label>
+								<div id="upload-quyetdinh_thanhtra_attachment">
+									<div class="custom-file">
+										<input type="file" class="custom-file-input upload_files" id="upload_files"
+											data-attr="quyetdinh_thanhtra_attachment" lang="vi">
+										<label class="custom-file-label">Chọn file tải lên</label>
 									</div>
-									<div class="highlight d-none border" id="preview_file" style="height:130px;overflow-y: auto; background-color: aliceblue;">
-										<pre >
-											 <ul class="list_file">
-											  <li>Agnes<span class="close">x</span></li>
-											</ul> 
-										</pre>
-									</div>
-					        </div> -->
-							<div class="row">
-								<div class="form-group col">
-									<label>Tài liệu đính kèm</label>
-									<div id="upload-taokehoach_attachment">
-										<div class="custom-file">
-											<input type="file" class="custom-file-input upload_files" id="upload_files"
-												data-attr="taokehoach_attachment" lang="vi">
-											<label class="custom-file-label">Chọn file tải lên</label>
-										</div>
-									</div>
-									<div id="download-taokehoach_attachment" class="form-group col col-md-12 col-sm-12">
-										<span class="textDownload" data-bind="text:taokehoach_attachment" />
-										<a href="#" class="linkDownload">Download</a>
-									</div>
+								</div>
+								<div id="download-quyetdinh_thanhtra_attachment"
+									class="form-group col col-md-12 col-sm-12">
+									<span class="textDownload" data-bind="text:quyetdinh_thanhtra_attachment" />
+									<a href="#" class="linkDownload">Download</a>
 								</div>
 							</div>
 							<div>
 								<span class="hienthilink"></span>
 							</div>
 
-							<div class="row nguoisoanthao d-none">
-								<div class="form-group required col-6">
-									<label>Người soạn thảo</label>
-									<span data-bind="text:username_nguoisoanthao_kehoach"></span>
+							<!-- <div class="row">
+								<div class="form-group col-6 required">
+									<label>Số quyết định thanh tra</label>
+									<input type="text" data-bind="value:so_quyetdinh_thanhtra"
+										placeholder="Nhập số quyết định" class="form-control">
 								</div>
-								<div class="form-group required col-6">
-									<label>Ngày soạn thảo</label>
-									<input disabled type="text" data-bind="value:ngaysoanthao" class="form-control">
+								<div class="form-group col-6 required">
+									<label>Ngày quyết định</label>
+									<input required type="text" data-bind="value:ngay_quyetdinh_thanhtra"
+										placeholder="Ngày ra quyết định" class="form-control">
 								</div>
 							</div>
-							<div class="row nguoixemxet-capphong d-none">
-								<div class="form-group required col-6">
-									<label>Người duyệt cấp phòng</label>
-									<span data-bind="text:username_phongduyet"></span>
+							<div class="row">
+
+								<div class="form-group col">
+									<label>Tài liệu đính kèm</label>
+									<div id="upload-quyetdinh_thanhtra_attachment">
+										<div class="custom-file">
+											<input type="file" class="custom-file-input upload_files" id="upload_files"
+												data-attr="quyetdinh_thanhtra_attachment" lang="vi">
+											<label class="custom-file-label">Chọn file tải lên</label>
+										</div>
+									</div>
+									<div id="download-quyetdinh_thanhtra_attachment"
+										class="form-group col col-md-12 col-sm-12 linkdownload_and_button">
+										<span class="textDownload2 textDownloadBuoc1"
+											data-bind="text:quyetdinh_thanhtra_attachment" />
+										<a class="linkDownload2 linkDownloadBuoc1">Download</a>
+									</div>
+
 								</div>
-								<div class="form-group required col-6">
-									<label>Ngày duyệt cấp phòng</label>
-									<input disabled type="text" data-bind="value:ngaypheduyet_phong"
+
+							</div> -->
+
+
+
+							<hr />
+							<div>
+								<h5 style="padding-bottom: 10px;">Danh sách thành viên đoàn thanh tra</h5>
+								<table class="table table-bordered text-center">
+									<thead>
+										<tr>
+											<th>Họ và tên</th>
+											<th>Đơn vị công tác</th>
+											<th>Vai trò</th>
+											<th id="header_del_member" class="d-none"></th>
+										</tr>
+									</thead>
+									<tbody id="danhsach_thanhvien" data-bind="list:danhsach_thanhvien"></tbody>
+								</table>
+
+								<button class="btn btn-primary btn-add-member">Thêm thành viên</button>
+								<span id="btn-add-member"></span>
+							</div>
+							<hr />
+							<h5>Quyết định trưng cầu giám định</h5>
+							<div class="row">
+								<div class="form-group col-6">
+									<label>Đơn vị thực hiện</label>
+									<input required type="text" data-bind="value:donvi_trungcau_giamdinh" placeholder=""
+										class="form-control">
+								</div>
+								<div class="form-group col-3">
+									<label>Số quyết định</label>
+									<input required type="text" data-bind="value:so_quyetdinh_trungcau_giamdinh"
+										class="form-control">
+								</div>
+								<div class="form-group col-3">
+									<label>Ngày quyết định</label>
+									<input required type="text" data-bind="value:ngay_quyetdinh_trungcau_giamdinh"
 										class="form-control">
 								</div>
 							</div>
-							<div class="row nguoixemxet-pct d-none">
-								<div class="form-group required col-6">
-									<label>Phó Cục Trưởng Duyệt</label>
-									<span data-bind="text:username_pctduyet"></span>
-								</div>
-								<div class="form-group required col-6">
-									<label>Ngày Phó Cục Trưởng Duyệt </label>
-									<input disabled type="text" data-bind="value:ngaypheduyet_pct" class="form-control">
-								</div>
-							</div>
 
-							<div class="row nguoipheduyet d-none">
-								<div class="form-group required col-6">
-									<label>Cục Trưởng Duyệt</label>
-									<span data-bind="text:username_quyetdinh"></span>
+							<div class="form-group col">
+								<label>Tài liệu đính kèm</label>
+								<div id="upload-quyetdinh_trungcau_giamdinh_attachment">
+									<div class="custom-file">
+										<input type="file" class="custom-file-input upload_files" id="upload_files"
+											data-attr="quyetdinh_trungcau_giamdinh_attachment" lang="vi">
+										<label class="custom-file-label">Chọn file tải lên</label>
+									</div>
 								</div>
-								<div class="form-group required col-6">
-									<label>Ngày Cục Trưởng Duyệt</label>
-									<span data-bind="text:ngaypheduyet_quyetdinh"></span>
+								<div id="download-quyetdinh_trungcau_giamdinh_attachment"
+									class="form-group col col-md-12 col-sm-12">
+									<span class="textDownload"
+										data-bind="text:quyetdinh_trungcau_giamdinh_attachment" />
+									<a href="#" class="linkDownload">Download</a>
 								</div>
 							</div>
-
-							<div class="form-group ketquathanhtra d-none">
-								<label>Kết quả thanh tra</label>
-								<textarea rows="2" data-bind="value:ketquathanhtra" class="form-control"
-									placeholder="Nhập kết quả thanh tra"></textarea>
-							</div>
-							<div class="form-group d-none ketluanthanhtra">
-								<label>Kết luận thanh tra</label>
-								<textarea rows="2" data-bind="value:ketluanthanhtra" class="form-control"
-									placeholder="Nhập kết luận thanh tra"></textarea>
-							</div>
+							<hr />
+							<!-- <h5>Người giám sát</h5>
 							<div class="row">
-								<div class="form-group col-6 ngayketthuc d-none">
-									<label>Ngày kết thúc</label>
-									<input type="text" data-bind="value:ngayketthuc" class="form-control">
+								<div class="form-group col-6 required">
+									<label>Người giám sát</label>
+									<select required class="selectpicker form-control" id="select_nguoigiamsat"
+										data-live-search="true" data-noneSelectedText="Chọn người giám sát"
+										title="Chọn người giám sát">
+									</select>
 								</div>
-								<div class="form-group col-6" id="trangthai">
-									<label>Trạng thái</label>
-									<input type="text" disabled data-bind="value:trangthai" class="form-control">
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-12">
-									<button id="btn_save" class="btn btn-primary">Lưu Thông Tin</button>
-									<button id="btn_review" class="btn btn-info">Gửi Xét Duyệt</button>
-									<button id="btn_approve" class="btn btn-info">Ra Quyết Định</button>
-									<button id="btn_cancel" class="btn btn-default">Từ Chối Duyệt</button>
-								</div>
-							</div>
-
-						</form>
+							</div> -->
 					</div>
+
+
+
+
+					<div class="row nguoisoanthao d-none">
+						<div class="form-group required col-6">
+							<label>Người soạn thảo</label>
+							<span data-bind="text:username_nguoisoanthao_kehoach"></span>
+						</div>
+						<div class="form-group required col-6">
+							<label>Ngày soạn thảo</label>
+							<input disabled type="text" data-bind="value:ngaysoanthao" class="form-control">
+						</div>
+					</div>
+					<div class="row nguoixemxet-capphong d-none">
+						<div class="form-group required col-6">
+							<label>Người duyệt cấp phòng</label>
+							<span data-bind="text:username_phongduyet"></span>
+						</div>
+						<div class="form-group required col-6">
+							<label>Ngày duyệt cấp phòng</label>
+							<input disabled type="text" data-bind="value:ngaypheduyet_phong" class="form-control">
+						</div>
+					</div>
+					<div class="row nguoixemxet-pct d-none">
+						<div class="form-group required col-6">
+							<label>Phó Cục Trưởng Duyệt</label>
+							<span data-bind="text:username_pctduyet"></span>
+						</div>
+						<div class="form-group required col-6">
+							<label>Ngày Phó Cục Trưởng Duyệt </label>
+							<input disabled type="text" data-bind="value:ngaypheduyet_pct" class="form-control">
+						</div>
+					</div>
+
+					<div class="row nguoipheduyet d-none">
+						<div class="form-group required col-6">
+							<label>Cục Trưởng Duyệt</label>
+							<span data-bind="text:username_quyetdinh"></span>
+						</div>
+						<div class="form-group required col-6">
+							<label>Ngày Cục Trưởng Duyệt</label>
+							<span data-bind="text:ngaypheduyet_quyetdinh"></span>
+						</div>
+					</div>
+
+					<div class="form-group ketquathanhtra d-none">
+						<label>Kết quả thanh tra</label>
+						<textarea rows="2" data-bind="value:ketquathanhtra" class="form-control"
+							placeholder="Nhập kết quả thanh tra"></textarea>
+					</div>
+					<div class="form-group d-none ketluanthanhtra">
+						<label>Kết luận thanh tra</label>
+						<textarea rows="2" data-bind="value:ketluanthanhtra" class="form-control"
+							placeholder="Nhập kết luận thanh tra"></textarea>
+					</div>
+					<div class="row">
+						<!-- <div class="form-group col-6 ngayketthuc d-none">
+							<label>Ngày kết thúc</label>
+							<input type="text" data-bind="value:ngayketthuc" class="form-control">
+						</div> -->
+						<div class="form-group col-6" id="trangthai">
+							<label>Trạng thái</label>
+							<input type="text" disabled data-bind="value:trangthai" class="form-control">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-12">
+							<button id="btn_save" class="btn btn-primary">Lưu Thông Tin</button>
+							<button id="btn_review" class="btn btn-info">Gửi Xét Duyệt</button>
+							<button id="btn_approve" class="btn btn-info">Ra Quyết Định</button>
+							<button id="btn_cancel" class="btn btn-default">Từ Chối Duyệt</button>
+						</div>
+					</div>
+
+					</form>
 				</div>
 			</div>
 		</div>
 	</div>
+</div>
 
 </div>

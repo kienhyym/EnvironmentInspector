@@ -87,6 +87,14 @@ define(function (require) {
 								self.model.set("namchuathanhtraganday", namhientai - Math.max.apply(Math, mangNam));
 							}
 
+							var keHoachThanhTraForeign = self.model.get('kehoachthanhtra_foreign');
+							keHoachThanhTraForeign.forEach(function (item, index) {
+								if (item.trangthai == "approved" || item.trangthai == "end_checked" || item.trangthai == "completed") {
+									delete item.stt;
+								}
+							})
+
+
 							self.model.save(null, {
 								success: function (model, respose, options) {
 									self.getApp().notify("Lưu thông tin thành công");
@@ -170,15 +178,15 @@ define(function (require) {
 					dataSource: TinhThanhSelectView
 				},
 				{
-					field: "tuanthuphapluat_chiso",
+					field: "chisotuanthuphapluat",
 					uicontrol: "combobox",
 					textField: "text",
 					valueField: "value",
 					dataSource: [
-						{ "value": 1, "text": "Báo cáo đầy đủ" },
-						{ "value": 2, "text": "Báo cáo không đầy đủ" },
-						{ "value": 3, "text": "Không báo cáo" },
-						{ "value": 4, "text": "Vi phạm hành chính" },
+						{ "value": "baocaodaydu", "text": "Báo cáo đầy đủ" },
+						{ "value": "baocaokhongdaydu", "text": "Báo cáo không đầy đủ" },
+						{ "value": "khongbaocao", "text": "Không báo cáo" },
+						{ "value": "viphamhanhchinh", "text": "Vi phạm hành chính" },
 					],
 
 
@@ -727,8 +735,9 @@ define(function (require) {
 
 		lichSuThucHienThanhTra: function () {
 			var self = this;
+			var keHoachThanhTraForeign = self.model.get('kehoachthanhtra_foreign');
 			var arrayLichSu = [];
-			self.model.get('kehoachthanhtra_foreign').forEach(function (item, index) {
+			keHoachThanhTraForeign.forEach(function (item, index) {
 				if (item.trangthai == "approved" || item.trangthai == "end_checked" || item.trangthai == "completed") {
 					item.stt = index + 1;
 					arrayLichSu.push(item)

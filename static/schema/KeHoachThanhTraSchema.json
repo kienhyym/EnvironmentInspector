@@ -32,16 +32,8 @@
     "thanhtranam": {
         "type": "number"
     },
-    "madoanhnghiep": {
+    "danhmucdoanhnghiep_id": {
         "type": "string"
-    },
-    "tendoanhnghiep": {
-        "type": "string",
-        "required": true,
-        "length": 50
-    },
-    "doanhnghiep": {
-        "type": "json"
     },
     "tailieulienquan": {
         "type": "json"
@@ -367,7 +359,10 @@
     "trangthai": {
         "type": "string"
     },
-    "danhsachlinhvuc": {
+    "danhmucdoanhnghiep": {
+        "type": "dict"
+    },
+    "danhsachlinhvuc_field": {
         "type": "list"
     },
     "baocaocuadoanthanhtrafield": {

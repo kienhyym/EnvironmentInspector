@@ -99,6 +99,23 @@ define(function (require) {
 					},
 				],
 			}],
+		uiControl: {
+			fields: [
+				{
+					field: "grouplinhvuc",
+					label: "Nhóm lĩnh vực",
+					uicontrol: "combobox",
+					textField: "text",
+					valueField: "value",
+					dataSource: [
+						{ value: "Hóa chất", text: "Hóa chất" },
+						{ value: "Nước sạch", text: "Nước sạch" },
+						{ value: "Chất thải y tế", text: "Chất thải y tế" },
+						{ value: "Môi trường y tế", text: "Môi trường y tế" },
+					],
+				},
+			]
+		},
 		render: function () {
 			var self = this;
 			var id = this.getApp().getRouter().getParam("id");

@@ -223,10 +223,6 @@ define(function (require) {
 						width: "30px"
 					},
 					{
-						field: "tenkehoach",
-						label: "Tên kế hoạch",
-					},
-					{
 						field: "ngaythanhtra", label: "Ngày thanh tra",
 						template: function (rowData) {
 							if (!!rowData && rowData.ngaythanhtra) {
@@ -242,7 +238,13 @@ define(function (require) {
 					},
 					{
 						field: "tendoanhnghiep",
-						label: "Đối tượng thanh tra"
+						label: "Đối tượng thanh tra",
+						template: function (rowData) {
+							if (!!rowData && rowData.danhmucdoanhnghiep.name) {
+								return rowData.danhmucdoanhnghiep.name;
+							}
+							return "";
+						},
 					},
 					{
 						field: "trangthai",
@@ -264,85 +266,6 @@ define(function (require) {
 							{ value: "end_checked", text: "Đã kết thúc thanh tra" }
 						],
 					},
-					//              	{
-					//        	    	 field: "command", 
-					//        	    	 label:" ",
-					//        	    	 command: [
-					//        	    	     {
-					//        	    	       "label":"xét duyệt",
-					//           	    	        "action": function(params, args){
-					//           	    	        	self.confirm_booking(params.rowData.id, "booking", params.el);
-					//           	    	        },
-					//           	    	        "class": function(e){
-					//           	    	        	var currentUser = self.getApp().currentUser;
-					//         	    	        	if(e.rowData.trangthai ===0 && currentUser.hasRole('CoSoKCB') && currentUser.id_cosokcb == e.rowData.cosokcb_id){
-					//         	    	        		return "btn-primary btn-sm px-1 mx-1 booking";	
-					//         	    	        	}else{
-					//         	    	        		return "d-none booking";
-					//         	    	        	}
-					//         	    	        	
-					//         	    	        },
-					//           	    	     },
-					//           	    	     {
-					//          	    	       "label":"quyết định",
-					//             	    	        "action": function(params, args){
-					//               	    	        	self.confirm_booking(params.rowData.id, "arrived", params.el);
-					//             	    	        },
-					//             	    	        "class": function(e){
-					//             	    	        	var currentUser = self.getApp().currentUser;
-					//             	    	        	if(e.rowData.trangthai ===1 && currentUser.hasRole('CoSoKCB') && currentUser.id_cosokcb == e.rowData.cosokcb_id){
-					//             	    	        		return "btn-primary btn-sm px-1 mx-1 arrived";	
-					//             	    	        	}else{
-					//             	    	        		return "d-none arrived";
-					//             	    	        	}
-					//             	    	        	
-					//             	    	        },
-					//             	    	     },
-					//	           	    	  {
-					//             	    	    	"label":"từ chối",
-					//	     	    	        	"action": function(params, args){
-					//     	    	        			var modalConfirm = function(callback){
-					//     	    	     			  
-					//     	    	        			self.$el.find("#confirm-model").modal('show');
-					//     	    	        			self.$el.find("#confirm-model #lydo_huydon").val("");
-					//
-					//     	    	        			$("#modal-btn-yes").on("click", function(){
-					//     	    	        				$(this).attr({"disabled":true});
-					//     	    	        				$(this).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Đang xử lý...')
-					//	     	    	     				  var lydo = self.$el.find("#confirm-model #lydo_huydon").val();
-					//	     	    	     				  if(lydo === null || lydo ==="" || lydo === undefined){
-					//	     	    	     					  self.getApp().notify("Vui lòng nhập lý do hủy đơn khám");
-					//	     	    	     					  return;
-					//	     	    	     				  }
-					//		     	    	     			    callback(true);
-					//		     	    	     			    $("#confirm-model").modal('hide');
-					//		     	    	     			    self.cancel_booking(params.rowData.id, params.el, lydo);
-					//		     	    	     			    return false;
-					//     	    	        			});
-					//     	    	   			  
-					//		     	    	   			$("#modal-btn-no").on("click", function(){
-					//		     	    	   			    callback(false);
-					//		     	    	   			    $("#confirm-model").modal('hide');
-					//		     	    	   			});
-					//	     	    	   			};
-					//
-					//	     	    	   			modalConfirm(function(confirm){
-					//	     	    	   			});
-					//render_grid
-					//             	    	        },
-					//	     	    	        	"class": function(e){
-					//	     	    	        		var currentUser = self.getApp().currentUser;
-					//             	    	        	if(e.rowData.trangthai ===0 && ((currentUser.hasRole('CoSoKCB') && currentUser.id_cosokcb == e.rowData.cosokcb_id) ||
-					//             	    	        			(currentUser.id == e.rowData.user_id))){
-					//             	    	        		return "btn-danger btn-sm cancel";	
-					//             	    	        	}else{
-					//             	    	        		return "d-none cancel";
-					//             	    	        	}
-					//             	    	        	
-					//             	    	        },
-					//	     	    	     }
-					//        	    	 ],
-					//        	   	 },
 				],
 				dataSource: dataSource,
 				primaryField: "id",

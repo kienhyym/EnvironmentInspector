@@ -56,24 +56,20 @@
     "tinhthanh_id": {
         "type": "string"
     },
-    "type": {
-        "type": "string"
-    },
-    "status": {
-        "type": "number",
-        "default": 0
-    },
     "quymodonvi": {
         "type": "number"
     },
     "solanthanhtra": {
-        "type": "number"
+        "type": "number",
+        "default": 0
     },
     "namchuathanhtraganday": {
-        "type": "number"
+        "type": "number",
+        "default": 0
     },
-    "tuanthuphapluat_chiso": {
-        "type": "number"
+    "chisotuanthuphapluat": {
+        "type": "string",
+        "length": 250
     },
     "xaphuong": {
         "type": "dict"

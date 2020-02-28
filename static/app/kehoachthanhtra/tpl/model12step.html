@@ -115,25 +115,25 @@
 					<div class="card-body">
 						<div class="float-right text-muted d-none"></div>
 						<div class="buoc1">
-							<h4 class="card-title">1: Ra quyết định thanh tra</h4>
+							<h4 class="card-title">1: Kế hoạch thanh tra</h4>
 
 
 
 							<h5>Quyết định thanh tra</h5>
 							<div class="row">
-								<div class="form-group col-4 required">
+								<div class="form-group col-6 required">
 									<label>Đối tượng thanh tra</label>
-									<input required type="text" data-bind="value:tendoanhnghiep" readonly
-										class="form-control">
+									<input required type="text" id="tendoanhnghiep" readonly
+										class="form-control bg-transparent">
 								</div>
-								<div class="form-group col-4 required">
+								<div class="form-group col-3 required">
 									<label>Số quyết định thanh tra</label>
-									<input  type="text" data-bind="value:so_quyetdinh_thanhtra"
-										placeholder="Nhập số quyết định" class="form-control">
+									<input type="text" data-bind="value:makehoach" placeholder="Nhập số quyết định"
+										class="form-control">
 								</div>
 								<div class="form-group col-3 required">
 									<label>Ngày quyết định</label>
-									<input required type="text" data-bind="value:ngay_quyetdinh_thanhtra"
+									<input required type="text" data-bind="value:ngaythanhtra"
 										placeholder="Ngày ra quyết định" class="form-control">
 								</div>
 							</div>
@@ -154,12 +154,6 @@
 										<span class="textDownload2 textDownloadBuoc1"
 											data-bind="text:quyetdinh_thanhtra_attachment" />
 										<a class="linkDownload2 linkDownloadBuoc1">Download</a>
-										<!--<div class="highlight d-none border" id="preview_file_gd4" style="height:130px;overflow-y: auto; background-color: aliceblue;">
-												<pre >
-												 <ul class="list_file_quyetdinh_trungcau_giamdinh_attachment">
-												</ul> 
-												</pre>
-											</div>-->
 									</div>
 
 								</div>
@@ -227,17 +221,6 @@
 											data-bind="text:quyetdinh_trungcau_giamdinh_attachment" />
 										<a class="linkDownload2 linkDownloadBuoc1">Download</a>
 									</div>
-								</div>
-							</div>
-							<hr />
-							<h5>Người giám sát</h5>
-							<div class="row">
-								<div class="form-group col-6 required">
-									<label>Người giám sát</label>
-									<select required class="selectpicker form-control" id="select_nguoigiamsat"
-										data-live-search="true" data-noneSelectedText="Chọn người giám sát"
-										title="Chọn người giám sát">
-									</select>
 								</div>
 							</div>
 							<button class="btn btn-success btn-save btn-save-gd1">Lưu</button>
@@ -745,7 +728,7 @@
 							<div class="row">
 
 								<div class="form-group col">
-									<label >Tài liệu đính kèm</label>
+									<label>Tài liệu đính kèm</label>
 									<div id="upload-ketqua_trungcau_ykien_attachment">
 										<div class="custom-file">
 											<input type="file" class="custom-file-input upload_files" id="upload_files"

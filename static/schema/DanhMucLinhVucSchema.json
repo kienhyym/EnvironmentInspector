@@ -30,5 +30,12 @@
     },
     "tenlinhvuc": {
         "type": "string"
+    },
+    "grouplinhvuc": {
+        "type": "string",
+        "length": 25
+    },
+    "kehoachthanhtra_id": {
+        "type": "string"
     }
 }

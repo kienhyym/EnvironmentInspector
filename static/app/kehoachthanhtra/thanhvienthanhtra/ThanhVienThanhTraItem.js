@@ -18,17 +18,6 @@ define(function (require) {
 	    foreignField: "kehoach_id",
 		uiControl: {
 			fields: [
-				// {
-				// 	field: "thoigian",
-				// 	textFormat: "DD/MM/YYYY",
-				// 	extraFormats: ["DDMMYYYY"],
-				// 	parseInputDate: function (val) {
-				// 		return moment.unix(val)
-				// 	},
-				// 	parseOutputDate: function (date) {
-				// 		return date.unix()
-				// 	}
-				// },
 				{
 					field: "vaitro",
 					uicontrol: "combobox",
@@ -41,6 +30,7 @@ define(function (require) {
 						{ value: "thuky", text: "Thư ký" },
 						{ value: "thanhvien", text: "Thành viên" },
 						{ value: "congtacvien", text: "Cộng tác viên" },
+						{ value: "giamsat", text: "Người giám sát" },
 					],
 				},
 			]

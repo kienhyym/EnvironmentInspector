@@ -109,7 +109,8 @@ async def pre_post_kehoachthanhtra(request=None, data=None, Model=None, **kw):
         data["username_nguoisoanthao"] = currentUser.name
         data["ngaysoanthao"] = floor(time.time())
         
-        
+
+    
         
 
 async def response_getmany_kehoachthanhtra(request=None, Model=None, result=None, **kw):
