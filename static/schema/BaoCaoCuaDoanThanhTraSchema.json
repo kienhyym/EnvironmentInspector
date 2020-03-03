@@ -26,13 +26,13 @@
         "primary": true
     },
     "vanbangiaitrinh_attachment": {
-        "type": "string"
+        "type": "json"
     },
     "ngayguibaocaogiaitrinh": {
         "type": "number"
     },
     "baocaotonghopcuadoanthanhtra_attachment": {
-        "type": "string"
+        "type": "json"
     },
     "ngayguibaocaocuadoanthanhtra": {
         "type": "number"

@@ -189,21 +189,19 @@ class KeHoachThanhTra(CommonModel):
     ketquathanhtra = db.Column(String)
     ketluanthanhtra = db.Column(String)
     ngayketthuc = db.Column(BigInteger())
-    taokehoach_attachment = db.Column(String)
-
+    taokehoach_attachment = db.Column(JSONB)
     danhsachlinhvuc_field = db.relationship('DanhMucLinhVuc', cascade="save-update")
-
-
+    
     #step1
     so_quyetdinh_thanhtra = db.Column(String)
     ngay_quyetdinh_thanhtra = db.Column(BigInteger())
-    quyetdinh_thanhtra_attachment = db.Column(String)
+    quyetdinh_thanhtra_attachment = db.Column(JSONB)
     danhsach_thanhvien = db.Column(JSONB)
     ## step1 - quyet dinh trung cau giam dinh
     donvi_trungcau_giamdinh = db.Column(String)
     so_quyetdinh_trungcau_giamdinh = db.Column(String)
     ngay_quyetdinh_trungcau_giamdinh = db.Column(BigInteger())
-    quyetdinh_trungcau_giamdinh_attachment = db.Column(String)
+    quyetdinh_trungcau_giamdinh_attachment = db.Column(JSONB)
     manguoigiamsat = db.Column(String)
     tennguoigiamsat = db.Column(String)
 
@@ -236,7 +234,7 @@ class KeHoachThanhTra(CommonModel):
     username_nguoiduyet_kehoach = db.Column(String)
     chucvu_nguoiduyet_kehoach = db.Column(String)
     
-    vanban_kehoach_attachment = db.Column(String)
+    vanban_kehoach_attachment = db.Column(JSONB)
     
     #GD3 - OK
     danhsach_congviec_thanhtra = db.Column(JSONB)
@@ -245,11 +243,11 @@ class KeHoachThanhTra(CommonModel):
     #GD4 - OK
     so_congvan_yeucau_doituong_baocao = db.Column(String)
     ngay_congvan_yeucau_doituong_baocao = db.Column(BigInteger())
-    congvan_yeucau_doituong_baocao_attachment = db.Column(String)
+    congvan_yeucau_doituong_baocao_attachment = db.Column(JSONB)
     
     so_vanban_doituong_baocao = db.Column(String)
     ngay_vanban_doituong_baocao = db.Column(BigInteger())
-    vanban_doituong_baocao_attachment = db.Column(String)
+    vanban_doituong_baocao_attachment = db.Column(JSONB)
     
     #GD5 -OK
     so_vanban_thongbao_doituong_thanhtra = db.Column(String)
@@ -259,28 +257,22 @@ class KeHoachThanhTra(CommonModel):
     #GD6 -ok
     so_vanban_congbo_quyetdinh = db.Column(String)
     ngay_vanban_congbo_quyetdinh = db.Column(BigInteger())
-    congbo_quyetdinhthanhtra_attachment = db.Column(String)
+    congbo_quyetdinhthanhtra_attachment = db.Column(JSONB)
 
     #GD7 -OK
     so_thongbao_ketthuc_thanhtra = db.Column(String)
     ngay_congvan_ketthuc_thanhtra = db.Column(BigInteger())
     codauhieu_hinhsu = db.Column(String)
-    codauhieu_hinhsu_attachment = db.Column(String)
+    codauhieu_hinhsu_attachment = db.Column(JSONB)
     
     #GD8 -OK
     danhsach_congviec_thuchien = db.Column(JSONB)
     so_ketqua_trungcau_ykien = db.Column(String)
     ngay_ketqua_trungcau_ykien = db.Column(BigInteger())
-    ketqua_trungcau_ykien_attachment = db.Column(String)
+    ketqua_trungcau_ykien_attachment = db.Column(JSONB)
     
     #GD9 - OK
-    # so_vanban_doituong_giaitrinh = db.Column(String)
-    # ngay_vanban_doituong_giaitrinh = db.Column(BigInteger())
-    # baocao_doanthanhtra_attachment = db.Column(String)
-    # ngay_baocao_doanthanhtra = db.Column(BigInteger())
     baocaocuadoanthanhtrafield = db.relationship('BaoCaoCuaDoanThanhTra', cascade="all, delete-orphan")
-
-    
     
     #GD10- OK co xu phat
     vanbanduthaofield = db.relationship('VanBanDuThao', cascade="all, delete-orphan")
@@ -292,33 +284,33 @@ class KeHoachThanhTra(CommonModel):
 
 
     so_vanban_quyetdinh = db.Column(String)
-
+    
     coquan_lapbienban_hanhchinh = db.Column(String)
     so_bienban_hanhchinh = db.Column(String)
     ngay_lapbienban_hanhchinh = db.Column(BigInteger())
-    bienban_hanhchinh_attachment = db.Column(String)
+    bienban_hanhchinh_attachment = db.Column(JSONB)
     coquan_xuphat = db.Column(String)
     sotien = db.Column(Integer)
     so_bienban_xuphat = db.Column(String)
     ngay_bienban_xuphat = db.Column(BigInteger())
-    bienban_xuphat_attachment = db.Column(String)
+    bienban_xuphat_attachment = db.Column(JSONB)
     vitriannutxuphat = db.Column(Integer)
     
     
     #GD11- OK co xu phat
     so_ketluan_thanhtra = db.Column(String)
     ngay_ketluan_thanhtra = db.Column(BigInteger())
-    ketluan_thanhtra_attachment = db.Column(String)
-    quyetdinh_xuphat_attachment = db.Column(String)
+    ketluan_thanhtra_attachment = db.Column(JSONB)
+    quyetdinh_xuphat_attachment = db.Column(JSONB)
 
     #GD12 - Cong bo ket luan thanh tra OK - html
     so_bienban_congbo_ketluan = db.Column(String)
     ngay_bienban_congbo_ketluan = db.Column(BigInteger())
-    bienban_congbo_ketluan_attachment = db.Column(String)
+    bienban_congbo_ketluan_attachment = db.Column(JSONB)
     ngay_congkhai_ketluan_tai_doituong = db.Column(BigInteger())
     ngay_congkhai_ketluan_internet = db.Column(BigInteger())
     congkhai_ketluan_link = db.Column(String)
-    congkhai_ketluan_image_attachment = db.Column(String)
+    congkhai_ketluan_image_attachment = db.Column(JSONB)
     
     
     #GD13 - ok
@@ -328,7 +320,7 @@ class KeHoachThanhTra(CommonModel):
 
     so_baocao_doituong_thuchien = db.Column(String)
     ngay_baocao_doituong_thuchien = db.Column(BigInteger())
-    baocao_doituong_thuchien_attachment = db.Column(String)
+    baocao_doituong_thuchien_attachment = db.Column(JSONB)
     
     #GD14 ok
     danhsach_hoso_bangiao_luutru = db.Column(JSONB)
@@ -385,9 +377,9 @@ class NotifyUser(CommonModel):
 class BaoCaoCuaDoanThanhTra(CommonModel):
     __tablename__ = 'baocaocuadoanthanhtra'
     id = db.Column(UUID(as_uuid=True), primary_key=True, default=default_uuid)
-    vanbangiaitrinh_attachment = db.Column(String)
+    vanbangiaitrinh_attachment = db.Column(JSONB())
     ngayguibaocaogiaitrinh = db.Column(BigInteger())
-    baocaotonghopcuadoanthanhtra_attachment = db.Column(String)
+    baocaotonghopcuadoanthanhtra_attachment = db.Column(JSONB())
     ngayguibaocaocuadoanthanhtra = db.Column(BigInteger())
     kehoachthanhtra_id = db.Column(UUID(as_uuid=True), ForeignKey('kehoachthanhtra.id'), nullable=True)
 
@@ -425,13 +417,12 @@ class VanBanDuThao(CommonModel):
     so_vanban_duthao = db.Column(String)
     ngay_duthao_vanban = db.Column(BigInteger())
     trangthai_vanban = db.Column(Integer)
-    vanban_duthao_duthao_attachment = db.Column(String)
-
+    vanban_duthao_duthao_attachment = db.Column(JSONB())
     so_congvan_giaitrinh = db.Column(String)
     ngay_gui_congvan_giaitrinh = db.Column(BigInteger())
-    congvan_giaitrinh_cua_doituong_thanhtra_attachment = db.Column(String)
+    congvan_giaitrinh_cua_doituong_thanhtra_attachment = db.Column(JSONB())
 
     so_vanban_thamkhao_ykien = db.Column(String)
     ngay_vanban_thamkhao_ykien = db.Column(BigInteger())
-    tham_khao_y_kien_attachment = db.Column(String)
+    tham_khao_y_kien_attachment = db.Column(JSONB())
     kehoachthanhtra_id = db.Column(UUID(as_uuid=True), ForeignKey('kehoachthanhtra.id'), nullable=True)

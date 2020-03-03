@@ -536,14 +536,17 @@ define(function (require) {
 		},
 		render: function () {
 			var self = this;
+
 			self.getDoanhNghiep();
 			self.bindEventSelect();
 			self.updateStepStatus();
+
 			var id = this.getApp().getRouter().getParam("id");
 			if (id) {
 				this.model.set('id', id);
 				this.model.fetch({
 					success: function (data) {
+
 						self.$el.find('#tendoanhnghiep').val(self.model.get('danhmucdoanhnghiep').name)
 						self.baoCaoCuaDoanThanhTra();
 						self.vanBanDuThao();
@@ -577,7 +580,6 @@ define(function (require) {
 						}
 						self.$el.find(".list_file").html("");
 						if (danhsachfile.length > 0) {
-
 							self.$el.find(".highlight").removeClass('d-none');
 						}
 						for (var i = 0; i < danhsachfile.length; i++) {
@@ -628,18 +630,23 @@ define(function (require) {
 						};
 
 						self.model.set("danhsach_congviec_thuchien", danhsach_congviec_thanhtra);
+						self.inputFileOnChange();
 						self.applyBindings();
 						self.LapBienBan();
 						self.ketthuc_thanhtra();
 						self.thanhtra_trolai();
 						self.updateStepStatus();
-						self.renderUpload();
+						// self.renderUpload();
 						self.GetNguoiGiamSat();
 						self.GetNguoiSoanThao();
 						self.GetNguoiXemXet();
 						self.GetNguoiPheDuyet();
 						self.checkAllSucees();
 						self.coDauHieuHinhSu();
+						self.checkHinhSuDeAnHien();
+						self.renderAttachmentBuoc8();
+						self.danhSachTaiLieu14Buoc();
+						self.renderAttachment();
 					},
 					error: function (xhr, status, error) {
 						try {
@@ -656,6 +663,8 @@ define(function (require) {
 					},
 					complete: function () {
 						self.bindEventGD1();
+
+
 					}
 				});
 			} else {
@@ -666,6 +675,70 @@ define(function (require) {
 
 
 		},
+		renderAttachmentBuoc8: function () {
+			var self = this;
+
+
+			var filters = {
+				filters: {
+					"$and": [
+						{ "id": { "$eq": window.location.hash.slice(36) } }
+					]
+				},
+				order_by: [{ "field": "created_at", "direction": "asc" }]
+			}
+			$.ajax({
+				url: self.getApp().serviceURL + "/api/v1/kehoachthanhtra?results_per_page=100000&max_results_per_page=1000000",
+				method: "GET",
+				data: "q=" + JSON.stringify(filters),
+				contentType: "application/json",
+				success: function (data) {
+					if (data.objects[0].danhsach_congviec_thanhtra.length != 0) {
+						self.$el.find('.taive-tailieu-B8').each(function (index, item) {
+							data.objects[0].danhsach_congviec_thanhtra.forEach(function (itemfield, indexfield) {
+								if ($(item).attr('data-id') == itemfield.id && itemfield.tailieu != null) {
+									$(self.$el.find('.custom-file-congviec')[index]).hide();
+									// $(item).append(`
+									// 	<label class = 'mt-2'>Danh sách tài liệu</label><br>
+									// `)
+									itemfield.tailieu.forEach(function (itemtailieu, indextailieu) {
+										$(item).append(`
+										<div  class = "row ">
+										<label class = "col-md-9" >&nbsp;&nbsp;&nbsp;&nbsp;${itemtailieu.slice(16)}</label>
+										<div  class = "col-md-3">
+										<a href="${itemtailieu}"> Tải về </a>
+										</div>
+										</div>
+									`)
+									})
+								}
+							});
+						})
+					}
+					else {
+					}
+
+				},
+				error: function (xhr, status, error) {
+					self.getApp().notify({ message: "Không lấy được dữ liệu" }, { type: "danger", delay: 1000 });
+				},
+			});
+		},
+		checkHinhSuDeAnHien: function () {
+			var self = this;
+			self.model.on('change:codauhieu_hinhsu', function () {
+				if (self.model.get('codauhieu_hinhsu') == "co") {
+					self.$el.find('.showbienbanhinhsu').show();
+				}
+				else {
+					self.$el.find('.showbienbanhinhsu').hide();
+				}
+			})
+			if (self.model.get('codauhieu_hinhsu') == "co") {
+				self.$el.find('.showbienbanhinhsu').show();
+			}
+		},
+
 		checkAllSucees: function () {
 			var self = this;
 			var dem = 0;
@@ -814,286 +887,30 @@ define(function (require) {
 			var maNguoiPheDuyet = self.model.get("manguoipheduyet");
 			self.$el.find("#select_nguoipheduyet").selectpicker('val', maNguoiPheDuyet);
 		},
-		// END New  Get người phê duyêt
 
-
-
-
-		// New Get người được phân công 
-		// getNguoiDuocPhanCong: function () {
-		// 	var self = this;
-
-		// 	var dsThanhVienThanhTra = self.model.get("danhsach_thanhvien");
-
-		// 	var dsCongViecThanhTra = self.model.get("danhsach_congviec_thanhtra");
-		// 	if(!dsCongViecThanhTra){
-		// 		dsCongViecThanhTra = [];
-		// 	}
-
-		// 	console.log(dsThanhVienThanhTra);
-
-		// 	for (var i = 0; i < dsCongViecThanhTra.length; i++) {
-		// 		var congViecView = new CongViecThanhTraItemView({
-		// 			viewData: {
-		// 				danhsachthanhvien: dsThanhVienThanhTra
-		// 			}
-		// 		});
-		// 		congViecView.render();
-		// 		self.$el.find("#danhsachphancongviec_grid").append(congViecView.$el);
-		// 	}
-
-		// 	// for (var i = 0; i < dsThanhVienThanhTra.length; i++) {
-		// 	// 	var item = dsThanhVienThanhTra[i];
-		// 	// 	var data_str = encodeURIComponent(JSON.stringify(item));
-		// 	// 	var option_elm = $('<option>').attr({ 'value': item.id, 'data-ck': data_str }).html(item.hoten)
-		// 	// 	var select_NguoiDuocPhanCong = congViecView.$el.find(".select_nguoiduocphancong")
-		// 	// 	select_NguoiDuocPhanCong.append(option_elm);
-		// 	// }
-
-		// 	// var maNguoiDuocPhanCong = congViecView.model.get("id");
-		// 	// congViecView.$el.find(".select_nguoiduocphancong").selectpicker('val', maNguoiDuocPhanCong);
-		// },
-		// // END New  Get người được phân công 
-
-
-
-
-
-		renderUpload() {
-			var self = this;
-			var keys = [
-				"quyetdinh_thanhtra_attachment",
-				"quyetdinh_trungcau_giamdinh_attachment",
-				"vanban_kehoach_attachment",
-				"congvan_yeucau_doituong_baocao_attachment",
-				"vanban_doituong_baocao_attachment",
-				"congbo_quyetdinhthanhtra_attachment",
-				"codauhieu_hinhsu_attachment",
-				"ketqua_trungcau_ykien_attachment",
-				"bienban_hanhchinh_attachment",
-				"quyetdinh_xuphat_attachment",
-				"ketluan_thanhtra_attachment",
-				"bienban_hanhchinh_attachment",
-				"quyetdinh_xuphat_attachment",
-				"bienban_congbo_ketluan_attachment",
-				"congkhai_ketluan_image_attachment",
-				"bienban_hanhchinh_attachment",
-				"quyetdinh_xuphat_attachment",
-				"baocao_doituong_thuchien_attachment",
-			];
-			$.each(keys, function (i, key) {
-				var attr_value = self.model.get(key);
-				var linkDownload = self.$el.find(".linkDownload2");
-
-				if (!!attr_value) {
-					linkDownload[i].href = attr_value;
-					self.$el.find("#upload-" + key).hide();
-					self.$el.find("#download-" + key).show();
-
-				} else {
-					self.$el.find("#upload-" + key).show();
-					self.$el.find("#download-" + key).hide();
-				}
-
-			})
-			self.$el.find(".textDownload2").each(function(index,item){
-				item.textContent = item.textContent.slice(16)
-			})
-			self.danhSachTaiLieu();
-			
-			var linkDownloadTinhHinhThanhTra = self.$el.find(".linkDownloadTinhHinhThanhTra");
-			var textDownloadTinhHinhThanhTra = self.$el.find(".textDownloadTinhHinhThanhTra");
-
-			var danhsachhoso_bangiao_buoc8 = self.$el.find(".danhsachhoso_bangiao_buoc8_2");
-			var danhsachhoso_buoc8 = [];
-
-			for (var i = 0; i < textDownloadTinhHinhThanhTra.length; i++) {
-
-				if (textDownloadTinhHinhThanhTra[i].textContent === '') {
-					textDownloadTinhHinhThanhTra[i].style.display = "none";
-				}
-				else {
-					var obj4 = {
-						text: textDownloadTinhHinhThanhTra[i].textContent,
-						link: textDownloadTinhHinhThanhTra[i].textContent
-					};
-
-
-					danhsachhoso_buoc8.push(obj4)
-				}
-
-			}
-			for (var i = 0; i < danhsachhoso_buoc8.length; i++) {
-
-				danhsachhoso_bangiao_buoc8.before("<tr><td class='stt text-center'>" + i + "</td><td>" + danhsachhoso_buoc8[i].text.slice(16) + "</span></td><td class='text-center'><a href='" + danhsachhoso_buoc8[i].link + "'>download</a></td></tr>")
-			}
-
-
-
-
-			var linkDownloadBaocaoCuaThanhTra = self.$el.find(".linkDownloadBaocaoCuaThanhTra");
-			var textDownloadBaocaoCuaThanhTra = self.$el.find(".textDownloadBaocaoCuaThanhTra");
-
-			var danhsachhoso_bangiao_buoc9 = self.$el.find(".danhsachhoso_bangiao_buoc9");
-			var danhsachhoso_buoc9 = [];
-
-			for (var i = 0; i < linkDownloadBaocaoCuaThanhTra.length; i++) {
-				if (linkDownloadBaocaoCuaThanhTra[i].href === '') {
-					linkDownloadBaocaoCuaThanhTra[i].style.display = "none";
-				}
-				else {
-					var obj3 = {
-						text: textDownloadBaocaoCuaThanhTra[i].textContent,
-						link: textDownloadBaocaoCuaThanhTra[i].textContent
-					};
-
-
-					danhsachhoso_buoc9.push(obj3)
-				}
-
-			}
-			for (var i = 0; i < danhsachhoso_buoc9.length; i++) {
-				danhsachhoso_bangiao_buoc9.before("<tr><td class='stt text-center'>" + i + "</td><td>" + danhsachhoso_buoc9[i].text.slice(16) + "</span></td><td class='text-center'><a href='" + danhsachhoso_buoc9[i].link + "'>download</a></td></tr>")
-			}
-
-
-
-
-			var linkDownloadVanBanDuThao = self.$el.find(".linkDownloadVanBanDuThao");
-			var textDownloadVanBanDuThao = self.$el.find(".textDownloadVanBanDuThao");
-
-			var hoso2 = self.$el.find(".danhsachhoso_bangiao_buoc10_2");
-			var arr2 = [];
-
-			for (var i = 0; i < linkDownloadVanBanDuThao.length; i++) {
-				if (linkDownloadVanBanDuThao[i].href === '') {
-					linkDownloadVanBanDuThao[i].style.display = "none";
-				}
-				else {
-					var obj2 = {
-						text: textDownloadVanBanDuThao[i].textContent,
-						link: textDownloadVanBanDuThao[i].textContent
-					};
-
-
-					arr2.push(obj2)
-				}
-
-			}
-			for (var i = 0; i < arr2.length; i++) {
-				hoso2.before("<tr><td class='stt text-center'>" + i + "</td><td>" + arr2[i].text.slice(16) + "</span></td><td class='text-center'><a href='" + arr2[i].link + "'>download</a></td></tr>")
-			}
-			var x = self.$el.find("tr .stt")
-			x.each(function(item,index){
-			index.textContent = item+1
-			})
-			// var linkDownload = self.$el.find(".linkDownload2");
-			// var textDownload = self.$el.find(".textDownload2");
-			// var link = self.$el.find(".linkdownload_and_button");
-			// var hoso = self.$el.find(".danhsachhoso_bangiao");
-			// var arr = [];
-
-			// for (var i = 0; i < linkDownload.length; i++) {
-			// 	if (linkDownload[i].href === '') {
-			// 		linkDownload[i].style.display = "none";
-			// 	}
-			// 	else {
-			// 		var obj = {
-			// 			text: textDownload[i].textContent,
-			// 			link: linkDownload[i].href
-			// 		};
-
-
-			// 		arr.push(obj)
-			// 	}
-
-			// }
-
-			// let ans = deduplicate(arr);
-
-			// function deduplicate(arr) {
-			// 	let isExist = (arr, x) => {
-
-			// 		for (let i = 0; i < arr.length; i++) {
-			// 			if (arr[i].text === x.text) return true;
-			// 		}
-			// 		return false;
-			// 	}
-
-			// 	let ans = [];
-			// 	arr.forEach(element => {
-			// 		if (!isExist(ans, element)) ans.push(element);
-			// 	});
-			// 	return ans;
-			// }
-
-			// for (var i = 0; i < ans.length; i++) {
-			// 	hoso.before("<tr><td>" + i + "</td><td>" + ans[i].text.slice(16) + "</span></td><td><a href='" + ans[i].link + "'>download</a></td></tr>")
-			// }
-		},
 
 		LapBienBan: function () {
 			var self = this;
-			var lapBienBanXuPhat = self.$el.find(".lap_bien_ban_xuphat")
-			var quyetDinhXuPhat = self.$el.find(".QuyetDinhXuPhat")
 
-			lapBienBanXuPhat[0].onclick = clickk;
-			function clickk() {
-				self.model.set("vitriannutxuphat", 0)
-				self.saveModel();
-
-
-			}
-			lapBienBanXuPhat[1].onclick = clickk2;
-			function clickk2() {
-				self.model.set("vitriannutxuphat", 1)
-				self.saveModel();
-			}
-
-			lapBienBanXuPhat[2].onclick = clickk3;
-			function clickk3() {
-				self.model.set("vitriannutxuphat", 2)
-				self.saveModel();
-			}
-
-			function hidexuphat() {
-				lapBienBanXuPhat.each(function (key, value) {
-					lapBienBanXuPhat.attr("style", "display:none");
+			self.$el.find(".lap_bien_ban_xuphat").each(function (index, item) {
+				$(item).unbind('click').bind('click', function (param) {
+					self.model.set("vitriannutxuphat", index)
+					$(self.$el.find(".QuyetDinhXuPhat")[index]).toggle();
+				})
+			})
+			if (self.model.get('vitriannutxuphat') != null) {
+				self.$el.find(".lap_bien_ban_xuphat").each(function (index, item) {
+					$(item).hide();
+				})
+				self.$el.find(".QuyetDinhXuPhat").each(function (index, item) {
+					if (index != self.model.get('vitriannutxuphat')) {
+						$(item).remove();
+					} else {
+						$(item).show();
+					}
 				})
 			}
-			function hidemucxuphat(x) {
-				for (var i = 0; i < quyetDinhXuPhat.length; i++) {
-					if (i != x) {
-						quyetDinhXuPhat[i].style.display = 'none';
-					}
-				}
-			}
-
-			var x = self.model.get("vitriannutxuphat");
-			if (x == 0) {
-				hidexuphat();
-				hidemucxuphat(x);
-
-			}
-			if (x == 1) {
-				;
-				hidexuphat();
-				hidemucxuphat(x);
-			}
-			if (x == 2) {
-				hidexuphat();
-				hidemucxuphat(x);
-			}
 		},
-
-
-
-
-		// ######   ####     ##  ####### 
-		// ##       ## ###   ##  ##   ###  
-		// ######   ##   ######  ##    ###
-		// ##       ##     ####  ##   ##
-		// ######   ##       ##  #####
 		ketthuc_thanhtra: function () {
 			var self = this;
 			var btnSave = self.$el.find(".btn-save")
@@ -1136,9 +953,6 @@ define(function (require) {
 					btnNoKetThuc.unbind('click').bind('click', function () {
 						thongbaoketthuc.hide();
 						self.$el.find(".content_14step").css("opacity", "1");
-						// self.getApp().router.refresh();
-						// Backbone.history.history.back();
-						// self.getApp().getRouter().navigate(location.href)
 
 					})
 				}
@@ -1153,8 +967,6 @@ define(function (require) {
 			var ketThucThanhTraTrangThai = self.model.get("trangthai");
 
 			if (ketThucThanhTraTrangThai === "end_checked" || ketThucThanhTraTrangThai === "completed") {
-				// self.$el.find(".buoc9").css("pointer-events", "none")
-				// self.$el.find(".buoc10").css("pointer-events", "none")
 				self.$el.find(".btn_ketthuchoanthanh").hide();
 				self.$el.find(".btn-them").hide();
 				btnSave.each(function () {
@@ -1245,13 +1057,11 @@ define(function (require) {
 
 				self.$el.find(".btn-end-exit").click();
 			}
-
-
 		},
 
 
 
-		bindEventGD1: function () {
+		bindEventGD1: function (files) {
 			var self = this;
 			self.$el.find(".btn-add-member").unbind('click').bind('click', function () {
 
@@ -1298,7 +1108,15 @@ define(function (require) {
 				// 	self.getApp().notify("Vui lòng nhập danh sách đoàn thanh tra");
 				// 	return;
 				// }
-				self.saveModel();
+				if (files != undefined) {
+					files.forEach(function (item, index) {
+						self.saveAttachment(item.arrAttachment, item.data_attr);
+					})
+				}
+				else {
+					self.saveModel();
+				}
+
 			});
 
 
@@ -1314,7 +1132,15 @@ define(function (require) {
 					self.getApp().notify("Vui lòng nhập ngày lên kế hoạch thanh tra");
 					return;
 				}
-				self.saveModel();
+				if (files != undefined) {
+					files.forEach(function (item, index) {
+						self.saveAttachment(item.arrAttachment, item.data_attr);
+					})
+				}
+				else {
+					self.saveModel();
+				}
+
 			});
 
 
@@ -1324,7 +1150,14 @@ define(function (require) {
 					self.getApp().notify("Vui lòng nhập danh sách công việc");
 					return;
 				}
-				self.saveModel();
+				if (files != undefined) {
+					files.forEach(function (item, index) {
+						self.saveAttachment(item.arrAttachment, item.data_attr);
+					})
+				}
+				else {
+					self.saveModel();
+				}
 			});
 
 			self.$el.find(".btn-save-gd4").unbind('click').bind('click', function () {
@@ -1339,7 +1172,14 @@ define(function (require) {
 				//    				self.getApp().notify("Vui lòng nhập ngày lên kế hoạch thanh tra");
 				//    				return;
 				//    			}
-				self.saveModel();
+				if (files != undefined) {
+					files.forEach(function (item, index) {
+						self.saveAttachment(item.arrAttachment, item.data_attr);
+					})
+				}
+				else {
+					self.saveModel();
+				}
 			});
 
 
@@ -1356,14 +1196,28 @@ define(function (require) {
 					self.getApp().notify("Vui lòng nhập ngày thông báo");
 					return;
 				}
-				self.saveModel();
+				if (files != undefined) {
+					files.forEach(function (item, index) {
+						self.saveAttachment(item.arrAttachment, item.data_attr);
+					})
+				}
+				else {
+					self.saveModel();
+				}
 			});
 
 
 			//6
 			self.$el.find(".btn-save-gd6").unbind('click').bind('click', function () {
 
-				self.saveModel();
+				if (files != undefined) {
+					files.forEach(function (item, index) {
+						self.saveAttachment(item.arrAttachment, item.data_attr);
+					})
+				}
+				else {
+					self.saveModel();
+				}
 			});
 
 			//7
@@ -1379,11 +1233,19 @@ define(function (require) {
 				//    				self.getApp().notify("Vui lòng nhập ngày lên kế hoạch thanh tra");
 				//    				return;
 				//    			}
-				self.saveModel();
+				if (files != undefined) {
+					files.forEach(function (item, index) {
+						self.saveAttachment(item.arrAttachment, item.data_attr);
+					})
+				}
+				else {
+					self.saveModel();
+				}
 			});
 
 			//8
 			self.$el.find(".btn-save-gd8").unbind('click').bind('click', function () {
+
 				//    			var sokehoach = self.model.get("sokehoach");
 				//    			if(sokehoach === null || sokehoach===""){
 				//    				self.getApp().notify("Vui lòng nhập số kế hoạch thanh tra");
@@ -1395,7 +1257,14 @@ define(function (require) {
 				//    				self.getApp().notify("Vui lòng nhập ngày lên kế hoạch thanh tra");
 				//    				return;
 				//    			}
-				self.saveModel();
+				if (files != undefined) {
+					files.forEach(function (item, index) {
+						self.saveAttachment(item.arrAttachment, item.data_attr);
+					})
+				}
+				else {
+					self.saveModel();
+				}
 			});
 
 
@@ -1412,7 +1281,14 @@ define(function (require) {
 				//    				self.getApp().notify("Vui lòng nhập ngày lên kế hoạch thanh tra");
 				//    				return;
 				//    			}
-				self.saveModel();
+				if (files != undefined) {
+					files.forEach(function (item, index) {
+						self.saveAttachment(item.arrAttachment, item.data_attr);
+					})
+				}
+				else {
+					self.saveModel();
+				}
 			});
 
 
@@ -1429,7 +1305,14 @@ define(function (require) {
 				//    				self.getApp().notify("Vui lòng nhập ngày lên kế hoạch thanh tra");
 				//    				return;
 				//    			}
-				self.saveModel();
+				if (files != undefined) {
+					files.forEach(function (item, index) {
+						self.saveAttachment(item.arrAttachment, item.data_attr);
+					})
+				}
+				else {
+					self.saveModel();
+				}
 			});
 
 			//11
@@ -1445,7 +1328,14 @@ define(function (require) {
 				//    				self.getApp().notify("Vui lòng nhập ngày lên kế hoạch thanh tra");
 				//    				return;
 				//    			}
-				self.saveModel();
+				if (files != undefined) {
+					files.forEach(function (item, index) {
+						self.saveAttachment(item.arrAttachment, item.data_attr);
+					})
+				}
+				else {
+					self.saveModel();
+				}
 			});
 
 
@@ -1462,7 +1352,14 @@ define(function (require) {
 				//    				self.getApp().notify("Vui lòng nhập ngày lên kế hoạch thanh tra");
 				//    				return;
 				//    			}
-				self.saveModel();
+				if (files != undefined) {
+					files.forEach(function (item, index) {
+						self.saveAttachment(item.arrAttachment, item.data_attr);
+					})
+				}
+				else {
+					self.saveModel();
+				}
 			});
 			//13
 			self.$el.find(".btn-save-gd13").unbind('click').bind('click', function () {
@@ -1477,7 +1374,14 @@ define(function (require) {
 				//    				self.getApp().notify("Vui lòng nhập ngày lên kế hoạch thanh tra");
 				//    				return;
 				//    			}
-				self.saveModel();
+				if (files != undefined) {
+					files.forEach(function (item, index) {
+						self.saveAttachment(item.arrAttachment, item.data_attr);
+					})
+				}
+				else {
+					self.saveModel();
+				}
 			});
 			//14
 			// self.$el.find(".btn-save-gd14").unbind('click').bind('click', function () {
@@ -1495,9 +1399,108 @@ define(function (require) {
 			// 	self.saveModel();
 			// });
 		},
-		saveModel: function () {
+		renderAttachment: function () {
 			var self = this;
+			self.$el.find('.link-taive-view div').each(function (indexhtml, itemhtml) {
 
+				if (self.model.get($(itemhtml).attr('data-field')) != null) {
+
+					$(self.$el.find('.custom-file-view')[indexhtml]).hide();
+					// $(itemhtml).append(`
+					// 	<label class = 'mt-2'>Danh sách tài liệu</label><br>
+					// `)
+					self.model.get($(itemhtml).attr('data-field')).forEach(function (itemfield, indexfield) {
+						self.$el.find(".taive-" + $(itemhtml).attr('data-field')).append(`
+						<label>&nbsp;&nbsp;&nbsp;&nbsp;${itemfield.slice(16)}</label><a href="${itemfield}"> Tải về </a><br>
+						`)
+					})
+				}
+			})
+		},
+
+		inputFileOnChange: function () {
+			var self = this;
+			var arrInputFile = [];
+			self.$el.find(".upload_files").change(function () {
+
+				const promise = new Promise((resolve, reject) => {
+					var arrAttachment = [];
+
+					var data_attr = $(this).attr("data-attr");
+					self.$el.find(".tenfile-" + data_attr).append(`
+						<label class = 'mt-2'>Danh sách tài liệu</label><br>
+					`)
+					self.$el.find(".tenfile-" + data_attr).find('label,br').remove()
+					for (var i = 0; i < $(this).get(0).files.length; ++i) {
+						self.$el.find(".tenfile-" + data_attr).append(`
+						<label>&nbsp;&nbsp;&nbsp;&nbsp;${$(this).get(0).files[i].name}</label><br>
+					`)
+						arrAttachment.push($(this).get(0).files[i]);
+					}
+					self.$el.find('.label_list_files-' + data_attr).text("Bạn vừa chọn " + arrAttachment.length + " tài liệu")
+					arrInputFile.push({ arrAttachment, data_attr })
+					return resolve(arrInputFile)
+				})
+				promise.then((arr) => {
+					self.bindEventGD1(arr)
+				});
+			});
+		},
+
+		saveAttachment: function (arrAttachment, data_attr) {
+			var self = this;
+			var arrLinkAttachment = [];
+			arrAttachment.forEach(function (item, index) {
+				var http = new XMLHttpRequest();
+				var fd = new FormData();
+				fd.append('file', item);
+				http.open('POST', '/api/v1/upload/file');
+				http.upload.addEventListener('progress', function (evt) {
+					if (evt.lengthComputable) {
+						var percent = evt.loaded / evt.total;
+						percent = parseInt(percent * 100);
+					}
+				}, false);
+				http.addEventListener('error', function () {
+				}, false);
+				http.onreadystatechange = function () {
+					if (http.status === 200) {
+						if (http.readyState === 4) {
+							var data_file = JSON.parse(http.responseText), link, p, t;
+							arrLinkAttachment.push(String(data_file.link))
+							if (arrAttachment.length == index + 1) {
+								self.model.set(data_attr, arrLinkAttachment)
+								self.model.save(null, {
+									success: function (model, response, options) {
+										self.getApp().router.refresh();
+									},
+									error: function (xhr, status, error) {
+										try {
+											if (($.parseJSON(error.xhr.responseText).error_code) === "SESSION_EXPIRED") {
+												self.getApp().notify("Hết phiên làm việc, vui lòng đăng nhập lại!");
+												self.getApp().getRouter().navigate("login");
+											} else {
+												self.getApp().notify({ message: $.parseJSON(error.xhr.responseText).error_message }, { type: "danger", delay: 1000 });
+											}
+										}
+										catch (err) {
+											self.getApp().notify({ message: "Lưu thông tin không thành công" }, { type: "danger", delay: 1000 });
+										}
+									}
+								});
+
+							}
+						}
+					} else {
+						self.getApp().notify("Không thể tải tệp tin lên máy chủ");
+					}
+				};
+				http.send(fd);
+			})
+
+		},
+		saveModel: function (files) {
+			var self = this;
 			var kiemTraKetThucThanhTra = self.model.get("trangthai");
 			if (kiemTraKetThucThanhTra != "end_checked") {
 				self.model.save(null, {
@@ -1650,7 +1653,6 @@ define(function (require) {
 
 			if (status) {
 
-				// console.log(status)
 				self.$el.find(".gd" + step + " .card").addClass("border-" + status + " shadow");
 				self.$el.find(".gd" + step + " .card-title").addClass("text-" + status);
 				self.$el.find(".gd" + step + " .badge-pill").removeClass("bg-light border");
@@ -1743,7 +1745,6 @@ define(function (require) {
 			var danger_html = "";
 
 			if (!!ngayquyetdinh && !!ngay_vanban_congbo_quyetdinh) {
-				console.log(ngay_vanban_congbo_quyetdinh - ngayquyetdinh,5 * 24 * 60 * 60)
 				if ((ngay_vanban_congbo_quyetdinh - ngayquyetdinh) < 5 * 24 * 60 * 60) {
 
 					danger_html = danger_html + "Công bố quyết định thanh tra quá sớm";
@@ -1758,16 +1759,18 @@ define(function (require) {
 			}
 			if (danger) {
 				self.$el.find(".gd6 .danger-reason").html(danger_html);
+				if (self.model.get("so_vanban_congbo_quyetdinh") !== null
+					&& self.model.get("ngay_vanban_congbo_quyetdinh") !== null) {
+					self.$el.find(".buoc7").removeClass("buoc7");
+				}
 				return "danger";
 			}
 
-			if (self.model.get("sovanban_congbo_quyetdinh") !== null
+			if (self.model.get("so_vanban_congbo_quyetdinh") !== null
 				&& self.model.get("ngay_vanban_congbo_quyetdinh") !== null) {
 				self.$el.find(".buoc7").removeClass("buoc7");
-
 				return "success"
 			}
-
 			return "light";
 		},
 		check_gd7_sucees: function () {
@@ -1783,38 +1786,27 @@ define(function (require) {
 		check_gd8_sucees: function () {
 			var self = this;
 			var dem = 0;
-			var ngay_vanban_congbo_quyetdinh = self.model.get("ngay_vanban_congbo_quyetdinh");
-			var ngay_vanban_doituong_giaitrinh = self.model.get("ngay_vanban_doituong_giaitrinh");
-			if (self.model.get("danhsach_congviec_thanhtra") != null) {
-				self.model.get("danhsach_congviec_thanhtra").forEach(function (item, index) {
-					if (item.thoigianhoanthanh != null) {
+			if (self.model.get('danhsach_congviec_thuchien') != null) {
+				self.model.get('danhsach_congviec_thuchien').forEach(function (item, index) {
+					if (self.model.get('ngay_ketqua_trungcau_ykien') < moment(item.thoigianhoanthanh).format("X")) {
 						dem++;
+
 					}
 				})
-			}
-			// if (self.model.get("danhsach_congviec_thanhtra") !== null
-			// 	&& self.model.get("danhsach_congviec_thanhtra") !== null
-			// 	&& self.model.get("danhsach_congviec_thanhtra").length > 0) {
-			// 		self.$el.find(".buoc9").removeClass("buoc9");
-
-			// 	return "success"
-			// }
-			if (dem != 0) {
-				self.$el.find(".buoc9").removeClass("buoc9");
-
-				return "success"
-			}
-			if (!!ngay_vanban_congbo_quyetdinh) {
-				var checkngay = moment().unix();
-				if (!!ngay_vanban_doituong_giaitrinh) {
-					checkngay = ngay_vanban_doituong_giaitrinh;
-				}
-
-				if ((checkngay - ngay_vanban_congbo_quyetdinh) > 45 * 24 * 60 * 60) {
-					self.$el.find(".gd8 .danger-reason").html("Quá 45 ngày kể từ ngày gửi quyết định thanh tra");
+				if (dem > 0) {
+					self.$el.find(".gd8 .danger-reason").html("Ngày hoàn thành không được trước ngày nhận kết quả trưng cầu");
 					return "danger"
+				} else {
+					self.$el.find(".buoc9").removeClass("buoc9");
+					return "success"
 				}
 			}
+			// 	if ((checkngay - ngay_vanban_congbo_quyetdinh) > 45 * 24 * 60 * 60) {
+			// 		self.$el.find(".gd8 .danger-reason").html("Quá 45 ngày kể từ ngày gửi quyết định thanh tra");
+			// 		return "danger"
+			// 	}
+			// }
+
 			return "light";
 		},
 		check_gd9_sucees: function () {
@@ -1976,40 +1968,40 @@ define(function (require) {
 			});
 
 
-			self.$el.find(".upload_files").on("change", function () {
-				var http = new XMLHttpRequest();
-				var fd = new FormData();
+			// self.$el.find(".upload_files").on("change", function () {
+			// 	var http = new XMLHttpRequest();
+			// 	var fd = new FormData();
 
-				var data_attr = $(this).attr("data-attr");
-				fd.append('file', this.files[0]);
+			// 	var data_attr = $(this).attr("data-attr");
+			// 	fd.append('file', this.files[0]);
 
-				http.open('POST', '/api/v1/upload/file');
+			// 	http.open('POST', '/api/v1/upload/file');
 
-				http.upload.addEventListener('progress', function (evt) {
-					if (evt.lengthComputable) {
-						var percent = evt.loaded / evt.total;
-						percent = parseInt(percent * 100);
+			// 	http.upload.addEventListener('progress', function (evt) {
+			// 		if (evt.lengthComputable) {
+			// 			var percent = evt.loaded / evt.total;
+			// 			percent = parseInt(percent * 100);
 
-					}
-				}, false);
-				http.addEventListener('error', function () {
-				}, false);
+			// 		}
+			// 	}, false);
+			// 	http.addEventListener('error', function () {
+			// 	}, false);
 
-				http.onreadystatechange = function () {
-					if (http.status === 200) {
-						if (http.readyState === 4) {
-							var data_file = JSON.parse(http.responseText), link, p, t;
+			// 	http.onreadystatechange = function () {
+			// 		if (http.status === 200) {
+			// 			if (http.readyState === 4) {
+			// 				var data_file = JSON.parse(http.responseText), link, p, t;
 
-							self.getApp().notify("Tải file thành công");
-							self.model.set(data_attr, data_file.link);
-							self.saveModel();
-						}
-					} else {
-						self.getApp().notify("Không thể tải tệp tin lên máy chủ");
-					}
-				};
-				http.send(fd);
-			});
+			// 				self.getApp().notify("Tải file thành công");
+			// 				self.model.set(data_attr, data_file.link);
+			// 				self.saveModel();
+			// 			}
+			// 		} else {
+			// 			self.getApp().notify("Không thể tải tệp tin lên máy chủ");
+			// 		}
+			// 	};
+			// 	http.send(fd);
+			// });
 
 			self.$el.find('#select_nguoigiamsat').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
 				var data_ck = self.$el.find('#select_nguoigiamsat option:selected').attr('data-ck');
@@ -2248,10 +2240,9 @@ define(function (require) {
 
 				});
 			});
+
 			self.$el.find("#btn_add_baocaocuadoanthanhtrafield").on("click", (eventClick) => {
 				var view = new BaoCaoCuaDoanThanhTraItemView();
-
-
 				view.model.save(null, {
 					success: function (model, respose, options) {
 						view.model.set(respose);
@@ -2386,77 +2377,171 @@ define(function (require) {
 				});
 			});
 		},
-		danhSachTaiLieu: function () {
+		danhSachTaiLieu14Buoc: function () {
 			var self = this;
-		
-			
-		
-
-			var x = self.model.get("vitriannutxuphat");
-			if (x == 0) {
-				self.$el.find(".text11").removeClass("textDownloadBuoc11");
-				self.$el.find(".text12").removeClass("textDownloadBuoc12");
-
-				
-				self.$el.find(".link11").removeClass("linkDownloadBuoc11");
-				self.$el.find(".link12").removeClass("linkDownloadBuoc12");
-
-
-			}
-			if (x == 1) {
-				self.$el.find(".text10").removeClass("textDownloadBuoc10");
-				self.$el.find(".text12").removeClass("textDownloadBuoc12");
-
-				
-				self.$el.find(".link10").removeClass("linkDownloadBuoc10");
-				self.$el.find(".link12").removeClass("linkDownloadBuoc12");
-
-			}
-			if (x == 2) {
-				self.$el.find(".text11").removeClass("textDownloadBuoc11");
-				self.$el.find(".text10").removeClass("textDownloadBuoc10");
-
-				
-				self.$el.find(".link11").removeClass("linkDownloadBuoc11");
-				self.$el.find(".link10").removeClass("linkDownloadBuoc10");
-
-			}
-			
-			for (var i = 1; i < 14; i++) {
-				var linkDownloadBuoc1 = self.$el.find(".linkDownloadBuoc" + i);
-				var textDownloadBuoc1 = self.$el.find(".textDownloadBuoc" + i);
-
-				var hoso = self.$el.find(".danhsachhoso_bangiao_buoc" + i);
-				var arr = [];
-
-				for (var j = 0; j < linkDownloadBuoc1.length; j++) {
-					if (linkDownloadBuoc1[j].href === '') {
-						linkDownloadBuoc1[j].style.display = "none";
-					}
-					else {
-						var obj = {
-							text: textDownloadBuoc1[j].textContent,
-							link: textDownloadBuoc1[j].textContent
-						};
-
-
-						arr.push(obj)
-					}
-
+			self.danhSachTaiLieuBuoc8();
+			self.danhSachTaiLieuBuoc9();
+			self.danhSachTaiLieuBuoc10();
+			var attachmentBuoc = [
+				"attachmentBuoc1",
+				"attachmentBuoc2",
+				"attachmentBuoc3",
+				"attachmentBuoc4",
+				"attachmentBuoc5",
+				"attachmentBuoc6",
+				"attachmentBuoc7",
+				"attachmentBuoc8",
+				"attachmentBuoc9",
+				"attachmentBuoc10",
+				"attachmentBuoc11",
+				"attachmentBuoc12",
+				"attachmentBuoc13"
+			]
+			attachmentBuoc.forEach(function (item, index) {
+				if (self.$el.find('.' + item).attr('data-attr') != undefined) {
+					var tenClass = item;
+					var arrClass = self.$el.find("." + tenClass)
+					arrClass.each(function (indexAttr, itemAttr) {
+						var element = $(itemAttr).attr('data-attr');
+						if (self.model.get(element) != null) {
+							self.$el.find('.danhsachhoso_bangiao_buoc' + (index + 1)).append(`
+										<tr>
+											<td colspan = "3">${$(itemAttr).attr('aria-label')}</td>
+										</tr>
+										`)
+							self.model.get(element).forEach(function (itemAttachment, indexAttachment) {
+								self.$el.find('.danhsachhoso_bangiao_buoc' + (index + 1)).append(`
+										<tr>
+											<td>${indexAttachment}</td>
+											<td>${itemAttachment.slice(16)}</td>
+											<td><a href="${itemAttachment}">Tải về</a></td>
+										</tr>
+										`)
+							})
+						}
+					})
 				}
-				for (var q = 0; q < arr.length; q++) {
-					hoso.before("<tr><td class='stt text-center'>" + q + "</td><td>" + arr[q].text + "</span></td><td class='text-center'><a href='/static/uploads/" + arr[q].text + "'>download</a></td></tr>")
+			})
+		},
+		danhSachTaiLieuBuoc8: function () {
+			var self = this;
+			self.model.get('danhsach_congviec_thanhtra').forEach(function (item) {
+				if (item.tailieu != null) {
+					self.$el.find('.danhsachhoso_bangiao_buoc8').append(`
+										<tr>
+											<td colspan = "3">Công viêc:${item.hangmuccongviec}</td>
+										</tr>
+										`)
+					item.tailieu.forEach(function (itemTaiLieu, indexTaiLieu) {
+						self.$el.find('.danhsachhoso_bangiao_buoc8').append(`
+										<tr>
+											<td>${indexTaiLieu}</td>
+											<td>${itemTaiLieu.slice(16)}</td>
+											<td><a href="${itemTaiLieu}">Tải về</a></td>
+										</tr>
+										`)
+					})
 				}
-				
+			})
+		},
+		danhSachTaiLieuBuoc9: function () {
+			var self = this;
+			var baocao = lodash.orderBy(self.model.get('baocaocuadoanthanhtrafield'), ['created_at'], ['desc']);
+			var baocaocuoicung = baocao.slice(0, 1);
 
+			console.log(baocaocuoicung[0].vanbangiaitrinh_attachment)
+			console.log(baocaocuoicung[0].baocaotonghopcuadoanthanhtra_attachment)
 
-			
-
-
+			if (baocaocuoicung[0].vanbangiaitrinh_attachment != null) {
+				self.$el.find('.danhsachhoso_bangiao_buoc9').append(`
+								<tr>
+									<td colspan = "3">Bảo cáo giải trình</td>
+								</tr>
+								`)
+				baocaocuoicung[0].vanbangiaitrinh_attachment.forEach(function (itemTaiLieu, indexTaiLieu) {
+					self.$el.find('.danhsachhoso_bangiao_buoc9').append(`
+								<tr>
+									<td>${indexTaiLieu}</td>
+									<td>${itemTaiLieu.slice(16)}</td>
+									<td><a href="${itemTaiLieu}">Tải về</a></td>
+								</tr>
+								`)
+				})
 			}
-		
+			if (baocaocuoicung[0].baocaotonghopcuadoanthanhtra_attachment != null) {
+				self.$el.find('.danhsachhoso_bangiao_buoc9').append(`
+								<tr>
+									<td colspan = "3">Bảo cáo của đoàn thanh tra</td>
+								</tr>
+								`)
+				baocaocuoicung[0].baocaotonghopcuadoanthanhtra_attachment.forEach(function (itemTaiLieu, indexTaiLieu) {
+					self.$el.find('.danhsachhoso_bangiao_buoc9').append(`
+								<tr>
+									<td>${indexTaiLieu}</td>
+									<td>${itemTaiLieu.slice(16)}</td>
+									<td><a href="${itemTaiLieu}">Tải về</a></td>
+								</tr>
+								`)
+				})
+			}
+		},
+		danhSachTaiLieuBuoc10: function () {
+			var self = this;
+			var vanbanduthao = lodash.orderBy(self.model.get('vanbanduthaofield'), ['created_at'], ['desc']);
+			var vanbanduthaocuoicung = vanbanduthao.slice(0, 1);
 
-
+			console.log(vanbanduthaocuoicung[0].vanban_duthao_duthao_attachment)
+			console.log(vanbanduthaocuoicung[0].congvan_giaitrinh_cua_doituong_thanhtra_attachment)
+			console.log(vanbanduthaocuoicung[0].tham_khao_y_kien_attachment)
+			if (vanbanduthaocuoicung[0].vanban_duthao_duthao_attachment != null) {
+				self.$el.find('.danhsachhoso_bangiao_buoc10').append(`
+								<tr>
+									<td colspan = "3">Dự thảo kết luận thanh tra</td>
+								</tr>
+								`)
+				vanbanduthaocuoicung[0].vanban_duthao_duthao_attachment.forEach(function (itemTaiLieu, indexTaiLieu) {
+					self.$el.find('.danhsachhoso_bangiao_buoc10').append(`
+								<tr>
+									<td>${indexTaiLieu}</td>
+									<td>${itemTaiLieu.slice(16)}</td>
+									<td><a href="${itemTaiLieu}">Tải về</a></td>
+								</tr>
+								`)
+				})
+			}
+			if (vanbanduthaocuoicung[0].congvan_giaitrinh_cua_doituong_thanhtra_attachment != null) {
+				self.$el.find('.danhsachhoso_bangiao_buoc10').append(`
+								<tr>
+									<td colspan = "3">Công văn giải trình
+									kết luận của đối tượng thanh tra</td>
+								</tr>
+								`)
+				vanbanduthaocuoicung[0].congvan_giaitrinh_cua_doituong_thanhtra_attachment.forEach(function (itemTaiLieu, indexTaiLieu) {
+					self.$el.find('.danhsachhoso_bangiao_buoc10').append(`
+								<tr>
+									<td>${indexTaiLieu}</td>
+									<td>${itemTaiLieu.slice(16)}</td>
+									<td><a href="${itemTaiLieu}">Tải về</a></td>
+								</tr>
+								`)
+				})
+			}
+			if (vanbanduthaocuoicung[0].tham_khao_y_kien_attachment != null) {
+				self.$el.find('.danhsachhoso_bangiao_buoc10').append(`
+								<tr>
+									<td colspan = "3">Tham khảo ý kiến</td>
+								</tr>
+								`)
+				vanbanduthaocuoicung[0].tham_khao_y_kien_attachment.forEach(function (itemTaiLieu, indexTaiLieu) {
+					self.$el.find('.danhsachhoso_bangiao_buoc10').append(`
+								<tr>
+									<td>${indexTaiLieu}</td>
+									<td>${itemTaiLieu.slice(16)}</td>
+									<td><a href="${itemTaiLieu}">Tải về</a></td>
+								</tr>
+								`)
+				})
+			}
 		}
 
 

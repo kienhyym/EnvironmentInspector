@@ -6,21 +6,30 @@
             placeholder="Ngày gửi báo cáo giải trình" class="form-control">
     </div>
 </div>
-<div class="row">
+
+<div class="row outFocus">
     <div class="form-group col">
-        <label>Báo cáo giải trình của đoàn thanh tra  </label>
+        <label>Tài liệu đính kèm</label>
         <div id="upload-vanbangiaitrinh_attachment">
-            <div class="custom-file">
-                <input type="file" class="custom-file-input upload_files btn_ketthuchoanthanh" id="upload_files"
-                    data-attr="vanbangiaitrinh_attachment" lang="vi">
-                <label class="custom-file-label">Chọn file tải lên</label>
+            <div class="custom-file custom-file-baocaodoanthanhtra">
+                <input type="file" class="custom-file-input upload_files" aria-label="Bảo cáo giải trình"
+                    id="upload_files" data-attr="vanbangiaitrinh_attachment" multiple
+                    lang="vi">
+                <label
+                    class="custom-file-label label_list_files-vanbangiaitrinh_attachment">Chọn
+                    file tải lên</label>
             </div>
         </div>
-        <div id="download-vanbangiaitrinh_attachment"
-            class="form-group col col-md-12 col-sm-12 linkdownload_and_button">
-            <span class="textDownloadBaocaoCuaThanhTra" baocaocuadoanthanhtra-bind="text:vanbangiaitrinh_attachment" />
-            <a class="linkDownloadBaocaoCuaThanhTra">Download</a>
+
+        <div class="tenfile">
+            <div class="tenfile-vanbangiaitrinh_attachment"
+                data-field="vanbangiaitrinh_attachment"></div>
         </div>
+        <div class="link-taive link-taive-baocaodoanthanhtra">
+            <div class="taive-vanbangiaitrinh_attachment"
+                data-field="vanbangiaitrinh_attachment"></div>
+        </div>
+
     </div>
 </div>
 <div class="row">
@@ -30,23 +39,33 @@
             placeholder="Ngày gửi báo cáo giải trình" class="form-control">
     </div>
 </div>
-<div class="row outFocus">
-    <div class="form-group col">
-        <label>Báo cáo tổng hợp của đoàn thanh tra  </label>
-        <div id="upload-baocaotonghopcuadoanthanhtra_attachment">
-            <div class="custom-file">
-                <input type="file" class="custom-file-input upload_files btn_ketthuchoanthanh" id="upload_files"
-                    data-attr="baocaotonghopcuadoanthanhtra_attachment" lang="vi">
-                <label class="custom-file-label">Chọn file tải lên</label>
+</div>
+
+    <div class="row outFocus">
+        <div class="form-group col">
+            <label>Tài liệu đính kèm</label>
+            <div id="upload-baocaotonghopcuadoanthanhtra_attachment">
+                <div class="custom-file custom-file-baocaodoanthanhtra">
+                    <input type="file" class="custom-file-input upload_files" aria-label="Bảo cáo của đoàn thanh tra"
+                        id="upload_files" data-attr="baocaotonghopcuadoanthanhtra_attachment" multiple
+                        lang="vi">
+                    <label
+                        class="custom-file-label label_list_files-baocaotonghopcuadoanthanhtra_attachment">Chọn
+                        file tải lên</label>
+                </div>
             </div>
-        </div>
-        <div id="download-baocaotonghopcuadoanthanhtra_attachment"
-            class="form-group col col-md-12 col-sm-12 linkdownload_and_button">
-            <span class="textDownloadBaocaoCuaThanhTra" baocaocuadoanthanhtra-bind="text:baocaotonghopcuadoanthanhtra_attachment" />
-            <a class="linkDownloadBaocaoCuaThanhTra">Download</a>
+
+            <div class="tenfile">
+                <div class="tenfile-baocaotonghopcuadoanthanhtra_attachment"
+                    data-field="baocaotonghopcuadoanthanhtra_attachment"></div>
+            </div>
+            <div class="link-taive link-taive-baocaodoanthanhtra">
+                <div class="taive-baocaotonghopcuadoanthanhtra_attachment"
+                    data-field="baocaotonghopcuadoanthanhtra_attachment"></div>
+            </div>
+
         </div>
     </div>
-</div>
 <button type="button" class="btn btn-success btn-luu btn_ketthuchoanthanh">Lưu</button>
 <button type="button" class="btn btn-danger btn-xoa btn_ketthuchoanthanh">Xóa</button>
 <hr>

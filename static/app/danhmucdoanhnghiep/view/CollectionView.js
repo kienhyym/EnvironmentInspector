@@ -137,9 +137,6 @@ define(function (require) {
 				if (self.$el.find('.chonlinhvuc select').selectpicker('val').length != 0) {
 					giatriloc_LinhVuc = self.$el.find('.chonlinhvuc select').selectpicker('val');
 				}
-
-
-
 				var mangBoLoc = [
 					{
 						"giatri": giatriloc_SoNamChuaThanhTra,
@@ -171,6 +168,7 @@ define(function (require) {
 					})
 					return resolve(mangBoLocSauKiemTraNull)
 				})
+
 				promise.then((data) => {
 					var filter = "data";
 					const isEmpty = v => {
@@ -336,7 +334,6 @@ define(function (require) {
 						})
 						self.$el.find('.chonkehoachdaco select').selectpicker({'width':'700px',});
 						self.$el.find('.chonkehoachdaco select').selectpicker('val', 'deselectAllText');
-
 						self.$el.find('.chonkehoachdaco select').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
 							self.$el.find('#noidungkehoach').val(data.objects[clickedIndex].noidungkehoach);
 							self.$el.find('#phamvithanhtratu').val(data.objects[clickedIndex].phamvithanhtratu);

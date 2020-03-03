@@ -90,7 +90,7 @@
         "type": "number"
     },
     "taokehoach_attachment": {
-        "type": "string"
+        "type": "json"
     },
     "so_quyetdinh_thanhtra": {
         "type": "string"
@@ -99,7 +99,7 @@
         "type": "number"
     },
     "quyetdinh_thanhtra_attachment": {
-        "type": "string"
+        "type": "json"
     },
     "danhsach_thanhvien": {
         "type": "json"
@@ -114,7 +114,7 @@
         "type": "number"
     },
     "quyetdinh_trungcau_giamdinh_attachment": {
-        "type": "string"
+        "type": "json"
     },
     "manguoigiamsat": {
         "type": "string"
@@ -183,7 +183,7 @@
         "type": "string"
     },
     "vanban_kehoach_attachment": {
-        "type": "string"
+        "type": "json"
     },
     "danhsach_congviec_thanhtra": {
         "type": "json"
@@ -195,7 +195,7 @@
         "type": "number"
     },
     "congvan_yeucau_doituong_baocao_attachment": {
-        "type": "string"
+        "type": "json"
     },
     "so_vanban_doituong_baocao": {
         "type": "string"
@@ -204,7 +204,7 @@
         "type": "number"
     },
     "vanban_doituong_baocao_attachment": {
-        "type": "string"
+        "type": "json"
     },
     "so_vanban_thongbao_doituong_thanhtra": {
         "type": "string"
@@ -222,7 +222,7 @@
         "type": "number"
     },
     "congbo_quyetdinhthanhtra_attachment": {
-        "type": "string"
+        "type": "json"
     },
     "so_thongbao_ketthuc_thanhtra": {
         "type": "string"
@@ -234,7 +234,7 @@
         "type": "string"
     },
     "codauhieu_hinhsu_attachment": {
-        "type": "string"
+        "type": "json"
     },
     "danhsach_congviec_thuchien": {
         "type": "json"
@@ -246,7 +246,7 @@
         "type": "number"
     },
     "ketqua_trungcau_ykien_attachment": {
-        "type": "string"
+        "type": "json"
     },
     "nguoiquyetdinh": {
         "type": "string"
@@ -270,7 +270,7 @@
         "type": "number"
     },
     "bienban_hanhchinh_attachment": {
-        "type": "string"
+        "type": "json"
     },
     "coquan_xuphat": {
         "type": "string"
@@ -285,7 +285,7 @@
         "type": "number"
     },
     "bienban_xuphat_attachment": {
-        "type": "string"
+        "type": "json"
     },
     "vitriannutxuphat": {
         "type": "number"
@@ -297,10 +297,10 @@
         "type": "number"
     },
     "ketluan_thanhtra_attachment": {
-        "type": "string"
+        "type": "json"
     },
     "quyetdinh_xuphat_attachment": {
-        "type": "string"
+        "type": "json"
     },
     "so_bienban_congbo_ketluan": {
         "type": "string"
@@ -309,7 +309,7 @@
         "type": "number"
     },
     "bienban_congbo_ketluan_attachment": {
-        "type": "string"
+        "type": "json"
     },
     "ngay_congkhai_ketluan_tai_doituong": {
         "type": "number"
@@ -321,7 +321,7 @@
         "type": "string"
     },
     "congkhai_ketluan_image_attachment": {
-        "type": "string"
+        "type": "json"
     },
     "coquan_congvan_yeucau_baocao_thuchien": {
         "type": "string"
@@ -339,7 +339,7 @@
         "type": "number"
     },
     "baocao_doituong_thuchien_attachment": {
-        "type": "string"
+        "type": "json"
     },
     "danhsach_hoso_bangiao_luutru": {
         "type": "json"

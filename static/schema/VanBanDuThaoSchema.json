@@ -35,7 +35,7 @@
         "type": "number"
     },
     "vanban_duthao_duthao_attachment": {
-        "type": "string"
+        "type": "json"
     },
     "so_congvan_giaitrinh": {
         "type": "string"
@@ -44,7 +44,7 @@
         "type": "number"
     },
     "congvan_giaitrinh_cua_doituong_thanhtra_attachment": {
-        "type": "string"
+        "type": "json"
     },
     "so_vanban_thamkhao_ykien": {
         "type": "string"
@@ -53,7 +53,7 @@
         "type": "number"
     },
     "tham_khao_y_kien_attachment": {
-        "type": "string"
+        "type": "json"
     },
     "kehoachthanhtra_id": {
         "type": "string"

@@ -88,8 +88,8 @@ async def upload_file(request):
             rand = ''.join(random.choice(string.digits) for _ in range(15))
             file_name = os.path.splitext(file.name)[0]
             extname = os.path.splitext(file.name)[1]
-#             newfilename = file_name + "-" + rand + extname
-            newfilename = file_name + extname 
+            newfilename = file_name + "-" + rand + extname
+            # newfilename = file_name + extname 
 
             print(newfilename)
             async with aiofiles.open(fsroot + newfilename, 'wb+') as f:

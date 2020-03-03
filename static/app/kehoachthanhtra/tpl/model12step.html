@@ -82,6 +82,7 @@
 
 		<!-- timeline GD 1 -->
 		<div class="row gd1">
+
 			<!-- timeline GD 1 left dot -->
 			<div class="col-auto text-center flex-column d-none d-sm-flex">
 				<div class="row h-50">
@@ -116,9 +117,6 @@
 						<div class="float-right text-muted d-none"></div>
 						<div class="buoc1">
 							<h4 class="card-title">1: Kế hoạch thanh tra</h4>
-
-
-
 							<h5>Quyết định thanh tra</h5>
 							<div class="row">
 								<div class="form-group col-6 required">
@@ -128,8 +126,8 @@
 								</div>
 								<div class="form-group col-3 required">
 									<label>Số quyết định thanh tra</label>
-									<input type="text" data-bind="value:so_quyetdinh_thanhtra" placeholder="Nhập số quyết định"
-										class="form-control">
+									<input type="text" data-bind="value:so_quyetdinh_thanhtra"
+										placeholder="Nhập số quyết định" class="form-control">
 								</div>
 								<div class="form-group col-3 required">
 									<label>Ngày quyết định</label>
@@ -139,27 +137,29 @@
 							</div>
 
 							<div class="row">
-
 								<div class="form-group col">
 									<label>Tài liệu đính kèm</label>
 									<div id="upload-quyetdinh_thanhtra_attachment">
-										<div class="custom-file">
-											<input type="file" class="custom-file-input upload_files" id="upload_files"
-												data-attr="quyetdinh_thanhtra_attachment" lang="vi">
-											<label class="custom-file-label">Chọn file tải lên</label>
+										<div class="custom-file custom-file-view">
+											<input type="file" class="custom-file-input upload_files attachmentBuoc1" aria-label="Quyết định thanh tra" id="upload_files"
+												data-attr="quyetdinh_thanhtra_attachment" multiple lang="vi">
+											<label
+												class="custom-file-label label_list_files-quyetdinh_thanhtra_attachment">Chọn
+												file tải lên</label>
 										</div>
 									</div>
-									<div id="download-quyetdinh_thanhtra_attachment"
-										class="form-group col col-md-12 col-sm-12 linkdownload_and_button">
-										<span class="textDownload2 textDownloadBuoc1"
-											data-bind="text:quyetdinh_thanhtra_attachment" />
-										<a class="linkDownload2 linkDownloadBuoc1">Download</a>
+
+									<div class="tenfile">
+										<div class="tenfile-quyetdinh_thanhtra_attachment"
+											data-field="quyetdinh_thanhtra_attachment"></div>
+									</div>
+									<div class="link-taive-view link-taive">
+										<div class="taive-quyetdinh_thanhtra_attachment"
+											data-field="quyetdinh_thanhtra_attachment"></div>
 									</div>
 
 								</div>
-
 							</div>
-
 
 
 							<hr />
@@ -204,25 +204,31 @@
 										class="form-control">
 								</div>
 							</div>
-
 							<div class="row">
 								<div class="form-group col">
 									<label>Tài liệu đính kèm</label>
 									<div id="upload-quyetdinh_trungcau_giamdinh_attachment">
-										<div class="custom-file">
-											<input type="file" class="custom-file-input upload_files" id="upload_files"
-												data-attr="quyetdinh_trungcau_giamdinh_attachment" lang="vi">
-											<label class="custom-file-label">Chọn file tải lên</label>
+										<div class="custom-file custom-file-view">
+											<input type="file" class="custom-file-input upload_files attachmentBuoc1" aria-label="Quyết định trưng cầu giám định" id="upload_files"
+												data-attr="quyetdinh_trungcau_giamdinh_attachment" multiple lang="vi">
+											<label
+												class="custom-file-label label_list_files-quyetdinh_trungcau_giamdinh_attachment">Chọn
+												file tải lên</label>
 										</div>
 									</div>
-									<div id="download-quyetdinh_trungcau_giamdinh_attachment"
-										class="form-group col col-md-12 col-sm-12 linkdownload_and_button">
-										<span class="textDownload2 textDownloadBuoc1"
-											data-bind="text:quyetdinh_trungcau_giamdinh_attachment" />
-										<a class="linkDownload2 linkDownloadBuoc1">Download</a>
+
+									<div class="tenfile">
+										<div class="tenfile-quyetdinh_trungcau_giamdinh_attachment"
+											data-field="quyetdinh_trungcau_giamdinh_attachment"></div>
 									</div>
+									<div class="link-taive-view link-taive">
+										<div class="taive-quyetdinh_trungcau_giamdinh_attachment"
+											data-field="quyetdinh_trungcau_giamdinh_attachment"></div>
+									</div>
+
 								</div>
 							</div>
+
 							<button class="btn btn-success btn-save btn-save-gd1">Lưu</button>
 
 						</div>
@@ -331,18 +337,24 @@
 								<div class="form-group col">
 									<label>Tài liệu đính kèm</label>
 									<div id="upload-vanban_kehoach_attachment">
-										<div class="custom-file">
-											<input type="file" class="custom-file-input upload_files" id="upload_files"
-												data-attr="vanban_kehoach_attachment" lang="vi">
-											<label class="custom-file-label">Chọn file tải lên</label>
+										<div class="custom-file custom-file-view">
+											<input type="file" class="custom-file-input upload_files attachmentBuoc2" aria-label="Xây dựng kế hoạch đoàn thanh tra" id="upload_files"
+												data-attr="vanban_kehoach_attachment" multiple lang="vi">
+											<label
+												class="custom-file-label label_list_files-vanban_kehoach_attachment">Chọn
+												file tải lên</label>
 										</div>
 									</div>
-									<div id="download-vanban_kehoach_attachment"
-										class="form-group col col-md-12 col-sm-12 linkdownload_and_button">
-										<span class="textDownload2 textDownloadBuoc2"
-											data-bind="text:vanban_kehoach_attachment" />
-										<a class="linkDownload2 linkDownloadBuoc2">Download</a>
+
+									<div class="tenfile">
+										<div class="tenfile-vanban_kehoach_attachment"
+											data-field="vanban_kehoach_attachment"></div>
 									</div>
+									<div class="link-taive-view link-taive">
+										<div class="taive-vanban_kehoach_attachment"
+											data-field="vanban_kehoach_attachment"></div>
+									</div>
+
 								</div>
 							</div>
 							<button class="btn btn-success btn-save btn-save-gd2">Lưu</button>
@@ -434,22 +446,30 @@
 										placeholder="Ngày gửi công văn" class="form-control">
 								</div>
 							</div>
+
 							<div class="row">
 								<div class="form-group col">
 									<label>Tài liệu đính kèm</label>
 									<div id="upload-congvan_yeucau_doituong_baocao_attachment">
-										<div class="custom-file">
-											<input type="file" class="custom-file-input upload_files" id="upload_files"
-												data-attr="congvan_yeucau_doituong_baocao_attachment" lang="vi">
-											<label class="custom-file-label">Chọn file tải lên</label>
+										<div class="custom-file custom-file-view">
+											<input type="file" class="custom-file-input upload_files attachmentBuoc4" aria-label="văn yêu cầu" id="upload_files"
+												data-attr="congvan_yeucau_doituong_baocao_attachment" multiple
+												lang="vi">
+											<label
+												class="custom-file-label label_list_files-congvan_yeucau_doituong_baocao_attachment">Chọn
+												file tải lên</label>
 										</div>
 									</div>
-									<div id="download-congvan_yeucau_doituong_baocao_attachment"
-										class="form-group col col-md-12 col-sm-12 linkdownload_and_button">
-										<span class="textDownload2 textDownloadBuoc4"
-											data-bind="text:congvan_yeucau_doituong_baocao_attachment" />
-										<a class="linkDownload2 linkDownloadBuoc4">Download</a>
+
+									<div class="tenfile">
+										<div class="tenfile-congvan_yeucau_doituong_baocao_attachment"
+											data-field="congvan_yeucau_doituong_baocao_attachment"></div>
 									</div>
+									<div class="link-taive-view link-taive">
+										<div class="taive-congvan_yeucau_doituong_baocao_attachment"
+											data-field="congvan_yeucau_doituong_baocao_attachment"></div>
+									</div>
+
 								</div>
 							</div>
 							<hr />
@@ -468,25 +488,31 @@
 								</div>
 							</div>
 
+
 							<div class="row">
 								<div class="form-group col">
 									<label>Tài liệu đính kèm</label>
 									<div id="upload-vanban_doituong_baocao_attachment">
-										<div class="custom-file">
-											<input type="file" class="custom-file-input upload_files" id="upload_files"
-												data-attr="vanban_doituong_baocao_attachment" lang="vi">
-											<label class="custom-file-label">Chọn file tải lên</label>
+										<div class="custom-file custom-file-view">
+											<input type="file" class="custom-file-input upload_files attachmentBuoc4" aria-label="Văn bản báo cáo" id="upload_files"
+												data-attr="vanban_doituong_baocao_attachment" multiple lang="vi">
+											<label
+												class="custom-file-label label_list_files-vanban_doituong_baocao_attachment">Chọn
+												file tải lên</label>
 										</div>
 									</div>
-									<div id="download-vanban_doituong_baocao_attachment"
-										class="form-group col col-md-12 col-sm-12 linkdownload_and_button">
-										<span class="textDownload2 textDownloadBuoc4"
-											data-bind="text:vanban_doituong_baocao_attachment" />
-										<a class="linkDownload2 linkDownloadBuoc4">Download</a>
+
+									<div class="tenfile">
+										<div class="tenfile-vanban_doituong_baocao_attachment"
+											data-field="vanban_doituong_baocao_attachment"></div>
 									</div>
+									<div class="link-taive-view link-taive">
+										<div class="taive-vanban_doituong_baocao_attachment"
+											data-field="vanban_doituong_baocao_attachment"></div>
+									</div>
+
 								</div>
 							</div>
-
 							<button class="btn btn-success btn-save btn-save-gd4">Lưu</button>
 						</div>
 					</div>
@@ -580,24 +606,32 @@
 										placeholder="Ngày công bố quyết định" class="form-control">
 								</div>
 							</div>
+
 							<div class="row">
 								<div class="form-group col">
 									<label>Tài liệu đính kèm</label>
 									<div id="upload-congbo_quyetdinhthanhtra_attachment">
-										<div class="custom-file">
-											<input type="file" class="custom-file-input upload_files" id="upload_files"
-												data-attr="congbo_quyetdinhthanhtra_attachment" lang="vi">
-											<label class="custom-file-label">Chọn file tải lên</label>
+										<div class="custom-file custom-file-view">
+											<input type="file" class="custom-file-input upload_files attachmentBuoc6" aria-label="Công bố quyết định thanh tra tại đối tượng thanh tra" id="upload_files"
+												data-attr="congbo_quyetdinhthanhtra_attachment" multiple lang="vi">
+											<label
+												class="custom-file-label label_list_files-congbo_quyetdinhthanhtra_attachment">Chọn
+												file tải lên</label>
 										</div>
 									</div>
-									<div id="download-congbo_quyetdinhthanhtra_attachment"
-										class="form-group col col-md-12 col-sm-12 linkdownload_and_button">
-										<span class="textDownload2 textDownloadBuoc6"
-											data-bind="text:congbo_quyetdinhthanhtra_attachment" />
-										<a class="linkDownload2 linkDownloadBuoc6">Download</a>
+
+									<div class="tenfile">
+										<div class="tenfile-congbo_quyetdinhthanhtra_attachment"
+											data-field="congbo_quyetdinhthanhtra_attachment"></div>
 									</div>
+									<div class="link-taive-view link-taive">
+										<div class="taive-congbo_quyetdinhthanhtra_attachment"
+											data-field="congbo_quyetdinhthanhtra_attachment"></div>
+									</div>
+
 								</div>
 							</div>
+
 							<button class="btn btn-success btn-save btn-save-gd6">Lưu</button>
 							<i><span class="danger-reason"></span></i>
 						</div>
@@ -630,37 +664,52 @@
 							<h4 class="card-title">7: Tiến hành thanh tra tại địa chỉ đối tượng thanh tra</h4>
 							<div class="row">
 								<div class="col-6">
-									<div class="form-group required">
-										<label>Nhập số công văn thông báo kết thúc thanh tra</label>
-										<input required type="text" data-bind="value:so_thongbao_ketthuc_thanhtra"
-											placeholder="Nhập số công văn kết thúc thanh tra" class="form-control">
-									</div>
-									<div class="form-group required">
-										<label>Ngày ra công văn</label>
-										<input required type="text" data-bind="value:ngay_congvan_ketthuc_thanhtra"
-											placeholder="Ngày ra công văn" class="form-control">
-									</div>
-								</div>
-								<div class="col-6">
 									<div class="form-group">
 										<label>Có dấu hiệu hình sự?</label>
 										<input required type="text" data-bind="value:codauhieu_hinhsu"
 											class="form-control">
 									</div>
-									<div class="form-group col m-0 p-0">
-										<label>Tài liệu đính kèm</label>
-										<div id="upload-codauhieu_hinhsu_attachment">
-											<div class="custom-file">
-												<input type="file" class="custom-file-input upload_files"
-													id="upload_files" data-attr="codauhieu_hinhsu_attachment" lang="vi">
-												<label class="custom-file-label">Chọn file tải lên</label>
+
+									<div class="form-group required showbienbanhinhsu" style="display: none;">
+										<label>Số công văn chuyển cơ quan điều tra</label>
+										<input required type="text" data-bind="value:so_thongbao_ketthuc_thanhtra"
+											placeholder="Nhập số công văn kết thúc thanh tra" class="form-control">
+									</div>
+
+								</div>
+								<div class="col-6">
+									<div class="form-group required showbienbanhinhsu" style="display: none;">
+										<label>Ngày ra công văn</label>
+										<input required type="text" data-bind="value:ngay_congvan_ketthuc_thanhtra"
+											placeholder="Ngày ra công văn" class="form-control">
+									</div>
+
+									<div class="form-group col m-0 p-0 showbienbanhinhsu" style="display: none;">
+
+										<div class="row">
+											<div class="form-group col">
+												<label>Tài liệu đính kèm</label>
+												<div id="upload-codauhieu_hinhsu_attachment">
+													<div class="custom-file custom-file-view">
+														<input type="file" class="custom-file-input upload_files attachmentBuoc7"
+															id="upload_files" aria-label="Tiến hành thanh tra tại địa chỉ đối tượng thanh tra có dấu hiệu hình sự" data-attr="codauhieu_hinhsu_attachment"
+															multiple lang="vi">
+														<label
+															class="custom-file-label label_list_files-codauhieu_hinhsu_attachment">Chọn
+															file tải lên</label>
+													</div>
+												</div>
+
+												<div class="tenfile">
+													<div class="tenfile-codauhieu_hinhsu_attachment"
+														data-field="codauhieu_hinhsu_attachment"></div>
+												</div>
+												<div class="link-taive-view link-taive">
+													<div class="taive-codauhieu_hinhsu_attachment"
+														data-field="codauhieu_hinhsu_attachment"></div>
+												</div>
+
 											</div>
-										</div>
-										<div id="download-codauhieu_hinhsu_attachment"
-											class="form-group col col-md-12 col-sm-12 linkdownload_and_button">
-											<span class="textDownload2 textDownloadBuoc7"
-												data-bind="text:codauhieu_hinhsu_attachment" />
-											<a class="linkDownload2 linkDownloadBuoc7">Download</a>
 										</div>
 									</div>
 								</div>
@@ -726,24 +775,31 @@
 								</div>
 							</div>
 							<div class="row">
-
 								<div class="form-group col">
 									<label>Tài liệu đính kèm</label>
 									<div id="upload-ketqua_trungcau_ykien_attachment">
-										<div class="custom-file">
-											<input type="file" class="custom-file-input upload_files" id="upload_files"
-												data-attr="ketqua_trungcau_ykien_attachment" lang="vi">
-											<label class="custom-file-label">Chọn file tải lên</label>
+										<div class="custom-file custom-file-view">
+											<input type="file" class="custom-file-input upload_files attachmentBuoc8" aria-label="Kết quả trưng cầu" id="upload_files"
+												data-attr="ketqua_trungcau_ykien_attachment" multiple lang="vi">
+											<label
+												class="custom-file-label label_list_files-ketqua_trungcau_ykien_attachment">Chọn
+												file tải lên</label>
 										</div>
 									</div>
-									<div id="download-ketqua_trungcau_ykien_attachment"
-										class="form-group col col-md-12 col-sm-12 linkdownload_and_button">
-										<span class="textDownload2 textDownloadBuoc8"
-											data-bind="text:ketqua_trungcau_ykien_attachment" />
-										<a class="linkDownload2 linkDownloadBuoc8">Download</a>
+
+									<div class="tenfile">
+										<div class="tenfile-ketqua_trungcau_ykien_attachment"
+											data-field="ketqua_trungcau_ykien_attachment"></div>
 									</div>
+									<div class="link-taive-view link-taive">
+										<div class="taive-ketqua_trungcau_ykien_attachment"
+											data-field="ketqua_trungcau_ykien_attachment"></div>
+									</div>
+
 								</div>
 							</div>
+
+
 							<button class="btn btn-success btn-save btn-save-gd8 mt-2">Lưu</button>
 							<i><span class="danger-reason"></span></i>
 						</div>
@@ -808,30 +864,25 @@
 							<h4 class="card-title ">10: Xây dựng dự thảo kết luận thanh tra</h4>
 
 							<div id="space_vanbanduthaofield"></div>
-							<button type="button" id="btn_add_vanbanduthaofield"
-								class="btn btn-primary btn-sm btn-them">Thêm đợt
-								dự thảo</button>
-							<div class="QuyetDinhXuPhat">
 
-								<div class="row mt-2 nguoiduyet">
-									<div class="form-group col-6">
-										<label>Người duyệt văn bản dự thảo</label>
-										<input required type="text" data-bind="value:nguoiquyetdinh"
-											class="form-control">
-									</div>
-									<div class="form-group col-3">
-										<label>Số quyết định</label>
-										<input required type="text" data-bind="value:soquyetdinh" class="form-control">
-									</div>
-									<div class="form-group col-3 required">
-										<label>Ngày duyệt văn bản dự thảo</label>
-										<input required type="text" data-bind="value:ngayduyetvanban"
-											class="form-control">
-									</div>
+							
+							<div class="row mt-2 nguoiduyet">
+								<div class="form-group col-6">
+									<label>Người duyệt văn bản dự thảo</label>
+									<input required type="text" data-bind="value:nguoiquyetdinh" class="form-control">
 								</div>
+								<div class="form-group col-3">
+									<label>Số quyết định</label>
+									<input required type="text" data-bind="value:soquyetdinh" class="form-control">
+								</div>
+								<div class="form-group col-3 required">
+									<label>Ngày duyệt văn bản dự thảo</label>
+									<input required type="text" data-bind="value:ngayduyetvanban" class="form-control">
+								</div>
+							</div>
+							<hr />
+							<div class="QuyetDinhXuPhat" style="display: none;">
 
-
-								<hr />
 
 								<h5>Biên bản vi phạm hành chính</h5>
 								<div class="row">
@@ -851,23 +902,30 @@
 											class="form-control">
 									</div>
 								</div>
+
 								<div class="row">
 									<div class="form-group col">
 										<label>Tài liệu đính kèm</label>
 										<div id="upload-bienban_hanhchinh_attachment">
-											<div class="custom-file">
-												<input type="file" class="custom-file-input upload_files"
-													id="upload_files" data-attr="bienban_hanhchinh_attachment"
+											<div class="custom-file custom-file-view">
+												<input type="file" class="custom-file-input upload_files attachmentBuoc10" aria-label="Biên bản vi phạm hành chính" 
+													id="upload_files" data-attr="bienban_hanhchinh_attachment" multiple
 													lang="vi">
-												<label class="custom-file-label">Chọn file tải lên</label>
+												<label
+													class="custom-file-label label_list_files-bienban_hanhchinh_attachment">Chọn
+													file tải lên</label>
 											</div>
 										</div>
-										<div id="download-bienban_hanhchinh_attachment"
-											class="form-group col col-md-12 col-sm-12 linkdownload_and_button">
-											<span class="textDownload2 textDownloadBuoc10 text10"
-												data-bind="text:bienban_hanhchinh_attachment" />
-											<a class="linkDownload2 linkDownloadBuoc10 link10">Download</a>
+
+										<div class="tenfile">
+											<div class="tenfile-bienban_hanhchinh_attachment"
+												data-field="bienban_hanhchinh_attachment"></div>
 										</div>
+										<div class="link-taive-view link-taive">
+											<div class="taive-bienban_hanhchinh_attachment"
+												data-field="bienban_hanhchinh_attachment"></div>
+										</div>
+
 									</div>
 								</div>
 
@@ -897,26 +955,35 @@
 											class="form-control">
 									</div>
 								</div>
+
 								<div class="row">
 									<div class="form-group col">
 										<label>Tài liệu đính kèm</label>
 										<div id="upload-quyetdinh_xuphat_attachment">
-											<div class="custom-file">
-												<input type="file" class="custom-file-input upload_files"
-													id="upload_files" data-attr="quyetdinh_xuphat_attachment" lang="vi">
-												<label class="custom-file-label">Chọn file tải lên</label>
+											<div class="custom-file custom-file-view">
+												<input type="file" class="custom-file-input upload_files attachmentBuoc10" aria-label="Quyết định xử phạt"
+													id="upload_files" data-attr="quyetdinh_xuphat_attachment" multiple
+													lang="vi">
+												<label
+													class="custom-file-label label_list_files-quyetdinh_xuphat_attachment">Chọn
+													file tải lên</label>
 											</div>
 										</div>
-										<div id="download-quyetdinh_xuphat_attachment"
-											class="form-group col col-md-12 col-sm-12 linkdownload_and_button">
-											<span class="textDownload2 textDownloadBuoc10 text10"
-												data-bind="text:quyetdinh_xuphat_attachment" />
-											<a class="linkDownload2 linkDownloadBuoc10 link10">Download</a>
+
+										<div class="tenfile">
+											<div class="tenfile-quyetdinh_xuphat_attachment"
+												data-field="quyetdinh_xuphat_attachment"></div>
 										</div>
+										<div class="link-taive-view link-taive">
+											<div class="taive-quyetdinh_xuphat_attachment"
+												data-field="quyetdinh_xuphat_attachment"></div>
+										</div>
+
 									</div>
 								</div>
 							</div>
 							<button class="btn btn-success btn-save btn-save-gd10">Lưu</button>
+							<button type="button" id="btn_add_vanbanduthaofield" class="btn btn-primary btn-sm btn-them">Thêm đợt dự thảo</button>
 							<button class="btn btn-danger lap_bien_ban_xuphat" id="lap_bien_ban_xuphat_btn"
 								data-step-id="10">Lập biên bản và xử
 								phạt</button>
@@ -961,26 +1028,34 @@
 										class="form-control">
 								</div>
 							</div>
+
 							<div class="row">
 								<div class="form-group col">
 									<label>Tài liệu đính kèm</label>
 									<div id="upload-ketluan_thanhtra_attachment">
-										<div class="custom-file">
-											<input type="file" class="custom-file-input upload_files" id="upload_files"
-												data-attr="ketluan_thanhtra_attachment" lang="vi">
-											<label class="custom-file-label">Chọn file tải lên</label>
+										<div class="custom-file custom-file-view">
+											<input type="file" class="custom-file-input upload_files attachmentBuoc11" id="upload_files" aria-label="Kết luận thanh tra"
+												data-attr="ketluan_thanhtra_attachment" multiple lang="vi">
+											<label
+												class="custom-file-label label_list_files-ketluan_thanhtra_attachment">Chọn
+												file tải lên</label>
 										</div>
 									</div>
-									<div id="download-ketluan_thanhtra_attachment"
-										class="form-group col col-md-12 col-sm-12 linkdownload_and_button">
-										<span class="textDownload2 textDownloadBuoc11"
-											data-bind="text:ketluan_thanhtra_attachment" />
-										<a class="linkDownload2 linkDownloadBuoc11">Download</a>
+
+									<div class="tenfile">
+										<div class="tenfile-ketluan_thanhtra_attachment"
+											data-field="ketluan_thanhtra_attachment"></div>
 									</div>
+									<div class="link-taive-view link-taive">
+										<div class="taive-ketluan_thanhtra_attachment"
+											data-field="ketluan_thanhtra_attachment"></div>
+									</div>
+
 								</div>
 							</div>
+
 							<hr />
-							<div class="QuyetDinhXuPhat">
+							<div class="QuyetDinhXuPhat" style="display: none;">
 
 								<h5>Biên bản vi phạm hành chính</h5>
 								<div class="row">
@@ -1000,23 +1075,30 @@
 											class="form-control">
 									</div>
 								</div>
+
 								<div class="row">
 									<div class="form-group col">
 										<label>Tài liệu đính kèm</label>
 										<div id="upload-bienban_hanhchinh_attachment">
-											<div class="custom-file">
-												<input type="file" class="custom-file-input upload_files"
-													id="upload_files" data-attr="bienban_hanhchinh_attachment"
+											<div class="custom-file custom-file-view">
+												<input type="file" class="custom-file-input upload_files attachmentBuoc11" aria-label="Biên bản vi phạm hành chính"
+													id="upload_files" data-attr="bienban_hanhchinh_attachment" multiple
 													lang="vi">
-												<label class="custom-file-label">Chọn file tải lên</label>
+												<label
+													class="custom-file-label label_list_files-bienban_hanhchinh_attachment">Chọn
+													file tải lên</label>
 											</div>
 										</div>
-										<div id="download-bienban_hanhchinh_attachment"
-											class="form-group col col-md-12 col-sm-12 linkdownload_and_button">
-											<span class="textDownload2 textDownloadBuoc11 text11"
-												data-bind="text:bienban_hanhchinh_attachment" />
-											<a class="linkDownload2 linkDownloadBuoc11 link11">Download</a>
+
+										<div class="tenfile">
+											<div class="tenfile-bienban_hanhchinh_attachment"
+												data-field="bienban_hanhchinh_attachment"></div>
 										</div>
+										<div class="link-taive-view link-taive">
+											<div class="taive-bienban_hanhchinh_attachment"
+												data-field="bienban_hanhchinh_attachment"></div>
+										</div>
+
 									</div>
 								</div>
 
@@ -1050,18 +1132,25 @@
 									<div class="form-group col">
 										<label>Tài liệu đính kèm</label>
 										<div id="upload-quyetdinh_xuphat_attachment">
-											<div class="custom-file">
-												<input type="file" class="custom-file-input upload_files"
-													id="upload_files" data-attr="quyetdinh_xuphat_attachment" lang="vi">
-												<label class="custom-file-label">Chọn file tải lên</label>
+											<div class="custom-file custom-file-view">
+												<input type="file" class="custom-file-input upload_files attachmentBuoc11" aria-label="Quyết định xử phạt"
+													id="upload_files" data-attr="quyetdinh_xuphat_attachment" multiple
+													lang="vi">
+												<label
+													class="custom-file-label label_list_files-quyetdinh_xuphat_attachment">Chọn
+													file tải lên</label>
 											</div>
 										</div>
-										<div id="download-quyetdinh_xuphat_attachment"
-											class="form-group col col-md-12 col-sm-12 linkdownload_and_button">
-											<span class="textDownload2 textDownloadBuoc11 text11"
-												data-bind="text:quyetdinh_xuphat_attachment" />
-											<a class="linkDownload2 linkDownloadBuoc11 link11">Download</a>
+
+										<div class="tenfile">
+											<div class="tenfile-quyetdinh_xuphat_attachment"
+												data-field="quyetdinh_xuphat_attachment"></div>
 										</div>
+										<div class="link-taive-view link-taive">
+											<div class="taive-quyetdinh_xuphat_attachment"
+												data-field="quyetdinh_xuphat_attachment"></div>
+										</div>
+
 									</div>
 								</div>
 							</div>
@@ -1114,26 +1203,32 @@
 															class="form-control">
 													</div>
 												</div>
+
 												<div class="row">
 													<div class="form-group col">
 														<label>Tài liệu đính kèm</label>
 														<div id="upload-bienban_congbo_ketluan_attachment">
-															<div class="custom-file">
+															<div class="custom-file custom-file-view">
 																<input type="file"
-																	class="custom-file-input upload_files"
+																	class="custom-file-input upload_files attachmentBuoc12" aria-label="Công bố kết luận thanh tra"
 																	id="upload_files"
 																	data-attr="bienban_congbo_ketluan_attachment"
-																	lang="vi">
-																<label class="custom-file-label">Chọn file tải
-																	lên</label>
+																	multiple lang="vi">
+																<label
+																	class="custom-file-label label_list_files-bienban_congbo_ketluan_attachment">Chọn
+																	file tải lên</label>
 															</div>
 														</div>
-														<div id="download-bienban_congbo_ketluan_attachment"
-															class="form-group col col-md-12 col-sm-12 linkdownload_and_button">
-															<span class="textDownload2 textDownloadBuoc12"
-																data-bind="text:bienban_congbo_ketluan_attachment" />
-															<a class="linkDownload2 linkDownloadBuoc12">Download</a>
+
+														<div class="tenfile">
+															<div class="tenfile-bienban_congbo_ketluan_attachment"
+																data-field="bienban_congbo_ketluan_attachment"></div>
 														</div>
+														<div class="link-taive-view link-taive">
+															<div class="taive-bienban_congbo_ketluan_attachment"
+																data-field="bienban_congbo_ketluan_attachment"></div>
+														</div>
+
 													</div>
 												</div>
 
@@ -1165,29 +1260,36 @@
 													</div>
 												</div>
 
+
+
 												<div class="row">
 													<div class="form-group col">
 														<label>Tài liệu đính kèm</label>
 														<div id="upload-congkhai_ketluan_image_attachment">
-															<div class="custom-file">
+															<div class="custom-file custom-file-view">
 																<input type="file"
-																	class="custom-file-input upload_files"
+																	class="custom-file-input upload_files attachmentBuoc12" aria-label="Công khai kết luận thanh tra"
 																	id="upload_files"
 																	data-attr="congkhai_ketluan_image_attachment"
-																	lang="vi">
-																<label class="custom-file-label">Chọn file tải
-																	lên</label>
+																	multiple lang="vi">
+																<label
+																	class="custom-file-label label_list_files-congkhai_ketluan_image_attachment">Chọn
+																	file tải lên</label>
 															</div>
 														</div>
-														<div id="download-congkhai_ketluan_image_attachment"
-															class="form-group col col-md-12 col-sm-12 linkdownload_and_button">
-															<span class="textDownload2 textDownloadBuoc12"
-																data-bind="text:congkhai_ketluan_image_attachment" />
-															<a class="linkDownload2 linkDownloadBuoc12">Download</a>
+
+														<div class="tenfile">
+															<div class="tenfile-congkhai_ketluan_image_attachment"
+																data-field="congkhai_ketluan_image_attachment"></div>
 														</div>
+														<div class="link-taive-view link-taive">
+															<div class="taive-congkhai_ketluan_image_attachment"
+																data-field="congkhai_ketluan_image_attachment"></div>
+														</div>
+
 													</div>
 												</div>
-												<div class="QuyetDinhXuPhat">
+												<div class="QuyetDinhXuPhat" style="display: none;">
 													<h5>Biên bản vi phạm hành chính</h5>
 													<div class="row">
 														<div class="form-group col-6">
@@ -1209,27 +1311,34 @@
 																class="form-control">
 														</div>
 													</div>
+
+
+
 													<div class="row">
 														<div class="form-group col">
 															<label>Tài liệu đính kèm</label>
-															<div id="upload-bienban_hanhchinh_attachment">
-																<div class="custom-file">
+															<div id="upload-bienban_hanhchinh_attachment attachmentBuoc12">
+																<div class="custom-file custom-file-view">
 																	<input type="file"
-																		class="custom-file-input upload_files"
+																		class="custom-file-input upload_files" aria-label="Biên bản vi phạm hành chính"
 																		id="upload_files"
 																		data-attr="bienban_hanhchinh_attachment"
-																		lang="vi">
-																	<label class="custom-file-label">Chọn file tải
-																		lên</label>
+																		multiple lang="vi">
+																	<label
+																		class="custom-file-label label_list_files-bienban_hanhchinh_attachment">Chọn
+																		file tải lên</label>
 																</div>
 															</div>
-															<div id="download-bienban_hanhchinh_attachment"
-																class="form-group col col-md-12 col-sm-12 linkdownload_and_button">
-																<span class="textDownload2 textDownloadBuoc12 text12"
-																	data-bind="text:bienban_hanhchinh_attachment" />
-																<a
-																	class="linkDownload2 linkDownloadBuoc12 link12">Download</a>
+
+															<div class="tenfile">
+																<div class="tenfile-bienban_hanhchinh_attachment"
+																	data-field="bienban_hanhchinh_attachment"></div>
 															</div>
+															<div class="link-taive-view link-taive">
+																<div class="taive-bienban_hanhchinh_attachment"
+																	data-field="bienban_hanhchinh_attachment"></div>
+															</div>
+
 														</div>
 													</div>
 
@@ -1266,23 +1375,27 @@
 														<div class="form-group col">
 															<label>Tài liệu đính kèm</label>
 															<div id="upload-quyetdinh_xuphat_attachment">
-																<div class="custom-file">
+																<div class="custom-file custom-file-view">
 																	<input type="file"
-																		class="custom-file-input upload_files"
+																		class="custom-file-input upload_files attachmentBuoc12"  aria-label="Quyết định xử phạt"
 																		id="upload_files"
-																		data-attr="quyetdinh_xuphat_attachment"
+																		data-attr="quyetdinh_xuphat_attachment" multiple
 																		lang="vi">
-																	<label class="custom-file-label">Chọn file tải
-																		lên</label>
+																	<label
+																		class="custom-file-label label_list_files-quyetdinh_xuphat_attachment">Chọn
+																		file tải lên</label>
 																</div>
 															</div>
-															<div id="download-quyetdinh_xuphat_attachment"
-																class="form-group col col-md-12 col-sm-12 linkdownload_and_button">
-																<span class="textDownload2 textDownloadBuoc12 text12"
-																	data-bind="text:quyetdinh_xuphat_attachment" />
-																<a
-																	class="linkDownload2 linkDownloadBuoc12 link12">Download</a>
+
+															<div class="tenfile">
+																<div class="tenfile-quyetdinh_xuphat_attachment"
+																	data-field="quyetdinh_xuphat_attachment"></div>
 															</div>
+															<div class="link-taive-view link-taive">
+																<div class="taive-quyetdinh_xuphat_attachment"
+																	data-field="quyetdinh_xuphat_attachment"></div>
+															</div>
+
 														</div>
 													</div>
 												</div>
@@ -1370,24 +1483,31 @@
 
 												</div>
 											</div>
+
 											<div class="row">
 												<div class="form-group col">
 													<label>Tài liệu đính kèm</label>
 													<div id="upload-baocao_doituong_thuchien_attachment">
-														<div class="custom-file">
-															<input type="file" class="custom-file-input upload_files"
+														<div class="custom-file custom-file-view">
+															<input type="file" class="custom-file-input upload_files attachmentBuoc13" aria-label="Báo cáo thực hiện của đối tượng thanh tra"
 																id="upload_files"
-																data-attr="baocao_doituong_thuchien_attachment"
+																data-attr="baocao_doituong_thuchien_attachment" multiple
 																lang="vi">
-															<label class="custom-file-label">Chọn file tải lên</label>
+															<label
+																class="custom-file-label label_list_files-baocao_doituong_thuchien_attachment">Chọn
+																file tải lên</label>
 														</div>
 													</div>
-													<div id="download-baocao_doituong_thuchien_attachment"
-														class="form-group col col-md-12 col-sm-12 linkdownload_and_button">
-														<span class="textDownload2 textDownloadBuoc13"
-															data-bind="text:baocao_doituong_thuchien_attachment" />
-														<a class="linkDownload2 linkDownloadBuoc13">Download</a>
+
+													<div class="tenfile">
+														<div class="tenfile-baocao_doituong_thuchien_attachment"
+															data-field="baocao_doituong_thuchien_attachment"></div>
 													</div>
+													<div class="link-taive-view link-taive">
+														<div class="taive-baocao_doituong_thuchien_attachment"
+															data-field="baocao_doituong_thuchien_attachment"></div>
+													</div>
+
 												</div>
 											</div>
 
@@ -1425,7 +1545,19 @@
 												<input required type="text" data-bind="value:ngay_bangiao_luutru"
 													class="form-control">
 											</div>
+											<div class="row">
+												<div class="form-group col-6 buoc14">
+													<label>Người giao</label>
+													<input required type="text" data-bind="value:nguoigiao"
+														class="form-control">
+												</div>
+												<div class="form-group col-6 buoc14">
+													<label>Người nhận</label>
+													<input required type="text" data-bind="value:nguoinhan"
+														class="form-control">
+												</div>
 
+											</div>
 											<div class="form-group col-12">
 												<label>Danh sách hồ sơ bàn giao</label>
 												<div style="background-color: #f3f3f3;border-radius: 10px;">
@@ -1514,65 +1646,9 @@
 												</div>
 											</div>
 
-											<!-- <div class="form-group col-12">
-													<label>Danh sách hồ sơ theo dõi tình hình thanh tra</label>
-													<div style="background-color: #f3f3f3;border-radius: 10px;">
-														<table class=" table table-bordered w-100">
-															<tr class="text-center">
-																<th>STT</th>
-																<th>Tên tài liệu</th>
-																<th>Tải về</th>
-															</tr>
-															<tbody class="danhsachhoso_bangiao_buoc8"></tbody>
-														</table>
-
-													</div>
-												</div>
-
-												<div class="form-group col-12">
-													<label>Danh sách hồ sơ báo cáo của đoàn thanh tra</label>
-													<div style="background-color: #f3f3f3;border-radius: 10px;">
-														<table class=" table table-bordered w-100">
-															<tr class="text-center">
-																<th>STT</th>
-																<th>Tên tài liệu</th>
-																<th>Tải về</th>
-															</tr>
-															<tbody class="danhsachhoso_bangiao_buoc9"></tbody>
-														</table>
-
-													</div>
-												</div>
-
-												<div class="form-group col-12">
-													<label>Danh sách hồ sơ văn bản dự thảo kết luận thanh tra</label>
-													<div style="background-color: #f3f3f3;border-radius: 10px;">
-														<table class=" table table-bordered w-100">
-															<tr class="text-center">
-																<th>STT</th>
-																<th>Tên tài liệu</th>
-																<th>Tải về</th>
-															</tr>
-															<tbody class="danhsachhoso_bangiao_buoc10"></tbody>
-														</table>
-
-													</div>
-												</div> -->
 
 										</div>
-										<div class="row">
-											<div class="form-group col-6 buoc14">
-												<label>Người giao</label>
-												<input required type="text" data-bind="value:nguoigiao"
-													class="form-control">
-											</div>
-											<div class="form-group col-6 buoc14">
-												<label>Người nhận</label>
-												<input required type="text" data-bind="value:nguoinhan"
-													class="form-control">
-											</div>
 
-										</div>
 										<button class="btn btn-success btn-save btn-save-gd14 buoc14">Lưu</button>
 
 										<button class="btn btn-danger btn-end-exit">Kết thúc thanh tra</button>

@@ -16,7 +16,7 @@
         "type": "datetime"
     },
     "tailieu": {
-        "type": "string"
+        "type": "json"
     }
 
 }
