@@ -149,19 +149,29 @@ def create_default_models():
     db.session.add(user1)
 
     salt2 = generator_salt()  
-    user2 = User(email='phocuctruong@gmail.com', name='Phó cục trưởng',  password=auth.encrypt_password('123456', salt2), salt=salt2 ,active=True)
-    user2.roles.append(role3)
+    user2 = User(email='vanphongcuc@gmail.com', name='Văn Phòng Cục',  password=auth.encrypt_password('123456', salt2), salt=salt2 ,active=True)
+    user2.roles.append(role2)
     db.session.add(user2)
 
     salt3 = generator_salt()  
-    user3 = User(email='truongphong@gmail.com', name='trưởng Phòng',  password=auth.encrypt_password('123456', salt3), salt=salt3 ,active=True)
-    user3.roles.append(role4)
+    user3 = User(email='phocuctruong@gmail.com', name='Phó Cục Trưởng',  password=auth.encrypt_password('123456', salt3), salt=salt3 ,active=True)
+    user3.roles.append(role3)
     db.session.add(user3)
 
     salt4 = generator_salt()  
-    user4 = User(email='chuyenvien@gmail.com', name='chuyên viên',  password=auth.encrypt_password('123456', salt4), salt=salt4 ,active=True)
-    user4.roles.append(role5)
+    user4 = User(email='truongphong@gmail.com', name='Trưởng Phòng',  password=auth.encrypt_password('123456', salt4), salt=salt4 ,active=True)
+    user4.roles.append(role4)
     db.session.add(user4)
+
+    salt5 = generator_salt()  
+    user5 = User(email='chuyenvien@gmail.com', name='chuyên viên',  password=auth.encrypt_password('123456', salt4), salt=salt4 ,active=True)
+    user5.roles.append(role5)
+    db.session.add(user5)
+
+    salt6 = generator_salt()  
+    user6 = User(email='thanhviendoanthanhtra@gmail.com', name='Thành Viên Đoàn Thanh Tra',  password=auth.encrypt_password('123456', salt4), salt=salt4 ,active=True)
+    user6.roles.append(role6)
+    db.session.add(user6)
 
     db.session.commit()
     
