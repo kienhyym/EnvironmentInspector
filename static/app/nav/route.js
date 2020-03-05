@@ -16,6 +16,17 @@ define(function (require) {
 		},
 
 		{
+			"collectionName": "donvi",
+			"route": "donvi/collection",
+			"$ref": "app/donvi/view/CollectionView",
+		},
+		{
+			"collectionName": "donvi",
+			"route": "donvi/model(/:id)",
+			"$ref": "app/donvi/view/ModelView",
+		},
+
+		{
 			"collectionName": "danhmuclinhvuc",
 			"route": "danhmuclinhvuc/collection",
 			"$ref": "app/danhmuclinhvuc/js/CollectionView",

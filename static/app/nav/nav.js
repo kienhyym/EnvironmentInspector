@@ -17,7 +17,7 @@ define(function (require) {
 		},
 
 		{
-			"text": "Danh sách đơn vị",
+			"text": "Danh sách doanh nghiệp",
 			"icon": "fa fa-home",
 			"type": "view",
 			"collectionName": "danhmucdoanhnghiep",
@@ -28,8 +28,6 @@ define(function (require) {
 			}
 		},
 		{
-			"text": "Chi tiết đơn vị",
-			"icon": "fa fa-home",
 			"type": "view",
 			"collectionName": "danhmucdoanhnghiep",
 			"route": "danhmucdoanhnghiep/model(/:id)",
@@ -38,6 +36,28 @@ define(function (require) {
 				return false;
 			}
 		},
+
+		{
+			"text": "Danh sách đơn vị quản lý",
+			"icon": "fa fa-home",
+			"type": "view",
+			"collectionName": "donvi",
+			"route": "donvi/collection",
+			"$ref": "app/donvi/js/CollectionView",
+			"visible": function () {
+				return true;
+			}
+		},
+		{
+			"type": "view",
+			"collectionName": "donvi",
+			"route": "donvi/model(/:id)",
+			"$ref": "app/donvi/js/ModelView",
+			"visible": function () {
+				return false;
+			}
+		},
+
 		{
 			"text": "Danh sách lĩnh vực",
 			"icon": "fa fa-home",

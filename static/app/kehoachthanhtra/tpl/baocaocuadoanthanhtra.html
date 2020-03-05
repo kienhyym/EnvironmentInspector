@@ -5,6 +5,11 @@
         <input type="text" baocaocuadoanthanhtra-bind="value:ngayguibaocaogiaitrinh"
             placeholder="Ngày gửi báo cáo giải trình" class="form-control">
     </div>
+    <div class="form-group col-6 ">
+        <label>Trạng thái</label>
+        <input required type="text" baocaocuadoanthanhtra-bind="value:duyet"
+            placeholder="Duyệt/ không duyệt"" class="form-control duyetkhongduyet">
+    </div>
 </div>
 
 <div class="row outFocus">
@@ -32,12 +37,21 @@
 
     </div>
 </div>
+<div class="row ykien" style="display: none">
+    <div class="form-group col-12 ">
+        <label>Ý kiến</label>
+        <textarea type="text" baocaocuadoanthanhtra-bind="value:ykien"
+            placeholder="Viết ý kiến" class="form-control"></textarea>
+    </div>
+    
+</div>
 <div class="row">
     <div class="form-group col-6 ">
         <label>Ngày gửi bảo cáo của đoàn thanh tra  </label>
         <input required type="text" baocaocuadoanthanhtra-bind="value:ngayguibaocaocuadoanthanhtra"
             placeholder="Ngày gửi báo cáo giải trình" class="form-control">
     </div>
+   
 </div>
 </div>
 

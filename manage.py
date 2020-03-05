@@ -130,12 +130,16 @@ def create_default_models():
     #add role
     role1 = Role(name='CucTruong',description='Cục Trưởng')
     db.session.add(role1)
+    # role2 = Role(name='VanPhongCuc',description='Văn Phòng Cục)
+    # db.session.add(role2)
     role3 = Role(name='PhoCucTruong',description='Phó Cục Trưởng')
     db.session.add(role3)
     role4 = Role(name='TruongPhong',description='Trưởng Phòng')
     db.session.add(role4)
     role5 = Role(name='ChuyenVien',description='Chuyên Viên')
     db.session.add(role5)
+    # role6 = Role(name='ThanhVienDoanThanhTra',description='Thành Viên Đoàn Thanh Tra)
+    # db.session.add(role6)
     db.session.flush()
 
     #add user test   

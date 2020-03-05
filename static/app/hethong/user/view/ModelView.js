@@ -9,6 +9,7 @@ define(function (require) {
 	var XaPhuongSelectView = require('app/DanhMuc/XaPhuong/view/SelectView');
 	var QuanHuyenSelectView = require('app/DanhMuc/QuanHuyen/view/SelectView');
 	var TinhThanhSelectView = require('app/DanhMuc/TinhThanh/view/SelectView');
+	var DonViSelectView = require('app/donvi/view/SelectView');
 
 
 	var currentDate = new Date();
@@ -70,29 +71,37 @@ define(function (require) {
 			}],
 		uiControl: {
 			fields: [
+				// {
+				// 	field: "xaphuong",
+				// 	uicontrol: "ref",
+				// 	textField: "ten",
+				// 	foreignRemoteField: "id",
+				// 	foreignField: "xaphuong_id",
+				// 	dataSource: XaPhuongSelectView
+				// },
+				// {
+				// 	field: "quanhuyen",
+				// 	uicontrol: "ref",
+				// 	textField: "ten",
+				// 	foreignRemoteField: "id",
+				// 	foreignField: "quanhuyen_id",
+				// 	dataSource: QuanHuyenSelectView
+				// },
+				// {
+				// 	field: "tinhthanh",
+				// 	uicontrol: "ref",
+				// 	textField: "ten",
+				// 	foreignRemoteField: "id",
+				// 	foreignField: "tinhthanh_id",
+				// 	dataSource: TinhThanhSelectView
+				// },
 				{
-					field: "xaphuong",
+					field: "donvi",
 					uicontrol: "ref",
 					textField: "ten",
 					foreignRemoteField: "id",
-					foreignField: "xaphuong_id",
-					dataSource: XaPhuongSelectView
-				},
-				{
-					field: "quanhuyen",
-					uicontrol: "ref",
-					textField: "ten",
-					foreignRemoteField: "id",
-					foreignField: "quanhuyen_id",
-					dataSource: QuanHuyenSelectView
-				},
-				{
-					field: "tinhthanh",
-					uicontrol: "ref",
-					textField: "ten",
-					foreignRemoteField: "id",
-					foreignField: "tinhthanh_id",
-					dataSource: TinhThanhSelectView
+					foreignField: "donvi_id",
+					dataSource: DonViSelectView
 				},
 			]
 		},

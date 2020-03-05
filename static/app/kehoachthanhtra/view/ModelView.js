@@ -165,12 +165,11 @@ define(function (require) {
 		},
 		render: function () {
 			var self = this;
+			self.chonLinhVuc();
+
 			self.getDoanhNghiep();
 			self.bindEventSelect();
 			self.updateUIPermission();
-			self.chonLinhVuc();
-			var link = window.location.href;
-			// self.model.set("madoanhnghiep", link.slice(-36))
 			self.inputFileOnChange();
 			self.bindEventGD();
 			var id = this.getApp().getRouter().getParam("id");
@@ -178,7 +177,7 @@ define(function (require) {
 				this.model.set('id', id);
 				this.model.fetch({
 					success: function (data) {
-						self.hienThiLinhVucDaChon();
+						
 						self.inputFileOnChange();
 						self.renderAttachment();
 						self.bindEventGD();
@@ -194,6 +193,8 @@ define(function (require) {
 							self.$el.find(".highlight").removeClass('d-none');
 						}
 						self.applyBindings();
+						self.chonLinhVuc();
+						self.hienThiLinhVuc();
 						self.$el.find("#multiselect_donvidoanhnghiep").selectpicker('val', self.model.get("madoanhnghiep"));
 						self.updateUITimeline(self.model.toJSON());
 						self.updateUIPermission();
@@ -255,73 +256,164 @@ define(function (require) {
 			}
 
 		},
+		hienThiLinhVuc: function () {
+			var self = this;
+			var linhVuc = [];
+			self.model.get('danhsachlinhvuc_field').forEach(function (item, index) {
+				linhVuc.push(item.id)
+			})
+			self.$el.find('.chonlinhvuc select').selectpicker('val', linhVuc);
+
+		},
+		chonLinhVuc: function () {
+			var self = this;
+			$.ajax({
+				url: self.getApp().serviceURL + "/api/v1/danhmuclinhvuc",
+				method: "GET",
+				data: { "q": JSON.stringify({ "order_by": [{ "field": "grouplinhvuc", "direction": "desc" }], "page": 1, "results_per_page": 10000 }) },
+				contentType: "application/json",
+				success: function (data) {
+					console.log('aaaaaaaaaaaaa',data)
+
+					var grouplinhvuc = "";
+					var classMaLinhVuc = "";
+					data.objects.forEach(function (item, index) {
+						if (grouplinhvuc !== item.grouplinhvuc) {
+							classMaLinhVuc = item.malinhvuc;
+							self.$el.find('.chonlinhvuc select').append(`
+							<optgroup label="${item.grouplinhvuc}" class ="optgroup${classMaLinhVuc} pt-0 pb-0 " >
+							<option value="${item.id}">${item.tenlinhvuc}</option>
+							</optgroup>
+							`)
+							grouplinhvuc = item.grouplinhvuc
+						} else {
+							self.$el.find('.optgroup' + classMaLinhVuc).append(`
+								<option value="${item.id}" >${item.tenlinhvuc}</option>
+							`)
+						}
+					})
+					self.$el.find('.chonlinhvuc select').selectpicker({
+						'actionsBox': 'true'
+					});
+				},
+				error: function (xhr, status, error) {
+					self.getApp().notify({ message: "Không lấy được dữ liệu" }, { type: "danger", delay: 1000 });
+				},
+			});
+
+
+		},
+
+
 		bindEventGD: function (files) {
 			var self = this;
 			self.$el.find("#btn_save").unbind('click').bind('click', function () {
-				self.model.save(null, {
-					success: function (model, response, options) {
-						if (files != undefined) {
-							files.forEach(function (item, index) {
-								self.saveAttachment(item.arrAttachment, item.data_attr);
-							})
-						}
-						else {
-							self.saveModel();
-						}
-
-						self.$el.find("#header_del_member").removeClass("d-none");
-						var memberView = new ThanhVienThanhTraItemView();
-						if (!!response) {
-							memberView.model.set(JSON.parse(JSON.stringify(response)));
-						}
-			
-						memberView.render();
-						self.$el.find("#danhsach_thanhvien").append(memberView.$el);
-						memberView.on("change", function (event) {
-							var ds_member = self.model.get("danhsach_thanhvien");
-							if (ds_member === null) {
-								ds_member = [];
-								ds_member.push(event.response)
-							}
-							for (var i = 0; i < ds_member.length; i++) {
-								if (ds_member[i].id === event.oldData.id) {
-									ds_member[i] = event.response;
-									break;
-								}
-							}
-							self.model.set("danhsach_thanhvien", ds_member);
-							self.applyBinding("danhsach_thanhvien");
-						});
-						memberView.$el.find("#del_member").unbind("click").bind("click", function () {
-							var ds_member = self.model.get("danhsach_thanhvien");
-							for (var i = 0; i < ds_member.length; i++) {
-								if (ds_member[i].id === memberView.model.get("id")) {
-			
-									ds_member.splice(i, 1);
-								}
-							}
-							self.model.set("danhsach_thanhvien", ds_member);
-							self.applyBinding("danhsach_thanhvien");
-							memberView.destroy();
-							memberView.remove();
-						});
-
-						self.getApp().getRouter().navigate(self.collectionName + "/collection");
-					},
-					error: function (xhr, status, error) {
-						try {
-							if (($.parseJSON(error.xhr.responseText).error_code) === "SESSION_EXPIRED") {
-								self.getApp().notify("Hết phiên làm việc, vui lòng đăng nhập lại!");
-								self.getApp().getRouter().navigate("login");
-							} else {
-								self.getApp().notify({ message: $.parseJSON(error.xhr.responseText).error_message }, { type: "danger", delay: 1000 });
-							}
-						}
-						catch (err) {
-							self.getApp().notify({ message: "Lưu thông tin không thành công" }, { type: "danger", delay: 1000 });
-						}
+				if (self.$el.find('.chonlinhvuc select').selectpicker('val').length != 0) {
+					var giatriloc_LinhVuc = self.$el.find('.chonlinhvuc select').selectpicker('val');
+					console.log(giatriloc_LinhVuc);
+					var filters = {
+						filters: {
+							"$and": [
+								{ "id": { "$in": giatriloc_LinhVuc } }
+							]
+						},
+						order_by: [{ "field": "created_at", "direction": "asc" }]
 					}
-				});
+					$.ajax({
+						type: "GET",
+						url: self.getApp().serviceURL + "/api/v1/danhmuclinhvuc?results_per_page=100000&max_results_per_page=1000000",
+						data: { "q": JSON.stringify(filters) },
+						contentType: "application/json",
+						success: function (response) {
+							console.log(response.objects)
+							self.model.set('danhsachlinhvuc_field', response.objects)
+							self.model.save(null, {
+								success: function (model, respose, options) {
+									if (files != undefined) {
+										files.forEach(function (item, index) {
+											self.saveAttachment(item.arrAttachment, item.data_attr);
+										})
+									}
+									else {
+										self.saveModel();
+									}
+
+									self.$el.find("#header_del_member").removeClass("d-none");
+									var memberView = new ThanhVienThanhTraItemView();
+									if (!!response) {
+										memberView.model.set(JSON.parse(JSON.stringify(response)));
+									}
+
+									memberView.render();
+									self.$el.find("#danhsach_thanhvien").append(memberView.$el);
+									memberView.on("change", function (event) {
+										var ds_member = self.model.get("danhsach_thanhvien");
+										if (ds_member === null) {
+											ds_member = [];
+											ds_member.push(event.response)
+										}
+										for (var i = 0; i < ds_member.length; i++) {
+											if (ds_member[i].id === event.oldData.id) {
+												ds_member[i] = event.response;
+												break;
+											}
+										}
+										self.model.set("danhsach_thanhvien", ds_member);
+										self.applyBinding("danhsach_thanhvien");
+									});
+									memberView.$el.find("#del_member").unbind("click").bind("click", function () {
+										var ds_member = self.model.get("danhsach_thanhvien");
+										for (var i = 0; i < ds_member.length; i++) {
+											if (ds_member[i].id === memberView.model.get("id")) {
+
+												ds_member.splice(i, 1);
+											}
+										}
+										self.model.set("danhsach_thanhvien", ds_member);
+										self.applyBinding("danhsach_thanhvien");
+										memberView.destroy();
+										memberView.remove();
+									});
+
+									self.getApp().getRouter().navigate(self.collectionName + "/collection");
+
+								},
+								error: function (xhr, status, error) {
+									try {
+										if (($.parseJSON(error.xhr.responseText).error_code) === "SESSION_EXPIRED") {
+											self.getApp().notify("Hết phiên làm việc, vui lòng đăng nhập lại!");
+											self.getApp().getRouter().navigate("login");
+										} else {
+											self.getApp().notify({ message: $.parseJSON(error.xhr.responseText).error_message }, { type: "danger", delay: 1000 });
+										}
+									}
+									catch (err) {
+										self.getApp().notify({ message: "Lưu thông tin không thành công" }, { type: "danger", delay: 1000 });
+									}
+								}
+							});
+						}
+					});
+				}
+
+				// self.model.save(null, {
+				// 	success: function (model, response, options) {
+
+				// 	},
+				// 	error: function (xhr, status, error) {
+				// 		try {
+				// 			if (($.parseJSON(error.xhr.responseText).error_code) === "SESSION_EXPIRED") {
+				// 				self.getApp().notify("Hết phiên làm việc, vui lòng đăng nhập lại!");
+				// 				self.getApp().getRouter().navigate("login");
+				// 			} else {
+				// 				self.getApp().notify({ message: $.parseJSON(error.xhr.responseText).error_message }, { type: "danger", delay: 1000 });
+				// 			}
+				// 		}
+				// 		catch (err) {
+				// 			self.getApp().notify({ message: "Lưu thông tin không thành công" }, { type: "danger", delay: 1000 });
+				// 		}
+				// 	}
+				// });
 
 			});
 		},
@@ -526,50 +618,50 @@ define(function (require) {
 				self.renderMember_GD1(data_default);
 			});
 		},
-		chonLinhVuc: function () {
-			var self = this;
-			$.ajax({
-				url: self.getApp().serviceURL + "/api/v1/danhmuclinhvuc?results_per_page=100000&max_results_per_page=1000000",
-				method: "GET",
-				contentType: "application/json",
-				success: function (data) {
-					data.objects.forEach(function (item, index) {
-						self.$el.find('.chonlinhvuc select').append(`
-						<option data-id="${item.id}">${item.tenlinhvuc}</option>
-					`)
-					})
-					self.$el.find('.chonlinhvuc select').selectpicker();
-					self.$el.find('.chonlinhvuc select').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
-						var arr = [];
-						self.$el.find(".chonlinhvuc div div div ul li").each(function (index, item) {
-							if ($(item).attr('class') == "selected") {
-								arr.push(data.objects[index])
-							}
-						})
-						self.model.set('danhsachlinhvuc_field', arr)
-					})
-				},
-				error: function (xhr, status, error) {
-					self.getApp().notify({ message: "Không lấy được dữ liệu" }, { type: "danger", delay: 1000 });
-				},
-			});
+		// chonLinhVuc: function () {
+		// 	var self = this;
+		// 	$.ajax({
+		// 		url: self.getApp().serviceURL + "/api/v1/danhmuclinhvuc?results_per_page=100000&max_results_per_page=1000000",
+		// 		method: "GET",
+		// 		contentType: "application/json",
+		// 		success: function (data) {
+		// 			data.objects.forEach(function (item, index) {
+		// 				self.$el.find('.chonlinhvuc select').append(`
+		// 				<option data-id="${item.id}">${item.tenlinhvuc}</option>
+		// 			`)
+		// 			})
+		// 			self.$el.find('.chonlinhvuc select').selectpicker();
+		// 			self.$el.find('.chonlinhvuc select').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+		// 				var arr = [];
+		// 				self.$el.find(".chonlinhvuc div div div ul li").each(function (index, item) {
+		// 					if ($(item).attr('class') == "selected") {
+		// 						arr.push(data.objects[index])
+		// 					}
+		// 				})
+		// 				self.model.set('danhsachlinhvuc_field', arr)
+		// 			})
+		// 		},
+		// 		error: function (xhr, status, error) {
+		// 			self.getApp().notify({ message: "Không lấy được dữ liệu" }, { type: "danger", delay: 1000 });
+		// 		},
+		// 	});
 
-		},
-		hienThiLinhVucDaChon: function () {
-			var self = this;
+		// },
+		// hienThiLinhVucDaChon: function () {
+		// 	var self = this;
 
-			const promise = new Promise((resolve, reject) => {
-				var arr = [];
-				self.model.get('danhsachlinhvuc_field').forEach(function (item, index) {
-					arr.push(item.tenlinhvuc)
-				})
-				return resolve(arr)
-			})
-			promise.then((data) => {
-				self.$el.find('.chonlinhvuc select').selectpicker('val', data)
-			});
-			self.model.set('danhsachlinhvuc_field', self.model.get('danhsachlinhvuc_field'))
-		},
+		// 	const promise = new Promise((resolve, reject) => {
+		// 		var arr = [];
+		// 		self.model.get('danhsachlinhvuc_field').forEach(function (item, index) {
+		// 			arr.push(item.tenlinhvuc)
+		// 		})
+		// 		return resolve(arr)
+		// 	})
+		// 	promise.then((data) => {
+		// 		self.$el.find('.chonlinhvuc select').selectpicker('val', data)
+		// 	});
+		// 	self.model.set('danhsachlinhvuc_field', self.model.get('danhsachlinhvuc_field'))
+		// },
 		renderUpload() {
 			var self = this;
 

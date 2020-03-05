@@ -25,22 +25,26 @@
         "type": "string",
         "primary": true
     },
-    "phone_number": {
+    "ten": {
         "type": "string",
-        "length": 50
+        "required": true
     },
-    "email": {
-        "type": "string",
-        "length": 50
-    },
-    "name": {
-        "type": "string",
-        "length": 50
-    },
-    "password": {
+    "fax": {
         "type": "string"
     },
-    "salt": {
+    "email": {
+        "type": "string"
+    },
+    "dienthoai": {
+        "type": "string"
+    },
+    "diachi": {
+        "type": "string"
+    },
+    "thongtin": {
+        "type": "string"
+    },
+    "nguoichiutrachnhiem": {
         "type": "string"
     },
     "xaphuong_id": {
@@ -52,25 +56,6 @@
     "tinhthanh_id": {
         "type": "string"
     },
-    "type": {
-        "type": "string"
-    },
-    "captren_id": {
-        "type": "string"
-    },
-    "captren_name": {
-        "type": "string"
-    },
-    "donvi_id": {
-        "type": "string"
-    },
-    "description": {
-        "type": "string"
-    },
-    "active": {
-        "type": "boolean",
-        "default": true
-    },
     "xaphuong": {
         "type": "dict"
     },
@@ -80,10 +65,7 @@
     "tinhthanh": {
         "type": "dict"
     },
-    "donvi": {
-        "type": "dict"
-    },
-    "roles": {
+    "userfield": {
         "type": "list"
     }
 }

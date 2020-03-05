@@ -3,35 +3,35 @@ define(function (require) {
     var $ = require('jquery'),
         _ = require('underscore'),
         Gonrin = require('gonrin');
-    var itemTemplate = require('text!app/kehoachthanhtra/tpl/vanbanduthao.html'),
-        itemSchema = require('json!schema/VanBanDuThaoSchema.json');
+    var itemTemplate = require('text!app/kehoachthanhtra/tpl/congvanbaocao.html'),
+        itemSchema = require('json!schema/CongVanBaoCaoSchema.json');
 
     return Gonrin.ItemView.extend({
-        bindings: "vanbanduthao-bind",
+        bindings: "congvanbaocao-bind",
         template: itemTemplate,
         tagName: 'div',
         modelSchema: itemSchema,
         urlPrefix: "/api/v1/",
-        collectionName: "vanbanduthao",
+        collectionName: "congvanbaocao",
         foreignRemoteField: "id",
         foreignField: "kehoachthanhtra_id",
         uiControl: {
             fields: [
                 {
-                    field: "trangthai_vanban",
+                    field: "duyet",
                     uicontrol: "combobox",
                     textField: "text",
                     valueField: "value",
                     cssClass: "form-control",
                     dataSource: [
-                        { value: 1, text: "Duyệt" },
-                        { value: 2, text: "Không duyệt" },
+                        { value: "duyet", text: "Duyệt" },
+                        { value: "khongduyet", text: "Không duyệt" },
 
                     ],
                 },
 
                 {
-                    field: "ngay_duthao_vanban",
+                    field: "ngay_congvan_yeucau_baocao_thuchien",
                     uicontrol: "datetimepicker",
                     textFormat: "DD/MM/YYYY",
                     extraFormats: ["DDMMYYYY"],
@@ -43,7 +43,7 @@ define(function (require) {
                     }
                 },
                 {
-                    field: "ngay_gui_congvan_giaitrinh",
+                    field: "ngay_baocao_doituong_thuchien",
                     uicontrol: "datetimepicker",
                     textFormat: "DD/MM/YYYY",
                     extraFormats: ["DDMMYYYY"],
@@ -54,30 +54,8 @@ define(function (require) {
                         return date.unix()
                     }
                 },
-                {
-                    field: "ngay_vanban_thamkhao_ykien",
-                    uicontrol: "datetimepicker",
-                    textFormat: "DD/MM/YYYY",
-                    extraFormats: ["DDMMYYYY"],
-                    parseInputDate: function (val) {
-                        return moment.unix(val)
-                    },
-                    parseOutputDate: function (date) {
-                        return date.unix()
-                    }
-                },
-                {
-                    field: "ngayduyetvanban",
-                    uicontrol: "datetimepicker",
-                    textFormat: "DD/MM/YYYY",
-                    extraFormats: ["DDMMYYYY"],
-                    parseInputDate: function (val) {
-                        return moment.unix(val)
-                    },
-                    parseOutputDate: function (date) {
-                        return date.unix()
-                    }
-                },
+
+
             ]
         },
 
@@ -87,76 +65,37 @@ define(function (require) {
                 self.saveModel();
             })
 
-            self.$el.find(".trangthai_vanban").on('change.gonrin', function (e) {
-                if (self.$el.find(".trangthai_vanban").data('gonrin').getValue() == 1) {
-                    $(".nguoiduyet").show()
-                }else{
-                    $(".nguoiduyet").hide()
+            self.$el.find(".duyetkhongduyet").on('change.gonrin', function (e) {
+                if (self.$el.find(".duyetkhongduyet").data('gonrin').getValue() == "duyet") {
+                    $(".ykien").hide()
+                } else {
+                    $(".ykien").show()
                 }
             });
+            if(self.model.attributes.duyet == "khongduyet"){
+                $(".ykien").show()
+            }
+
             self.$el.find(".btn_congvangiaitrinh").unbind("click").bind("click", function () {
                 self.$el.find(".congvangiaitrinh").toggle();
             });
             self.$el.find(".btn_thamkhao").unbind("click").bind("click", function () {
                 self.$el.find(".thamkhao").toggle();
             });
-            if(self.model.attributes.ngay_vanban_thamkhao_ykien != null && 
-                self.model.attributes.so_vanban_thamkhao_ykien != "" &&
-                self.model.attributes.so_vanban_thamkhao_ykien != null &&
-                self.model.attributes.tham_khao_y_kien_attachment != null ){
-                    self.$el.find(".thamkhao").show();
-                }
-                if(self.model.attributes.ngay_gui_congvan_giaitrinh != null && 
-                    self.model.attributes.so_congvan_giaitrinh != "" &&
-                    self.model.attributes.so_congvan_giaitrinh != null &&
-                    self.model.attributes.congvan_giaitrinh_cua_doituong_thanhtra_attachment != null ){
-                        self.$el.find(".congvangiaitrinh").show();
-                    }
             if (!self.model.get("id")) {
                 self.model.set("id", gonrin.uuid())
             }
 
-            // self.bindEventSelect();
             self.applyBindings();
-            // self.renderUpload();
             self.inputFileOnChange();
             self.renderAttachment();
             self.$el.find(".btn-xoa").unbind("click").bind("click", function () {
                 self.remove(true);
             });
         },
-        renderUpload() {
-            var self = this;
-            var keys = [
-                "vanban_duthao_duthao_attachment",
-                "congvan_giaitrinh_cua_doituong_thanhtra_attachment",
-                "tham_khao_y_kien_attachment"
-
-            ];
-            $.each(keys, function (i, key) {
-                var attr_value = self.model.get(key);
-                var linkDownload = self.$el.find(".linkDownloadVanBanDuThao");
-
-                if (!!attr_value) {
-                    linkDownload[i].href = attr_value;
-                    self.$el.find("#upload-" + key).hide();
-                    self.$el.find("#download-" + key).show();
-
-                } else {
-                    self.$el.find("#upload-" + key).show();
-                    self.$el.find("#download-" + key).hide();
-
-                }
-
-            })
-            self.$el.find(".textDownloadVanBanDuThao").each(function (index, item) {
-                item.textContent = item.textContent
-            })
-        },
+        
         saveModel: function () {
             var self = this;
-
-
             self.model.save(null, {
                 success: function (model, response, options) {
                     self.getApp().notify("Lưu thông tin thành công");
@@ -194,13 +133,13 @@ define(function (require) {
         },
         renderAttachment: function () {
             var self = this;
-            self.$el.find('.link-taive-vanbanduthao div').each(function (indexhtml, itemhtml) {
+            self.$el.find('.link-taive-congvanbaocao div').each(function (indexhtml, itemhtml) {
                 if (self.model.get($(itemhtml).attr('data-field')) != null) {
-                    $(self.$el.find('.custom-file-vanbanduthao')[indexhtml]).hide();
+                    $(self.$el.find('.custom-file-congvanbaocao')[indexhtml]).hide();
                     // $(itemhtml).append(`
-					// 	<label class = 'mt-2'>Danh sách tài liệu</label><br>
+                    // 	<label class = 'mt-2'>Danh sách tài liệu</label><br>
                     // `)
-                    
+
                     self.model.get($(itemhtml).attr('data-field')).forEach(function (itemfield, indexfield) {
                         self.$el.find(".taive-" + $(itemhtml).attr('data-field')).append(`
 						<label>&nbsp;&nbsp;&nbsp;&nbsp;${itemfield.slice(16)}</label><a href="${itemfield}"> Tải về </a><br>
@@ -219,13 +158,13 @@ define(function (require) {
 
                     var data_attr = $(this).attr("data-attr");
                     // self.$el.find(".tenfile-" + data_attr).append(`
-					// 	<label class = 'mt-2'>Danh sách tài liệu</label><br>
+                    // 	<label class = 'mt-2'>Danh sách tài liệu</label><br>
                     // `)
                     self.$el.find(".tenfile-" + data_attr).find('label,br').remove()
                     for (var i = 0; i < $(this).get(0).files.length; ++i) {
-                    //     self.$el.find(".tenfile-" + data_attr).append(`
-					// 	<label>&nbsp;&nbsp;&nbsp;&nbsp;${$(this).get(0).files[i].name}</label><br>
-					// `)
+                        //     self.$el.find(".tenfile-" + data_attr).append(`
+                        // 	<label>&nbsp;&nbsp;&nbsp;&nbsp;${$(this).get(0).files[i].name}</label><br>
+                        // `)
                         arrAttachment.push($(this).get(0).files[i]);
                     }
                     self.$el.find('.label_list_files-' + data_attr).text("Bạn vừa chọn " + arrAttachment.length + " tài liệu")

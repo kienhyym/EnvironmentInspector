@@ -15,7 +15,7 @@ define(function (require) {
 		bindings: "data-member-bind",
 		collectionName: "thanhvienthanhtra",
 		foreignRemoteField: "id",
-	    foreignField: "kehoach_id",
+		foreignField: "kehoach_id",
 		uiControl: {
 			fields: [
 				{
@@ -35,23 +35,87 @@ define(function (require) {
 				},
 			]
 		},
-	
+
 		render: function () {
 			var self = this;
 
-			if (self.model.get("id") == null){
+			if (self.model.get("id") == null) {
 				self.model.set("id", gonrin.uuid());
 			}
-						
-			self.model.on("change", function () {
 
+			self.model.on("change", function () {
 				self.trigger("change", {
 					"oldData": self.model.previousAttributes(),
 					"data": self.model.toJSON()
 				});
 			});
+			self.chonThanhVienThanhTra();
+
 			self.applyBindings();
+			self.$el.find('.chonthanhvienthanhtra select').on('change.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+				var filters = {
+					filters: {
+						"$and": [
+							{ "id": { "$eq": self.$el.find('.chonthanhvienthanhtra select').selectpicker('val') } }
+						]
+					},
+					order_by: [{ "field": "created_at", "direction": "asc" }]
+				}
+				$.ajax({
+					url: self.getApp().serviceURL + "/api/v1/user?results_per_page=100000&max_results_per_page=1000000",
+					method: "GET",
+					data: "q=" + JSON.stringify(filters),
+					contentType: "application/json",
+					success: function (data) {
+						self.model.set('donvicongtac',data.objects[0].donvi.ten)
+						self.model.set('hoten',self.$el.find('.chonthanhvienthanhtra select').selectpicker('val'));
+						console.log(self.model.toJSON())
+						self.trigger("change", {
+							"oldData": self.model.previousAttributes(),
+							"data": self.model.toJSON()
+						});
+					},
+					error: function (xhr, status, error) {
+						self.getApp().notify({ message: "Không lấy được dữ liệu" }, { type: "danger", delay: 1000 });
+					},
+				});
+			});
 		},
+		chonThanhVienThanhTra: function () {
+			var self = this;
+			$.ajax({
+				url: self.getApp().serviceURL + "/api/v1/user?results_per_page=100000&max_results_per_page=1000000",
+				method: "GET",
+				contentType: "application/json",
+				success: function (data) {
+
+					data.objects.forEach(function (item, index) {
+						self.$el.find('.chonthanhvienthanhtra select').append(`
+						<option value="${item.id}" data-id="${item.id}">${item.name}</option>
+					`)
+					})
+					self.$el.find('.chonthanhvienthanhtra select').selectpicker('val', 'deselectAllText');
+
+					if (self.model.toJSON() != undefined && self.model.toJSON() != null) {
+						if (self.model.toJSON().hoten != undefined && self.model.toJSON().hoten != null) {
+							var x = self.model.toJSON().hoten;
+							self.$el.find('.chonthanhvienthanhtra select').selectpicker('val', x);
+						}
+					}
+					
+					self.$el.find('.chonthanhvienthanhtra select').on('shown.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+						self.$el.find('.popover-header .close').css('line-height', '10px')
+						self.$el.find('.popover-header .close').unbind('click').bind('click', function () {
+							self.$el.find('.chonthanhvienthanhtra select').selectpicker('val', 'deselectAllText');
+						})
+					})
+				},
+				error: function (xhr, status, error) {
+					self.getApp().notify({ message: "Không lấy được dữ liệu" }, { type: "danger", delay: 1000 });
+				},
+			});
+		},
+
 	});
 
 });

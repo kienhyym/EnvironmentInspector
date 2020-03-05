@@ -37,82 +37,100 @@
 
 	</div>
 </div>
-<hr>
-<h5>Công văn giải trình
-	kết luận của đối tượng thanh tra</h5>
-<div class="row">
+<div class="congvangiaitrinh" style="display: none;">
+	<h5>Công văn giải trình kết luận của đối tượng thanh tra</h5>
+	<div class="row">
 
-	<div class="form-group col-6">
-		<label>Số văn bản</label>
-		<input required type="text" vanbanduthao-bind="value:so_congvan_giaitrinh"
-			placeholder="Nhập số văn bản giải trình" class="form-control">
+		<div class="form-group col-6">
+			<label>Số văn bản</label>
+			<input required type="text" vanbanduthao-bind="value:so_congvan_giaitrinh"
+				placeholder="Nhập số văn bản giải trình" class="form-control">
+		</div>
+		<div class="form-group col-6 required">
+			<label>Ngày giải trình</label>
+			<input required type="text" vanbanduthao-bind="value:ngay_gui_congvan_giaitrinh"
+				placeholder="Ngày gửi báo cáo giải trình" class="form-control">
+		</div>
 	</div>
-	<div class="form-group col-6 required">
-		<label>Ngày giải trình</label>
-		<input required type="text" vanbanduthao-bind="value:ngay_gui_congvan_giaitrinh"
-			placeholder="Ngày gửi báo cáo giải trình" class="form-control">
+
+
+	<div class="row ">
+		<div class="form-group col">
+			<label>Tài liệu đính kèm</label>
+			<div id="upload-congvan_giaitrinh_cua_doituong_thanhtra_attachment">
+				<div class="custom-file custom-file-vanbanduthao">
+					<input type="file" class="custom-file-input upload_files" id="upload_files"
+						data-attr="congvan_giaitrinh_cua_doituong_thanhtra_attachment" multiple lang="vi">
+					<label
+						class="custom-file-label label_list_files-congvan_giaitrinh_cua_doituong_thanhtra_attachment">Chọn
+						file tải lên</label>
+				</div>
+			</div>
+
+			<div class="tenfile">
+				<div class="tenfile-congvan_giaitrinh_cua_doituong_thanhtra_attachment"
+					data-field="congvan_giaitrinh_cua_doituong_thanhtra_attachment"></div>
+			</div>
+			<div class="link-taive-vanbanduthao link-taive">
+				<div class="taive-congvan_giaitrinh_cua_doituong_thanhtra_attachment"
+					data-field="congvan_giaitrinh_cua_doituong_thanhtra_attachment"></div>
+			</div>
+
+		</div>
 	</div>
 </div>
+<div class="thamkhao" style="display: none;">
+	<h5>Tham khảo ý kiến</h5>
+	<div class="row">
+		<div class="form-group col-6">
+			<label>Số văn bản phản hồi</label>
+			<input required type="text" vanbanduthao-bind="value:so_vanban_thamkhao_ykien" class="form-control">
+		</div>
+		<div class="form-group col-6 required">
+			<label>Ngày nhận văn bản phản hồi</label>
+			<input required type="text" vanbanduthao-bind="value:ngay_vanban_thamkhao_ykien" class="form-control">
+		</div>
+	</div>
 
+	<div class="row ">
+		<div class="form-group col">
+			<label>Tài liệu đính kèm</label>
+			<div id="upload-tham_khao_y_kien_attachment">
+				<div class="custom-file custom-file-vanbanduthao">
+					<input type="file" class="custom-file-input upload_files" id="upload_files"
+						data-attr="tham_khao_y_kien_attachment" multiple lang="vi">
+					<label class="custom-file-label label_list_files-tham_khao_y_kien_attachment">Chọn
+						file tải lên</label>
+				</div>
+			</div>
 
-<div class="row ">
-	<div class="form-group col">
-		<label>Tài liệu đính kèm</label>
-		<div id="upload-congvan_giaitrinh_cua_doituong_thanhtra_attachment">
-			<div class="custom-file custom-file-vanbanduthao">
-				<input type="file" class="custom-file-input upload_files" id="upload_files"
-					data-attr="congvan_giaitrinh_cua_doituong_thanhtra_attachment" multiple lang="vi">
-				<label
-					class="custom-file-label label_list_files-congvan_giaitrinh_cua_doituong_thanhtra_attachment">Chọn
-					file tải lên</label>
+			<div class="tenfile">
+				<div class="tenfile-tham_khao_y_kien_attachment" data-field="tham_khao_y_kien_attachment"></div>
+			</div>
+			<div class="link-taive-vanbanduthao link-taive">
+				<div class="taive-tham_khao_y_kien_attachment" data-field="tham_khao_y_kien_attachment"></div>
 			</div>
 		</div>
-
-		<div class="tenfile">
-			<div class="tenfile-congvan_giaitrinh_cua_doituong_thanhtra_attachment"
-				data-field="congvan_giaitrinh_cua_doituong_thanhtra_attachment"></div>
-		</div>
-		<div class="link-taive-vanbanduthao link-taive">
-			<div class="taive-congvan_giaitrinh_cua_doituong_thanhtra_attachment"
-				data-field="congvan_giaitrinh_cua_doituong_thanhtra_attachment"></div>
-		</div>
-
 	</div>
 </div>
-<hr />
-<h5>Tham khảo ý kiến</h5>
-<div class="row">
+<hr class="m-0 p-0 nguoiduyet">
+<div class="row mt-2 nguoiduyet">
 	<div class="form-group col-6">
-		<label>Số văn bản phản hồi</label>
-		<input required type="text" vanbanduthao-bind="value:so_vanban_thamkhao_ykien" class="form-control">
+		<label>Người duyệt văn bản dự thảo</label>
+		<input required type="text" vanbanduthao-bind="value:nguoiquyetdinh" class="form-control">
 	</div>
-	<div class="form-group col-6 required">
-		<label>Ngày nhận văn bản phản hồi</label>
-		<input required type="text" vanbanduthao-bind="value:ngay_vanban_thamkhao_ykien" class="form-control">
+	<div class="form-group col-3">
+		<label>Số quyết định</label>
+		<input required type="text" vanbanduthao-bind="value:soquyetdinh" class="form-control">
 	</div>
-</div>
-
-<div class="row ">
-	<div class="form-group col">
-		<label>Tài liệu đính kèm</label>
-		<div id="upload-tham_khao_y_kien_attachment">
-			<div class="custom-file custom-file-vanbanduthao">
-				<input type="file" class="custom-file-input upload_files" id="upload_files"
-					data-attr="tham_khao_y_kien_attachment" multiple lang="vi">
-				<label class="custom-file-label label_list_files-tham_khao_y_kien_attachment">Chọn
-					file tải lên</label>
-			</div>
-		</div>
-
-		<div class="tenfile">
-			<div class="tenfile-tham_khao_y_kien_attachment" data-field="tham_khao_y_kien_attachment"></div>
-		</div>
-		<div class="link-taive-vanbanduthao link-taive">
-			<div class="taive-tham_khao_y_kien_attachment" data-field="tham_khao_y_kien_attachment"></div>
-		</div>
+	<div class="form-group col-3 required">
+		<label>Ngày duyệt văn bản dự thảo</label>
+		<input required type="text" vanbanduthao-bind="value:ngayduyetvanban" class="form-control">
 	</div>
 </div>
 
+<button type="button" class="btn btn-primary btn-luu btn_congvangiaitrinh">Thêm công văn giải trình</button>
+<button type="button" class="btn btn-primary btn-luu btn_thamkhao">Thêm ý kiến tham khảo</button>
 <button type="button" class="btn btn-success btn-luu btn_ketthuchoanthanh">Lưu</button>
 <button type="button" class="btn btn-danger btn-xoa btn_ketthuchoanthanh">Xóa</button>
 <hr />

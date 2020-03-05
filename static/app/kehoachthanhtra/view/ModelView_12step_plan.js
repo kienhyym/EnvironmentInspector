@@ -13,6 +13,7 @@ define(function (require) {
 	var CongViecThanhTraThucHienItemView = require('app/kehoachthanhtra/congviecthanhtra/CongViecThanhTraThucHienItemView');
 	var BaoCaoCuaDoanThanhTraItemView = require('app/kehoachthanhtra/view/BaoCaoCuaDoanThanhTraView');
 	var VanBanDuThaoItemView = require('app/kehoachthanhtra/view/VanBanDuThaoView');
+	var CongVanBaoCaoItemView = require('app/kehoachthanhtra/view/CongVanBaoCaoView');
 
 
 	return Gonrin.ModelView.extend({
@@ -88,6 +89,17 @@ define(function (require) {
 				},
 				{
 					field: "codauhieu_hinhsu",
+					uicontrol: "combobox",
+					textField: "text",
+					valueField: "value",
+					cssClass: "form-control",
+					dataSource: [
+						{ value: "co", text: "Có" },
+						{ value: "khong", text: "Không" },
+					],
+				},
+				{
+					field: "duyet",
 					uicontrol: "combobox",
 					textField: "text",
 					valueField: "value",
@@ -539,19 +551,20 @@ define(function (require) {
 
 			self.getDoanhNghiep();
 			self.bindEventSelect();
-			self.updateStepStatus();
+
 
 			var id = this.getApp().getRouter().getParam("id");
 			if (id) {
 				this.model.set('id', id);
 				this.model.fetch({
 					success: function (data) {
-
 						self.$el.find('#tendoanhnghiep').val(self.model.get('danhmucdoanhnghiep').name)
 						self.baoCaoCuaDoanThanhTra();
 						self.vanBanDuThao();
+						self.congVanBaoCaoCao();
 						var duyetHayKhong = self.model.get("vanbanduthaofield")
 						var demduyet = 0;
+
 						duyetHayKhong.forEach(function (item, index) {
 							if (item.trangthai_vanban == 1) {
 								demduyet++;
@@ -559,13 +572,22 @@ define(function (require) {
 						})
 						if (demduyet == 0) {
 							self.$el.find(".nguoiduyet").hide();
+							self.$el.find("#btn_add_vanbanduthaofield").show();
+
+
 						}
 						else {
 							self.$el.find(".nguoiduyet").show();
+							self.$el.find("#btn_add_vanbanduthaofield").hide();
+
 						}
 
 						var arr1 = self.$el.find(".solan")
 						arr1.each(function (item, index) {
+							index.append(item + 1);
+						})
+						var arr3 = self.$el.find(".solanx")
+						arr3.each(function (item, index) {
 							index.append(item + 1);
 						})
 						var arr2 = self.$el.find(".solann")
@@ -630,13 +652,14 @@ define(function (require) {
 						};
 
 						self.model.set("danhsach_congviec_thuchien", danhsach_congviec_thanhtra);
+
+						self.danhkhoitao();
 						self.inputFileOnChange();
 						self.applyBindings();
 						self.LapBienBan();
 						self.ketthuc_thanhtra();
 						self.thanhtra_trolai();
 						self.updateStepStatus();
-						// self.renderUpload();
 						self.GetNguoiGiamSat();
 						self.GetNguoiSoanThao();
 						self.GetNguoiXemXet();
@@ -693,16 +716,18 @@ define(function (require) {
 				data: "q=" + JSON.stringify(filters),
 				contentType: "application/json",
 				success: function (data) {
-					if (data.objects[0].danhsach_congviec_thanhtra.length != 0) {
-						self.$el.find('.taive-tailieu-B8').each(function (index, item) {
-							data.objects[0].danhsach_congviec_thanhtra.forEach(function (itemfield, indexfield) {
-								if ($(item).attr('data-id') == itemfield.id && itemfield.tailieu != null) {
-									$(self.$el.find('.custom-file-congviec')[index]).hide();
-									// $(item).append(`
-									// 	<label class = 'mt-2'>Danh sách tài liệu</label><br>
-									// `)
-									itemfield.tailieu.forEach(function (itemtailieu, indextailieu) {
-										$(item).append(`
+					if (data.objects[0].danhsach_congviec_thanhtra != null) {
+						if (data.objects[0].danhsach_congviec_thanhtra.length != 0) {
+
+							self.$el.find('.taive-tailieu-B8').each(function (index, item) {
+								data.objects[0].danhsach_congviec_thanhtra.forEach(function (itemfield, indexfield) {
+									if ($(item).attr('data-id') == itemfield.id && itemfield.tailieu != null) {
+										$(self.$el.find('.custom-file-congviec')[index]).hide();
+										// $(item).append(`
+										// 	<label class = 'mt-2'>Danh sách tài liệu</label><br>
+										// `)
+										itemfield.tailieu.forEach(function (itemtailieu, indextailieu) {
+											$(item).append(`
 										<div  class = "row ">
 										<label class = "col-md-9" >&nbsp;&nbsp;&nbsp;&nbsp;${itemtailieu.slice(16)}</label>
 										<div  class = "col-md-3">
@@ -710,12 +735,11 @@ define(function (require) {
 										</div>
 										</div>
 									`)
-									})
-								}
-							});
-						})
-					}
-					else {
+										})
+									}
+								});
+							})
+						}
 					}
 
 				},
@@ -1617,21 +1641,19 @@ define(function (require) {
 
 
 		},
-		updateStepStatus: function (step, ) {
+		updateStepStatus: function () {
 			var self = this;
-			var currentUser = self.getApp().currentUser;
-			var trangthai = self.model.get("trangthai");
+			// var currentUser = self.getApp().currentUser;
+			// var trangthai = self.model.get("trangthai");
+			console.log("self.check_gd1_sucees())", self.check_gd1_sucees());
 			self.updateStepUI(1, self.check_gd1_sucees());
 			self.updateStepUI(2, self.check_gd2_sucees());
-
 			self.updateStepUI(3, self.check_gd3_sucees());
-
 			self.updateStepUI(4, self.check_gd4_sucees());
 			self.updateStepUI(5, self.check_gd5_sucees());
 			self.updateStepUI(6, self.check_gd6_sucees());
 			self.updateStepUI(7, self.check_gd7_sucees());
 			self.updateStepUI(8, self.check_gd8_sucees());
-
 			self.updateStepUI(9, self.check_gd9_sucees());
 			self.updateStepUI(10, self.check_gd10_sucees());
 			self.updateStepUI(11, self.check_gd11_sucees());
@@ -1643,8 +1665,6 @@ define(function (require) {
 
 		updateStepUI: function (step, status) {
 			var self = this;
-
-			//self.$el.find(".gd" + step +" .badge-pill").removeClass("bg-light border");
 			self.$el.find(".gd" + step + " .badge-pill").addClass("bg-light border");
 			self.$el.find(".gd" + step + " .card-title").removeClass("text-success");
 			self.$el.find(".gd" + step + " .card-title").removeClass("text-danger");
@@ -1652,7 +1672,6 @@ define(function (require) {
 			self.$el.find(".gd" + step + " .card").removeClass("border-danger shadow");
 
 			if (status) {
-
 				self.$el.find(".gd" + step + " .card").addClass("border-" + status + " shadow");
 				self.$el.find(".gd" + step + " .card-title").addClass("text-" + status);
 				self.$el.find(".gd" + step + " .badge-pill").removeClass("bg-light border");
@@ -1775,10 +1794,8 @@ define(function (require) {
 		},
 		check_gd7_sucees: function () {
 			var self = this;
-			if (self.model.get("so_thongbao_ketthuc_thanhtra") !== null
-				&& self.model.get("ngay_thongbao_ketthuc_thanhtra") !== null) {
+			if (self.model.get("codauhieu_hinhsu") !== null) {
 				self.$el.find(".buoc8").removeClass("buoc8");
-
 				return "success"
 			}
 			return "light";
@@ -1790,65 +1807,70 @@ define(function (require) {
 				self.model.get('danhsach_congviec_thuchien').forEach(function (item, index) {
 					if (self.model.get('ngay_ketqua_trungcau_ykien') < moment(item.thoigianhoanthanh).format("X")) {
 						dem++;
-
 					}
 				})
 				if (dem > 0) {
 					self.$el.find(".gd8 .danger-reason").html("Ngày hoàn thành không được trước ngày nhận kết quả trưng cầu");
 					return "danger"
 				} else {
-					self.$el.find(".buoc9").removeClass("buoc9");
-					return "success"
+					if (self.model.get('so_ketqua_trungcau_ykien') != null &&
+						self.model.get('ngay_ketqua_trungcau_ykien') != null &&
+						self.model.get('ketqua_trungcau_ykien_attachment') != null) {
+						self.$el.find(".buoc9").removeClass("buoc9");
+						return "success"
+					}
 				}
 			}
-			// 	if ((checkngay - ngay_vanban_congbo_quyetdinh) > 45 * 24 * 60 * 60) {
-			// 		self.$el.find(".gd8 .danger-reason").html("Quá 45 ngày kể từ ngày gửi quyết định thanh tra");
-			// 		return "danger"
-			// 	}
-			// }
-
 			return "light";
 		},
 		check_gd9_sucees: function () {
 			var self = this;
-			if (self.model.get("baocaocuadoanthanhtrafield").length !== 0) {
-				self.$el.find(".buoc10").removeClass("buoc10");
+			if (self.model.get("baocaocuadoanthanhtrafield").length !== 0 && self.model.get("baocaocuadoanthanhtrafield").length !== null) {
+				var baocao = lodash.orderBy(self.model.get('baocaocuadoanthanhtrafield'), ['created_at'], ['desc']);
+				var baocaocuoicung = baocao.slice(0, 1);
 
-				return "success"
+				if (baocaocuoicung[0].duyet == "duyet" &&
+					baocaocuoicung[0].vanbangiaitrinh_attachment != null &&
+					baocaocuoicung[0].ngayguibaocaogiaitrinh != null) {
+					self.$el.find(".buoc10").removeClass("buoc10");
+				}
+				if ((baocaocuoicung[0].ngayguibaocaogiaitrinh - Number(self.model.get("ngay_quyetdinh_thanhtra"))) >= 30 * 24 * 60 * 60) {
+					self.$el.find(".gd9 .danger-reason").html("Ngày gửi bảo cáo giải trình quá 30 ngày kể từ ngày gửi quyết định thanh tra");
+					return "danger"
+				}
+				return "success";
 			}
 			return "light";
 		},
+
+
 		check_gd10_sucees: function () {
 			var self = this;
-			// if (self.model.get("so_vanban_duthao_lan1") !== null
-			// 	&& self.model.get("ngay_duthao_vanban_lan1") !== null) {
-			// 		self.$el.find(".buoc11").removeClass("buoc11");
-
-			// 	return "success"
-			// }
-
-
-			var mangVanBanDuThao = self.model.get("vanbanduthaofield");
-			var dem = 0;
-			mangVanBanDuThao.forEach(function (item, index) {
-				if (item.trangthai_vanban == 1) {
-					dem++;
+			if (self.model.get("baocaocuadoanthanhtrafield").length !== 0 && self.model.get('vanbanduthaofield').length != 0) {
+				var baocao = lodash.orderBy(self.model.get('baocaocuadoanthanhtrafield'), ['created_at'], ['desc']);
+				var vanban = lodash.orderBy(self.model.get('vanbanduthaofield'), ['created_at'], ['desc']);
+				var baocaocuoicung = baocao.slice(0, 1);
+				var vanbancuoicung = vanban.slice(0, 1);
+				if (vanbancuoicung[0].trangthai_vanban == 1 &&
+					vanbancuoicung[0].so_vanban_duthao != null &&
+					vanbancuoicung[0].ngay_duthao_vanban != null &&
+					vanbancuoicung[0].vanban_duthao_duthao_attachment != null) {
+					self.$el.find(".buoc11").removeClass("buoc11");
 				}
-			})
-			if (dem != 0) {
-				self.$el.find(".buoc11").removeClass("buoc11");
+				if ((vanbancuoicung[0].ngay_gui_congvan_giaitrinh - baocaocuoicung[0].ngayguibaocaogiaitrinh) >= 15 * 24 * 60 * 60) {
+					self.$el.find(".gd10 .danger-reason").html("Ngày gửi công văn giải trình quá 15 ngày kể từ ngày gửi báo cáo giải trình");
+					return "danger"
+				}
 				return "success";
 			}
-			//
 			return "light";
 		},
 		check_gd11_sucees: function () {
 			var self = this;
 			if (self.model.get("so_ketluan_thanhtra") !== null
-				&& self.model.get("ngay_ketluan_thanhtra") !== null) {
-
+				&& self.model.get("ngay_ketluan_thanhtra") !== null
+				&& self.model.get("ketluan_thanhtra_attachment") != null) {
 				self.$el.find(".buoc12").removeClass("buoc12");
-
 				return "success"
 			}
 			return "light";
@@ -1856,22 +1878,33 @@ define(function (require) {
 
 		check_gd12_sucees: function () {
 			var self = this;
-			if (self.model.get("so_bienban_congbo_ketluan") !== null
-				&& self.model.get("ngay_bienban_congbo_ketluan") !== null) {
+			if (self.model.get("ngay_bienban_congbo_ketluan") !== null) {
 				self.$el.find(".buoc13").removeClass("buoc13");
-
-				return "success"
+				if ((self.model.get("ngay_bienban_congbo_ketluan") - self.model.get("ngay_ketluan_thanhtra")) >= 10 * 24 * 60 * 60) {
+					self.$el.find(".gd12 .danger-reason").html("Ngày công bố kết luận muộn qúa 10 ngày kể từ ngày kết luận thanh tra");
+					return "danger"
+				}
+				return "success";
 			}
 			return "light";
 		},
 		check_gd13_sucees: function () {
 			var self = this;
-			if (self.model.get("coquan_congvan_yeucau_baocao_thuchien") !== null
-				&& self.model.get("so_congvan_yeucau_baocao_thuchien") !== null
-				&& self.model.get("ngay_congvan_yeucau_baocao_thuchien") !== null) {
-				self.$el.find(".buoc14").removeClass("buoc14");
-
-				return "success"
+			if (self.model.get("congvanbaocaofield").length !== 0 && self.model.get('congvanbaocaofield') != null) {
+				var congvan = lodash.orderBy(self.model.get('congvanbaocaofield'), ['created_at'], ['desc']);
+				var congvancuoicung = congvan.slice(0, 1);
+				if (congvancuoicung[0].duyet == 'duyet' &&
+					congvancuoicung[0].congvan_yeucau_baocao_thuchien_attachment != null &&
+					congvancuoicung[0].ngay_congvan_yeucau_baocao_thuchien != null &&
+					congvancuoicung[0].so_congvan_yeucau_baocao_thuchien != null
+				) {
+					self.$el.find(".buoc14").removeClass("buoc14");
+				}
+				if ((congvancuoicung[0].ngay_congvan_yeucau_baocao_thuchien - self.model.get("ngay_ketluan_thanhtra")) >= 55 * 24 * 60 * 60) {
+					self.$el.find(".gd13 .danger-reason").html("Ngày công văn yêu cầu báo cáo thực hiện kết luận thanh tra muộn qúa 55 ngày kể từ ngày kết luận thanh tra");
+					return "danger"
+				}
+				return "success";
 			}
 			return "light";
 		},
@@ -1966,42 +1999,6 @@ define(function (require) {
 			self.$el.find("#btn_cancel").unbind("click").bind("click", function () {
 				self.cancel_kehoach();
 			});
-
-
-			// self.$el.find(".upload_files").on("change", function () {
-			// 	var http = new XMLHttpRequest();
-			// 	var fd = new FormData();
-
-			// 	var data_attr = $(this).attr("data-attr");
-			// 	fd.append('file', this.files[0]);
-
-			// 	http.open('POST', '/api/v1/upload/file');
-
-			// 	http.upload.addEventListener('progress', function (evt) {
-			// 		if (evt.lengthComputable) {
-			// 			var percent = evt.loaded / evt.total;
-			// 			percent = parseInt(percent * 100);
-
-			// 		}
-			// 	}, false);
-			// 	http.addEventListener('error', function () {
-			// 	}, false);
-
-			// 	http.onreadystatechange = function () {
-			// 		if (http.status === 200) {
-			// 			if (http.readyState === 4) {
-			// 				var data_file = JSON.parse(http.responseText), link, p, t;
-
-			// 				self.getApp().notify("Tải file thành công");
-			// 				self.model.set(data_attr, data_file.link);
-			// 				self.saveModel();
-			// 			}
-			// 		} else {
-			// 			self.getApp().notify("Không thể tải tệp tin lên máy chủ");
-			// 		}
-			// 	};
-			// 	http.send(fd);
-			// });
 
 			self.$el.find('#select_nguoigiamsat').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
 				var data_ck = self.$el.find('#select_nguoigiamsat option:selected').attr('data-ck');
@@ -2275,6 +2272,7 @@ define(function (require) {
 									ds_baoCaoCuaDoanThanhTra[index] = data;
 								}
 							});
+							var containerEl = self.$el.find("#space_vanbanduthaofield");
 
 							self.model.set("baocaocuadoanthanhtrafield", ds_baoCaoCuaDoanThanhTra);
 							self.model.save(null, {
@@ -2323,8 +2321,6 @@ define(function (require) {
 			});
 			self.$el.find("#btn_add_vanbanduthaofield").on("click", (eventClick) => {
 				var view = new VanBanDuThaoItemView();
-
-
 				view.model.save(null, {
 					success: function (model, respose, options) {
 						view.model.set(respose);
@@ -2377,11 +2373,96 @@ define(function (require) {
 				});
 			});
 		},
+		congVanBaoCaoCao: function () {
+			var self = this;
+
+			var ds_congVanBaoCaoCao = self.model.get("congvanbaocaofield");
+			if (!ds_congVanBaoCaoCao) {
+				ds_congVanBaoCaoCao = [];
+			}
+
+			var containerEl = self.$el.find("#space_congvanbaocaofield");
+			containerEl.empty();
+
+
+			var dataSource = lodash.orderBy(ds_congVanBaoCaoCao, ['created_at'], ['asc']);
+			dataSource.forEach((item, index) => {
+
+				var view = new CongVanBaoCaoItemView();
+				view.model.set(item);
+				view.render();
+				$(view.el).hide().appendTo(containerEl).fadeIn();
+				view.on("change", (data) => {
+					var ds_congVanBaoCaoCao = self.model.get("congvanbaocaofield");
+					ds_congVanBaoCaoCao.forEach((item, index) => {
+						if (item.id == data.id) {
+							ds_congVanBaoCaoCao[index] = data;
+						}
+					});
+					self.model.set("congvanbaocaofield", ds_congVanBaoCaoCao);
+
+				});
+			});
+
+			self.$el.find("#btn_add_congvanbaocaofield").on("click", (eventClick) => {
+				var view = new CongVanBaoCaoItemView();
+				view.model.save(null, {
+					success: function (model, respose, options) {
+						view.model.set(respose);
+						view.render();
+						$(view.el).hide().appendTo(containerEl).fadeIn();
+
+						// PUSH THE CHILD TO LIST
+						var ds_congVanBaoCaoCao = self.model.get("congvanbaocaofield");
+						if (!ds_congVanBaoCaoCao) {
+							ds_congVanBaoCaoCao = [];
+						}
+						ds_congVanBaoCaoCao.push(view.model.toJSON());
+						self.model.set("congvanbaocaofield", ds_congVanBaoCaoCao);
+						self.model.save(null, {
+							success: function (model, respose, options) {
+								// NOTIFY TO GRANPARENT
+								self.trigger("change", self.model.toJSON());
+							},
+							error: function (xhr, status, error) {
+							}
+						});
+
+						view.on("change", (data) => {
+							var ds_congVanBaoCaoCao = self.model.get("congvanbaocaofield");
+							if (!ds_congVanBaoCaoCao) {
+								ds_congVanBaoCaoCao = [];
+							}
+							ds_congVanBaoCaoCao.forEach((item, index) => {
+								if (item.id == data.id) {
+									ds_congVanBaoCaoCao[index] = data;
+								}
+							});
+							var containerEl = self.$el.find("#space_congvanbaocaofield");
+
+							self.model.set("congvanbaocaofield", ds_congVanBaoCaoCao);
+							self.model.save(null, {
+								success: function (model, respose, options) {
+									// NOTIFY TO GRANPARENT
+									self.trigger("change", self.model.toJSON());
+								},
+								error: function (xhr, status, error) {
+								}
+							});
+						});
+						self.getApp().router.refresh();
+
+					},
+					error: function (xhr, status, error) {
+						// HANDLE ERROR
+					}
+				});
+			});
+		},
 		danhSachTaiLieu14Buoc: function () {
 			var self = this;
 			self.danhSachTaiLieuBuoc8();
-			self.danhSachTaiLieuBuoc9();
-			self.danhSachTaiLieuBuoc10();
+			self.danhSachTaiLieuBuocItemView();
 			var attachmentBuoc = [
 				"attachmentBuoc1",
 				"attachmentBuoc2",
@@ -2444,105 +2525,93 @@ define(function (require) {
 				}
 			})
 		},
-		danhSachTaiLieuBuoc9: function () {
+		danhSachTaiLieuBuocItemView: function () {
 			var self = this;
-			var baocao = lodash.orderBy(self.model.get('baocaocuadoanthanhtrafield'), ['created_at'], ['desc']);
-			var baocaocuoicung = baocao.slice(0, 1);
+			var mangFiled = [
+				{
+					"field": "baocaocuadoanthanhtrafield",
+					"attachment": [{ "value": "vanbangiaitrinh_attachment", "text": "Bảo cáo giải trình" },
+					{ "value": "baocaotonghopcuadoanthanhtra_attachment", "text": "Bảo cáo tổng hợp của đoàn thanh tra" }]
+				},
+				{
+					"field": "vanbanduthaofield",
+					"attachment": [{ "value": "vanban_duthao_duthao_attachment", "text": "Dự thảo kết luận thanh tra" },
+					{ "value": "congvan_giaitrinh_cua_doituong_thanhtra_attachment", "text": "Công văn giải trình kết luận của đối tượng thanh tra" },
+					{ "value": "tham_khao_y_kien_attachment", "text": "Tham khảo y kiến" },]
+				},
+				{
+					"field": "congvanbaocaofield",
+					"attachment": [{ "value": "congvan_yeucau_baocao_thuchien_attachment", "text": "Công văn yêu cầu báo cáo thực hiện kết luận thanh tra" },
+					{ "value": "baocao_doituong_thuchien_attachment", "text": "Báo cáo thực hiện của đối tượng thanh tra" }]
+				}
 
-			console.log(baocaocuoicung[0].vanbangiaitrinh_attachment)
-			console.log(baocaocuoicung[0].baocaotonghopcuadoanthanhtra_attachment)
-
-			if (baocaocuoicung[0].vanbangiaitrinh_attachment != null) {
-				self.$el.find('.danhsachhoso_bangiao_buoc9').append(`
-								<tr>
-									<td colspan = "3">Bảo cáo giải trình</td>
-								</tr>
-								`)
-				baocaocuoicung[0].vanbangiaitrinh_attachment.forEach(function (itemTaiLieu, indexTaiLieu) {
-					self.$el.find('.danhsachhoso_bangiao_buoc9').append(`
-								<tr>
-									<td>${indexTaiLieu}</td>
-									<td>${itemTaiLieu.slice(16)}</td>
-									<td><a href="${itemTaiLieu}">Tải về</a></td>
-								</tr>
-								`)
-				})
-			}
-			if (baocaocuoicung[0].baocaotonghopcuadoanthanhtra_attachment != null) {
-				self.$el.find('.danhsachhoso_bangiao_buoc9').append(`
-								<tr>
-									<td colspan = "3">Bảo cáo của đoàn thanh tra</td>
-								</tr>
-								`)
-				baocaocuoicung[0].baocaotonghopcuadoanthanhtra_attachment.forEach(function (itemTaiLieu, indexTaiLieu) {
-					self.$el.find('.danhsachhoso_bangiao_buoc9').append(`
-								<tr>
-									<td>${indexTaiLieu}</td>
-									<td>${itemTaiLieu.slice(16)}</td>
-									<td><a href="${itemTaiLieu}">Tải về</a></td>
-								</tr>
-								`)
-				})
-			}
+			]
+			mangFiled.forEach(function (item, index) {
+				if (self.model.get(item.field) != null && self.model.get(item.field) != undefined) {
+					var mangFiledSort = lodash.orderBy(self.model.get(item.field), ['created_at'], ['desc']);
+					var mangFiledFilter = mangFiledSort.slice(0, 1)[0];
+					if (mangFiledFilter !== undefined && mangFiledFilter !== null) {
+						item.attachment.forEach(function (item_attachment, index_attachment) {
+							if (mangFiledFilter[item_attachment.value] != null) {
+								self.$el.find('.ds_' + item.field).append(`
+										<tr>
+											<td colspan = "3">${item_attachment.text}</td>
+											</tr>
+										`)
+								mangFiledFilter[item_attachment.value].forEach(function (item_value, index_value) {
+									self.$el.find('.ds_' + item.field).append(`
+										<tr>
+											<td>${index_value + 1}</td>
+												<td>${item_value.slice(16)}</td>
+											<td><a href="${item_value}">Tải về</a></td>
+										</tr>
+									`)
+								})
+							}
+						})
+					}
+				}
+			})
 		},
-		danhSachTaiLieuBuoc10: function () {
+		danhkhoitao: function () {
 			var self = this;
-			var vanbanduthao = lodash.orderBy(self.model.get('vanbanduthaofield'), ['created_at'], ['desc']);
-			var vanbanduthaocuoicung = vanbanduthao.slice(0, 1);
 
-			console.log(vanbanduthaocuoicung[0].vanban_duthao_duthao_attachment)
-			console.log(vanbanduthaocuoicung[0].congvan_giaitrinh_cua_doituong_thanhtra_attachment)
-			console.log(vanbanduthaocuoicung[0].tham_khao_y_kien_attachment)
-			if (vanbanduthaocuoicung[0].vanban_duthao_duthao_attachment != null) {
-				self.$el.find('.danhsachhoso_bangiao_buoc10').append(`
-								<tr>
-									<td colspan = "3">Dự thảo kết luận thanh tra</td>
-								</tr>
-								`)
-				vanbanduthaocuoicung[0].vanban_duthao_duthao_attachment.forEach(function (itemTaiLieu, indexTaiLieu) {
-					self.$el.find('.danhsachhoso_bangiao_buoc10').append(`
-								<tr>
-									<td>${indexTaiLieu}</td>
-									<td>${itemTaiLieu.slice(16)}</td>
-									<td><a href="${itemTaiLieu}">Tải về</a></td>
-								</tr>
-								`)
-				})
-			}
-			if (vanbanduthaocuoicung[0].congvan_giaitrinh_cua_doituong_thanhtra_attachment != null) {
-				self.$el.find('.danhsachhoso_bangiao_buoc10').append(`
-								<tr>
-									<td colspan = "3">Công văn giải trình
-									kết luận của đối tượng thanh tra</td>
-								</tr>
-								`)
-				vanbanduthaocuoicung[0].congvan_giaitrinh_cua_doituong_thanhtra_attachment.forEach(function (itemTaiLieu, indexTaiLieu) {
-					self.$el.find('.danhsachhoso_bangiao_buoc10').append(`
-								<tr>
-									<td>${indexTaiLieu}</td>
-									<td>${itemTaiLieu.slice(16)}</td>
-									<td><a href="${itemTaiLieu}">Tải về</a></td>
-								</tr>
-								`)
-				})
-			}
-			if (vanbanduthaocuoicung[0].tham_khao_y_kien_attachment != null) {
-				self.$el.find('.danhsachhoso_bangiao_buoc10').append(`
-								<tr>
-									<td colspan = "3">Tham khảo ý kiến</td>
-								</tr>
-								`)
-				vanbanduthaocuoicung[0].tham_khao_y_kien_attachment.forEach(function (itemTaiLieu, indexTaiLieu) {
-					self.$el.find('.danhsachhoso_bangiao_buoc10').append(`
-								<tr>
-									<td>${indexTaiLieu}</td>
-									<td>${itemTaiLieu.slice(16)}</td>
-									<td><a href="${itemTaiLieu}">Tải về</a></td>
-								</tr>
-								`)
-				})
-			}
-		}
+			var mangField = [
+				{ "field": "vanbanduthaofield", "itemview": new VanBanDuThaoItemView() },
+				{ "field": "baocaocuadoanthanhtrafield", "itemview": new BaoCaoCuaDoanThanhTraItemView() },
+				{ "field": "congvanbaocaofield", "itemview": new CongVanBaoCaoItemView() },
+			]
+			mangField.forEach(function (item, index) {
+				if (self.model.get(item.field).length == 0) {
+					var view = item.itemview;
+					view.model.save(null, {
+						success: function (model, respose, options) {
+							view.model.set(respose);
+							view.render();
+							$(view.el).hide().appendTo(self.$el.find("#space_" + item.field)).fadeIn();
+							// PUSH THE CHILD TO LIST
+							var ds_item = self.model.get(item.field);
+							if (!ds_item) {
+								ds_item = [];
+							}
+							ds_item.push(view.model.toJSON());
+							self.model.set(item.field, ds_item);
+							self.model.save(null, {
+								success: function (model, respose, options) {
+									// NOTIFY TO GRANPARENT
+									self.trigger("change", self.model.toJSON());
+								},
+								error: function (xhr, status, error) {
+								}
+							});
+							// self.getApp().router.refresh();			
+						},
+						error: function (xhr, status, error) {
+						}
+					});
+				}
+			})
+		},
 
 
 	});

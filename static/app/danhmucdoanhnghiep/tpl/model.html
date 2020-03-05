@@ -41,7 +41,7 @@
 				<div class="card-body content-main">
 					<form class="needs-validation" novalidate="">
 						<div class="row">
-							<div class="col-md-6">
+							<!-- <div class="col-md-6">
 								<label>Lĩnh Vực</label>
 								<select class="selectpicker form-control" id="multiselect_linhvuc" multiple
 									data-live-search="true" data-actions-box="true"
@@ -50,7 +50,15 @@
 								<div class="invalid-feedback">
 									Vui lòng chọn loại lĩnh vực
 								</div>
+							</div> -->
+							<div class="col-md-6">
+								<label>Lĩnh Vực</label>
+								<div class="form-group required border rounded chonlinhvuc">
+									<select class="selectpicker  col-md-12 m-0 p-0" multiple data-live-search="true">
+									</select>
+								</div>
 							</div>
+
 							<div class="col-md-6 mb-3">
 								<label>Người đại diện theo pháp luật</label>
 								<input type="text" class="form-control" data-bind="value:nguoidaidienphapluat"
@@ -160,7 +168,7 @@
 				</div>
 
 				<div class="card formthemchinhanh"
-					style="display: none;position: fixed;width: 1000px;height: 340px;top: 300px;left: 506px;;margin-top: -100px; margin-left: -250px;">
+					style="display: none;position: fixed;width: 1000px;height: 340px;top: 200px;left: 506px;;margin-top: -100px; margin-left: -250px;">
 					<div class="card-header bg-secondary text-white border-bottom">Thông tin chi nhánh
 						<button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
 							<span aria-hidden="true" class="text-white ">&times;</span>

@@ -94,6 +94,8 @@ class User(CommonModel):
     type = db.Column(db.String())
     captren_id = db.Column(db.String())
     captren_name = db.Column(db.String())
+    donvi_id = db.Column(UUID(as_uuid=True), ForeignKey('donvi.id'))
+    donvi = relationship('DonVi', cascade="save-update")
     description = db.Column(db.String())
     active = db.Column(db.Boolean(), default=True)
     roles = db.relationship('Role', secondary=roles_users, cascade="save-update")
@@ -102,6 +104,23 @@ class User(CommonModel):
             return role in (role.name for role in self.roles)
         else:
             return role in self.roles
+class DonVi(CommonModel):
+    __tablename__ ='donvi'
+    id = db.Column(UUID(as_uuid=True), primary_key=True, default=default_uuid)
+    ten = db.Column(String, nullable=False)
+    fax = db.Column(String)
+    email = db.Column(String)
+    dienthoai = db.Column(String)
+    diachi = db.Column(String)
+    thongtin = db.Column(String)
+    nguoichiutrachnhiem = db.Column(String)
+    xaphuong_id = db.Column(UUID(as_uuid=True), ForeignKey('xaphuong.id'))
+    xaphuong = relationship('XaPhuong', viewonly=True)
+    quanhuyen_id = db.Column(UUID(as_uuid=True), ForeignKey('quanhuyen.id'))
+    quanhuyen = relationship('QuanHuyen', viewonly=True)
+    tinhthanh_id = db.Column(UUID(as_uuid=True), ForeignKey('tinhthanh.id'))
+    tinhthanh = relationship('TinhThanh', viewonly=True)
+    userfield = db.relationship("User",cascade="all, delete-orphan")
 
 DonVi_LinhVuc = db.Table('donvi_linhvuc',
     db.Column('donvi_id', UUID(as_uuid=True), db.ForeignKey('danhmucdoanhnghiep.id', ondelete='cascade'), primary_key=True),
@@ -278,9 +297,7 @@ class KeHoachThanhTra(CommonModel):
     vanbanduthaofield = db.relationship('VanBanDuThao', cascade="all, delete-orphan")
 
 
-    nguoiquyetdinh = db.Column(String)
-    soquyetdinh = db.Column(String)
-    ngayduyetvanban = db.Column(BigInteger())
+    
 
 
     so_vanban_quyetdinh = db.Column(String)
@@ -314,14 +331,18 @@ class KeHoachThanhTra(CommonModel):
     
     
     #GD13 - ok
-    coquan_congvan_yeucau_baocao_thuchien = db.Column(String)
-    so_congvan_yeucau_baocao_thuchien = db.Column(String)
-    ngay_congvan_yeucau_baocao_thuchien = db.Column(BigInteger())
+    # duyet = db.Column(String(10))
+    # ykien = db.Column(String)
+    # so_congvan_yeucau_baocao_thuchien = db.Column(String)
+    # ngay_congvan_yeucau_baocao_thuchien = db.Column(BigInteger())
+    # congvan_yeucau_baocao_thuchien_attachment = db.Column(JSONB)
 
-    so_baocao_doituong_thuchien = db.Column(String)
-    ngay_baocao_doituong_thuchien = db.Column(BigInteger())
-    baocao_doituong_thuchien_attachment = db.Column(JSONB)
-    
+    # so_baocao_doituong_thuchien = db.Column(String)
+    # ngay_baocao_doituong_thuchien = db.Column(BigInteger())
+    # baocao_doituong_thuchien_attachment = db.Column(JSONB)
+
+    congvanbaocaofield = db.relationship('CongVanBaoCao', cascade="all, delete-orphan")
+
     #GD14 ok
     danhsach_hoso_bangiao_luutru = db.Column(JSONB)
     ngay_bangiao_luutru = db.Column(BigInteger())
@@ -377,6 +398,8 @@ class NotifyUser(CommonModel):
 class BaoCaoCuaDoanThanhTra(CommonModel):
     __tablename__ = 'baocaocuadoanthanhtra'
     id = db.Column(UUID(as_uuid=True), primary_key=True, default=default_uuid)
+    duyet = db.Column(String(10))
+    ykien = db.Column(String)
     vanbangiaitrinh_attachment = db.Column(JSONB())
     ngayguibaocaogiaitrinh = db.Column(BigInteger())
     baocaotonghopcuadoanthanhtra_attachment = db.Column(JSONB())
@@ -425,4 +448,24 @@ class VanBanDuThao(CommonModel):
     so_vanban_thamkhao_ykien = db.Column(String)
     ngay_vanban_thamkhao_ykien = db.Column(BigInteger())
     tham_khao_y_kien_attachment = db.Column(JSONB())
+
+    nguoiquyetdinh = db.Column(String)
+    soquyetdinh = db.Column(String)
+    ngayduyetvanban = db.Column(BigInteger())
+
+    kehoachthanhtra_id = db.Column(UUID(as_uuid=True), ForeignKey('kehoachthanhtra.id'), nullable=True)
+
+class CongVanBaoCao(CommonModel):
+    __tablename__ = 'congvanbaocao'
+    id = db.Column(UUID(as_uuid=True), primary_key=True, default=default_uuid)
+    duyet = db.Column(String(10))
+    ykien = db.Column(String)
+    so_congvan_yeucau_baocao_thuchien = db.Column(String)
+    ngay_congvan_yeucau_baocao_thuchien = db.Column(BigInteger())
+    congvan_yeucau_baocao_thuchien_attachment = db.Column(JSONB)
+
+    so_baocao_doituong_thuchien = db.Column(String)
+    ngay_baocao_doituong_thuchien = db.Column(BigInteger())
+    baocao_doituong_thuchien_attachment = db.Column(JSONB)
+
     kehoachthanhtra_id = db.Column(UUID(as_uuid=True), ForeignKey('kehoachthanhtra.id'), nullable=True)

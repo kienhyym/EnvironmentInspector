@@ -1,0 +1,107 @@
+<h5 class = "solanx">Công văn yêu cầu báo cáo thực hiện kết luận thanh tra&nbsp;</h5>
+<div class="row">
+
+	<div class="col-4">
+		<div class="form-group">
+			<label>Số công văn</label>
+			<input required type="text" congvanbaocao-bind="value:so_congvan_yeucau_baocao_thuchien" class="form-control">
+		</div>
+
+	</div>
+	<div class="col-4">
+		<div class="form-group">
+			<label>Ngày công văn</label>
+			<input required type="text" congvanbaocao-bind="value:ngay_congvan_yeucau_baocao_thuchien" class="form-control">
+		</div>
+	</div>
+	<div class="col-4">
+		<div class="form-group">
+			<label>Duyệt</label>
+			<input required type="text" placeholder="Có / không"  congvanbaocao-bind="value:duyet" class="form-control duyetkhongduyet">
+		</div>
+	</div>
+</div>
+
+
+<div class="row outFocus">
+	<div class="form-group col">
+		<label>Tài liệu đính kèm</label>
+		<div id="upload-congvan_yeucau_baocao_thuchien_attachment">
+			<div class="custom-file custom-file-congvanbaocao">
+				<input type="file" class="custom-file-input upload_files" aria-label="Công văn yêu cầu báo cáo thực hiện kết luận thanh tra"
+					id="upload_files" data-attr="congvan_yeucau_baocao_thuchien_attachment" multiple
+					lang="vi">
+				<label
+					class="custom-file-label label_list_files-congvan_yeucau_baocao_thuchien_attachment">Chọn
+					file tải lên</label>
+			</div>
+		</div>
+
+		<div class="tenfile">
+			<div class="tenfile-congvan_yeucau_baocao_thuchien_attachment"
+				data-field="congvan_yeucau_baocao_thuchien_attachment"></div>
+		</div>
+		<div class="link-taive link-taive-congvanbaocao">
+			<div class="taive-congvan_yeucau_baocao_thuchien_attachment"
+				data-field="congvan_yeucau_baocao_thuchien_attachment"></div>
+		</div>
+
+	</div>
+</div>
+<div class="row ykien" style="display: none;">
+	<div class="col-12">
+		<div class="form-group " >
+			<label >Ý kiến</label>
+			<textarea required type="text" placeholder="Viết ý kiến"  congvanbaocao-bind="value:ykien"
+				class="form-control "></textarea>
+		</div>
+	</div>
+</div>
+<hr />
+<h5>Báo cáo thực hiện của đối tượng thanh tra</h5>
+<div class="row">
+	<div class="col-6">
+		<div class="form-group">
+			<label>Số báo cáo</label>
+			<input required type="text" congvanbaocao-bind="value:so_baocao_doituong_thuchien" class="form-control">
+		</div>
+
+	</div>
+	<div class="col-6">
+		<div class="form-group">
+			<label>Ngày báo cáo</label>
+			<input required type="text" congvanbaocao-bind="value:ngay_baocao_doituong_thuchien" class="form-control">
+		</div>
+
+	</div>
+</div>
+
+
+<div class="row outFocus">
+	<div class="form-group col">
+		<label>Tài liệu đính kèm</label>
+		<div id="upload-baocao_doituong_thuchien_attachment">
+			<div class="custom-file custom-file-congvanbaocao">
+				<input type="file" class="custom-file-input upload_files" aria-label="Báo cáo thực hiện của đối tượng thanh tra"
+					id="upload_files" data-attr="baocao_doituong_thuchien_attachment" multiple
+					lang="vi">
+				<label
+					class="custom-file-label label_list_files-baocao_doituong_thuchien_attachment">Chọn
+					file tải lên</label>
+			</div>
+		</div>
+
+		<div class="tenfile">
+			<div class="tenfile-baocao_doituong_thuchien_attachment"
+				data-field="baocao_doituong_thuchien_attachment"></div>
+		</div>
+		<div class="link-taive link-taive-congvanbaocao">
+			<div class="taive-baocao_doituong_thuchien_attachment"
+				data-field="baocao_doituong_thuchien_attachment"></div>
+		</div>
+
+	</div>
+</div>
+<button type="button" class="btn btn-success btn-luu btn_ketthuchoanthanh">Lưu</button>
+<button type="button" class="btn btn-danger btn-xoa btn_ketthuchoanthanh">Xóa</button>
+<hr>

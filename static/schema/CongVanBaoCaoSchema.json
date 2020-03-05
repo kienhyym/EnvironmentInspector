@@ -32,17 +32,23 @@
     "ykien": {
         "type": "string"
     },
-    "vanbangiaitrinh_attachment": {
-        "type": "json"
+    "so_congvan_yeucau_baocao_thuchien": {
+        "type": "string"
     },
-    "ngayguibaocaogiaitrinh": {
+    "ngay_congvan_yeucau_baocao_thuchien": {
         "type": "number"
     },
-    "baocaotonghopcuadoanthanhtra_attachment": {
+    "congvan_yeucau_baocao_thuchien_attachment": {
         "type": "json"
     },
-    "ngayguibaocaocuadoanthanhtra": {
+    "so_baocao_doituong_thuchien": {
+        "type": "string"
+    },
+    "ngay_baocao_doituong_thuchien": {
         "type": "number"
+    },
+    "baocao_doituong_thuchien_attachment": {
+        "type": "json"
     },
     "kehoachthanhtra_id": {
         "type": "string"

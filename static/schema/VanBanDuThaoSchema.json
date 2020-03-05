@@ -55,6 +55,15 @@
     "tham_khao_y_kien_attachment": {
         "type": "json"
     },
+    "nguoiquyetdinh": {
+        "type": "string"
+    },
+    "soquyetdinh": {
+        "type": "string"
+    },
+    "ngayduyetvanban": {
+        "type": "number"
+    },
     "kehoachthanhtra_id": {
         "type": "string"
     }

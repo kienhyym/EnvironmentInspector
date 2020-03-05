@@ -1,0 +1,90 @@
+<div block-bind="content">
+	<!-- Page Header -->
+	<div class="page-header row no-gutters py-4">
+		<div class="col-12 col-md-10 col-sm-4 text-center text-sm-left mb-0">
+			<span class="text-uppercase page-subtitle"> </span>
+			<h3 class="page-title text-uppercase">Thông tin đơn vị</h3>
+		</div>
+	</div>
+	<!-- End Page Header -->
+	<div class="row">
+		<div class="col-lg-12 col-md-12">
+			<div class="card  card-small mb-4">
+				<div class="card-header  border-bottom">
+					<div class="row">
+						<div class="col-md-7">
+							<h6 class="m-0">Thông tin chi tiết</h6>
+						</div>
+						<div class="col-md-5 text-right">
+							<div block-bind="toolbar"></div>
+						</div>
+					</div>
+
+
+				</div>
+				<div class="card-body">
+					<form class="needs-validation" novalidate="">
+						<div class="row">
+							<div class="col-md-8 mb-3">
+								<label>Tên đơn vị</label>
+								<input type="text" class="form-control" data-bind="value:ten"
+									placeholder="Nhập tên đơn vị">
+							</div>
+							<div class="col-md-4 mb-3">
+								<label>Người chịu trách nhiệm</label>
+								<input type="text" class="form-control" data-bind="value:nguoichiutrachnhiem"
+									placeholder="Nhập tên người chịu trách nhiệm">
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-4 mb-3">
+								<label>Email</label>
+								<input type="text" class="form-control" data-bind="value:email"
+									placeholder="Nhập email">
+							</div>
+							<div class="col-md-4 mb-3">
+								<label>Số điên thoại</label>
+								<input type="text" class="form-control" data-bind="value:dienthoai"
+									placeholder="Nhập số điện thoại">
+							</div>
+							<div class="col-md-4 mb-3">
+								<label>Fax</label>
+								<input type="text" class="form-control" data-bind="value:fax" placeholder="Nhập fax">
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12 mb-3">
+								<label>Thông tin</label>
+								<textarea type="text" class="form-control" data-bind="value:thongtin"
+									placeholder="Nhập thêm thông tin"></textarea>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-4 mb-3">
+								<label for="cc-name">Tỉnh/Thành phố</label>
+								<input type="text" class="form-control" id="tinhthanh" data-bind="dict:tinhthanh"
+									placeholder="..." required="">
+							</div>
+							<div class="col-md-4 mb-3">
+								<label for="cc-number">Quận/Huyện</label>
+								<input type="text" class="form-control" id="quanhuyen" data-bind="dict:quanhuyen"
+									placeholder="..." required="">
+							</div>
+							<div class="col-md-4 mb-3">
+								<label for="cc-expiration">Xã/Phường</label>
+								<input type="text" class="form-control" id="xaphuong" placeholder="..."
+									data-bind="dict:xaphuong" required="">
+							</div>
+							<div class="mb-3 col-md-12">
+								<label for="cc-expiration">Địa chỉ</label>
+								<input class="form-control" data-bind="value:diachi" id="diachitruso" placeholder="..."
+									required="">
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>

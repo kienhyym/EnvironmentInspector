@@ -33,15 +33,7 @@ define(function (require) {
 						command: function () {
 							var self = this;
 							if (self.getApp().currentUser.hasRole("CucTruong")) {
-								self.getApp().getRouter().navigate(self.collectionName + "/collection" +
-									"?id=null" +
-									"&tinhthanh_ID=" + self.getApp().getRouter().getParam("tinhthanh_ID") +
-									"&chisotuanthu=" + self.getApp().getRouter().getParam("chisotuanthu") +
-									"&linhvuc_ID=" + self.getApp().getRouter().getParam("linhvuc_ID") +
-									"&sonamchuathanhtra=" + self.getApp().getRouter().getParam("sonamchuathanhtra") +
-									"&solanthanhtra=" + self.getApp().getRouter().getParam("solanthanhtra")
-
-								);
+								self.getApp().getRouter().navigate(self.collectionName + "/collection");
 							}
 						},
 						visible: function () {
@@ -58,64 +50,48 @@ define(function (require) {
 						},
 						command: function () {
 							var self = this;
-							var danhmuclinhvuc_foreign = [];
-							self.$el.find("#multiselect_linhvuc option:selected").each(function () {
-								var data_ck = $(this).attr('data-ck');
-								var my_object = JSON.parse(decodeURIComponent(data_ck));
-								if (my_object !== null) {
-									danhmuclinhvuc_foreign.push(my_object);
+							// Chọn lĩnh vực trước khi lưu
+							if (self.$el.find('.chonlinhvuc select').selectpicker('val').length != 0) {
+								var giatriloc_LinhVuc = self.$el.find('.chonlinhvuc select').selectpicker('val');
+								var filters = {
+									filters: {
+										"$and": [
+											{ "id": { "$in": giatriloc_LinhVuc } }
+										]
+									},
+									order_by: [{ "field": "created_at", "direction": "asc" }]
 								}
-							});
-							self.model.set("danhmuclinhvuc_foreign", danhmuclinhvuc_foreign);
-							self.model.set("solanthanhtra", (self.model.get("lichsuthanhtra_field").length));
-							var mangNam = [];
-							self.model.get("lichsuthanhtra_field").forEach(function (item, index) {
-								mangNam.push(item.nam)
-							})
-							if (self.model.get("namchuathanhtraganday") == null) {
-								self.model.set("namchuathanhtraganday", 0);
+								$.ajax({
+									type: "GET",
+									url: self.getApp().serviceURL + "/api/v1/danhmuclinhvuc?results_per_page=100000&max_results_per_page=1000000",
+									data: { "q": JSON.stringify(filters) },
+									contentType: "application/json",
+									success: function (response) {
+										self.model.set('danhmuclinhvuc_foreign', response.objects)
+										self.model.save(null, {
+											success: function (model, respose, options) {
+												self.getApp().notify("Lưu thông tin thành công");
+												self.getApp().getRouter().navigate(self.collectionName + "/collection");
+												// self.getApp().getRouter().refresh();
 
-							}
-							if (self.model.get("solanthanhtra") == null) {
-								self.model.set("solanthanhtra", 0);
-
-							}
-							else {
-								var year = new Date();
-								var namhientai = year.getFullYear();
-
-								self.model.set("namchuathanhtraganday", namhientai - Math.max.apply(Math, mangNam));
-							}
-
-							var keHoachThanhTraForeign = self.model.get('kehoachthanhtra_foreign');
-							keHoachThanhTraForeign.forEach(function (item, index) {
-								if (item.trangthai == "approved" || item.trangthai == "end_checked" || item.trangthai == "completed") {
-									delete item.stt;
-								}
-							})
-
-
-							self.model.save(null, {
-								success: function (model, respose, options) {
-									self.getApp().notify("Lưu thông tin thành công");
-									self.getApp().getRouter().navigate(self.collectionName + "/collection");
-									// self.getApp().getRouter().refresh();
-
-								},
-								error: function (xhr, status, error) {
-									try {
-										if (($.parseJSON(error.xhr.responseText).error_code) === "SESSION_EXPIRED") {
-											self.getApp().notify("Hết phiên làm việc, vui lòng đăng nhập lại!");
-											self.getApp().getRouter().navigate("login");
-										} else {
-											self.getApp().notify({ message: $.parseJSON(error.xhr.responseText).error_message }, { type: "danger", delay: 1000 });
-										}
+											},
+											error: function (xhr, status, error) {
+												try {
+													if (($.parseJSON(error.xhr.responseText).error_code) === "SESSION_EXPIRED") {
+														self.getApp().notify("Hết phiên làm việc, vui lòng đăng nhập lại!");
+														self.getApp().getRouter().navigate("login");
+													} else {
+														self.getApp().notify({ message: $.parseJSON(error.xhr.responseText).error_message }, { type: "danger", delay: 1000 });
+													}
+												}
+												catch (err) {
+													self.getApp().notify({ message: "Lưu thông tin không thành công" }, { type: "danger", delay: 1000 });
+												}
+											}
+										});
 									}
-									catch (err) {
-										self.getApp().notify({ message: "Lưu thông tin không thành công" }, { type: "danger", delay: 1000 });
-									}
-								}
-							});
+								});
+							}
 						}
 					},
 					{
@@ -208,9 +184,7 @@ define(function (require) {
 		render: function () {
 			var self = this;
 			var id = this.getApp().getRouter().getParam("id");
-			self.$el.find(".filter-option-inner-inner").selectpicker("810810af-c49e-4e37-b9e5-c66fb986bbf5")
-			self.getLinhvucs();
-			self.checkLinhVuc();
+			self.chonLinhVuc();
 			self.themChiNhanh();
 			if (id) {
 				this.model.set('id', id);
@@ -218,10 +192,12 @@ define(function (require) {
 					success: function (data) {
 						self.lichSuThucHienThanhTra();
 						self.applyBindings();
-						self.checkLinhVuc();
+						self.chonLinhVuc();
+						self.hienThiLinhVuc();
 						self.danhSachChiNhanh();
 						self.themChiNhanh();
 						self.themVaoKeHoachNamSau();
+
 						self.model.on("change:tinhthanh_id", function () {
 							self.getFieldElement("quanhuyen").data("gonrin").setFilters({ "tinhthanh_id": { "$eq": self.model.get("tinhthanh_id") } });
 						});
@@ -229,17 +205,8 @@ define(function (require) {
 							self.getFieldElement("xaphuong").data("gonrin").setFilters({ "quanhuyen_id": { "$eq": self.model.get("quanhuyen_id") } });
 						});
 
-						var danhmuclinhvuc_foreign = self.model.get("danhmuclinhvuc_foreign");
-						var val_danhmuclinhvuc_foreign = [];
-						if (val_danhmuclinhvuc_foreign !== null) {
-							for (var i = 0; i < danhmuclinhvuc_foreign.length; i++) {
-								val_danhmuclinhvuc_foreign.push(danhmuclinhvuc_foreign[i].id);
-							}
-						}
-						self.$el.find("#multiselect_linhvuc").selectpicker('val', val_danhmuclinhvuc_foreign);
-						var x;
-						var y;
-						var z;
+						
+						var x, y, z;
 						if (self.model.get('xaphuong') == null) {
 							y = "";
 						}
@@ -260,10 +227,6 @@ define(function (require) {
 						}
 						self.$el.find("#diachitrusochinh").val(x + ' ' + y + ' ' + z);
 
-						var arr = self.$el.find("tr td #stt")
-						arr.each(function (item, index) {
-							index.value = item + 1;
-						})
 					},
 					error: function (xhr, status, error) {
 						try {
@@ -291,42 +254,7 @@ define(function (require) {
 			}
 
 		},
-		getLinhvucs: function () {
-			var self = this;
-			var url = self.getApp().serviceURL + "/api/v1/danhmuclinhvuc";
-			$.ajax({
-				url: url,
-				method: "GET",
-				contentType: "application/json",
-				success: function (data) {
-
-					self.$el.find("#multiselect_linhvuc").html("");
-					for (var i = 0; i < data.objects.length; i++) {
-						var item = data.objects[i];
-						var data_str = encodeURIComponent(JSON.stringify(item));
-						var option_elm = $('<option>').attr({ 'value': item.id, 'data-ck': data_str }).html(item.tenlinhvuc)
-						self.$el.find("#multiselect_linhvuc").append(option_elm);
-					}
-
-					$.fn.selectpicker.Constructor.DEFAULTS.multipleSeparator = ' | ';
-					var danhmuclinhvuc_foreign = self.model.get("danhmuclinhvuc_foreign");
-					var val_danhmuclinhvuc_foreign = [];
-					if (val_danhmuclinhvuc_foreign !== null) {
-						for (var i = 0; i < danhmuclinhvuc_foreign.length; i++) {
-							val_danhmuclinhvuc_foreign.push(danhmuclinhvuc_foreign[i].id);
-						}
-					} -
-						self.$el.find("#multiselect_linhvuc").selectpicker('val', val_danhmuclinhvuc_foreign);
-				},
-				error: function (xhr, status, error) {
-					self.getApp().notify({ message: "Không lấy được dữ liệu" }, { type: "danger", delay: 1000 });
-				},
-			});
-
-
-
-
-		},
+		
 		validateEmail: function (email) {
 			var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 			return re.test(String(email).toLowerCase());
@@ -388,6 +316,51 @@ define(function (require) {
 							});
 						}
 					})
+				},
+				error: function (xhr, status, error) {
+					self.getApp().notify({ message: "Không lấy được dữ liệu" }, { type: "danger", delay: 1000 });
+				},
+			});
+
+
+		},
+		hienThiLinhVuc: function () {
+			var self = this;
+			var linhVuc = [];
+			self.model.get('danhmuclinhvuc_foreign').forEach(function (item, index) {
+				linhVuc.push(item.id)
+			})
+			self.$el.find('.chonlinhvuc select').selectpicker('val', linhVuc);
+
+		},
+		chonLinhVuc: function () {
+			var self = this;
+			$.ajax({
+				url: self.getApp().serviceURL + "/api/v1/danhmuclinhvuc",
+				method: "GET",
+				data: { "q": JSON.stringify({ "order_by": [{ "field": "grouplinhvuc", "direction": "desc" }], "page": 1, "results_per_page": 10000 }) },
+				contentType: "application/json",
+				success: function (data) {
+					var grouplinhvuc = "";
+					var classMaLinhVuc = "";
+					data.objects.forEach(function (item, index) {
+						if (grouplinhvuc !== item.grouplinhvuc) {
+							classMaLinhVuc = item.malinhvuc;
+							self.$el.find('.chonlinhvuc select').append(`
+							<optgroup label="${item.grouplinhvuc}" class ="optgroup${classMaLinhVuc} pt-0 pb-0 " >
+							<option value="${item.id}">${item.tenlinhvuc}</option>
+							</optgroup>
+							`)
+							grouplinhvuc = item.grouplinhvuc
+						} else {
+							self.$el.find('.optgroup' + classMaLinhVuc).append(`
+								<option value="${item.id}" >${item.tenlinhvuc}</option>
+							`)
+						}
+					})
+					self.$el.find('.chonlinhvuc select').selectpicker({
+						'actionsBox': 'true'
+					});
 				},
 				error: function (xhr, status, error) {
 					self.getApp().notify({ message: "Không lấy được dữ liệu" }, { type: "danger", delay: 1000 });
@@ -555,7 +528,7 @@ define(function (require) {
 					self.$el.find('#tenxaphuong').css('border', '1px solid green');
 				});
 			})
-			
+
 			self.$el.find('#selectQuanHuyen').unbind('click').bind('click', function () {
 				var quanHuyenDialogView = new QuanHuyenDialogView({
 					viewData: {

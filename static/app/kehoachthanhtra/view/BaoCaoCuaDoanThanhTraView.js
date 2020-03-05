@@ -17,7 +17,18 @@ define(function (require) {
         foreignField: "kehoachthanhtra_id",
         uiControl: {
             fields: [
+                {
+                    field: "duyet",
+                    uicontrol: "combobox",
+                    textField: "text",
+                    valueField: "value",
+                    cssClass: "form-control",
+                    dataSource: [
+                        { value: "duyet", text: "Duyệt" },
+                        { value: "khongduyet", text: "Không duyệt" },
 
+                    ],
+                },
                 {
                     field: "ngayguibaocaogiaitrinh",
                     uicontrol: "datetimepicker",
@@ -60,7 +71,19 @@ define(function (require) {
             self.$el.find(".btn-xoa").unbind("click").bind("click", function () {
                 self.remove(true);
             });
-
+            self.$el.find(".btn-luu").unbind("click").bind("click", function () {
+                    self.saveModel();
+            })
+            self.$el.find(".duyetkhongduyet").on('change.gonrin', function (e) {
+                if (self.$el.find(".duyetkhongduyet").data('gonrin').getValue() == "duyet") {
+                    self.$el.find(".ykien").hide()
+                } else {
+                    self.$el.find(".ykien").show()
+                }
+            });
+            if(self.model.attributes.duyet == "khongduyet"){
+                self.$el.find(".ykien").show()
+            }
         },
         renderUpload() {
             var self = this;
