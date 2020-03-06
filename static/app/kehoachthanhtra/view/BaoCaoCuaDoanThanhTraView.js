@@ -62,7 +62,7 @@ define(function (require) {
             if (!self.model.get("id")) {
                 self.model.set("id", gonrin.uuid())
             }
-            
+
             // self.bindEventSelect();
             self.applyBindings();
             // self.renderUpload();
@@ -72,7 +72,21 @@ define(function (require) {
                 self.remove(true);
             });
             self.$el.find(".btn-luu").unbind("click").bind("click", function () {
-                    self.saveModel();
+                var ngayguibaocaogiaitrinh = self.model.get("ngayguibaocaogiaitrinh");
+                if (ngayguibaocaogiaitrinh === null || ngayguibaocaogiaitrinh === "") {
+                    self.getApp().notify({ message: "Vui lòng chọn ngày gửi báo cáo giải trình" }, { type: "danger", delay: 1000 });
+                    return;
+                }
+                var tenfile_vanbangiaitrinh_attachment = self.$el.find(".tenfile-vanbangiaitrinh_attachment label");
+                var taive_vanbangiaitrinh_attachment = self.$el.find(".taive-vanbangiaitrinh_attachment label");
+
+                if (tenfile_vanbangiaitrinh_attachment.length == 0) {
+                    if (taive_vanbangiaitrinh_attachment.length == 0) {
+                        self.getApp().notify({ message: "Vui lòng tải tài liệu công văn giải trình của đối tượng thanh tra" }, { type: "danger", delay: 1000 });
+                        return;
+                    }
+                }
+                self.saveModel();
             })
             self.$el.find(".duyetkhongduyet").on('change.gonrin', function (e) {
                 if (self.$el.find(".duyetkhongduyet").data('gonrin').getValue() == "duyet") {
@@ -81,7 +95,7 @@ define(function (require) {
                     self.$el.find(".ykien").show()
                 }
             });
-            if(self.model.attributes.duyet == "khongduyet"){
+            if (self.model.attributes.duyet == "khongduyet") {
                 self.$el.find(".ykien").show()
             }
         },
@@ -137,7 +151,24 @@ define(function (require) {
         },
         bindEventGD1: function (files) {
             var self = this;
-            self.$el.find(".btn-luu").bind("click", function () {
+            self.$el.find(".btn-luu").unbind('click').bind("click", function () {
+
+                var ngayguibaocaogiaitrinh = self.model.get("ngayguibaocaogiaitrinh");
+                if (ngayguibaocaogiaitrinh === null || ngayguibaocaogiaitrinh === "") {
+                    self.getApp().notify({ message: "Vui lòng chọn ngày gửi báo cáo giải trình" }, { type: "danger", delay: 1000 });
+                    return;
+                }
+
+                var tenfile_vanbangiaitrinh_attachment = self.$el.find(".tenfile-vanbangiaitrinh_attachment label");
+                var taive_vanbangiaitrinh_attachment = self.$el.find(".taive-vanbangiaitrinh_attachment label");
+
+                if (tenfile_vanbangiaitrinh_attachment.length == 0) {
+                    if (taive_vanbangiaitrinh_attachment.length == 0) {
+                        self.getApp().notify({ message: "Vui lòng tải tài liệu công văn giải trình của đối tượng thanh tra" }, { type: "danger", delay: 1000 });
+                        return;
+                    }
+                }
+
                 if (files != undefined) {
                     files.forEach(function (item, index) {
                         self.saveAttachment(item.arrAttachment, item.data_attr);
@@ -146,7 +177,7 @@ define(function (require) {
                 else {
                     self.saveModel();
                 }
-                // self.saveModel();
+                self.saveModel();
             })
         },
         renderAttachment: function () {
@@ -155,8 +186,8 @@ define(function (require) {
                 if (self.model.get($(itemhtml).attr('data-field')) != null) {
                     $(self.$el.find('.custom-file-baocaodoanthanhtra')[indexhtml]).hide();
                     // $(itemhtml).append(`
-					// 	<label class = 'mt-2'>Danh sách tài liệu</label><br>
-					// `)
+                    // 	<label class = 'mt-2'>Danh sách tài liệu</label><br>
+                    // `)
                     self.model.get($(itemhtml).attr('data-field')).forEach(function (itemfield, indexfield) {
                         self.$el.find(".taive-" + $(itemhtml).attr('data-field')).append(`
 						<label>&nbsp;&nbsp;&nbsp;&nbsp;${itemfield.slice(16)}</label><a href="${itemfield}"> Tải về </a><br>
@@ -175,13 +206,13 @@ define(function (require) {
 
                     var data_attr = $(this).attr("data-attr");
                     // self.$el.find(".tenfile-" + data_attr).append(`
-					// 	<label class = 'mt-2'>Danh sách tài liệu</label><br>
+                    // 	<label class = 'mt-2'>Danh sách tài liệu</label><br>
                     // `)
                     self.$el.find(".tenfile-" + data_attr).find('label,br').remove()
                     for (var i = 0; i < $(this).get(0).files.length; ++i) {
-                    //     self.$el.find(".tenfile-" + data_attr).append(`
-					// 	<label>&nbsp;&nbsp;&nbsp;&nbsp;${$(this).get(0).files[i].name}</label><br>
-					// `)
+                        //     self.$el.find(".tenfile-" + data_attr).append(`
+                        // 	<label>&nbsp;&nbsp;&nbsp;&nbsp;${$(this).get(0).files[i].name}</label><br>
+                        // `)
                         arrAttachment.push($(this).get(0).files[i]);
                     }
                     self.$el.find('.label_list_files-' + data_attr).text("Bạn vừa chọn " + arrAttachment.length + " tài liệu")

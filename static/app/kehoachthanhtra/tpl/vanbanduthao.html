@@ -1,6 +1,6 @@
 <h5 class="mb-0 solan"> Dự thảo kết luận thanh tra lần </h5>
 <div class="row">
-	<div class="form-group col-4">
+	<div class="form-group col-4 required">
 		<label>Số văn bản dự thảo</label>
 		<input required type="text" vanbanduthao-bind="value:so_vanban_duthao" placeholder="Thêm trường"
 			class="form-control">
@@ -9,7 +9,7 @@
 		<label>Ngày dự thảo</label>
 		<input required type="text" vanbanduthao-bind="value:ngay_duthao_vanban" placeholder="Ngày ra quyết định"
 			class="form-control"> </div>
-	<div class="form-group col-4 required">
+	<div class="form-group col-4 ">
 		<label>Trạng thái (Phê duyệt)</label>
 		<input type="text" vanbanduthao-bind="value:trangthai_vanban" placeholder="(Phê duyệt)"
 			class="form-control trangthai_vanban">
@@ -18,7 +18,9 @@
 
 <div class="row ">
 	<div class="form-group col">
-		<label>Tài liệu đính kèm</label>
+		<div class="form-group required ">
+			<label>Tài liệu đính kèm</label>
+		</div>
 		<div id="upload-vanban_duthao_duthao_attachment">
 			<div class="custom-file custom-file-vanbanduthao">
 				<input type="file" class="custom-file-input upload_files" id="upload_files"

@@ -1018,7 +1018,7 @@
 
 							<h5>Kết luận thanh tra</h5>
 							<div class="row">
-								<div class="form-group col-6">
+								<div class="form-group col-6 required">
 									<label>Số kết luận</label>
 									<input required type="text" data-bind="value:so_ketluan_thanhtra"
 										class="form-control">
@@ -1032,7 +1032,9 @@
 
 							<div class="row">
 								<div class="form-group col">
-									<label>Tài liệu đính kèm</label>
+									<div class="form-group required ">
+										<label>Tài liệu đính kèm</label>
+									</div>
 									<div id="upload-ketluan_thanhtra_attachment">
 										<div class="custom-file custom-file-view">
 											<input type="file" class="custom-file-input upload_files attachmentBuoc11"
@@ -1195,7 +1197,7 @@
 												<h5>Công bố kết luận thanh tra</h5>
 
 												<div class="row">
-													<div class="form-group col-6">
+													<div class="form-group col-6 required">
 														<label>Số biên bản công bố</label>
 														<input required type="text"
 															data-bind="value:so_bienban_congbo_ketluan"
@@ -1211,7 +1213,11 @@
 
 												<div class="row">
 													<div class="form-group col">
-														<label>Tài liệu đính kèm</label>
+														<div class="form-group required ">
+															<label>Tài liệu đính kèm</label>
+														</div>
+														
+
 														<div id="upload-bienban_congbo_ketluan_attachment">
 															<div class="custom-file custom-file-view">
 																<input type="file"
@@ -1473,18 +1479,18 @@
 									<div class="card-body">
 										<h4 class="card-title">14: Bàn giao bộ phận lưu trữ hồ sơ</h4>
 										<div class="row">
-											<div class="form-group col-4 buoc14">
+											<div class="form-group col-4 buoc14 required">
 												<label>Ngày bàn giao</label>
 												<input required type="text" data-bind="value:ngay_bangiao_luutru"
 													class="form-control">
 											</div>
 
-											<div class="form-group col-4 buoc14">
+											<div class="form-group col-4 buoc14 required">
 												<label>Người giao</label>
 												<input required type="text" data-bind="value:nguoigiao"
 													class="form-control">
 											</div>
-											<div class="form-group col-4 buoc14">
+											<div class="form-group col-4 buoc14 required">
 												<label>Người nhận</label>
 												<input required type="text" data-bind="value:nguoinhan"
 													class="form-control">

@@ -84,6 +84,26 @@ define(function (require) {
         render: function () {
             var self = this;
             self.$el.find(".btn-luu").unbind("click").bind("click", function () {
+                var so_vanban_duthao = self.model.get("so_vanban_duthao");
+                if (so_vanban_duthao === null || so_vanban_duthao === "") {
+                    self.getApp().notify({ message: "Vui lòng nhập số văn bản dự thảo" }, { type: "danger", delay: 1000 });
+                    return;
+                }
+                var ngay_duthao_vanban = self.model.get("ngay_duthao_vanban");
+                if (ngay_duthao_vanban === null || ngay_duthao_vanban === "") {
+                    self.getApp().notify({ message: "Vui lòng nhập ngày văn bản dự thảo"}, { type: "danger", delay: 1000 });
+                    return;
+                }
+
+                var tenfile_vanban_duthao_duthao_attachment = self.$el.find(".tenfile-vanban_duthao_duthao_attachment label");
+                var taive_vanban_duthao_duthao_attachment = self.$el.find(".taive-vanban_duthao_duthao_attachment label");
+
+                if (tenfile_vanban_duthao_duthao_attachment.length == 0) {
+                    if (taive_vanban_duthao_duthao_attachment.length == 0) {
+                        self.getApp().notify({ message: "Vui lòng tải tài liệu dự thảo lên" }, { type: "danger", delay: 1000 });
+                        return;
+                    }
+                }
                 self.saveModel();
             })
 
@@ -181,6 +201,26 @@ define(function (require) {
         bindEventGD1: function (files) {
             var self = this;
             self.$el.find(".btn-luu").bind("click", function () {
+                var so_vanban_duthao = self.model.get("so_vanban_duthao");
+                if (so_vanban_duthao === null || so_vanban_duthao === "") {
+                    self.getApp().notify({ message: "Vui lòng nhập số văn bản dự thảo" }, { type: "danger", delay: 1000 });
+                    return;
+                }
+                var ngay_duthao_vanban = self.model.get("ngay_duthao_vanban");
+                if (ngay_duthao_vanban === null || ngay_duthao_vanban === "") {
+                    self.getApp().notify({ message: "Vui lòng nhập ngày văn bản dự thảo"}, { type: "danger", delay: 1000 });
+                    return;
+                }
+
+                var tenfile_vanban_duthao_duthao_attachment = self.$el.find(".tenfile-vanban_duthao_duthao_attachment label");
+                var taive_vanban_duthao_duthao_attachment = self.$el.find(".taive-vanban_duthao_duthao_attachment label");
+
+                if (tenfile_vanban_duthao_duthao_attachment.length == 0) {
+                    if (taive_vanban_duthao_duthao_attachment.length == 0) {
+                        self.getApp().notify({ message: "Vui lòng tải tài liệu dự thảo lên" }, { type: "danger", delay: 1000 });
+                        return;
+                    }
+                }
                 if (files != undefined) {
                     files.forEach(function (item, index) {
                         self.saveAttachment(item.arrAttachment, item.data_attr);

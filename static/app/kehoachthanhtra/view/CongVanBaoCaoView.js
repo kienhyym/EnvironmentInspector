@@ -62,6 +62,28 @@ define(function (require) {
         render: function () {
             var self = this;
             self.$el.find(".btn-luu").unbind("click").bind("click", function () {
+                var so_congvan_yeucau_baocao_thuchien = self.model.get("so_congvan_yeucau_baocao_thuchien");
+                if (so_congvan_yeucau_baocao_thuchien === null || so_congvan_yeucau_baocao_thuchien === "") {
+                    self.getApp().notify({ message: "Vui lòng nhập số công văn yêu cầu báo cáo thực hiện kết luận thanh tra"  }, { type: "danger", delay: 1000 });
+                    return;
+                }
+
+                var ngay_congvan_yeucau_baocao_thuchien = self.model.get("ngay_congvan_yeucau_baocao_thuchien");
+                if (ngay_congvan_yeucau_baocao_thuchien === null || ngay_congvan_yeucau_baocao_thuchien === "") {
+                    self.getApp().notify({ message: "Vui lòng nhập ngày công văn yêu cầu báo cáo thực hiện kết luận thanh tra" }, { type: "danger", delay: 1000 });
+                    return;
+                }
+
+
+                var tenfile_congvan_yeucau_baocao_thuchien_attachment = self.$el.find(".tenfile-congvan_yeucau_baocao_thuchien_attachment label");
+                var taive_congvan_yeucau_baocao_thuchien_attachment = self.$el.find(".taive-congvan_yeucau_baocao_thuchien_attachment label");
+
+                if (tenfile_congvan_yeucau_baocao_thuchien_attachment.length == 0) {
+                    if (taive_congvan_yeucau_baocao_thuchien_attachment.length == 0) {
+                        self.getApp().notify({ message: "Vui lòng tải tài liệu công văn yêu cầu báo cáo thực hiện kết luận thanh tra" }, { type: "danger", delay: 1000 });
+                        return;
+                    }
+                }
                 self.saveModel();
             })
 
@@ -120,6 +142,28 @@ define(function (require) {
         bindEventGD1: function (files) {
             var self = this;
             self.$el.find(".btn-luu").bind("click", function () {
+                var so_congvan_yeucau_baocao_thuchien = self.model.get("so_congvan_yeucau_baocao_thuchien");
+                if (so_congvan_yeucau_baocao_thuchien === null || so_congvan_yeucau_baocao_thuchien === "") {
+                    self.getApp().notify({ message: "Vui lòng nhập số công văn yêu cầu báo cáo thực hiện kết luận thanh tra"  }, { type: "danger", delay: 1000 });
+                    return;
+                }
+
+                var ngay_congvan_yeucau_baocao_thuchien = self.model.get("ngay_congvan_yeucau_baocao_thuchien");
+                if (ngay_congvan_yeucau_baocao_thuchien === null || ngay_congvan_yeucau_baocao_thuchien === "") {
+                    self.getApp().notify({ message: "Vui lòng nhập ngày công văn yêu cầu báo cáo thực hiện kết luận thanh tra" }, { type: "danger", delay: 1000 });
+                    return;
+                }
+
+
+                var tenfile_congvan_yeucau_baocao_thuchien_attachment = self.$el.find(".tenfile-congvan_yeucau_baocao_thuchien_attachment label");
+                var taive_congvan_yeucau_baocao_thuchien_attachment = self.$el.find(".taive-congvan_yeucau_baocao_thuchien_attachment label");
+
+                if (tenfile_congvan_yeucau_baocao_thuchien_attachment.length == 0) {
+                    if (taive_congvan_yeucau_baocao_thuchien_attachment.length == 0) {
+                        self.getApp().notify({ message: "Vui lòng tải tài liệu công văn yêu cầu báo cáo thực hiện kết luận thanh tra" }, { type: "danger", delay: 1000 });
+                        return;
+                    }
+                }
                 if (files != undefined) {
                     files.forEach(function (item, index) {
                         self.saveAttachment(item.arrAttachment, item.data_attr);
