@@ -2,7 +2,10 @@
 	"id": {
 		"type": "string",
 		"primary": true
-	},
+    },
+    "id_hoten": {
+        "type": "string"
+    },
     "hoten": {
         "type": "string"
     },

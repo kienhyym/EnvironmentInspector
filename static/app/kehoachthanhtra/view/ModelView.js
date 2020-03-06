@@ -439,13 +439,13 @@ define(function (require) {
 		renderAttachment: function () {
 			var self = this;
 			self.$el.find('.link-taive-view div').each(function (indexhtml, itemhtml) {
-
 				if (self.model.get($(itemhtml).attr('data-field')) != null) {
 
 					$(self.$el.find('.custom-file-view')[indexhtml]).hide();
 					// $(itemhtml).append(`
 					// 	<label class = 'mt-2'>Danh sách tài liệu</label><br>
 					// `)
+					
 					self.model.get($(itemhtml).attr('data-field')).forEach(function (itemfield, indexfield) {
 						self.$el.find(".taive-" + $(itemhtml).attr('data-field')).append(`
 						<label>&nbsp;&nbsp;&nbsp;&nbsp;${itemfield.slice(16)}</label><a href="${itemfield}"> Tải về </a><br>
@@ -626,7 +626,7 @@ define(function (require) {
 			var self = this;
 			self.$el.find(".btn-add-member").unbind('click').bind('click', function () {
 
-				var data_default = { "id": gonrin.uuid(), "hoten": "", "donvicongtac": null, "vaitro": null };
+				var data_default = { "id": gonrin.uuid(),"id_hoten":"", "hoten": "", "donvicongtac": null, "vaitro": null };
 				var danhsach_thanhvien = self.model.get("danhsach_thanhvien");
 				if (danhsach_thanhvien === null || danhsach_thanhvien.length === 0) {
 					danhsach_thanhvien = [];

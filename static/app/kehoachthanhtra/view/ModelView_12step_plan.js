@@ -919,6 +919,7 @@ define(function (require) {
 		GetNguoiPheDuyet: function () {
 			var self = this;
 			var dsThanhVienThanhTra = self.model.get("danhsach_thanhvien");
+			console.log('dsThanhVienThanhTra', dsThanhVienThanhTra)
 			for (var i = 0; i < dsThanhVienThanhTra.length; i++) {
 				var item = dsThanhVienThanhTra[i];
 				var data_str = encodeURIComponent(JSON.stringify(item));
@@ -1106,7 +1107,7 @@ define(function (require) {
 			var self = this;
 			self.$el.find(".btn-add-member").unbind('click').bind('click', function () {
 
-				var data_default = { "id": gonrin.uuid(), "hoten": "", "donvicongtac": null, "vaitro": null };
+				var data_default = { "id": gonrin.uuid(),"id_hoten":"", "hoten": "", "donvicongtac": null, "vaitro": null };
 				var danhsach_thanhvien = self.model.get("danhsach_thanhvien");
 				if (danhsach_thanhvien === null || danhsach_thanhvien.length === 0) {
 					danhsach_thanhvien = [];
@@ -2550,7 +2551,7 @@ define(function (require) {
 							self.model.get(element).forEach(function (itemAttachment, indexAttachment) {
 								self.$el.find('.danhsachhoso_bangiao_buoc' + (index + 1)).append(`
 										<tr>
-											<td>${indexAttachment}</td>
+											<td>${indexAttachment+1}</td>
 											<td>${itemAttachment.slice(16)}</td>
 											<td><a href="${itemAttachment}">Tải về</a></td>
 										</tr>
@@ -2573,7 +2574,7 @@ define(function (require) {
 					item.tailieu.forEach(function (itemTaiLieu, indexTaiLieu) {
 						self.$el.find('.danhsachhoso_bangiao_buoc8').append(`
 										<tr>
-											<td>${indexTaiLieu}</td>
+											<td>${indexTaiLieu+1}</td>
 											<td>${itemTaiLieu.slice(16)}</td>
 											<td><a href="${itemTaiLieu}">Tải về</a></td>
 										</tr>
