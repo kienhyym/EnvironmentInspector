@@ -236,7 +236,10 @@ define(function (require) {
 										</div>
 									</td>
 									<td class="diachi p-1" >${item.danhmucdoanhnghiep.diachi}, ${item.danhmucdoanhnghiep.tenxaphuong}, ${item.danhmucdoanhnghiep.tenquanhuyen}, ${item.danhmucdoanhnghiep.tentinhthanh}</td>
-									<td class="diachi p-1" ><button class="btn btn-primary p-1 mt-5 btn-taokehoach" data-id="${item.id}" >Tạo kế hoạch</button></td>
+									<td class="p-1" style="position: relative;">
+										<button class="btn btn-primary p-1 mt-4 btn-taokehoach" data-id="${item.id}" style="width:46px">Tạo kế hoạch</button>
+										<button class="btn btn-outline-danger p-1 btn_xoakehoach" style="position: absolute;top: 0px;right: 0px;" >x</button>
+									</td>
 
 								</tr>
 							`)
@@ -247,6 +250,7 @@ define(function (require) {
 						self.chonDonViPhoiHop_ChuTri(item.id, item.donvichutri_id, item.donviphoihop_id, index);
 						self.luaChonThoiGian(item.id, item.phamvithanhtratu, item.phamvithanhtraden, item.thoigiantienhanh, index);
 						self.taoKeHoachThanhTra(item.noidungkehoachnamsau_id, index, item.kehoachthanhtra_id, item.kehoachthanhtra);
+						self.xoaKhoiKeHoach(item.id, index)
 					})
 
 				},
@@ -425,6 +429,25 @@ define(function (require) {
 				})
 			}
 
+		},
+		xoaKhoiKeHoach: function (id, idx) {
+			var self = this;
+			$(self.$el.find('.btn_xoakehoach')[idx]).unbind('click').bind('click', function () {
+				$.ajax({
+					url: self.getApp().serviceURL + "/api/v1/danhsachdonvikehoachnamsau/" + id,
+					type: 'DELETE',
+					headers: {
+						'content-type': 'application/json'
+					},
+					dataType: 'json',
+					success: function (data) {
+						self.getApp().notify("Xóa doanh nghiệp khỏi kế hoạch thành công");
+						self.getApp().getRouter().refresh();
+					},
+					error: function (request, textStatus, errorThrown) {
+					}
+				})
+			})
 		},
 	});
 
