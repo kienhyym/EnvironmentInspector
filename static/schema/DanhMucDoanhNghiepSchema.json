@@ -50,10 +50,19 @@
     "xaphuong_id": {
         "type": "string"
     },
+    "tenxaphuong": {
+        "type": "string"
+    },
     "quanhuyen_id": {
         "type": "string"
     },
+    "tenquanhuyen": {
+        "type": "string"
+    },
     "tinhthanh_id": {
+        "type": "string"
+    },
+    "tentinhthanh": {
         "type": "string"
     },
     "quymodonvi": {

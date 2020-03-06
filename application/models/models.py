@@ -139,10 +139,13 @@ class DanhMucDoanhNghiep(CommonModel):
     diachi = db.Column(String)
     xaphuong_id = db.Column(UUID(as_uuid=True), ForeignKey('xaphuong.id'))
     xaphuong = relationship('XaPhuong', viewonly=True)
+    tenxaphuong = db.Column(String)
     quanhuyen_id = db.Column(UUID(as_uuid=True), ForeignKey('quanhuyen.id'))
     quanhuyen = relationship('QuanHuyen', viewonly=True)
+    tenquanhuyen = db.Column(String)
     tinhthanh_id = db.Column(UUID(as_uuid=True), ForeignKey('tinhthanh.id'))
     tinhthanh = relationship('TinhThanh', viewonly=True)
+    tentinhthanh = db.Column(String)
     quymodonvi = db.Column(Integer())
     solanthanhtra = db.Column(Integer, default=0)    
     namchuathanhtraganday = db.Column(Integer, default=0)    
@@ -420,18 +423,23 @@ class DanhSachDonViKeHoachNamSau(CommonModel):
     danhmucdoanhnghiep = relationship('DanhMucDoanhNghiep', viewonly=True)
     noidungkehoachnamsau_id = db.Column(UUID(as_uuid=True), ForeignKey('noidungkehoachnamsau.id'))
     noidungkehoachnamsau = relationship('NoiDungKeHoachNamSau', viewonly=True)
+
+    phamvithanhtratu= db.Column(BigInteger())
+    phamvithanhtraden= db.Column(BigInteger())
+    thoigiantienhanh= db.Column(BigInteger())
+
+    # donvichutri= db.Column(String)
+    # donviphoihop= db.Column(String)
+    donvichutri_id = db.Column(String)
+    donviphoihop_id = db.Column(String)
+    kehoachthanhtra_id = db.Column(String)
+    trangthai = db.Column(String)
     nam = db.Column(db.Integer())
 
 class NoiDungKeHoachNamSau(CommonModel):
     __tablename__ = 'noidungkehoachnamsau'
     id = db.Column(UUID(as_uuid=True), primary_key=True, default=default_uuid)
     noidungkehoach= db.Column(String)
-    phamvithanhtratu= db.Column(String)
-    phamvithanhtraden= db.Column(String)
-    thoigiantienhanh= db.Column(String)
-    donvichutri= db.Column(String)
-    donviphoihop= db.Column(String)
-    diachi= db.Column(String)
     nam = db.Column(db.Integer())
 
 class VanBanDuThao(CommonModel):

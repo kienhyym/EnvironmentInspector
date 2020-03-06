@@ -31,6 +31,27 @@
     "noidungkehoachnamsau_id": {
         "type": "string"
     },
+    "phamvithanhtratu": {
+        "type": "number"
+    },
+    "phamvithanhtraden": {
+        "type": "number"
+    },
+    "thoigiantienhanh": {
+        "type": "number"
+    },
+    "donvichutri_id": {
+        "type": "string"
+    },
+    "donviphoihop_id": {
+        "type": "string"
+    },
+    "kehoachthanhtra_id": {
+        "type": "string"
+    },
+    "trangthai": {
+        "type": "string"
+    },
     "nam": {
         "type": "number"
     },

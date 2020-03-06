@@ -28,24 +28,6 @@
     "noidungkehoach": {
         "type": "string"
     },
-    "phamvithanhtratu": {
-        "type": "string"
-    },
-    "phamvithanhtraden": {
-        "type": "string"
-    },
-    "thoigiantienhanh": {
-        "type": "string"
-    },
-    "donvichutri": {
-        "type": "string"
-    },
-    "donviphoihop": {
-        "type": "string"
-    },
-    "diachi": {
-        "type": "string"
-    },
     "nam": {
         "type": "number"
     }

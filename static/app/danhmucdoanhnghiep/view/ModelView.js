@@ -70,10 +70,28 @@ define(function (require) {
 										self.model.set('danhmuclinhvuc_foreign', response.objects)
 										self.model.save(null, {
 											success: function (model, respose, options) {
-												self.getApp().notify("Lưu thông tin thành công");
-												self.getApp().getRouter().navigate(self.collectionName + "/collection");
-												// self.getApp().getRouter().refresh();
-
+												self.model.set('tentinhthanh',respose.tinhthanh.ten)
+												self.model.set('tenquanhuyen',respose.quanhuyen.ten)
+												self.model.set('tenxaphuong',respose.xaphuong.ten)
+												self.model.save(null, {
+													success: function (model, respose, options) {
+														self.getApp().notify("Lưu thông tin thành công");
+														self.getApp().getRouter().navigate(self.collectionName + "/collection");
+													},
+													error: function (xhr, status, error) {
+														try {
+															if (($.parseJSON(error.xhr.responseText).error_code) === "SESSION_EXPIRED") {
+																self.getApp().notify("Hết phiên làm việc, vui lòng đăng nhập lại!");
+																self.getApp().getRouter().navigate("login");
+															} else {
+																self.getApp().notify({ message: $.parseJSON(error.xhr.responseText).error_message }, { type: "danger", delay: 1000 });
+															}
+														}
+														catch (err) {
+															self.getApp().notify({ message: "Lưu thông tin không thành công" }, { type: "danger", delay: 1000 });
+														}
+													}
+												});
 											},
 											error: function (xhr, status, error) {
 												try {

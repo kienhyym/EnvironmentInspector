@@ -10,12 +10,12 @@ define(function (require) {
 	var danhMucDoanhNghiepSelectView = require('app/danhmucdoanhnghiep/view/SelectView');
 	var DonViSelectView = require('app/danhmuclinhvuc/js/SelectView');
 	var TemplateHelper = require('app/base/view/TemplateHelper');
-
 	return Gonrin.ModelView.extend({
 		template: template,
 		urlPrefix: "/api/v1/",
 		modelSchema: schema,
 		collectionName: "kehoachthanhtra",
+		itemIDKeHoachNamSau: null,
 		tools: [
 			{
 				name: "defaultgr",
@@ -163,10 +163,15 @@ define(function (require) {
 				},
 			]
 		},
+
+		initialize: function () {
+			this.itemIDKeHoachNamSau = localStorage.getItem("idItem");
+		},
 		render: function () {
 			var self = this;
-			self.chonLinhVuc();
+			// localStorage.clear();
 
+			self.chonLinhVuc();
 			self.getDoanhNghiep();
 			self.bindEventSelect();
 			self.updateUIPermission();
@@ -177,7 +182,7 @@ define(function (require) {
 				this.model.set('id', id);
 				this.model.fetch({
 					success: function (data) {
-						
+
 						self.inputFileOnChange();
 						self.renderAttachment();
 						self.bindEventGD();
@@ -273,8 +278,6 @@ define(function (require) {
 				data: { "q": JSON.stringify({ "order_by": [{ "field": "grouplinhvuc", "direction": "desc" }], "page": 1, "results_per_page": 10000 }) },
 				contentType: "application/json",
 				success: function (data) {
-					console.log('aaaaaaaaaaaaa',data)
-
 					var grouplinhvuc = "";
 					var classMaLinhVuc = "";
 					data.objects.forEach(function (item, index) {
@@ -310,7 +313,6 @@ define(function (require) {
 			self.$el.find("#btn_save").unbind('click').bind('click', function () {
 				if (self.$el.find('.chonlinhvuc select').selectpicker('val').length != 0) {
 					var giatriloc_LinhVuc = self.$el.find('.chonlinhvuc select').selectpicker('val');
-					console.log(giatriloc_LinhVuc);
 					var filters = {
 						filters: {
 							"$and": [
@@ -325,11 +327,29 @@ define(function (require) {
 						data: { "q": JSON.stringify(filters) },
 						contentType: "application/json",
 						success: function (response) {
-							console.log(response.objects)
 							self.model.set('danhsachlinhvuc_field', response.objects)
 							self.model.save(null, {
 								success: function (model, respose, options) {
-									if (files != undefined) {
+									console.log("self.itemIDKeHoachNamSau", self.itemIDKeHoachNamSau)
+									if(self.itemIDKeHoachNamSau != null){
+										$.ajax({
+											url: self.getApp().serviceURL + "/api/v1/danhsachdonvikehoachnamsau/" +self.itemIDKeHoachNamSau,
+											method: "PUT",
+											data: JSON.stringify({
+												"kehoachthanhtra_id": respose.id,
+												"trangthai": respose.trangthai,
+											}),
+											contentType: "application/json",
+											success: function (data) {
+											},
+											error: function (xhr, status, error) {
+												self.getApp().notify({ message: "Có lỗi xảy ra" }, { type: "danger", delay: 1000 });
+											}
+										});
+									}
+									
+
+									if (String(typeof files) == "object") {
 										files.forEach(function (item, index) {
 											self.saveAttachment(item.arrAttachment, item.data_attr);
 										})
@@ -675,7 +695,6 @@ define(function (require) {
 					self.$el.find("#upload-" + key).hide();
 					self.$el.find("#download-" + key).show();
 				} else {
-					// console.log(key, attr_value);
 					self.$el.find("#upload-" + key).show();
 					self.$el.find("#download-" + key).hide();
 				}
@@ -833,7 +852,6 @@ define(function (require) {
 		bindEventSelect: function () {
 			var self = this;
 			self.$el.find(".upload_files").on("change", function () {
-				console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
 				var mdel = self.model.get("taokehoach_attachment");
 				self.$el.find(".hienthilink").html(mdel);
 				var http = new XMLHttpRequest();
@@ -882,7 +900,6 @@ define(function (require) {
 					}
 				}
 			});
-			console.log('self.model.toJSON()', self.model.toJSON());
 			self.$el.find("#btn_save").unbind("click").bind("click", function () {
 
 				self.model.save(null, {
@@ -893,7 +910,6 @@ define(function (require) {
 
 					},
 					error: function (xhr, status, error) {
-						// console.log('error',xhr)
 						try {
 							if (($.parseJSON(error.xhr.responseText).error_code) === "SESSION_EXPIRED") {
 								self.getApp().notify("Hết phiên làm việc, vui lòng đăng nhập lại!");
@@ -1032,7 +1048,6 @@ define(function (require) {
 
 		},
 		updateUITimeline: function (data) {
-			// console.log('data',data)
 			var self = this;
 			var el_status_new = self.$el.find("#timeline .kehoach_new");
 			el_status_new.addClass("complete");
@@ -1043,7 +1058,6 @@ define(function (require) {
 			var arr_timeline_capphong = ["send_review_pct", "cancel_reviewed_pct", "send_approved", "approved", "cancel_approved", "checked"]
 			if (data.trangthai != "new" && data.trangthai != "send_review_truongphong" &&
 				data.trangthai != "cancel_reviewed_truongphong") {
-				// console.log("timeline truong phong");
 				var el_status_capphong = self.$el.find("#timeline .kehoach_send_review_capphong");
 				el_status_capphong.addClass("complete");
 				el_status_capphong.find('.author').html(data.username_phongduyet || "&nbsp;");

@@ -62,19 +62,22 @@ async def logout(request):
 #     userobj['exprire'] = time.time() + auth.expire
 #     return userobj 
 
-@app.route('/api/v1/themvaokehoachnamsau', methods=['POST'])
-async def themvaokehoachnamsau(request):
+@app.route('/api/v1/themvaonoidungkehoachnamsau', methods=['POST'])
+async def themvaonoidungkehoachnamsau(request):
     data = request.json
-    for x in data['daTaDonVi']:
-        danhsachdonvikehoachnamsau = db.session.query(DanhSachDonViKeHoachNamSau).filter(and_(DanhSachDonViKeHoachNamSau.donvi_id == x['id'], DanhSachDonViKeHoachNamSau.nam == data['nam'])).first()
-        if (danhsachdonvikehoachnamsau is None):
-            new_danhsachdonvikehoachnamsau = DanhSachDonViKeHoachNamSau()
-            new_danhsachdonvikehoachnamsau.donvi_id = x['id']
-            new_danhsachdonvikehoachnamsau.noidungkehoachnamsau_id = data['idNoiDungKeHoach']
-            new_danhsachdonvikehoachnamsau.nam = data['nam']
-            db.session.add(new_danhsachdonvikehoachnamsau)
+    print('DDDDDDDDDDDDDDDDDDDDDDDxxxxxxxxxxxxxx',data)
+    for doanhnghiep in data['doanhnghiep']:
+        doanhnghiep_info = db.session.query(DanhSachDonViKeHoachNamSau).filter(and_(DanhSachDonViKeHoachNamSau.donvi_id == doanhnghiep['id'], DanhSachDonViKeHoachNamSau.nam == data['nam'])).first()
+        if (doanhnghiep_info is None):
+            doanhnghiep_namsau_moi = DanhSachDonViKeHoachNamSau()
+            doanhnghiep_namsau_moi.donvi_id = doanhnghiep['id']
+            doanhnghiep_namsau_moi.noidungkehoachnamsau_id = data['noidungkehoach_id']
+            doanhnghiep_namsau_moi.donvichutri_id = data['donvichutri_id']
+            doanhnghiep_namsau_moi.donviphoihop_id = data['donviphoihop_id']
+            doanhnghiep_namsau_moi.nam = data['nam']
+            db.session.add(doanhnghiep_namsau_moi)
             db.session.commit()
-    return json({"error_code":"ok","error_message":"Ngon"})
+    return json({"error_code":"ok","error_message":to_dict(doanhnghiep_namsau_moi)})
 
 
 

@@ -32,6 +32,8 @@ define(function (require) {
 			self.chonChiSo();
 			self.chonSoLanThanhTra();
 			self.chonSoNamChuaThanhTra();
+			self.chonDonViChuTri();
+			self.chonDonViPhoiHop();
 			self.locDuLieu();
 			self.xoaLoc();
 		},
@@ -125,6 +127,56 @@ define(function (require) {
 				})
 			})
 		},
+		chonDonViChuTri: function () {
+			var self = this;
+			$.ajax({
+				url: self.getApp().serviceURL + "/api/v1/donvi?results_per_page=100000&max_results_per_page=1000000",
+				method: "GET",
+				contentType: "application/json",
+				success: function (data) {
+					data.objects.forEach(function (item, index) {
+						self.$el.find('.chondonvichutri select').append(`
+						<option value="${item.id}" >${item.ten}</option>
+					`)
+					})
+					self.$el.find('.chondonvichutri select').selectpicker('val', 'deselectAllText');
+					self.$el.find('.chondonvichutri select').on('shown.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+						self.$el.find('.popover-header .close').css('line-height', '10px')
+						self.$el.find('.popover-header .close').unbind('click').bind('click', function () {
+							self.$el.find('.chondonvichutri select').selectpicker('val', 'deselectAllText');
+						})
+					})
+				},
+				error: function (xhr, status, error) {
+					self.getApp().notify({ message: "Không lấy được dữ liệu" }, { type: "danger", delay: 1000 });
+				},
+			});
+		},
+		chonDonViPhoiHop: function () {
+			var self = this;
+			$.ajax({
+				url: self.getApp().serviceURL + "/api/v1/donvi?results_per_page=100000&max_results_per_page=1000000",
+				method: "GET",
+				contentType: "application/json",
+				success: function (data) {
+					data.objects.forEach(function (item, index) {
+						self.$el.find('.chondonviphoihop select').append(`
+						<option value="${item.id}" >${item.ten}</option>
+					`)
+					})
+					self.$el.find('.chondonviphoihop select').selectpicker('val', 'deselectAllText');
+					self.$el.find('.chondonviphoihop select').on('shown.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+						self.$el.find('.popover-header .close').css('line-height', '10px')
+						self.$el.find('.popover-header .close').unbind('click').bind('click', function () {
+							self.$el.find('.chondonviphoihop select').selectpicker('val', 'deselectAllText');
+						})
+					})
+				},
+				error: function (xhr, status, error) {
+					self.getApp().notify({ message: "Không lấy được dữ liệu" }, { type: "danger", delay: 1000 });
+				},
+			});
+		},
 		locDuLieu: function () {
 			var self = this;
 			self.$el.find('.boloc').unbind('click').bind('click', function () {
@@ -210,7 +262,7 @@ define(function (require) {
 								});
 							}
 							self.btnLuuTaoKeHoachMoi(mangSauLocLinhVuc);
-							self.btnLuuKeHoachDaCo(mangSauLocLinhVuc);
+							// self.btnLuuKeHoachDaCo(mangSauLocLinhVuc);
 							self.render_grid2(0, mangSauLocLinhVuc);
 
 						},
@@ -230,25 +282,7 @@ define(function (require) {
 		},
 		anHienCacNut: function () {
 			var self = this;
-			self.$el.find('.btn-taokehoachmoi').unbind('click').bind('click', function () {
-				self.$el.find('.content-kehoach').show();
-				self.$el.find('.btn-taokehoachmoi, .btn-chonkehoachdaco').hide();
-				self.$el.find('.btn-trolai').show();
-				self.$el.find('.taoKeHoachMoi').show();
-				self.$el.find('.chonKeHoachDaCo').hide();
-			})
-			self.$el.find('.btn-chonkehoachdaco').unbind('click').bind('click', function () {
-				self.$el.find('.content-kehoach').show();
-				self.$el.find('.btn-taokehoachmoi, .btn-chonkehoachdaco').hide();
-				self.$el.find('.btn-trolai').show();
-				self.$el.find('.chonKeHoachDaCo').show();
-				self.$el.find('.taoKeHoachMoi').hide();
-			})
-			self.$el.find('.btn-trolai').unbind('click').bind('click', function () {
-				self.$el.find('.content-kehoach').hide();
-				self.$el.find('.btn-taokehoachmoi, .btn-chonkehoachdaco').show();
-				self.$el.find('.btn-trolai .troLai').hide();
-			})
+
 			self.$el.find('.btn-close').unbind('click').bind('click', function () {
 				self.$el.find('.noidungcuocthanhtra').hide()
 				self.$el.find(".noidungtrang").css('opacity', '1');
@@ -269,12 +303,6 @@ define(function (require) {
 					type: 'POST',
 					data: JSON.stringify({
 						'noidungkehoach': self.$el.find('#noidungkehoach').val(),
-						'phamvithanhtratu': self.$el.find('#phamvithanhtratu').val(),
-						'phamvithanhtraden': self.$el.find('#phamvithanhtraden').val(),
-						'thoigiantienhanh': self.$el.find('#thoigiantienhanh').val(),
-						'donvichutri': self.$el.find('#donvichutri').val(),
-						'donviphoihop': self.$el.find('#donviphoihop').val(),
-						'diachi': self.$el.find('#diachi').val(),
 						'nam': d.getFullYear() + 1,
 					}
 					),
@@ -284,11 +312,13 @@ define(function (require) {
 					dataType: 'json',
 					success: function (datanoidungkehoach) {
 						$.ajax({
-							url: self.getApp().serviceURL + "/api/v1/themvaokehoachnamsau",
+							url: self.getApp().serviceURL + "/api/v1/themvaonoidungkehoachnamsau",
 							type: 'POST',
 							data: JSON.stringify({
-								'daTaDonVi': arr,
-								'idNoiDungKeHoach': datanoidungkehoach.id,
+								'doanhnghiep': arr,
+								'noidungkehoach_id': datanoidungkehoach.id,
+								'donvichutri_id': self.$el.find('.chondonvichutri select').selectpicker('val'),
+								'donviphoihop_id': self.$el.find('.chondonviphoihop select').selectpicker('val'),
 								'nam': d.getFullYear() + 1,
 							}
 							),
@@ -296,9 +326,8 @@ define(function (require) {
 								'content-type': 'application/json'
 							},
 							dataType: 'json',
-							success: function (data) {
-								self.getApp().notify("Thêm kế hoạch thành công");
-
+							success: function (datanoidungkehoach) {
+								console.log(datanoidungkehoach)
 							},
 							error: function (request, textStatus, errorThrown) {
 							}
@@ -307,6 +336,8 @@ define(function (require) {
 					error: function (request, textStatus, errorThrown) {
 					}
 				})
+
+
 			})
 		},
 		btnLuuKeHoachDaCo: function (arr) {
@@ -326,23 +357,19 @@ define(function (require) {
 				data: "q=" + JSON.stringify(filters),
 				contentType: "application/json",
 				success: function (data) {
-					if(data.objects.length != 0){
+					if (data.objects.length != 0) {
 						data.objects.forEach(function (item, index) {
 							self.$el.find('.chonkehoachdaco select').append(`
 							<option data-id="${item.id}">${item.noidungkehoach}</option>
 						`)
 						})
-						self.$el.find('.chonkehoachdaco select').selectpicker({'width':'700px',});
+						self.$el.find('.chonkehoachdaco select').selectpicker({ 'width': '700px', });
 						self.$el.find('.chonkehoachdaco select').selectpicker('val', 'deselectAllText');
 						self.$el.find('.chonkehoachdaco select').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
 							self.$el.find('#noidungkehoach').val(data.objects[clickedIndex].noidungkehoach);
-							self.$el.find('#phamvithanhtratu').val(data.objects[clickedIndex].phamvithanhtratu);
-							self.$el.find('#phamvithanhtraden').val(data.objects[clickedIndex].phamvithanhtraden);
-							self.$el.find('#thoigiantienhanh').val(data.objects[clickedIndex].thoigiantienhanh);
 							self.$el.find('#donvichutri').val(data.objects[clickedIndex].donvichutri);
 							self.$el.find('#donviphoihop').val(data.objects[clickedIndex].donviphoihop);
-							self.$el.find('#diachi').val(data.objects[clickedIndex].diachi);
-	
+
 							self.$el.find('.btn-luu-kehoachdaco').unbind('click').bind('click', function () {
 								var d = new Date();
 								$.ajax({
@@ -367,7 +394,7 @@ define(function (require) {
 							})
 						})
 					}
-					
+
 				},
 				error: function (xhr, status, error) {
 					self.getApp().notify({ message: "Không lấy được dữ liệu" }, { type: "danger", delay: 1000 });
