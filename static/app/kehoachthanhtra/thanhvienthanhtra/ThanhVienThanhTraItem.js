@@ -67,8 +67,11 @@ define(function (require) {
 					data: "q=" + JSON.stringify(filters),
 					contentType: "application/json",
 					success: function (data) {
-						self.model.set('donvicongtac',data.objects[0].donvi.ten)
-						self.model.set('hoten',self.$el.find('.chonthanhvienthanhtra select').selectpicker('val'));
+						self.model.set('donvicongtac',data.objects[0].donvi.ten);
+						self.model.set('id_hoten',self.$el.find('.chonthanhvienthanhtra select').selectpicker('val'));
+						self.model.set('hoten', self.$el.find('.chonthanhvienthanhtra div button').attr('title'));
+						
+
 						console.log(self.model.toJSON())
 						self.trigger("change", {
 							"oldData": self.model.previousAttributes(),
@@ -97,8 +100,8 @@ define(function (require) {
 					self.$el.find('.chonthanhvienthanhtra select').selectpicker('val', 'deselectAllText');
 
 					if (self.model.toJSON() != undefined && self.model.toJSON() != null) {
-						if (self.model.toJSON().hoten != undefined && self.model.toJSON().hoten != null) {
-							var x = self.model.toJSON().hoten;
+						if (self.model.toJSON().id_hoten != undefined && self.model.toJSON().id_hoten != null) {
+							var x = self.model.toJSON().id_hoten;
 							self.$el.find('.chonthanhvienthanhtra select').selectpicker('val', x);
 						}
 					}

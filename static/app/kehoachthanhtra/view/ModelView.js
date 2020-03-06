@@ -442,10 +442,6 @@ define(function (require) {
 				if (self.model.get($(itemhtml).attr('data-field')) != null) {
 
 					$(self.$el.find('.custom-file-view')[indexhtml]).hide();
-					// $(itemhtml).append(`
-					// 	<label class = 'mt-2'>Danh sách tài liệu</label><br>
-					// `)
-					
 					self.model.get($(itemhtml).attr('data-field')).forEach(function (itemfield, indexfield) {
 						self.$el.find(".taive-" + $(itemhtml).attr('data-field')).append(`
 						<label>&nbsp;&nbsp;&nbsp;&nbsp;${itemfield.slice(16)}</label><a href="${itemfield}"> Tải về </a><br>
