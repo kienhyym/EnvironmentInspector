@@ -236,7 +236,7 @@ define(function (require) {
 										</div>
 									</td>
 									<td class="diachi p-1" >${item.danhmucdoanhnghiep.diachi}, ${item.danhmucdoanhnghiep.tenxaphuong}, ${item.danhmucdoanhnghiep.tenquanhuyen}, ${item.danhmucdoanhnghiep.tentinhthanh}</td>
-									<td class="diachi p-1" ><button class="btn btn-primary p-1 mt-5 btn-taokehoach" >Tạo kế hoạch</button></td>
+									<td class="diachi p-1" ><button class="btn btn-primary p-1 mt-5 btn-taokehoach" data-id="${item.id}" >Tạo kế hoạch</button></td>
 
 								</tr>
 							`)
@@ -246,7 +246,7 @@ define(function (require) {
 						self.noiDungThanhTra(item.noidungkehoachnamsau_id, index);
 						self.chonDonViPhoiHop_ChuTri(item.id, item.donvichutri_id, item.donviphoihop_id, index);
 						self.luaChonThoiGian(item.id, item.phamvithanhtratu, item.phamvithanhtraden, item.thoigiantienhanh, index);
-						self.taoKeHoachThanhTra(item.noidungkehoachnamsau_id, index);
+						self.taoKeHoachThanhTra(item.noidungkehoachnamsau_id, index, item.kehoachthanhtra_id, item.kehoachthanhtra);
 					})
 
 				},
@@ -385,12 +385,46 @@ define(function (require) {
 			$(self.$el.find(".noidungkehoach")[idx])[0].style.height = chieuCao_px + 5 + 'px';
 
 		},
-		taoKeHoachThanhTra: function (id, idx) {
+		taoKeHoachThanhTra: function (id, idx, kehoachthanhtra_id, trangthai) {
 			var self = this;
-			$(self.$el.find('.btn-taokehoach')[idx]).unbind('click').bind('click', function () {
-				self.getApp().getRouter().navigate("kehoachthanhtra/model");
-				localStorage.setItem('idItem',id)
-			})
+			var trangThai = null;
+			if (kehoachthanhtra_id != null) {
+				var foreignValues = [
+					{ value: "new", text: "Tạo mới" },
+					{ value: "send_review_truongphong", text: "Chờ cấp phòng duyệt" },
+					{ value: "cancel_reviewed_truongphong", text: "Phòng từ chối" },
+					{ value: "send_review_pct", text: "Chờ PCT duyệt" },
+					{ value: "cancel_reviewed_pct", text: "PCT từ chối" },
+					{ value: "send_approved", text: "Chờ CT duyệt" },
+					{ value: "cancel_approved", text: "CT từ chối" },
+					{ value: "approved", text: "CT đã duyệt quyết định" },
+					{ value: "checked", text: "Đã kiểm tra" },
+					{ value: "result_checked", text: "Đã có kết luận" },
+					{ value: "completed", text: "Hoàn thành" },
+					{ value: "end_checked", text: "Đã kết thúc thanh tra" }
+				]
+				foreignValues.forEach(function (item) {
+					if (item.value == trangthai.trangthai) {
+						trangThai = item.text;
+					}
+				})
+
+				$(self.$el.find('.btn-taokehoach')[idx]).text(trangThai)
+				$(self.$el.find('.btn-taokehoach')[idx]).removeClass('btn-primary')
+				$(self.$el.find('.btn-taokehoach')[idx]).addClass('btn-success')
+				$(self.$el.find('.btn-taokehoach')[idx]).unbind('click').bind('click', function () {
+					self.getApp().getRouter().navigate("kehoachthanhtra/model?id=" + kehoachthanhtra_id);
+					localStorage.setItem('idItem', $(self.$el.find('.btn-taokehoach')[idx]).attr('data-id'))
+				})
+
+			}
+			else {
+				$(self.$el.find('.btn-taokehoach')[idx]).unbind('click').bind('click', function () {
+					self.getApp().getRouter().navigate("kehoachthanhtra/model");
+					localStorage.setItem('idItem', $(self.$el.find('.btn-taokehoach')[idx]).attr('data-id'))
+				})
+			}
+
 		},
 	});
 

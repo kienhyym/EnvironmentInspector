@@ -432,8 +432,8 @@ class DanhSachDonViKeHoachNamSau(CommonModel):
     # donviphoihop= db.Column(String)
     donvichutri_id = db.Column(String)
     donviphoihop_id = db.Column(String)
-    kehoachthanhtra_id = db.Column(String)
-    trangthai = db.Column(String)
+    kehoachthanhtra_id = db.Column(UUID(as_uuid=True), ForeignKey('kehoachthanhtra.id'))
+    kehoachthanhtra = relationship('KeHoachThanhTra', viewonly=True)
     nam = db.Column(db.Integer())
 
 class NoiDungKeHoachNamSau(CommonModel):

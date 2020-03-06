@@ -166,10 +166,11 @@ define(function (require) {
 
 		initialize: function () {
 			this.itemIDKeHoachNamSau = localStorage.getItem("idItem");
+			// localStorage.clear();
+
 		},
 		render: function () {
 			var self = this;
-			// localStorage.clear();
 
 			self.chonLinhVuc();
 			self.getDoanhNghiep();
@@ -330,14 +331,12 @@ define(function (require) {
 							self.model.set('danhsachlinhvuc_field', response.objects)
 							self.model.save(null, {
 								success: function (model, respose, options) {
-									console.log("self.itemIDKeHoachNamSau", self.itemIDKeHoachNamSau)
 									if(self.itemIDKeHoachNamSau != null){
 										$.ajax({
 											url: self.getApp().serviceURL + "/api/v1/danhsachdonvikehoachnamsau/" +self.itemIDKeHoachNamSau,
 											method: "PUT",
 											data: JSON.stringify({
 												"kehoachthanhtra_id": respose.id,
-												"trangthai": respose.trangthai,
 											}),
 											contentType: "application/json",
 											success: function (data) {
