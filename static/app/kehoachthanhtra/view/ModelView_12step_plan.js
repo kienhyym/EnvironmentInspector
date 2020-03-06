@@ -1118,20 +1118,22 @@ define(function (require) {
 			self.$el.find(".btn-save-gd1").unbind('click').bind('click', function () {
 				var soquyetdinh = self.model.get("so_quyetdinh_thanhtra");
 				if (soquyetdinh === null || soquyetdinh === "") {
-					self.getApp().notify("Vui lòng nhập số quyết định thanh tra");
+					self.getApp().notify({ message: "Vui lòng nhập số quyết định thanh tra" }, { type: "danger", delay: 1000 });
+
 					return;
 				}
 
-				var ngayquyetdinh = self.model.get("ngayquyetdinh");
+				var ngayquyetdinh = self.model.get("ngay_quyetdinh_thanhtra");
 				if (ngayquyetdinh === null || ngayquyetdinh === "") {
-					self.getApp().notify("Vui lòng nhập ngày quyết định thanh tra");
+					self.getApp().notify({ message: "Vui lòng nhập ngày quyết định thanh tra" }, { type: "danger", delay: 1000 });
 					return;
 				}
-				// var danhsach_thanhvien = self.model.get("danhsach_thanhvien");
-				// if (danhsach_thanhvien === null || danhsach_thanhvien === "" || danhsach_thanhvien.length == 0) {
-				// 	self.getApp().notify("Vui lòng nhập danh sách đoàn thanh tra");
-				// 	return;
-				// }
+				var danhsach_thanhvien = self.model.get("danhsach_thanhvien");
+				if (danhsach_thanhvien === null || danhsach_thanhvien === undefined) {
+					self.getApp().notify({ message: "Vui lòng nhập danh sách đoàn thanh tra" }, { type: "danger", delay: 1000 });
+
+					return;
+				}
 				if (files != undefined) {
 					files.forEach(function (item, index) {
 						self.saveAttachment(item.arrAttachment, item.data_attr);
@@ -1145,15 +1147,17 @@ define(function (require) {
 
 
 			self.$el.find(".btn-save-gd2").unbind('click').bind('click', function () {
-				var sokehoach = self.model.get("sokehoach");
+				var sokehoach = self.model.get("so_vanban_kehoach");
 				if (sokehoach === null || sokehoach === "") {
-					self.getApp().notify("Vui lòng nhập số kế hoạch thanh tra");
+					self.getApp().notify({ message: "Vui lòng nhập số kế hoạch thanh tra" }, { type: "danger", delay: 1000 });
+
 					return;
 				}
 
-				var ngaylenkehoach = self.model.get("ngaylenkehoach");
+				var ngaylenkehoach = self.model.get("ngay_vanban_kehoach");
 				if (ngaylenkehoach === null || ngaylenkehoach === "") {
-					self.getApp().notify("Vui lòng nhập ngày lên kế hoạch thanh tra");
+					self.getApp().notify({ message: "Vui lòng nhập ngày lên kế hoạch thanh tra" }, { type: "danger", delay: 1000 });
+
 					return;
 				}
 				if (files != undefined) {
@@ -1171,8 +1175,14 @@ define(function (require) {
 			self.$el.find(".btn-save-gd3").unbind('click').bind('click', function () {
 				var danhsach_congviec_thanhtra = self.model.get("danhsach_congviec_thanhtra");
 				if (danhsach_congviec_thanhtra === null || danhsach_congviec_thanhtra === "") {
-					self.getApp().notify("Vui lòng nhập danh sách công việc");
+					self.getApp().notify({ message: "Vui lòng nhập danh sách công việc" }, { type: "danger", delay: 1000 });
 					return;
+				}
+				else {
+					if (danhsach_congviec_thanhtra.length === 0) {
+						self.getApp().notify({ message: "Vui lòng nhập danh sách công việc" }, { type: "danger", delay: 1000 });
+						return;
+					}
 				}
 				if (files != undefined) {
 					files.forEach(function (item, index) {
@@ -1185,17 +1195,31 @@ define(function (require) {
 			});
 
 			self.$el.find(".btn-save-gd4").unbind('click').bind('click', function () {
-				//    			var sokehoach = self.model.get("sokehoach");
-				//    			if(sokehoach === null || sokehoach===""){
-				//    				self.getApp().notify("Vui lòng nhập số kế hoạch thanh tra");
-				//    				return;
-				//    			}
-				//    			
-				//    			var ngaylenkehoach = self.model.get("ngaylenkehoach");
-				//    			if(ngaylenkehoach === null || ngaylenkehoach===""){
-				//    				self.getApp().notify("Vui lòng nhập ngày lên kế hoạch thanh tra");
-				//    				return;
-				//    			}
+				var so_congvan_yeucau_doituong_baocao = self.model.get("so_congvan_yeucau_doituong_baocao");
+				if (so_congvan_yeucau_doituong_baocao === null || so_congvan_yeucau_doituong_baocao === "") {
+					self.getApp().notify({ message: "Vui lòng nhập số công văn yêu cầu của đối tượng báo cáo" }, { type: "danger", delay: 1000 });
+					return;
+				}
+
+				var ngay_congvan_yeucau_doituong_baocao = self.model.get("ngay_congvan_yeucau_doituong_baocao");
+				if (ngay_congvan_yeucau_doituong_baocao === null || ngay_congvan_yeucau_doituong_baocao === "") {
+					self.getApp().notify({ message: "Vui lòng nhập ngày công văn yêu cầu của đối tượng báo cáo" }, { type: "danger", delay: 1000 });
+					return;
+				}
+
+				var so_vanban_doituong_baocao = self.model.get("so_vanban_doituong_baocao");
+				if (so_vanban_doituong_baocao === null || so_vanban_doituong_baocao === "") {
+					self.getApp().notify({ message: "Vui lòng nhập số văn bản của đối tượng báo cáo" }, { type: "danger", delay: 1000 });
+					return;
+				}
+
+				var ngay_vanban_doituong_baocao = self.model.get("ngay_vanban_doituong_baocao");
+				if (ngay_vanban_doituong_baocao === null || ngay_vanban_doituong_baocao === "") {
+					self.getApp().notify({ message: "Vui lòng nhập ngày công văn của đối tượng báo cáo" }, { type: "danger", delay: 1000 });
+					return;
+				}
+				
+				
 				if (files != undefined) {
 					files.forEach(function (item, index) {
 						self.saveAttachment(item.arrAttachment, item.data_attr);
@@ -1211,15 +1235,17 @@ define(function (require) {
 			self.$el.find(".btn-save-gd5").unbind('click').bind('click', function () {
 				var sovanban_thongbao_doituong_thanhtra = self.model.get("sovanban_thongbao_doituong_thanhtra");
 				if (sovanban_thongbao_doituong_thanhtra === null || sovanban_thongbao_doituong_thanhtra === "") {
-					self.getApp().notify("Vui lòng nhập số văn bản thông báo");
+					self.getApp().notify({ message: "Vui lòng nhập số văn bản thông báo" }, { type: "danger", delay: 1000 });
+
+					return;
+				}
+				var ngay_vanban_thongbao_doituong_thanhtra = self.model.get("ngay_vanban_thongbao_doituong_thanhtra");
+				if (ngay_vanban_thongbao_doituong_thanhtra === null || ngay_vanban_thongbao_doituong_thanhtra === "") {
+					self.getApp().notify({ message: "Vui lòng nhập ngày thông báo" }, { type: "danger", delay: 1000 });
+
 					return;
 				}
 
-				var ngay_vanban_thongbao_doituong_thanhtra = self.model.get("ngay_vanban_thongbao_doituong_thanhtra");
-				if (ngay_vanban_thongbao_doituong_thanhtra === null || ngay_vanban_thongbao_doituong_thanhtra === "") {
-					self.getApp().notify("Vui lòng nhập ngày thông báo");
-					return;
-				}
 				if (files != undefined) {
 					files.forEach(function (item, index) {
 						self.saveAttachment(item.arrAttachment, item.data_attr);
@@ -1233,7 +1259,18 @@ define(function (require) {
 
 			//6
 			self.$el.find(".btn-save-gd6").unbind('click').bind('click', function () {
+				var so_vanban_congbo_quyetdinh = self.model.get("so_vanban_congbo_quyetdinh");
+				if (so_vanban_congbo_quyetdinh === null || so_vanban_congbo_quyetdinh === "") {
+					self.getApp().notify({ message: "Vui lòng nhập số văn bản công bố quyết định" }, { type: "danger", delay: 1000 });
 
+					return;
+				}
+				var ngay_vanban_congbo_quyetdinh = self.model.get("ngay_vanban_congbo_quyetdinh");
+				if (ngay_vanban_congbo_quyetdinh === null || ngay_vanban_congbo_quyetdinh === "") {
+					self.getApp().notify({ message: "Vui lòng nhập ngày công bố văn bản quyết định" }, { type: "danger", delay: 1000 });
+
+					return;
+				}
 				if (files != undefined) {
 					files.forEach(function (item, index) {
 						self.saveAttachment(item.arrAttachment, item.data_attr);
@@ -1246,17 +1283,11 @@ define(function (require) {
 
 			//7
 			self.$el.find(".btn-save-gd7").unbind('click').bind('click', function () {
-				//    			var sokehoach = self.model.get("sokehoach");
-				//    			if(sokehoach === null || sokehoach===""){
-				//    				self.getApp().notify("Vui lòng nhập số kế hoạch thanh tra");
-				//    				return;
-				//    			}
-				//    			
-				//    			var ngaylenkehoach = self.model.get("ngaylenkehoach");
-				//    			if(ngaylenkehoach === null || ngaylenkehoach===""){
-				//    				self.getApp().notify("Vui lòng nhập ngày lên kế hoạch thanh tra");
-				//    				return;
-				//    			}
+				var codauhieu_hinhsu = self.model.get("codauhieu_hinhsu");
+				if (codauhieu_hinhsu === null || codauhieu_hinhsu === "") {
+					self.getApp().notify({ message: "Vui lòng chọn quyết định có dấu hiệu hình sự không" }, { type: "danger", delay: 1000 });
+					return;
+				}
 				if (files != undefined) {
 					files.forEach(function (item, index) {
 						self.saveAttachment(item.arrAttachment, item.data_attr);
@@ -1269,18 +1300,17 @@ define(function (require) {
 
 			//8
 			self.$el.find(".btn-save-gd8").unbind('click').bind('click', function () {
+				var so_ketqua_trungcau_ykien = self.model.get("so_ketqua_trungcau_ykien");
+				if (so_ketqua_trungcau_ykien === null || so_ketqua_trungcau_ykien === "") {
+					self.getApp().notify({ message: "Vui lòng nhập số kết quả trưng cầu ý kiến" }, { type: "danger", delay: 1000 });
+					return;
+				}
+				var ngay_ketqua_trungcau_ykien = self.model.get("ngay_ketqua_trungcau_ykien");
+				if (ngay_ketqua_trungcau_ykien === null || ngay_ketqua_trungcau_ykien === "") {
+					self.getApp().notify({ message: "Vui lòng chọn ngày kết quả trưng cầu ý kiến" }, { type: "danger", delay: 1000 });
+					return;
+				}
 
-				//    			var sokehoach = self.model.get("sokehoach");
-				//    			if(sokehoach === null || sokehoach===""){
-				//    				self.getApp().notify("Vui lòng nhập số kế hoạch thanh tra");
-				//    				return;
-				//    			}
-				//    			
-				//    			var ngaylenkehoach = self.model.get("ngaylenkehoach");
-				//    			if(ngaylenkehoach === null || ngaylenkehoach===""){
-				//    				self.getApp().notify("Vui lòng nhập ngày lên kế hoạch thanh tra");
-				//    				return;
-				//    			}
 				if (files != undefined) {
 					files.forEach(function (item, index) {
 						self.saveAttachment(item.arrAttachment, item.data_attr);
@@ -1814,8 +1844,8 @@ define(function (require) {
 					return "danger"
 				} else {
 					if (self.model.get('so_ketqua_trungcau_ykien') != null &&
-						self.model.get('ngay_ketqua_trungcau_ykien') != null &&
-						self.model.get('ketqua_trungcau_ykien_attachment') != null) {
+						self.model.get('ngay_ketqua_trungcau_ykien') != null)
+						{
 						self.$el.find(".buoc9").removeClass("buoc9");
 						return "success"
 					}

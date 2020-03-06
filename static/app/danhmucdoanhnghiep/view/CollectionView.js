@@ -328,6 +328,8 @@ define(function (require) {
 							dataType: 'json',
 							success: function (datanoidungkehoach) {
 								self.getApp().notify('Danh sách doanh nghiệp đã được thêm vào kế hoạch năm sau')
+								self.$el.find('.noidungcuocthanhtra').hide()
+								self.$el.find(".noidungtrang").css('opacity', '1');
 							},
 							error: function (request, textStatus, errorThrown) {
 								self.getApp().notify({ message: "Danh sách doanh nghiệp đã có trong kế hoạch năm sau" }, { type: "danger", delay: 1000 });

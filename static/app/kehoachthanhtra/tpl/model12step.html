@@ -549,12 +549,12 @@
 							<div class="row">
 								<div class="col-6">
 									<h5>Thông báo bằng văn bản</h5>
-									<div class="form-group">
+									<div class="form-group required">
 										<label>Số văn bản</label>
 										<input type="text" data-bind="value:so_vanban_thongbao_doituong_thanhtra"
 											placeholder="Nhập văn bản" class="form-control">
 									</div>
-									<div class="form-group">
+									<div class="form-group required">
 										<label>Ngày gửi văn bản</label>
 										<input type="text" data-bind="value:ngay_vanban_thongbao_doituong_thanhtra"
 											placeholder="Ngày gửi văn bản" class="form-control">
@@ -671,7 +671,7 @@
 							<h4 class="card-title">7: Tiến hành thanh tra tại địa chỉ đối tượng thanh tra</h4>
 							<div class="row">
 								<div class="col-6">
-									<div class="form-group">
+									<div class="form-group required">
 										<label>Có dấu hiệu hình sự?</label>
 										<input required type="text" data-bind="value:codauhieu_hinhsu"
 											class="form-control">
@@ -772,12 +772,12 @@
 
 							</div>
 							<div class="row">
-								<div class="form-group col-6 ">
+								<div class="form-group col-6 required">
 									<label>Số kết quả trưng cầu</label>
 									<input required type="text" data-bind="value:so_ketqua_trungcau_ykien"
 										placeholder="Nhập số văn bản quyết định" class="form-control">
 								</div>
-								<div class="form-group col-6 ">
+								<div class="form-group col-6 required">
 									<label>Ngày nhận kết quả trưng cầu</label>
 									<input required type="text" data-bind="value:ngay_ketqua_trungcau_ykien"
 										placeholder="Ngày công bố quyết định" class="form-control">
@@ -981,7 +981,7 @@
 								<button class="btn btn-success btn-save btn-save-gd10 mb-1">Lưu</button>
 								<hr>
 							</div>
-							
+
 							<button type="button" id="btn_add_vanbanduthaofield"
 								class="btn btn-primary btn-sm btn-them">Thêm đợt dự thảo</button>
 							<button class="btn btn-danger lap_bien_ban_xuphat" id="lap_bien_ban_xuphat_btn"
@@ -1444,7 +1444,7 @@
 											<div id="space_congvanbaocaofield"></div>
 											<button type="button" id="btn_add_congvanbaocaofield"
 												class="btn btn-primary btn-sm btn-them">Thêm công văn báo cáo</button>
-											<button class="btn btn-success btn-save btn-save-gd13 d-none" >Lưu</button>
+											<button class="btn btn-success btn-save btn-save-gd13 d-none">Lưu</button>
 										</div>
 									</div>
 								</div>
@@ -1543,14 +1543,17 @@
 													</tr>
 													<tr>
 														<th colspan="3">Giai đoạn 9:Báo cáo của đoàn thanh tra</th>
-														<tbody class="danhsachhoso_bangiao_buoc9 ds_baocaocuadoanthanhtrafield"></tbody>
+														<tbody
+															class="danhsachhoso_bangiao_buoc9 ds_baocaocuadoanthanhtrafield">
+														</tbody>
 													</tr>
 													<tr>
 														<th colspan="3">Giai đoạn 10: Xây dựng dự thảo kết luận
 															thanh tra</th>
 														<!-- <tbody class="danhsachhoso_bangiao_buoc10_2"></tbody> -->
 
-														<tbody class="danhsachhoso_bangiao_buoc10 ds_vanbanduthaofield"></tbody>
+														<tbody class="danhsachhoso_bangiao_buoc10 ds_vanbanduthaofield">
+														</tbody>
 
 													</tr>
 													<tr>
@@ -1566,7 +1569,9 @@
 													<tr>
 														<th colspan="3">Giai đoạn 13:Theo dõi thực hiện kết luận
 															thanh tra</th>
-														<tbody class="danhsachhoso_bangiao_buoc13 ds_congvanbaocaofield"></tbody>
+														<tbody
+															class="danhsachhoso_bangiao_buoc13 ds_congvanbaocaofield">
+														</tbody>
 													</tr>
 
 

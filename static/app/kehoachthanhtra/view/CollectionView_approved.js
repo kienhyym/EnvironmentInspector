@@ -89,15 +89,15 @@ define(function (require) {
 					},
 					
 					{
-						field: "ngaythanhtra", label: "Ngày thanh tra",
+						field: "ngay_quyetdinh_thanhtra", label: "Ngày thanh tra",
 						template: function (rowData) {
-							if (!!rowData && rowData.ngaythanhtra) {
+							if (!!rowData && rowData.ngay_quyetdinh_thanhtra) {
 								var template_helper = new TemplateHelper();
 								var utcTolocal = function (times, format) {
 									return moment(times * 1000).local().format(format);
 								}
 								// return template_helper.datetimeFormat(rowData.ngaythanhtra, "DD/MM/YYYY");
-								return utcTolocal(rowData.ngaythanhtra, "DD/MM/YYYY");
+								return utcTolocal(rowData.ngay_quyetdinh_thanhtra, "DD/MM/YYYY");
 							}
 							return "";
 						},
