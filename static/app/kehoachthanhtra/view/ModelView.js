@@ -16,6 +16,9 @@ define(function (require) {
 		modelSchema: schema,
 		collectionName: "kehoachthanhtra",
 		itemIDKeHoachNamSau: null,
+		itemDonViKeHoachNamSau: null,
+		itemTenDonViKeHoachNamSau: null,
+		itemLinhVucKeHoachNamSau: null,
 		tools: [
 			{
 				name: "defaultgr",
@@ -158,7 +161,9 @@ define(function (require) {
 						{ value: "approved", text: "CT đã duyệt quyết định" },
 						{ value: "checked", text: "Đã kiểm tra" },
 						{ value: "result_checked", text: "Đã có kết luận" },
-						{ value: "completed", text: "Hoàn thành" }
+						{ value: "completed", text: "Hoàn thành" },
+						{ value: "end_checked", text: "Đã kết thúc thanh tra" }
+
 					],
 				},
 			]
@@ -166,11 +171,18 @@ define(function (require) {
 
 		initialize: function () {
 			this.itemIDKeHoachNamSau = localStorage.getItem("idItem");
-			// localStorage.clear();
-
+			this.itemDonViKeHoachNamSau = localStorage.getItem("idDonVi");
+			this.itemTenDonViKeHoachNamSau = localStorage.getItem("tenDonVi");
+			this.itemLinhVucKeHoachNamSau = localStorage.getItem("dsLinhVuc");
+			localStorage.clear();
 		},
 		render: function () {
 			var self = this;
+			self.getApp().currentUser.roles.forEach(function (item, index) {
+				if (item.role_name == 'VanPhongCuc' || item.role_name == 'ThanhVienDoanThanhTra') {
+					self.$el.find('.dsnut,.btn-add-member').hide();
+				}
+			})
 
 			self.chonLinhVuc();
 			self.getDoanhNghiep();
@@ -178,7 +190,10 @@ define(function (require) {
 			self.updateUIPermission();
 			self.inputFileOnChange();
 			self.bindEventGD();
+			self.lyDoTuChoi();
+
 			var id = this.getApp().getRouter().getParam("id");
+
 			if (id) {
 				this.model.set('id', id);
 				this.model.fetch({
@@ -187,6 +202,7 @@ define(function (require) {
 						self.inputFileOnChange();
 						self.renderAttachment();
 						self.bindEventGD();
+						self.lyDoTuChoi();
 						self.$el.find("#form-content").find("input").prop("disabled", true);
 						self.$el.find("#trangthai").removeClass("hidden");
 						var danhsachfile = self.model.get("tailieulienquan");
@@ -257,17 +273,34 @@ define(function (require) {
 				self.applyBindings();
 				// self.renderUpload();
 				self.bindEventGD1();
-
+				self.model.set('danhmucdoanhnghiep_id', self.itemDonViKeHoachNamSau)
+				self.$el.find('.tendoanhnghiep div span').text(self.itemTenDonViKeHoachNamSau)
 
 			}
 
 		},
+		lyDoTuChoi: function () {
+			var self = this;
+			self.$el.find('#lydotuchoi').hide();
+			if (self.model.get('trangthai') == 'cancel_approved' ||
+				self.model.get('trangthai') == 'cancel_reviewed_pct' ||
+				self.model.get('trangthai') == 'cancel_reviewed_truongphong') {
+				self.$el.find('#lydotuchoi').show();
+			}
+			self.$el.find('#btn_send').unbind('click').bind('click', function () {
+				self.saveModel();
+			})
+		},
 		hienThiLinhVuc: function () {
 			var self = this;
 			var linhVuc = [];
+			console.log(JSON.parse(self.itemLinhVucKeHoachNamSau))
+
+
 			self.model.get('danhsachlinhvuc_field').forEach(function (item, index) {
 				linhVuc.push(item.id)
 			})
+
 			self.$el.find('.chonlinhvuc select').selectpicker('val', linhVuc);
 
 		},
@@ -299,6 +332,10 @@ define(function (require) {
 					self.$el.find('.chonlinhvuc select').selectpicker({
 						'actionsBox': 'true'
 					});
+					if (JSON.parse(self.itemLinhVucKeHoachNamSau) != null) {
+						self.$el.find('.chonlinhvuc select').selectpicker('val', JSON.parse(self.itemLinhVucKeHoachNamSau));
+
+					}
 				},
 				error: function (xhr, status, error) {
 					self.getApp().notify({ message: "Không lấy được dữ liệu" }, { type: "danger", delay: 1000 });
@@ -331,9 +368,9 @@ define(function (require) {
 							self.model.set('danhsachlinhvuc_field', response.objects)
 							self.model.save(null, {
 								success: function (model, respose, options) {
-									if(self.itemIDKeHoachNamSau != null){
+									if (self.itemIDKeHoachNamSau != null) {
 										$.ajax({
-											url: self.getApp().serviceURL + "/api/v1/danhsachdonvikehoachnamsau/" +self.itemIDKeHoachNamSau,
+											url: self.getApp().serviceURL + "/api/v1/danhsachdonvikehoachnamsau/" + self.itemIDKeHoachNamSau,
 											method: "PUT",
 											data: JSON.stringify({
 												"kehoachthanhtra_id": respose.id,
@@ -346,7 +383,7 @@ define(function (require) {
 											}
 										});
 									}
-									
+
 
 									if (String(typeof files) == "object") {
 										files.forEach(function (item, index) {
@@ -622,7 +659,7 @@ define(function (require) {
 			var self = this;
 			self.$el.find(".btn-add-member").unbind('click').bind('click', function () {
 
-				var data_default = { "id": gonrin.uuid(),"id_hoten":"", "hoten": "", "donvicongtac": null, "vaitro": null };
+				var data_default = { "id": gonrin.uuid(), "id_hoten": "", "hoten": "", "donvicongtac": null, "vaitro": null };
 				var danhsach_thanhvien = self.model.get("danhsach_thanhvien");
 				if (danhsach_thanhvien === null || danhsach_thanhvien.length === 0) {
 					danhsach_thanhvien = [];
@@ -921,13 +958,14 @@ define(function (require) {
 
 			});
 			self.$el.find("#btn_review").unbind("click").bind("click", function () {
+				self.model.set('lydotuchoi', null);
 				self.confirm_kehoach();
 				self.getApp().getRouter().refresh();
 			});
 			self.$el.find("#btn_approve").unbind("click").bind("click", function () {
+				self.model.set('lydotuchoi', null);
 				self.confirm_kehoach();
 				self.getApp().getRouter().refresh();
-
 			});
 			self.$el.find("#btn_cancel").unbind("click").bind("click", function () {
 				self.cancel_kehoach();
@@ -1094,6 +1132,20 @@ define(function (require) {
 			if (arr_timeline_completed.indexOf(data.trangthai) >= 0) {
 				var el_status_completed = self.$el.find("#timeline .kechoach_completed");
 				el_status_completed.addClass("complete");
+				el_status_completed.find('.author').html('&nbsp;');
+				var template_helper = new TemplateHelper();
+				var ngayketthuc = template_helper.datetimeFormat(data.ngayketthuc, "DD/MM/YYYY");
+				el_status_completed.find('.date').html(ngayketthuc || "&nbsp;");
+				self.$el.find(".ngayketthuc").removeClass("d-none");
+			}
+			var arr_timeline_completed = ["end_checked", "result_checked"]
+			if (arr_timeline_completed.indexOf(data.trangthai) >= 0) {
+				var el_status_completed = self.$el.find("#timeline .kechoach_completed");
+				self.$el.find("#timeline .kechoach_approved").addClass("complete");
+				self.$el.find("#timeline .kechoach_checked").addClass("complete");
+				self.$el.find("#timeline .kehoach_send_review_pct").addClass("complete");
+
+				el_status_completed.addClass("theend text-danger");
 				el_status_completed.find('.author').html('&nbsp;');
 				var template_helper = new TemplateHelper();
 				var ngayketthuc = template_helper.datetimeFormat(data.ngayketthuc, "DD/MM/YYYY");

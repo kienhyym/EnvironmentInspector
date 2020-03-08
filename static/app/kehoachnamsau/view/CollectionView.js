@@ -5,37 +5,41 @@ define(function (require) {
         Gonrin = require('gonrin');
 
     var template = require('text!app/kehoachnamsau/tpl/collection.html'),
-		schema = require('json!schema/KeHoachNamSauSchema.json');
+        schema = require('json!schema/KeHoachNamSauSchema.json');
 
     return Gonrin.CollectionView.extend({
         template: template,
         modelSchema: schema,
         urlPrefix: "/api/v1/",
         collectionName: "kehoachnamsau",
-        uiControl:{
+        uiControl: {
             fields: [
 
-                
+
                 {
                     field: "nam", label: "Năm", width: 250, readonly: true,
                 },
-                
+
 
             ],
             onRowClick: function (event) {
                 if (event.rowId) {
-                    var path =  this.collectionName + '/model?id=' + event.rowId;
+                    var path = this.collectionName + '/model?id=' + event.rowId;
                     this.getApp().getRouter().navigate(path);
                 }
             }
         },
         render: function () {
-            
-            this.applyBindings();   
-            console.log(this);
-            return this;
+            var self = this;
+            self.getApp().currentUser.roles.forEach(function (item, index) {
+                if (item.role_name == 'VanPhongCuc') {
+                    self.$el.find('.toolbar').hide();
+                }
+            })
+            self.applyBindings();
+            return self;
         },
-        
+
     });
 
 });

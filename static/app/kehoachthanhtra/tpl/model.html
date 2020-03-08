@@ -44,6 +44,10 @@
 		border-top: 2px solid #66DC71;
 	}
 
+	.li.theend .status {
+		border-top: 2px solid rgb(252, 0, 0);
+	}
+
 	.status label.desc {
 		font-weight: 600;
 	}
@@ -52,6 +56,16 @@
 		background-color: #66DC71;
 		border: none;
 		transition: all 200ms ease-in;
+	}
+
+	.li.theend .status:before {
+		background-color: rgb(252, 0, 0);
+		border: none;
+		transition: all 200ms ease-in;
+	}
+
+	.li.theend .status h4 {
+		color: rgb(252, 0, 0);
 	}
 
 	.li.complete .status h4 {
@@ -217,7 +231,7 @@
 										placeholder="Nhập mã kế hoạch" class="form-control">
 								</div>
 								<div class="col-6">
-									<div class="form-group required">
+									<div class="form-group required tendoanhnghiep">
 										<label>Tên doanh nghiệp</label>
 										<input type="text" data-bind="dict:danhmucdoanhnghiep">
 									</div>
@@ -483,14 +497,24 @@
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-12">
+						<div class="col-12 dsnut">
 							<button id="btn_save" class="btn btn-primary">Lưu Thông Tin</button>
 							<button id="btn_review" class="btn btn-info">Gửi Xét Duyệt</button>
 							<button id="btn_approve" class="btn btn-info">Ra Quyết Định</button>
 							<button id="btn_cancel" class="btn btn-default">Từ Chối Duyệt</button>
 						</div>
 					</div>
-
+					<div class="row" id="lydotuchoi">
+						<div class="form-group col-11">
+							<label>Lý do từ chối </label>
+							<textarea required type="text" data-bind="value:lydotuchoi" placeholder="Ghi lý do từ chối"
+								class="form-control" ></textarea>
+						</div>
+						<div class="col-1">
+							<label>&nbsp; </label>
+						<button id="btn_send" class="btn btn-primary mt-3">Lưu</button>
+							</div>
+					</div>
 					</form>
 				</div>
 			</div>

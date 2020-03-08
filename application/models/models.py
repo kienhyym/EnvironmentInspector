@@ -206,6 +206,7 @@ class KeHoachThanhTra(CommonModel):
     username_quyetdinh = db.Column(String)
     ngaypheduyet_quyetdinh = db.Column(BigInteger())
     chucvu_duyetquyetdinh = db.Column(String)
+    lydotuchoi = db.Column(String)
 
     ngaythanhtra = db.Column(BigInteger())
     ketquathanhtra = db.Column(String)
@@ -423,7 +424,7 @@ class DanhSachDonViKeHoachNamSau(CommonModel):
     danhmucdoanhnghiep = relationship('DanhMucDoanhNghiep', viewonly=True)
     noidungkehoachnamsau_id = db.Column(UUID(as_uuid=True), ForeignKey('noidungkehoachnamsau.id'))
     noidungkehoachnamsau = relationship('NoiDungKeHoachNamSau', viewonly=True)
-
+    linhvucloc = db.Column(JSONB())
     phamvithanhtratu= db.Column(BigInteger())
     phamvithanhtraden= db.Column(BigInteger())
     thoigiantienhanh= db.Column(BigInteger())

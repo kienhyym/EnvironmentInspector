@@ -5,14 +5,14 @@ define(function (require) {
         Gonrin = require('gonrin');
 
     var template = require('text!app/danhmuclinhvuc/tpl/collection.html'),
-		schema = require('json!schema/DanhMucLinhVucSchema.json');
+        schema = require('json!schema/DanhMucLinhVucSchema.json');
 
     return Gonrin.CollectionView.extend({
         template: template,
         modelSchema: schema,
         urlPrefix: "/api/v1/",
         collectionName: "danhmuclinhvuc",
-        uiControl:{
+        uiControl: {
             fields: [
 
                 {
@@ -21,23 +21,27 @@ define(function (require) {
                 {
                     field: "tenlinhvuc", label: "Lĩnh vực", width: 250, readonly: true,
                 },
-                
+
 
             ],
             onRowClick: function (event) {
                 if (event.rowId) {
-                    var path =  this.collectionName + '/model?id=' + event.rowId;
+                    var path = this.collectionName + '/model?id=' + event.rowId;
                     this.getApp().getRouter().navigate(path);
                 }
             }
         },
         render: function () {
-            
-            this.applyBindings();   
-            console.log(this);
-            return this;
+            var self = this;
+            self.getApp().currentUser.roles.forEach(function (item, index) {
+                if (item.role_name == 'VanPhongCuc') {
+                    self.$el.find('.toolbar').hide();
+                }
+            })
+            self.applyBindings();
+            return self;
         },
-        
+
     });
 
 });

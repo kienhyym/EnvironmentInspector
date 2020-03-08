@@ -53,7 +53,27 @@ define(function (require) {
 				data: { "q": JSON.stringify({ "filters": filters, "order_by": [{ "field": "updated_at", "direction": "desc" }], "page": page, "results_per_page": results_per_page }) },
 				contentType: "application/json",
 				success: function (data) {
-					self.render_grid(status, data.objects);
+					var x = data.objects
+					var arr = [];
+					var dataSource = lodash.orderBy(x, ['created_at'], ['asc']);
+					self.getApp().currentUser.roles.forEach(function (item, index) {
+						if (item.role_name == 'ThanhVienDoanThanhTra') {
+							dataSource.forEach(function (item, index) {
+								if (item.danhsach_thanhvien.length != 0) {
+									item.danhsach_thanhvien.forEach(function (itemtv, indextv) {
+										if (itemtv.id_hoten == self.getApp().currentUser.id) {
+											arr.push(item)
+										}
+									})
+								}
+							})
+							self.render_grid(status, arr);
+
+						}
+						else{
+							self.render_grid(status, dataSource);
+						}
+					})
 
 				},
 				error: function (xhr, status, error) {

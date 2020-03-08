@@ -32,9 +32,14 @@ define(function (require) {
             }
         },
         render: function () {
-            
-            this.applyBindings();   
-            return this;
+            var self = this;
+            self.getApp().currentUser.roles.forEach(function (item, index) {
+                if (item.role_name == 'VanPhongCuc') {
+                    self.$el.find('.toolbar').hide();
+                }
+            })
+            self.applyBindings();   
+            return self;
         },
         
     });

@@ -51,6 +51,13 @@ define(function (require) {
 						command: function () {
 							var self = this;
 							// Chọn lĩnh vực trước khi lưu
+							var keHoachThanhTraForeign = self.model.get('kehoachthanhtra_foreign');
+
+							keHoachThanhTraForeign.forEach(function (item, index) {
+								if (item.trangthai == "approved" || item.trangthai == "end_checked" || item.trangthai == "completed") {
+									delete item.stt;
+								}
+							})
 							if (self.$el.find('.chonlinhvuc select').selectpicker('val').length != 0) {
 								var giatriloc_LinhVuc = self.$el.find('.chonlinhvuc select').selectpicker('val');
 								var filters = {

@@ -38,6 +38,11 @@ define(function (require) {
 
 		render: function () {
 			var self = this;
+			self.getApp().currentUser.roles.forEach(function (item, index) {
+				if (item.role_name == 'VanPhongCuc') {
+					self.$el.find("#del_member").hide();
+				}
+			})
 
 			if (self.model.get("id") == null) {
 				self.model.set("id", gonrin.uuid());

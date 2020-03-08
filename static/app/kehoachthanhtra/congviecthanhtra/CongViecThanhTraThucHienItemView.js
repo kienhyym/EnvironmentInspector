@@ -14,6 +14,11 @@ define(function (require) {
         template: template,
         render: function () {
             var self = this;
+            self.getApp().currentUser.roles.forEach(function (item, index) {
+				if (item.role_name == 'VanPhongCuc') {
+					self.$el.find(".btn-luu").hide();
+				}
+			})
             // self.bindEventSelect();
             self.applyBindings();
             // self.$el.find('.upload_files_B8').attr("aria-label",self.model.attributes.hangmuccongviec)

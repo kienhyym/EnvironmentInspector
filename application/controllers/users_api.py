@@ -75,6 +75,7 @@ async def themvaonoidungkehoachnamsau(request):
             doanhnghiep_namsau_moi.donvichutri_id = data['donvichutri_id']
             doanhnghiep_namsau_moi.donviphoihop_id = data['donviphoihop_id']
             doanhnghiep_namsau_moi.nam = data['nam']
+            doanhnghiep_namsau_moi.linhvucloc = data['linhvucloc']
             db.session.add(doanhnghiep_namsau_moi)
             db.session.commit()
     return json({"error_code":"ok","error_message":to_dict(doanhnghiep_namsau_moi)})
@@ -86,7 +87,18 @@ async def themvaonoidungkehoachnamsau(request):
 async def login(request):
     username = request.json.get("data", None)
     password = request.json.get("password", None)
+    
+
     user = db.session.query(User).filter(or_(User.email == username, User.phone_number == username)).first()
+    passwordx = auth.encrypt_password(password, user.salt)
+    passwordx2 = auth.verify_password(user.password, user.salt)
+
+    print('--------------------reques',password)
+    print('--------------------reques',passwordx)
+    print('-----------------------------get',user.password)
+    print('-----------------------------get verify_password',passwordx2)
+
+
     if (user is not None) and auth.verify_password(password, user.password, user.salt):
         auth.login_user(request, user)
         result = await get_user_with_permission(user)
@@ -115,7 +127,6 @@ async def prepost_user(request=None, data=None, Model=None, **kw):
     password = data['password']
     data['password'] = auth.encrypt_password(password, salt)
     data['active']= True
-    print('hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh',data)
 
 
 async def preput_user(request=None, data=None, Model=None, **kw):
@@ -142,11 +153,16 @@ async def preput_user(request=None, data=None, Model=None, **kw):
 
     if currentUser.has_role("CucTruong") or str(currentUser.id) == data['id']:
         if(data['password'] is None):
-            data['password'] = to_dict(user)['password']
-            print('-------------------------MAT KHAU IS NONE-----------------',data['password'])
+            del data['password']
+            # password = to_dict(user)['password']
+            # data['password'] = password
+            # print('-------------------------MAT KHAU HIEN TAI-----------------', to_dict(user)['password'])
+            print('-------------------------MAT KHAU IS NONE-----------------', data)
 
-        if(data['password'] != to_dict(user)['password']):
+        else:
             print('-------------------------TRUOC KHI MA HOA MAT KHAU-----------------',data['password'])
+            print('-------------------------MAT KHAU HIEN TAI-----------------',to_dict(user)['password'])
+
             password = data['password']
             data['password'] = auth.encrypt_password(password, user.salt)
             print('-------------------------SAU KHI MA HOA MAT KHAU-----------------',password)
@@ -167,7 +183,7 @@ sqlapimanager.create_api(User, max_results_per_page=1000000,
     url_prefix='/api/v1',
     preprocess=dict(GET_SINGLE=[auth_func], GET_MANY=[auth_func], POST=[auth_func, prepost_user], PUT_SINGLE=[auth_func, preput_user], DELETE=[predelete_user]),
     postprocess=dict(POST=[], PUT_SINGLE=[], DELETE_SINGLE=[], GET_MANY =[]),
-    # exclude_columns= ["password","salt","active"],
+    exclude_columns= ["password","salt","active"],
     collection_name='user')
 
 sqlapimanager.create_api(Role, max_results_per_page=1000000,

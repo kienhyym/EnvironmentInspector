@@ -102,6 +102,11 @@ define(function (require) {
 			}],
 		render: function () {
 			var self = this;
+			self.getApp().currentUser.roles.forEach(function (item, index) {
+                if (item.role_name == 'VanPhongCuc') {
+                    self.$el.find('.toolbar').hide();
+                }
+            })
 			var id = this.getApp().getRouter().getParam("id");
 			var arr = [];
 			self.getApp().currentUser.roles.forEach(function (item, index) {
@@ -170,7 +175,7 @@ define(function (require) {
 						self.$el.find('.trangthai2 div div input').attr('placeholder', text)
 						self.applyBindings();
 						self.danhSachDonViThanhTra();
-
+						
 					},
 					error: function () {
 						self.getApp().notify("Get data Eror");
@@ -249,7 +254,7 @@ define(function (require) {
 						self.noiDungThanhTra(item.noidungkehoachnamsau_id, index);
 						self.chonDonViPhoiHop_ChuTri(item.id, item.donvichutri_id, item.donviphoihop_id, index);
 						self.luaChonThoiGian(item.id, item.phamvithanhtratu, item.phamvithanhtraden, item.thoigiantienhanh, index);
-						self.taoKeHoachThanhTra(item.noidungkehoachnamsau_id, index, item.kehoachthanhtra_id, item.kehoachthanhtra);
+						self.taoKeHoachThanhTra(item.noidungkehoachnamsau_id, index, item.kehoachthanhtra_id, item.kehoachthanhtra,item.donvi_id,item.danhmucdoanhnghiep.name,item.linhvucloc);
 						self.xoaKhoiKeHoach(item.id, index)
 					})
 
@@ -389,7 +394,7 @@ define(function (require) {
 			$(self.$el.find(".noidungkehoach")[idx])[0].style.height = chieuCao_px + 5 + 'px';
 
 		},
-		taoKeHoachThanhTra: function (id, idx, kehoachthanhtra_id, trangthai) {
+		taoKeHoachThanhTra: function (id, idx, kehoachthanhtra_id, trangthai,donvi_id,ten_donVi,dslinhvuc) {
 			var self = this;
 			var trangThai = null;
 			if (kehoachthanhtra_id != null) {
@@ -426,6 +431,13 @@ define(function (require) {
 				$(self.$el.find('.btn-taokehoach')[idx]).unbind('click').bind('click', function () {
 					self.getApp().getRouter().navigate("kehoachthanhtra/model");
 					localStorage.setItem('idItem', $(self.$el.find('.btn-taokehoach')[idx]).attr('data-id'))
+					localStorage.setItem('idDonVi', donvi_id)
+					localStorage.setItem('tenDonVi', ten_donVi)
+					localStorage.setItem('dsLinhVuc', JSON.stringify(dslinhvuc))
+
+					
+
+
 				})
 			}
 

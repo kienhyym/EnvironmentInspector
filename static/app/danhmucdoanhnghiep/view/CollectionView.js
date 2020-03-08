@@ -18,6 +18,12 @@ define(function (require) {
 
 		render: function () {
 			var self = this;
+			self.getApp().currentUser.roles.forEach(function (item,index) {
+				if( item.role_name == 'VanPhongCuc'){
+					self.$el.find('.toolbar,.nutthem').hide();
+				}
+				
+			  })
 			self.applyBindings()
 
 			//Tạo tiêu đề cho cái nút thêm vào kế hoạch năm sau
@@ -177,6 +183,7 @@ define(function (require) {
 				},
 			});
 		},
+		
 		locDuLieu: function () {
 			var self = this;
 			self.$el.find('.boloc').unbind('click').bind('click', function () {
@@ -261,8 +268,7 @@ define(function (require) {
 
 								});
 							}
-							self.btnLuuTaoKeHoachMoi(mangSauLocLinhVuc);
-							// self.btnLuuKeHoachDaCo(mangSauLocLinhVuc);
+							self.btnLuuTaoKeHoachMoi(mangSauLocLinhVuc,giatriloc_LinhVuc);
 							self.render_grid2(0, mangSauLocLinhVuc);
 
 						},
@@ -294,7 +300,7 @@ define(function (require) {
 
 			});
 		},
-		btnLuuTaoKeHoachMoi: function (arr) {
+		btnLuuTaoKeHoachMoi: function (arr,linhvuc) {
 			var self = this;
 			self.$el.find('.btn-luu-taokehoachmoi').unbind('click').bind('click', function () {
 				var d = new Date();
@@ -316,6 +322,7 @@ define(function (require) {
 							type: 'POST',
 							data: JSON.stringify({
 								'doanhnghiep': arr,
+								'linhvucloc':linhvuc,
 								'noidungkehoach_id': datanoidungkehoach.id,
 								'donvichutri_id': self.$el.find('.chondonvichutri select').selectpicker('val'),
 								'donviphoihop_id': self.$el.find('.chondonviphoihop select').selectpicker('val'),

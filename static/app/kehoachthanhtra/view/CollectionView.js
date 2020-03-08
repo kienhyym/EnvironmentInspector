@@ -38,12 +38,14 @@ define(function (require) {
 			},
 		],
 		render: function () {
-
 			var self = this;
+
 			var currentUser = self.getApp().currentUser;
 			self.bindEvent();
 			if (!!currentUser && (currentUser.hasRole("CucTruong") ||
 				currentUser.hasRole("PhoCucTruong") ||
+				currentUser.hasRole("VanPhongCuc") ||
+				currentUser.hasRole("ThanhVienDoanThanhTra") ||
 				currentUser.hasRole("TruongPhong"))) {
 				self.$el.find("#kehoach-new-tab").parent('li').hide();
 				self.$el.find("#kehoach-review-tab").click();
@@ -56,22 +58,23 @@ define(function (require) {
 				return;
 			}
 			//	    	self.getDataSource(0,filter_new,1,100);
-		
+
 			return this;
 		},
 		bindEvent: function () {
 			var self = this;
+
 			var currentUser = self.getApp().currentUser;
 			self.$el.find("#kehoach-new-tab").unbind('click').bind('click', function () {
 				var filters_common = "";
 				if (!!currentUser && currentUser.hasRole("ChuyenVien")) {
-				filters_common = { 
-					"$or": [
-					{ "trangthai": { "$eq": "new" } },
-					] 
+					filters_common = {
+						"$or": [
+							{ "trangthai": { "$eq": "new" } },
+						]
+					};
+					self.getDataSource(0, filters_common, 1, 100);
 				};
-				self.getDataSource(0, filters_common, 1, 100);
-			};
 			});
 
 			self.$el.find("#kehoach-review-tab").unbind('click').bind('click', function () {
@@ -108,7 +111,34 @@ define(function (require) {
 						},
 						]
 					};
-				} else {
+				}
+				else if (!!currentUser && currentUser.hasRole("ThanhVienDoanThanhTra")) {
+
+					// filters_common = {
+					// 	"$and": [{
+					// 		"$or": [
+					// 			{ "trangthai": { "$eq": "send_review_truongphong" } },
+					// 			{ "trangthai": { "$eq": "cancel_reviewed_truongphong" } },
+					// 			{ "trangthai": { "$eq": "send_review_pct" } },
+					// 			{ "trangthai": { "$eq": "send_approved" } }]
+					// 	},
+					// 	]
+					// };
+				}
+				else if (!!currentUser && currentUser.hasRole("VanPhongCuc")) {
+
+					// filters_common = {
+					// 	"$and": [{
+					// 		"$or": [
+					// 			{ "trangthai": { "$eq": "send_review_truongphong" } },
+					// 			{ "trangthai": { "$eq": "cancel_reviewed_truongphong" } },
+					// 			{ "trangthai": { "$eq": "send_review_pct" } },
+					// 			{ "trangthai": { "$eq": "send_approved" } }]
+					// 	},
+					// 	]
+					// };
+				}
+				else {
 					self.getApp().notify("Phiên làm việc hết hạn, vui lòng đăng nhập lại!");
 					self.getApp().getRouter().navigate("login");
 					return;
@@ -159,7 +189,7 @@ define(function (require) {
 				// var filter_finish = { "trangthai": { "$eq": "completed" } };
 				var filter_finish = {
 					"$or": [
-						{ "trangthai": { "$eq": "end_checked" }},
+						{ "trangthai": { "$eq": "end_checked" } },
 						{ "trangthai": { "$eq": "completed" } }]
 				};
 				self.getDataSource(3, filter_finish, 1, 100);
@@ -167,7 +197,7 @@ define(function (require) {
 		},
 		getDataSource: function (status, filters, page, results_per_page) {
 			var self = this;
-			console.log('filter',filters);
+			console.log('filter', filters);
 			$.ajax({
 				url: self.getApp().serviceURL + "/api/v1/kehoachthanhtra",
 				method: "GET",
@@ -175,10 +205,27 @@ define(function (require) {
 				contentType: "application/json",
 				success: function (data) {
 					var x = data.objects
-					console.log('data',x)
-					// var dataSource = lodash.orderBy(x, ['created_at'], ['asc']);
-					// _.orderBy(x, [ 'created_at'], ['desc']);
-					self.render_grid(status, data.objects);
+					var arr = [];
+					var dataSource = lodash.orderBy(x, ['created_at'], ['asc']);
+					self.getApp().currentUser.roles.forEach(function (item, index) {
+						if (item.role_name == 'ThanhVienDoanThanhTra') {
+							dataSource.forEach(function (item, index) {
+								if (item.danhsach_thanhvien.length != 0) {
+									item.danhsach_thanhvien.forEach(function (itemtv, indextv) {
+										if (itemtv.id_hoten == self.getApp().currentUser.id) {
+											arr.push(item)
+										}
+									})
+								}
+							})
+							self.render_grid(status, arr);
+
+						}
+						else{
+							self.render_grid(status, dataSource);
+						}
+					})
+					
 
 				},
 				error: function (xhr, status, error) {

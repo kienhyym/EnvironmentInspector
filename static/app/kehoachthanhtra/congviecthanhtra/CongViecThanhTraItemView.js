@@ -40,7 +40,11 @@ define(function (require) {
 		},
 		render: function () {
 			var self = this;
-			
+            self.getApp().currentUser.roles.forEach(function (item, index) {
+				if (item.role_name == 'VanPhongCuc') {
+					self.$el.find("#del_member").hide();
+				}
+			})
 			for (var i = 0; i < self.uiControl.fields.length; i++){
 				if (self.uiControl.fields[i].field == "nguoiduocphancong"){
 					self.uiControl.fields[i].dataSource = self.viewData.danhsachthanhvien;

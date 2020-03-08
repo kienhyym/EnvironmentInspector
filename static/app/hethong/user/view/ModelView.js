@@ -102,21 +102,7 @@ define(function (require) {
 								return;
 							}
 
-							// var filters = {
-							// 	filters: {
-							// 		"$and": [
-							// 			{ "id": { "$in": self.$el.find('.chonvaitro select').selectpicker('val') } }
-							// 		]
-							// 	},
-							// 	order_by: [{ "field": "created_at", "direction": "asc" }]
-							// }
-							// $.ajax({
-							// 	url: self.getApp().serviceURL + "/api/v1/role?results_per_page=100000&max_results_per_page=1000000",
-							// 	method: "GET",
-							// 	data: { "q": JSON.stringify(filters) },
-							// 	contentType: "application/json",
-							// 	success: function (data) {
-							// 		self.model.set('roles', data.objects)
+							
 							console.log(self.model.set)
 							self.model.save(null, {
 								success: function (model, respose, options) {
@@ -137,11 +123,6 @@ define(function (require) {
 									}
 								}
 							});
-							// },
-							// error: function (xhr, status, error) {
-							// 	self.getApp().notify({ message: "Không lấy được dữ liệu" }, { type: "danger", delay: 1000 });
-							// },
-							// });
 
 
 						}
@@ -220,7 +201,7 @@ define(function (require) {
 				this.model.set('id', id);
 				this.model.fetch({
 					success: function (data) {
-						self.$el.find("#password").remove();
+						// self.$el.find("#password").remove();
 						self.applyBindings();
 						self.hienVaiTro();
 
