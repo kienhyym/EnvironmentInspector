@@ -6,13 +6,8 @@ define(function (require) {
 
 	var template = require('text!app/hethong/user/tpl/model.html'),
 		schema = require('json!schema/UserSchema.json');
-	var XaPhuongSelectView = require('app/DanhMuc/XaPhuong/view/SelectView');
-	var QuanHuyenSelectView = require('app/DanhMuc/QuanHuyen/view/SelectView');
-	var TinhThanhSelectView = require('app/DanhMuc/TinhThanh/view/SelectView');
 	var DonViSelectView = require('app/donvi/view/SelectView');
 
-
-	var currentDate = new Date();
 	return Gonrin.ModelView.extend({
 		template: template,
 		urlPrefix: "/api/v1/",
@@ -35,6 +30,121 @@ define(function (require) {
 
 							Backbone.history.history.back();
 						},
+					},
+					{
+						name: "save",
+						type: "button",
+						buttonClass: "btn-success btn-sm",
+						label: "TRANSLATE:SAVE",
+						visible: function () {
+							return this.getApp().currentUser.hasRole("CucTruong");
+						},
+						command: function () {
+							var self = this;
+							//validate
+							var check_validate = true;
+							var forms = document.getElementsByClassName('needs-validation');
+							// Loop over them and prevent submission
+							Array.prototype.filter.call(forms, function (form) {
+								if (form.checkValidity() === false) {
+									event.preventDefault();
+									event.stopPropagation();
+									if (check_validate === true) {
+										check_validate = false;
+									}
+								}
+								form.classList.add('was-validated');
+							});
+							if (self.$el.find('.chonvaitro select').selectpicker('val').length == 0 &&
+								self.model.get('donvi_id') == null) {
+								self.$el.find('.roles_rounded div button').css({
+									"border": "1px #c4183c solid",
+									"box-shadow": "0 5px 11.5px rgba(196,24,60,.1)"
+								})
+								self.$el.find('.roles_rounded').css({ "box-shadow": "0 5px 11.5px rgba(196,24,60,.1)" })
+								self.$el.find('.roles_validate').show()
+								self.$el.find('.donvi_id_rounded').css({
+									"border": "1px #c4183c solid",
+									"box-shadow": "0 5px 11.5px rgba(196,24,60,.1)"
+								})
+								self.$el.find('.donvi_id_validate').show()
+								return false;
+
+							}
+
+							if (self.$el.find('.chonvaitro select').selectpicker('val').length == 0) {
+								self.$el.find('.roles_rounded div button').css({
+									"border": "1px #c4183c solid",
+									"box-shadow": "0 5px 11.5px rgba(196,24,60,.1)"
+								})
+								self.$el.find('.roles_rounded').css({ "box-shadow": "0 5px 11.5px rgba(196,24,60,.1)" })
+								self.$el.find('.roles_validate').show()
+								return false;
+							}
+							else {
+								self.$el.find('.roles_rounded').css({ "border": "1px #17c671 solid" })
+							}
+
+							if (self.model.get('donvi_id') == null) {
+								self.$el.find('.donvi_id_rounded').css({
+									"border": "1px #c4183c solid",
+									"box-shadow": "0 5px 11.5px rgba(196,24,60,.1)"
+								})
+								self.$el.find('.donvi_id_validate').show()
+								return false;
+							} else {
+								self.$el.find('.donvi_id_rounded').css({
+									"border": "1px #17c671 solid",
+								})
+							}
+
+							if (check_validate === false) {
+								return;
+							}
+
+							// var filters = {
+							// 	filters: {
+							// 		"$and": [
+							// 			{ "id": { "$in": self.$el.find('.chonvaitro select').selectpicker('val') } }
+							// 		]
+							// 	},
+							// 	order_by: [{ "field": "created_at", "direction": "asc" }]
+							// }
+							// $.ajax({
+							// 	url: self.getApp().serviceURL + "/api/v1/role?results_per_page=100000&max_results_per_page=1000000",
+							// 	method: "GET",
+							// 	data: { "q": JSON.stringify(filters) },
+							// 	contentType: "application/json",
+							// 	success: function (data) {
+							// 		self.model.set('roles', data.objects)
+							console.log(self.model.set)
+							self.model.save(null, {
+								success: function (model, respose, options) {
+									self.getApp().notify('Lưu dữ liệu thành công');
+									self.getApp().getRouter().navigate(self.collectionName + "/collection");
+								},
+								error: function (xhr, status, error) {
+									try {
+										if (($.parseJSON(error.xhr.responseText).error_code) === "SESSION_EXPIRED") {
+											self.getApp().notify("Hết phiên làm việc, vui lòng đăng nhập lại!");
+											self.getApp().getRouter().navigate("login");
+										} else {
+											self.getApp().notify({ message: $.parseJSON(error.xhr.responseText).error_message }, { type: "danger", delay: 1000 });
+										}
+									}
+									catch (err) {
+										self.getApp().notify({ message: "Lưu thông tin không thành công" }, { type: "danger", delay: 1000 });
+									}
+								}
+							});
+							// },
+							// error: function (xhr, status, error) {
+							// 	self.getApp().notify({ message: "Không lấy được dữ liệu" }, { type: "danger", delay: 1000 });
+							// },
+							// });
+
+
+						}
 					},
 					{
 						name: "delete",
@@ -71,30 +181,7 @@ define(function (require) {
 			}],
 		uiControl: {
 			fields: [
-				// {
-				// 	field: "xaphuong",
-				// 	uicontrol: "ref",
-				// 	textField: "ten",
-				// 	foreignRemoteField: "id",
-				// 	foreignField: "xaphuong_id",
-				// 	dataSource: XaPhuongSelectView
-				// },
-				// {
-				// 	field: "quanhuyen",
-				// 	uicontrol: "ref",
-				// 	textField: "ten",
-				// 	foreignRemoteField: "id",
-				// 	foreignField: "quanhuyen_id",
-				// 	dataSource: QuanHuyenSelectView
-				// },
-				// {
-				// 	field: "tinhthanh",
-				// 	uicontrol: "ref",
-				// 	textField: "ten",
-				// 	foreignRemoteField: "id",
-				// 	foreignField: "tinhthanh_id",
-				// 	dataSource: TinhThanhSelectView
-				// },
+
 				{
 					field: "donvi",
 					uicontrol: "ref",
@@ -107,146 +194,99 @@ define(function (require) {
 		},
 		render: function () {
 			var self = this;
-			self.getRoles();
-			self.$el.find("#create_partner").unbind('click').bind('click', function () {
-				//validate
-				var check_validate = true;
-				if(self.$el.find("#passwordNay")== null || self.$el.find("#passwordNay")== ''){
-					return false
-				}
-				var forms = document.getElementsByClassName('needs-validation');
-				// Loop over them and prevent submission
-				var validation = Array.prototype.filter.call(forms, function (form) {
-					if (form.checkValidity() === false) {
-						event.preventDefault();
-						event.stopPropagation();
-						if (check_validate === true) {
-							check_validate = false;
-						}
-
-					}
-					form.classList.add('was-validated');
-				});
-				if (check_validate === false) {
-					return;
-				}
-				var roles = [];
-				self.$el.find("#multiselect_roles option:selected").each(function () {
-					var data_ck = $(this).attr('data-ck');
-					var my_object = JSON.parse(decodeURIComponent(data_ck));
-					if (my_object !== null) {
-						roles.push(my_object);
-					}
-				});
-				
-				self.model.set("roles", roles);
-				console.log('self.model.set("roles", roles)',self.model.set("roles", roles))
-				self.model.save(null, {
-					success: function (model, respose, options) {
-						self.getApp().notify("Lưu dữ liệu thành công");
-						self.getApp().getRouter().navigate(self.collectionName + "/collection");
-
-					},
-					error: function (xhr, status, error) {
-						try {
-							if (($.parseJSON(error.xhr.responseText).error_code) === "SESSION_EXPIRED") {
-								self.getApp().notify("Hết phiên làm việc, vui lòng đăng nhập lại!");
-								self.getApp().getRouter().navigate("login");
-							} else {
-								self.getApp().notify({ message: $.parseJSON(error.xhr.responseText).error_message }, { type: "danger", delay: 1000 });
-							}
-						}
-						catch (err) {
-							self.getApp().notify({ message: "Lưu dữ liệu không thành công" }, { type: "danger", delay: 1000 });
-						}
-					}
-				});
-
-			});
-
+			self.chonVaiTro();
 			var id = this.getApp().getRouter().getParam("id");
 			var currentUser = self.getApp().currentUser;
-			console.log("currentUser===", currentUser.hasRole('CucTruong'));
 
-			console.log("currentUser===", currentUser);
-			console.log("currentUser.hasRole('CucTruong')==", currentUser.hasRole('CucTruong'));
-			if (currentUser && currentUser.hasRole('CucTruong')) {
-				self.$el.find("#password").show();
-			} else {
-				self.$el.find("#password").hide();
-			}
+			self.$el.find('.chonvaitro select').on('changed.bs.select', function () {
+				if (self.$el.find('.chonvaitro select').selectpicker('val').length != 0) {
+					console.log('xxx')
+					self.$el.find('.roles_rounded').removeAttr("style");
+					self.$el.find('.roles_rounded div button').css({ "border": "1px  #17c671  solid" })
+					self.$el.find('.roles_validate').hide()
+				}
+
+			});
+			self.model.on('change:donvi_id', function () {
+				if (self.model.get('donvi_id') != null) {
+					self.$el.find('.donvi_id_rounded').removeAttr("style");
+					self.$el.find('.donvi_id_rounded').css({ "border": "1px #17c671 solid" })
+					self.$el.find('.donvi_id_validate').hide()
+				}
+			})
+
+
 			if (id) {
 				this.model.set('id', id);
 				this.model.fetch({
 					success: function (data) {
+						self.$el.find("#password").remove();
 						self.applyBindings();
-						var roles = self.model.get("roles");
-						var val_roles = [];
-						if (val_roles !== null) {
-							for (var i = 0; i < roles.length; i++) {
-								val_roles.push(roles[i].id);
-							}
-						}
+						self.hienVaiTro();
 
-						self.$el.find("#multiselect_roles").selectpicker('val', val_roles);
-
-					},
-					error: function (xhr, status, error) {
-						try {
-							if (($.parseJSON(error.xhr.responseText).error_code) === "SESSION_EXPIRED") {
-								self.getApp().notify("Hết phiên làm việc, vui lòng đăng nhập lại!");
-								self.getApp().getRouter().navigate("login");
-							} else {
-								self.getApp().notify({ message: $.parseJSON(error.xhr.responseText).error_message }, { type: "danger", delay: 1000 });
-							}
-						}
-						catch (err) {
-							self.getApp().notify({ message: "Không tìm thấy dữ liệu" }, { type: "danger", delay: 1000 });
-						}
 					},
 				});
 			} else {
 				self.applyBindings();
-				
-			}
 
+
+
+			}
+		},
+		hienVaiTro: function () {
+			var self = this;
+			var vaiTro = [];
+			self.model.get('roles').forEach(function (item, index) {
+				vaiTro.push(item.id)
+			})
+			self.$el.find('.chonvaitro select').selectpicker('val', vaiTro);
 
 		},
-		getRoles: function () {
+		chonVaiTro: function () {
 			var self = this;
-			var url = self.getApp().serviceURL + "/api/v1/role";
 			$.ajax({
-				url: url,
+				url: self.getApp().serviceURL + "/api/v1/role?results_per_page=100000&max_results_per_page=1000000",
 				method: "GET",
 				contentType: "application/json",
 				success: function (data) {
-					self.$el.find("#multiselect_roles").html("");
-					for (var i = 0; i < data.objects.length; i++) {
-						var item = data.objects[i];
-						var data_str = encodeURIComponent(JSON.stringify(item));
-						var option_elm = $('<option>').attr({ 'value': item.id, 'data-ck': data_str }).html(item.description)
-						self.$el.find("#multiselect_roles").append(option_elm);
-					}
-					$.fn.selectpicker.Constructor.DEFAULTS.multipleSeparator = ' | ';
-					var roles = self.model.get("roles");
-					var val_roles = [];
-					if (val_roles !== null) {
-						for (var i = 0; i < roles.length; i++) {
-							val_roles.push(roles[i].id);
-						}
-					}
-					
-
-					self.$el.find("#multiselect_roles").selectpicker('val', val_roles);
-					
+					data.objects.forEach(function (item, index) {
+						self.$el.find('.chonvaitro select').append(`
+						<option value="${item.id}" data-id="${item.id}">${item.description}</option>
+					`)
+					})
+					self.$el.find('.chonvaitro select').selectpicker('val', 'deselectAllText');
+					self.$el.find('.chonvaitro select').on('shown.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+						self.$el.find('.popover-header .close').css('line-height', '10px')
+						self.$el.find('.popover-header .close').unbind('click').bind('click', function () {
+							self.$el.find('.chonvaitro select').selectpicker('val', 'deselectAllText');
+						})
+					})
+					var arr_roles = [];
+					self.$el.find('.chonvaitro select').selectpicker('val').forEach(function (id_role) {
+						data.objects.forEach(function (item_role) {
+							if (id_role == item_role.id) {
+								arr_roles.push(item_role);
+							}
+						});
+					});
+					self.model.set('roles', arr_roles)
+					self.$el.find('.chonvaitro select').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+						var arr_roles = [];
+						self.$el.find('.chonvaitro select').selectpicker('val').forEach(function (id_role) {
+							data.objects.forEach(function (item_role) {
+								if (id_role == item_role.id) {
+									arr_roles.push(item_role);
+								}
+							});
+						});
+						self.model.set('roles', arr_roles)
+					});
 				},
 				error: function (xhr, status, error) {
-					console.log("Không lấy được dữ liệu role");
+					self.getApp().notify({ message: "Không lấy được dữ liệu" }, { type: "danger", delay: 1000 });
 				},
 			});
-
-		}
-
+		},
 	});
 
 });

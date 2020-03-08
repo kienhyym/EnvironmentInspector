@@ -23,17 +23,17 @@
 				<div class="card-body">
 					<form class="needs-validation" novalidate>
 						<div class="form-row mt-3">
-							<div class="col-md-6">
+							<div class="col-md-6 form-group required">
 								<label>Họ và tên</label>
-								<input type="text" class="form-control" required data-hoso-bind="value:name"
-									placeholder="Nhập họ và tên" required>
+								<input type="text" class="form-control user_name" required data-hoso-bind="value:name"
+									placeholder="Nhập họ và tên" required >
 								<div class="invalid-feedback">
 									Vui lòng nhập Họ và tên
 								</div>
 							</div>
-							<div class="col-md-6">
+							<div class="col-md-6 form-group required">
 								<label>Số điện thoại</label>
-								<input type="text" class="form-control" required data-hoso-bind="value:phone_number"
+								<input type="text" class="form-control user_phone" required data-hoso-bind="value:phone_number"
 									placeholder="Nhập số điện thoại" required>
 								<div class="invalid-feedback">
 									Vui lòng nhập Số điện thoại
@@ -41,65 +41,47 @@
 							</div>
 						</div>
 						<div class="form-row mt-3">
-							<div class="col-md-6">
+							<div class=" col-md-6 form-group required">
 								<label>Vai trò</label>
-								<select class="selectpicker form-control" required id="multiselect_roles" multiple
-									data-live-search="true" data-actions-box="true" data-noneSelectedText="Chọn vai trò"
-									title="Chọn vai trò">
-								</select>
-								<div class="invalid-feedback">
+								<div class=" border rounded  chonvaitro roles_rounded">
+									<select class="selectpicker  col-md-12 m-0 p-0" multiple
+										data-live-search="true" data-actions-box="true"
+										data-noneSelectedText="Chọn vai trò" title="Chọn vai trò">
+									</select>
+								</div>
+								<div class="roles_validate" style="display: none;font-size: 80%;color: #c4183c">
 									Vui lòng chọn loại vai trò
 								</div>
 							</div>
-							<div class="col-md-6">
+
+							<div class="col-md-6 form-group required">
 								<label>Email</label>
-								<input type="email" class="form-control" required id="email"
+								<input type="email" class="form-control user_email" required id="email"
 									data-hoso-bind="value:email" placeholder="...">
 							</div>
 						</div>
-						<div class="form-row mt-3">
-							<div class="col-6" id="password">
+						<div class="form-row mt-3 ">
+							<div class="form-group required col-6 " id="password">
 								<label>Mật khẩu đăng nhập</label>
-								<input id="passwordNay" type="password" required class="form-control"
+								<input id="passwordNay" type="password" required class="form-control user_pass"
 									data-hoso-bind="value:password" placeholder="...">
 								<div class="invalid-feedback">
 									Vui lòng nhập mật khẩu đăng nhập
 								</div>
 							</div>
-							<div class="col-md-6">
+							<div class="col-md-6 form-group required">
 								<label for="cc-name">Đơn vị làm việc</label>
-								<input type="text" class="form-control" id="donvi" data-hoso-bind="dict:donvi"
-									placeholder="..." required="">
-							</div>
-						</div>
-
-						<div class="form-row mt-3 d-none">
-							<div class="col-lg-4 col-md-6">
-								<label for="cc-name">Tỉnh/Thành phố</label>
-								<input type="text" class="form-control" id="tinhthanh" data-hoso-bind="dict:tinhthanh"
-									placeholder="..." required>
-								<div class="invalid-feedback">
-									Vui lòng chọn thông tin Tỉnh/Thành phố
+								<div class="rounded donvi_id_rounded" >
+									<input type="text" class="form-control" id="donvi" data-hoso-bind="dict:donvi"
+										placeholder="..." required="">
 								</div>
-							</div>
-							<div class="col-lg-4 col-md-6 mt-3">
-								<label for="cc-number">Quận/Huyện</label>
-								<input type="text" class="form-control" id="quanhuyen" data-hoso-bind="dict:quanhuyen"
-									placeholder="..." required>
-								<div class="invalid-feedback">
-									Vui lòng chọn thông tin Quận/Huyện/Thị Xã
-								</div>
-							</div>
-							<div class="col-lg-4 col-md-6 mt-3">
-								<label for="cc-expiration">Xã/Phường</label>
-								<input type="text" class="form-control" id="xaphuong" placeholder="..."
-									data-hoso-bind="dict:xaphuong" required>
-								<div class="invalid-feedback">
-									Vui lòng chọn thông tin Xã/Phường
+								<div class="donvi_id_validate" style="display: none;font-size: 80%;color: #c4183c">
+									Vui lòng chọn đơn vị làm việc
 								</div>
 							</div>
 						</div>
 
+						
 
 						<div class="form-row mt-3">
 							<div class="col-md-12">
@@ -108,8 +90,8 @@
 									placeholder="..."></textarea>
 							</div>
 						</div>
-						<hr class="mb-4 mt-3">
-						<button id="create_partner" class="btn btn-info btn-lg btn-block" type="submit">Lưu</button>
+						<!-- <hr class="mb-4 mt-3"> -->
+						<!-- <button id="create_partner" class="btn btn-info btn-lg btn-block" type="submit">Lưu</button> -->
 					</form>
 				</div>
 			</div>

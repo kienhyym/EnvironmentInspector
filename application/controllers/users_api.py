@@ -115,8 +115,13 @@ async def prepost_user(request=None, data=None, Model=None, **kw):
     password = data['password']
     data['password'] = auth.encrypt_password(password, salt)
     data['active']= True
-    
+    print('hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh',data)
+
+
 async def preput_user(request=None, data=None, Model=None, **kw):
+    
+
+    # del data["password"]
     currentUser = await current_user(request)
     if (currentUser is None):
         return json({"error_code":"SESSION_EXPIRED","error_message":"Hết phiên làm việc, vui lòng đăng nhập lại!"}, status=520)
@@ -136,8 +141,16 @@ async def preput_user(request=None, data=None, Model=None, **kw):
         return json({"error_code":"NOT_FOUND","error_message":"Không tìm thấy tài khoản người dùng"}, status=520)
 
     if currentUser.has_role("CucTruong") or str(currentUser.id) == data['id']:
-        password = data['password']
-        data['password'] = auth.encrypt_password(password, user.salt)
+        if(data['password'] is None):
+            data['password'] = to_dict(user)['password']
+            print('-------------------------MAT KHAU IS NONE-----------------',data['password'])
+
+        if(data['password'] != to_dict(user)['password']):
+            print('-------------------------TRUOC KHI MA HOA MAT KHAU-----------------',data['password'])
+            password = data['password']
+            data['password'] = auth.encrypt_password(password, user.salt)
+            print('-------------------------SAU KHI MA HOA MAT KHAU-----------------',password)
+
     else:
         return json({"error_code":"PERMISSION_DENY","error_message":"Không có quyền thực hiện hành động này"}, status=520)
 
@@ -154,7 +167,7 @@ sqlapimanager.create_api(User, max_results_per_page=1000000,
     url_prefix='/api/v1',
     preprocess=dict(GET_SINGLE=[auth_func], GET_MANY=[auth_func], POST=[auth_func, prepost_user], PUT_SINGLE=[auth_func, preput_user], DELETE=[predelete_user]),
     postprocess=dict(POST=[], PUT_SINGLE=[], DELETE_SINGLE=[], GET_MANY =[]),
-    exclude_columns= ["password","salt","active"],
+    # exclude_columns= ["password","salt","active"],
     collection_name='user')
 
 sqlapimanager.create_api(Role, max_results_per_page=1000000,
