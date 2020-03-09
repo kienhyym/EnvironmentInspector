@@ -1495,7 +1495,7 @@ define(function (require) {
 
 				if (self.model.get($(itemhtml).attr('data-field')) != null) {
 
-					$(self.$el.find('.custom-file-view')[indexhtml]).hide();
+					// $(self.$el.find('.custom-file-view')[indexhtml]).hide();
 					// $(itemhtml).append(`
 					// 	<label class = 'mt-2'>Danh sách tài liệu</label><br>
 					// `)
@@ -1510,8 +1510,8 @@ define(function (require) {
 
 		inputFileOnChange: function () {
 			var self = this;
-			var arrInputFile = [];
 			self.$el.find(".upload_files").change(function () {
+				var arrInputFile = [];
 
 				const promise = new Promise((resolve, reject) => {
 					var arrAttachment = [];
@@ -1539,54 +1539,81 @@ define(function (require) {
 
 		saveAttachment: function (arrAttachment, data_attr) {
 			var self = this;
+
+
 			var arrLinkAttachment = [];
 			arrAttachment.forEach(function (item, index) {
-				var http = new XMLHttpRequest();
-				var fd = new FormData();
-				fd.append('file', item);
-				http.open('POST', '/api/v1/upload/file');
-				http.upload.addEventListener('progress', function (evt) {
-					if (evt.lengthComputable) {
-						var percent = evt.loaded / evt.total;
-						percent = parseInt(percent * 100);
-					}
-				}, false);
-				http.addEventListener('error', function () {
-				}, false);
-				http.onreadystatechange = function () {
-					if (http.status === 200) {
-						if (http.readyState === 4) {
-							var data_file = JSON.parse(http.responseText), link, p, t;
-							arrLinkAttachment.push(String(data_file.link))
-							if (arrAttachment.length == index + 1) {
-								self.model.set(data_attr, arrLinkAttachment)
-								self.model.save(null, {
-									success: function (model, response, options) {
-										self.getApp().router.refresh();
-									},
-									error: function (xhr, status, error) {
-										try {
-											if (($.parseJSON(error.xhr.responseText).error_code) === "SESSION_EXPIRED") {
-												self.getApp().notify("Hết phiên làm việc, vui lòng đăng nhập lại!");
-												self.getApp().getRouter().navigate("login");
-											} else {
-												self.getApp().notify({ message: $.parseJSON(error.xhr.responseText).error_message }, { type: "danger", delay: 1000 });
-											}
-										}
-										catch (err) {
-											self.getApp().notify({ message: "Lưu thông tin không thành công" }, { type: "danger", delay: 1000 });
-										}
-									}
-								});
+				const promise = new Promise((resolve, reject) => {
+					var http = new XMLHttpRequest();
+					var fd = new FormData();
+					fd.append('file', item);
+					http.open('POST', '/api/v1/upload/file');
+					http.upload.addEventListener('progress', function (evt) {
+						if (evt.lengthComputable) {
+							var percent = evt.loaded / evt.total;
+							percent = parseInt(percent * 100);
+						}
+					}, false);
+					http.addEventListener('error', function () {
+					}, false);
+					http.onreadystatechange = function () {
+						if (http.status === 200) {
+							if (http.readyState === 4) {
+								var data_file = JSON.parse(http.responseText), link, p, t;
+
+								// const promise2 = new Promise((resolve2, reject) => {
+								arrLinkAttachment.push(String(data_file.link))
+								// setTimeout(() => {
+								// 	return resolve2(arrLinkAttachment)
+								// }, 2000);
+								// })
+								// promise2.then((arr2) => {
+								console.log(index)
+								// if (arrAttachment.length == index + 1) {
+								// 	console.log('arrAttachment.length',arrAttachment.length)
+
+								return resolve(arrLinkAttachment)
+								// 	}
+								// });
+
+
 
 							}
+						} else {
+							self.getApp().notify("Không thể tải tệp tin lên máy chủ");
 						}
-					} else {
-						self.getApp().notify("Không thể tải tệp tin lên máy chủ");
+					};
+					http.send(fd);
+				})
+				promise.then((arr) => {
+					if (arr.length == arrAttachment.length) {
+						self.model.set(data_attr, arr)
+						self.model.save(null, {
+							success: function (model, response, options) {
+								self.getApp().router.refresh();
+							},
+							error: function (xhr, status, error) {
+								try {
+									if (($.parseJSON(error.xhr.responseText).error_code) === "SESSION_EXPIRED") {
+										self.getApp().notify("Hết phiên làm việc, vui lòng đăng nhập lại!");
+										self.getApp().getRouter().navigate("login");
+									} else {
+										self.getApp().notify({ message: $.parseJSON(error.xhr.responseText).error_message }, { type: "danger", delay: 1000 });
+									}
+								}
+								catch (err) {
+									self.getApp().notify({ message: "Lưu thông tin không thành công" }, { type: "danger", delay: 1000 });
+								}
+							}
+						});
+
 					}
-				};
-				http.send(fd);
+
+				});
 			})
+
+
+
 
 		},
 		saveModel: function (files) {

@@ -451,26 +451,6 @@ define(function (require) {
 						}
 					});
 				}
-
-				// self.model.save(null, {
-				// 	success: function (model, response, options) {
-
-				// 	},
-				// 	error: function (xhr, status, error) {
-				// 		try {
-				// 			if (($.parseJSON(error.xhr.responseText).error_code) === "SESSION_EXPIRED") {
-				// 				self.getApp().notify("Hết phiên làm việc, vui lòng đăng nhập lại!");
-				// 				self.getApp().getRouter().navigate("login");
-				// 			} else {
-				// 				self.getApp().notify({ message: $.parseJSON(error.xhr.responseText).error_message }, { type: "danger", delay: 1000 });
-				// 			}
-				// 		}
-				// 		catch (err) {
-				// 			self.getApp().notify({ message: "Lưu thông tin không thành công" }, { type: "danger", delay: 1000 });
-				// 		}
-				// 	}
-				// });
-
 			});
 		},
 		renderAttachment: function () {
@@ -490,9 +470,10 @@ define(function (require) {
 
 		inputFileOnChange: function () {
 			var self = this;
-			var arrInputFile = [];
 			self.$el.find(".upload_files").change(function () {
+				var arrInputFile = [];
 
+				console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxx')
 				const promise = new Promise((resolve, reject) => {
 					var arrAttachment = [];
 
@@ -538,7 +519,7 @@ define(function (require) {
 						if (http.readyState === 4) {
 							var data_file = JSON.parse(http.responseText), link, p, t;
 							arrLinkAttachment.push(String(data_file.link))
-							if (arrAttachment.length == index + 1) {
+							if (arrAttachment.length == arrLinkAttachment.length) {
 								self.model.set(data_attr, arrLinkAttachment)
 								self.model.save(null, {
 									success: function (model, response, options) {
@@ -670,50 +651,6 @@ define(function (require) {
 				self.renderMember_GD1(data_default);
 			});
 		},
-		// chonLinhVuc: function () {
-		// 	var self = this;
-		// 	$.ajax({
-		// 		url: self.getApp().serviceURL + "/api/v1/danhmuclinhvuc?results_per_page=100000&max_results_per_page=1000000",
-		// 		method: "GET",
-		// 		contentType: "application/json",
-		// 		success: function (data) {
-		// 			data.objects.forEach(function (item, index) {
-		// 				self.$el.find('.chonlinhvuc select').append(`
-		// 				<option data-id="${item.id}">${item.tenlinhvuc}</option>
-		// 			`)
-		// 			})
-		// 			self.$el.find('.chonlinhvuc select').selectpicker();
-		// 			self.$el.find('.chonlinhvuc select').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
-		// 				var arr = [];
-		// 				self.$el.find(".chonlinhvuc div div div ul li").each(function (index, item) {
-		// 					if ($(item).attr('class') == "selected") {
-		// 						arr.push(data.objects[index])
-		// 					}
-		// 				})
-		// 				self.model.set('danhsachlinhvuc_field', arr)
-		// 			})
-		// 		},
-		// 		error: function (xhr, status, error) {
-		// 			self.getApp().notify({ message: "Không lấy được dữ liệu" }, { type: "danger", delay: 1000 });
-		// 		},
-		// 	});
-
-		// },
-		// hienThiLinhVucDaChon: function () {
-		// 	var self = this;
-
-		// 	const promise = new Promise((resolve, reject) => {
-		// 		var arr = [];
-		// 		self.model.get('danhsachlinhvuc_field').forEach(function (item, index) {
-		// 			arr.push(item.tenlinhvuc)
-		// 		})
-		// 		return resolve(arr)
-		// 	})
-		// 	promise.then((data) => {
-		// 		self.$el.find('.chonlinhvuc select').selectpicker('val', data)
-		// 	});
-		// 	self.model.set('danhsachlinhvuc_field', self.model.get('danhsachlinhvuc_field'))
-		// },
 		renderUpload() {
 			var self = this;
 

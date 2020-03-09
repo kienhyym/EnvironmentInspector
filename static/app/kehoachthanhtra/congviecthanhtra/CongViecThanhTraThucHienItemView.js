@@ -156,8 +156,8 @@ define(function (require) {
         },
         inputFileOnChange: function () {
             var self = this;
-            var arrInputFile = [];
             self.$el.find(".upload_files_B8").change(function () {
+                var arrInputFile = [];
                 const promise = new Promise((resolve, reject) => {
                     
                     var arrAttachment = [];
@@ -208,7 +208,7 @@ define(function (require) {
                         if (http.readyState === 4) {
                             var data_file = JSON.parse(http.responseText), link, p, t;
                             arrLinkAttachment.push(String(data_file.link))
-                            if (arrAttachment.length == index + 1) {
+                            if (arrAttachment.length == arrLinkAttachment.length) {
                                 var filters = {
                                     filters: {
                                         "$and": [
