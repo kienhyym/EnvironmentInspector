@@ -77,9 +77,9 @@ define(function (require) {
 										self.model.set('danhmuclinhvuc_foreign', response.objects)
 										self.model.save(null, {
 											success: function (model, respose, options) {
-												self.model.set('tentinhthanh',respose.tinhthanh.ten)
-												self.model.set('tenquanhuyen',respose.quanhuyen.ten)
-												self.model.set('tenxaphuong',respose.xaphuong.ten)
+												self.model.set('tentinhthanh', respose.tinhthanh.ten)
+												self.model.set('tenquanhuyen', respose.quanhuyen.ten)
+												self.model.set('tenxaphuong', respose.xaphuong.ten)
 												self.model.save(null, {
 													success: function (model, respose, options) {
 														self.getApp().notify("Lưu thông tin thành công");
@@ -211,6 +211,7 @@ define(function (require) {
 			var id = this.getApp().getRouter().getParam("id");
 			self.chonLinhVuc();
 			self.themChiNhanh();
+			self.checkLinhVuc1();
 			if (id) {
 				this.model.set('id', id);
 				this.model.fetch({
@@ -222,7 +223,7 @@ define(function (require) {
 						self.danhSachChiNhanh();
 						self.themChiNhanh();
 						self.themVaoKeHoachNamSau();
-
+						self.checkLinhVuc2();
 						self.model.on("change:tinhthanh_id", function () {
 							self.getFieldElement("quanhuyen").data("gonrin").setFilters({ "tinhthanh_id": { "$eq": self.model.get("tinhthanh_id") } });
 						});
@@ -230,7 +231,7 @@ define(function (require) {
 							self.getFieldElement("xaphuong").data("gonrin").setFilters({ "quanhuyen_id": { "$eq": self.model.get("quanhuyen_id") } });
 						});
 
-						
+
 						var x, y, z;
 						if (self.model.get('xaphuong') == null) {
 							y = "";
@@ -279,7 +280,7 @@ define(function (require) {
 			}
 
 		},
-		
+
 		validateEmail: function (email) {
 			var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 			return re.test(String(email).toLowerCase());
@@ -296,56 +297,56 @@ define(function (require) {
 				return false;
 			}
 		},
-		checkLinhVuc: function () {
+		checkLinhVuc1: function () {
 			var self = this;
-			var linhvuc = self.$el.find("#multiselect_linhvuc");
-			var linhVucID = self.model.get("danhmuclinhvuc_foreign");
+			self.$el.find('.chonlinhvuc select').on('change.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+				var filters = {
+					filters: {
+						"$and": [
+							{ "id": { "$in": self.$el.find('.chonlinhvuc select').selectpicker('val') } }
+						]
+					},
+					order_by: [{ "field": "created_at", "direction": "asc" }]
+				}
+				$.ajax({
+					type: "GET",
+					url: self.getApp().serviceURL + "/api/v1/danhmuclinhvuc?results_per_page=100000&max_results_per_page=1000000",
+					data: { "q": JSON.stringify(filters) },
+					contentType: "application/json",
+					success: function (response) {
+						var dem = 0;
+						response.objects.forEach(function (item, index) {
+							if (item.grouplinhvuc === "Nước sạch") {
+								dem++;
+							}
+						})
+						if (dem > 0) {
+							self.$el.find(".quymodonvi").show();
+						}
+						else {
+							self.$el.find(".quymodonvi").hide();
+							self.model.set("quymodonvi", null)
+						}
+					}
+				});
+			});
+		},
+		checkLinhVuc2: function () {
+			var self = this;
+
 			var dem = 0;
-			linhVucID.forEach(function (item) {
-				if (item.malinhvuc == "NS") {
+			self.model.get('danhmuclinhvuc_foreign').forEach(function (item, index) {
+				if (item.grouplinhvuc === "Nước sạch") {
 					dem++;
 				}
-				if (dem > 0) {
-					self.$el.find(".quymodonvi").show();
-				}
-				else {
-					self.$el.find(".quymodonvi").hide();
-					self.model.set("quymodonvi", null)
-				}
 			})
-			var url = self.getApp().serviceURL + "/api/v1/danhmuclinhvuc";
-			$.ajax({
-				url: url,
-				method: "GET",
-				contentType: "application/json",
-				success: function (data) {
-					data.objects.forEach(function (item, index) {
-						if (item.malinhvuc == "NS") {
-
-							linhvuc.on("change", function () {
-								var linhVucID2 = linhvuc.val();
-								var dem2 = 0;
-								linhVucID2.forEach(function (item2, index) {
-									if (item.id == item2) {
-										dem2++;
-									}
-									if (dem2 > 0) {
-										self.$el.find(".quymodonvi").show();
-									}
-									else {
-										self.$el.find(".quymodonvi").hide();
-										self.model.set("quymodonvi", null)
-
-									}
-								});
-							});
-						}
-					})
-				},
-				error: function (xhr, status, error) {
-					self.getApp().notify({ message: "Không lấy được dữ liệu" }, { type: "danger", delay: 1000 });
-				},
-			});
+			if (dem > 0) {
+				self.$el.find(".quymodonvi").show();
+			}
+			else {
+				self.$el.find(".quymodonvi").hide();
+				self.model.set("quymodonvi", null)
+			}
 
 
 		},

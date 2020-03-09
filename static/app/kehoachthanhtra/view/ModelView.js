@@ -963,6 +963,24 @@ define(function (require) {
 				self.getApp().getRouter().refresh();
 			});
 			self.$el.find("#btn_approve").unbind("click").bind("click", function () {
+				var d = new Date();
+				var param = {
+					"solanthanhtra"  : self.model.get('danhmucdoanhnghiep').solanthanhtra+1 ,
+					"namchuathanhtraganday" : d.getFullYear()
+				};
+				$.ajax({
+					url: self.getApp().serviceURL + "/api/v1/danhmucdoanhnghiep/" + self.model.get('danhmucdoanhnghiep_id'),
+					type: 'PUT',
+					data: JSON.stringify(param),
+					headers: {
+						'content-type': 'application/json'
+					},
+					dataType: 'json',
+					success: function (data) {
+					},
+					error: function (request, textStatus, errorThrown) {
+					}
+				})
 				self.model.set('lydotuchoi', null);
 				self.confirm_kehoach();
 				self.getApp().getRouter().refresh();

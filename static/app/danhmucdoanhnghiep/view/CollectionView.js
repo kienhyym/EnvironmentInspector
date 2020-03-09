@@ -187,8 +187,9 @@ define(function (require) {
 		locDuLieu: function () {
 			var self = this;
 			self.$el.find('.boloc').unbind('click').bind('click', function () {
-
-				var giatriloc_SoNamChuaThanhTra = self.$el.find('.chonsonamchuathanhtra select').selectpicker('val');
+				var d = new Date();
+				var giatriloc_SoNamChuaThanhTra = d.getFullYear() - self.$el.find('.chonsonamchuathanhtra select').selectpicker('val');
+				console.log(giatriloc_SoNamChuaThanhTra)
 				var giatriloc_SoLanThanhTra = self.$el.find('.chonsolanthanhtra select').selectpicker('val');
 				var giatriloc_ChiSo = self.$el.find('.chonchiso select').selectpicker('val');
 				var giatriloc_TinhThanh = self.$el.find('.chontinhthanh select').selectpicker('val');
