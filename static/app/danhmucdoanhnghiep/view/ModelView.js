@@ -50,6 +50,30 @@ define(function (require) {
 						},
 						command: function () {
 							var self = this;
+							if (self.$el.find('.chonlinhvuc select').selectpicker('val').length == 0) {
+								self.getApp().notify({ message: "Bạn chưa chọn lĩnh vực" }, { type: "danger", delay: 1000 });
+								return false
+							}
+							if (self.model.get('name') == null) {
+								self.getApp().notify({ message: "Bạn chưa chọn viết tên doanh nghiệp" }, { type: "danger", delay: 1000 });
+								return false
+							}
+							if (self.model.get('tinhthanh_id') == null) {
+								self.getApp().notify({ message: "Bạn chưa chọn tỉnh thành" }, { type: "danger", delay: 1000 });
+								return false
+							}
+							if (self.model.get('quanhuyen_id') == null) {
+								self.getApp().notify({ message: "Bạn chưa chọn quận huyện" }, { type: "danger", delay: 1000 });
+								return false
+							}
+							if (self.model.get('xaphuong_id') == null) {
+								self.getApp().notify({ message: "Bạn chưa chọn xã phường" }, { type: "danger", delay: 1000 });
+								return false
+							}
+							if (self.model.get('diachi') == null) {
+								self.getApp().notify({ message: "Bạn chưa viết địa chỉ" }, { type: "danger", delay: 1000 });
+								return false
+							}
 							// Chọn lĩnh vực trước khi lưu
 							var keHoachThanhTraForeign = self.model.get('kehoachthanhtra_foreign');
 
@@ -680,6 +704,14 @@ define(function (require) {
 			})
 			//sửa thông tin chi nhánh
 			self.$el.find('.btn-sua').unbind('click').bind('click', function () {
+				if(self.$el.find('#tenchinhanh').val() == null || self.$el.find('#tenchinhanh').val() == ""){
+					self.getApp().notify({ message: "Tên chi nhánh không được để trống" }, { type: "danger", delay: 1000 });
+					return false;
+				}
+				if(self.$el.find('#diachichinhanh').val() == null || self.$el.find('#diachichinhanh').val() == ""){
+					self.getApp().notify({ message: "Địa chỉ chi nhánh không được để trống" }, { type: "danger", delay: 1000 });
+					return false;
+				}
 				var param = {
 					tenchinhanh: self.$el.find('#tenchinhanh').val(),
 					diachichinhanh: self.$el.find('#diachichinhanh').val(),
@@ -789,7 +821,7 @@ define(function (require) {
 				},
 				events: {
 					"rowclick": function (e) {
-						self.getApp().getRouter().navigate("kehoachthanhtra/model_step_plan?/model?id=" + e.rowId);
+						self.getApp().getRouter().navigate("kehoachthanhtra/model?id=" + e.rowId);
 					},
 				},
 			});

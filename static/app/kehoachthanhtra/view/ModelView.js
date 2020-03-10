@@ -203,6 +203,7 @@ define(function (require) {
 						self.renderAttachment();
 						self.bindEventGD();
 						self.lyDoTuChoi();
+						self.linkChiTiet();
 						self.$el.find("#form-content").find("input").prop("disabled", true);
 						self.$el.find("#trangthai").removeClass("hidden");
 						var danhsachfile = self.model.get("tailieulienquan");
@@ -215,8 +216,9 @@ define(function (require) {
 							self.$el.find(".highlight").removeClass('d-none');
 						}
 						self.applyBindings();
-						self.chonLinhVuc();
 						self.hienThiLinhVuc();
+						self.chonLinhVuc();
+						
 						self.$el.find("#multiselect_donvidoanhnghiep").selectpicker('val', self.model.get("madoanhnghiep"));
 						self.updateUITimeline(self.model.toJSON());
 						self.updateUIPermission();
@@ -291,12 +293,23 @@ define(function (require) {
 				self.saveModel();
 			})
 		},
+		linkChiTiet: function () {
+			var self = this;
+			if (self.model.get('trangthai') == 'approved' ||
+				self.model.get('trangthai') == 'result_checked' ||
+				self.model.get('trangthai') == 'end_checked' ||
+				self.model.get('trangthai') == 'completed') {
+					self.$el.find('.linkchitiet').show();
+					self.$el.find('.linkchitiet').unbind('click').bind('click', function () {
+						self.getApp().getRouter().navigate("kehoachthanhtra/model_step_plan?id=" + self.model.get('id'));
+
+					})
+				}
+			
+		},
 		hienThiLinhVuc: function () {
 			var self = this;
 			var linhVuc = [];
-			console.log(JSON.parse(self.itemLinhVucKeHoachNamSau))
-
-
 			self.model.get('danhsachlinhvuc_field').forEach(function (item, index) {
 				linhVuc.push(item.id)
 			})
@@ -332,8 +345,10 @@ define(function (require) {
 					self.$el.find('.chonlinhvuc select').selectpicker({
 						'actionsBox': 'true'
 					});
-					if (JSON.parse(self.itemLinhVucKeHoachNamSau) != null) {
-						self.$el.find('.chonlinhvuc select').selectpicker('val', JSON.parse(self.itemLinhVucKeHoachNamSau));
+
+					if (self.itemLinhVucKeHoachNamSau != null) {
+						var arrLinhvuc = self.itemLinhVucKeHoachNamSau.slice(1, self.itemLinhVucKeHoachNamSau.length - 1).split(',')
+						self.$el.find('.chonlinhvuc select').selectpicker('val', arrLinhvuc);
 
 					}
 				},
@@ -349,6 +364,23 @@ define(function (require) {
 		bindEventGD: function (files) {
 			var self = this;
 			self.$el.find("#btn_save").unbind('click').bind('click', function () {
+				
+				if (self.model.get('so_quyetdinh_thanhtra') == null) {
+					self.getApp().notify({ message: "Bạn chưa chọn viết số quyết định thanh tra" }, { type: "danger", delay: 1000 });
+					return false
+				}
+				if (self.model.get('danhmucdoanhnghiep_id') == null) {
+					self.getApp().notify({ message: "Bạn chưa chọn viết chọn doanh nghiệp (đối tượng thanh tra)" }, { type: "danger", delay: 1000 });
+					return false
+				}
+				if (self.$el.find('.chonlinhvuc select').selectpicker('val').length == 0) {
+					self.getApp().notify({ message: "Bạn chưa chọn lĩnh vực" }, { type: "danger", delay: 1000 });
+					return false
+				}
+				if (self.model.get('ngay_quyetdinh_thanhtra') == null) {
+					self.getApp().notify({ message: "Bạn chưa chọn ngày quyết định thanh tra" }, { type: "danger", delay: 1000 });
+					return false
+				}
 				if (self.$el.find('.chonlinhvuc select').selectpicker('val').length != 0) {
 					var giatriloc_LinhVuc = self.$el.find('.chonlinhvuc select').selectpicker('val');
 					var filters = {
@@ -473,7 +505,6 @@ define(function (require) {
 			self.$el.find(".upload_files").change(function () {
 				var arrInputFile = [];
 
-				console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxx')
 				const promise = new Promise((resolve, reject) => {
 					var arrAttachment = [];
 
@@ -902,8 +933,8 @@ define(function (require) {
 			self.$el.find("#btn_approve").unbind("click").bind("click", function () {
 				var d = new Date();
 				var param = {
-					"solanthanhtra"  : self.model.get('danhmucdoanhnghiep').solanthanhtra+1 ,
-					"namchuathanhtraganday" : d.getFullYear()
+					"solanthanhtra": self.model.get('danhmucdoanhnghiep').solanthanhtra + 1,
+					"namchuathanhtraganday": d.getFullYear()
 				};
 				$.ajax({
 					url: self.getApp().serviceURL + "/api/v1/danhmucdoanhnghiep/" + self.model.get('danhmucdoanhnghiep_id'),

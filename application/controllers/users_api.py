@@ -65,20 +65,56 @@ async def logout(request):
 @app.route('/api/v1/themvaonoidungkehoachnamsau', methods=['POST'])
 async def themvaonoidungkehoachnamsau(request):
     data = request.json
-    print('DDDDDDDDDDDDDDDDDDDDDDDxxxxxxxxxxxxxx',data)
+    danhSachDonVi = [];
     for doanhnghiep in data['doanhnghiep']:
         doanhnghiep_info = db.session.query(DanhSachDonViKeHoachNamSau).filter(and_(DanhSachDonViKeHoachNamSau.donvi_id == doanhnghiep['id'], DanhSachDonViKeHoachNamSau.nam == data['nam'])).first()
-        if (doanhnghiep_info is None):
-            doanhnghiep_namsau_moi = DanhSachDonViKeHoachNamSau()
-            doanhnghiep_namsau_moi.donvi_id = doanhnghiep['id']
-            doanhnghiep_namsau_moi.noidungkehoachnamsau_id = data['noidungkehoach_id']
-            doanhnghiep_namsau_moi.donvichutri_id = data['donvichutri_id']
-            doanhnghiep_namsau_moi.donviphoihop_id = data['donviphoihop_id']
-            doanhnghiep_namsau_moi.nam = data['nam']
-            doanhnghiep_namsau_moi.linhvucloc = data['linhvucloc']
-            db.session.add(doanhnghiep_namsau_moi)
-            db.session.commit()
-    return json({"error_code":"ok","error_message":to_dict(doanhnghiep_namsau_moi)})
+        if doanhnghiep_info is None:
+            danhSachDonVi.append(doanhnghiep)
+    print('mảng danh sách doanh nghiệp',len (danhSachDonVi) )
+
+    if len (danhSachDonVi) != 0:
+        if data['noidungkehoach_id'] is not None :
+            for doanhnghiep_each in danhSachDonVi:
+                    doanhnghiep_namsau_moi = DanhSachDonViKeHoachNamSau()
+                    doanhnghiep_namsau_moi.donvi_id = doanhnghiep_each['id']
+                    doanhnghiep_namsau_moi.noidungkehoachnamsau_id = data['noidungkehoach_id']
+                    doanhnghiep_namsau_moi.donvichutri_id = data['donvichutri_id']
+                    doanhnghiep_namsau_moi.donviphoihop_id = data['donviphoihop_id']
+                    doanhnghiep_namsau_moi.nam = data['nam']
+                    doanhnghiep_namsau_moi.linhvucloc = data['linhvucloc']
+                    db.session.add(doanhnghiep_namsau_moi)
+                    db.session.commit()
+        else :    
+            if data['noidungkehoach'] is "" or  data['noidungkehoach'] is None: 
+                print('Chưa ghi nội dung')
+                return json({"error_code":"0","error_message":"Chưa ghi nội dung thanh tra"}, status=520)
+
+            else :
+                noidung_kehoach_namsau = NoiDungKeHoachNamSau()
+                noidung_kehoach_namsau.noidungkehoach = data['noidungkehoach']
+                noidung_kehoach_namsau.nam = data['nam']
+                db.session.add(noidung_kehoach_namsau)
+                db.session.commit()
+                print('Chưa ghi nội dung',to_dict(noidung_kehoach_namsau)['id'])
+                for doanhnghiep_each in danhSachDonVi:
+                    doanhnghiep_namsau_moi = DanhSachDonViKeHoachNamSau()
+                    doanhnghiep_namsau_moi.donvi_id = doanhnghiep_each['id']
+                    doanhnghiep_namsau_moi.noidungkehoachnamsau_id = to_dict(noidung_kehoach_namsau)['id']
+                    doanhnghiep_namsau_moi.donvichutri_id = data['donvichutri_id']
+                    doanhnghiep_namsau_moi.donviphoihop_id = data['donviphoihop_id']
+                    doanhnghiep_namsau_moi.nam = data['nam']
+                    doanhnghiep_namsau_moi.linhvucloc = data['linhvucloc']
+                    db.session.add(doanhnghiep_namsau_moi)
+                    db.session.commit()
+    else :
+        return json({"error_code":"0","error_message":"Các doanh nghiệp vừa lọc đã trong nội dung cuộc thanh tra khác rồi"}, status=520)
+    timKeHoachNamSau = db.session.query(KeHoachNamSau).filter(and_(KeHoachNamSau.nam == data['nam'])).first()
+    if timKeHoachNamSau is None :
+        KeHoachNamSau_moi = KeHoachNamSau()
+        KeHoachNamSau_moi.nam = data['nam']
+        db.session.add(KeHoachNamSau_moi)
+        db.session.commit()
+    return json({"error_code":"200","error_message":"Success"})
 
 
 

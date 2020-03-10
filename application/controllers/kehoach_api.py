@@ -137,7 +137,13 @@ async def response_getmany_kehoachthanhtra(request=None, Model=None, result=None
 async def pregetmany_kehoachthanhtra(search_params, Model, **kw):
     request = kw.get("request", None)
 
+async def kiemtratrung(request=None, Model=None, result=None, **kw):
+    check_danhmuc = db.session.query(Model).filter(Model.malinhvuc == data["malinhvuc"]).filter(Model.id != data['id']).first()
+    if (check_danhmuc is not None):
+        return json({"error_code":"PARAMS_ERROR", "error_message":"Notification code already in use, please select again"}, status=520)
+            
 
+        
 
 sqlapimanager.create_api(DanhMucDoanhNghiep, max_results_per_page=1000000,
     methods=['GET', 'POST', 'DELETE', 'PUT'],
@@ -156,7 +162,7 @@ sqlapimanager.create_api(DanhSachChiNhanhDonVi, max_results_per_page=1000000,
 sqlapimanager.create_api(DanhMucLinhVuc, max_results_per_page=1000000,
     methods=['GET', 'POST', 'DELETE', 'PUT'],
     url_prefix='/api/v1',
-    preprocess=dict(GET_SINGLE=[auth_func], GET_MANY=[auth_func], POST=[auth_func], PUT_SINGLE=[auth_func]),
+    preprocess=dict(GET_SINGLE=[auth_func], GET_MANY=[auth_func], POST=[auth_func,kiemtratrung], PUT_SINGLE=[auth_func]),
     postprocess=dict(POST=[], PUT_SINGLE=[], DELETE_SINGLE=[], GET_MANY =[]),
     collection_name='danhmuclinhvuc')
 

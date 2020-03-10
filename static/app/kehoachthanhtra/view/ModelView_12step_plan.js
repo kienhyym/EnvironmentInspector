@@ -1921,16 +1921,18 @@ define(function (require) {
 				var baocao = lodash.orderBy(self.model.get('baocaocuadoanthanhtrafield'), ['created_at'], ['desc']);
 				var baocaocuoicung = baocao.slice(0, 1);
 
-				if (baocaocuoicung[0].duyet == "duyet" &&
-					baocaocuoicung[0].vanbangiaitrinh_attachment != null &&
-					baocaocuoicung[0].ngayguibaocaogiaitrinh != null) {
-					self.$el.find(".buoc10").removeClass("buoc10");
-				}
+				
 				if ((baocaocuoicung[0].ngayguibaocaogiaitrinh - Number(self.model.get("ngay_quyetdinh_thanhtra"))) >= 30 * 24 * 60 * 60) {
 					self.$el.find(".gd9 .danger-reason").html("Ngày gửi bảo cáo giải trình quá 30 ngày kể từ ngày gửi quyết định thanh tra");
 					return "danger"
 				}
-				return "success";
+				if (baocaocuoicung[0].duyet == "duyet" &&
+					baocaocuoicung[0].vanbangiaitrinh_attachment != null &&
+					baocaocuoicung[0].ngayguibaocaogiaitrinh != null) {
+					self.$el.find(".buoc10").removeClass("buoc10");
+					return "success";
+				}
+				
 			}
 			return "light";
 		},
@@ -1943,17 +1945,18 @@ define(function (require) {
 				var vanban = lodash.orderBy(self.model.get('vanbanduthaofield'), ['created_at'], ['desc']);
 				var baocaocuoicung = baocao.slice(0, 1);
 				var vanbancuoicung = vanban.slice(0, 1);
+				
+				if ((vanbancuoicung[0].ngay_gui_congvan_giaitrinh - baocaocuoicung[0].ngayguibaocaogiaitrinh) >= 15 * 24 * 60 * 60) {
+					self.$el.find(".gd10 .danger-reason").html("Ngày gửi công văn giải trình quá 15 ngày kể từ ngày gửi báo cáo giải trình");
+					return "danger"
+				}
 				if (vanbancuoicung[0].trangthai_vanban == 1 &&
 					vanbancuoicung[0].so_vanban_duthao != null &&
 					vanbancuoicung[0].ngay_duthao_vanban != null &&
 					vanbancuoicung[0].vanban_duthao_duthao_attachment != null) {
 					self.$el.find(".buoc11").removeClass("buoc11");
+					return "success";
 				}
-				if ((vanbancuoicung[0].ngay_gui_congvan_giaitrinh - baocaocuoicung[0].ngayguibaocaogiaitrinh) >= 15 * 24 * 60 * 60) {
-					self.$el.find(".gd10 .danger-reason").html("Ngày gửi công văn giải trình quá 15 ngày kể từ ngày gửi báo cáo giải trình");
-					return "danger"
-				}
-				return "success";
 			}
 			return "light";
 		},
@@ -1985,18 +1988,19 @@ define(function (require) {
 			if (self.model.get("congvanbaocaofield").length !== 0 && self.model.get('congvanbaocaofield') != null) {
 				var congvan = lodash.orderBy(self.model.get('congvanbaocaofield'), ['created_at'], ['desc']);
 				var congvancuoicung = congvan.slice(0, 1);
+				
+				if ((congvancuoicung[0].ngay_congvan_yeucau_baocao_thuchien - self.model.get("ngay_ketluan_thanhtra")) >= 55 * 24 * 60 * 60) {
+					self.$el.find(".gd13 .danger-reason").html("Ngày công văn yêu cầu báo cáo thực hiện kết luận thanh tra muộn qúa 55 ngày kể từ ngày kết luận thanh tra");
+					return "danger"
+				}
 				if (congvancuoicung[0].duyet == 'duyet' &&
 					congvancuoicung[0].congvan_yeucau_baocao_thuchien_attachment != null &&
 					congvancuoicung[0].ngay_congvan_yeucau_baocao_thuchien != null &&
 					congvancuoicung[0].so_congvan_yeucau_baocao_thuchien != null
 				) {
 					self.$el.find(".buoc14").removeClass("buoc14");
+					return "success";
 				}
-				if ((congvancuoicung[0].ngay_congvan_yeucau_baocao_thuchien - self.model.get("ngay_ketluan_thanhtra")) >= 55 * 24 * 60 * 60) {
-					self.$el.find(".gd13 .danger-reason").html("Ngày công văn yêu cầu báo cáo thực hiện kết luận thanh tra muộn qúa 55 ngày kể từ ngày kết luận thanh tra");
-					return "danger"
-				}
-				return "success";
 			}
 			return "light";
 		},

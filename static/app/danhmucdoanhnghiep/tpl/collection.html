@@ -59,17 +59,17 @@
 		<label>Số năm chưa thanh tra</label>
 		<div class="form-group required border rounded chonsonamchuathanhtra">
 			<select class="selectpicker  col-md-12 m-0 p-0" data-live-search="true" data-header="Bỏ chọn">
-				<option value="0">0 năm</option>
-				<option value="1">1 năm</option>
-				<option value="2">2 năm</option>
-				<option value="3">3 năm</option>
-				<option value="4">4 năm</option>
-				<option value="5">5 năm</option>
-				<option value="6">6 năm</option>
-				<option value="7">7 năm</option>
-				<option value="8">8 năm</option>
-				<option value="9">9 năm</option>
-				<option value="10">10 năm</option>
+				<option value="1">0 năm</option>
+				<option value="2">1 năm</option>
+				<option value="3">2 năm</option>
+				<option value="4">3 năm</option>
+				<option value="5">4 năm</option>
+				<option value="6">5 năm</option>
+				<option value="7">6 năm</option>
+				<option value="8">7 năm</option>
+				<option value="9">8 năm</option>
+				<option value="10">9 năm</option>
+				<option value="11">10 năm</option>
 			</select>
 		</div>
 	</div>
@@ -91,7 +91,7 @@
 	<div class="col-md-2 nutthem">
 		<label>Thêm vào năm:&nbsp;</label><label class="text-danger font-weight-bold tieuDeNamSau">2021</label>
 		<div class="d-flex justify-content-center">
-			<button type="button" class="btn btn-primary w-100" id="themVaoKeHoachNamSau">Thêm</button>
+			<input type="button" class="btn btn-primary w-100" id="themVaoKeHoachNamSau" value="Thêm" disabled>
 		</div>
 	</div>
 </div>
@@ -110,8 +110,16 @@
 		<div class="d-flex justify-content-end mr-2">
 			<button class="btn btn-success btn-luu-taokehoachmoi">Lưu</button>
 		</div>
+		<label>Chọn nội dung thanh tra đã có</label>
+				<div class="form-group required border rounded chonnoidungthanhtra">
+					<select class="selectpicker  col-md-12 m-0 p-0" data-live-search="true" data-header="Bỏ chọn">
+					</select>
+				</div>
+				<hr>
+				
 		<div class="content-kehoach  row">
 			<div class="col-md-12">
+				<label>Hoặc viết nội dung mới:</label><br>
 				<label>Nội dung thanh tra:</label>
 				<div>
 					<textarea type="text" id="noidungkehoach" class="form-control"></textarea>

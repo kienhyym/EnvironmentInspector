@@ -1,6 +1,6 @@
 <div block-bind="content">
 	<!-- Page Header -->
-	
+
 
 	<div class="page-header row no-gutters py-4">
 		<div class="col-12 col-md-10 col-sm-4 text-center text-sm-left mb-0">
@@ -24,25 +24,27 @@
 
 
 				</div>
+
 				<div class="card-body">
-						<div class="row">
-							<div class="col-md-2 mb-3">
-								<label>Năm</label>
-								<input type="text" class="form-control" data-bind="value:nam"
-									placeholder="Nhập năm" required="">
-							</div>
-							<div class="col-md-3 mb-3 trangthai2">
-								<label>Trạng thái</label>
-								<input type="text" id="trangthai" class="form-control" data-bind="value:trangthai"
-									placeholder="trạng thái" required="">
-							</div>
-							<div class="col-md-7 mb-3">
-								<label>Nội dung</label>
-								<input type="text" id="noidung" class="form-control" data-bind="value:noidung"
-									placeholder="nội dung chỉnh sửa danh sách" required="">
-							</div>
+					<div class="row">
+						<div class="col-md-2 mb-3">
+							<label>Năm</label>
+							<input type="text" class="form-control" data-bind="value:nam" placeholder="Nhập năm"
+								required="">
 						</div>
-						<div class="table-responsive">
+						<div class="col-md-3 mb-3 trangthai2">
+							<label>Trạng thái</label>
+							<input type="text" id="trangthai" class="form-control" data-bind="value:trangthai"
+								placeholder="trạng thái" required="">
+						</div>
+						<div class="col-md-7 mb-3">
+							<label>Nội dung</label>
+							<input type="text" id="noidung" class="form-control" data-bind="value:noidung"
+								placeholder="nội dung chỉnh sửa danh sách" required="">
+						</div>
+					</div>
+
+					<!-- <div class="table-responsive">
 							<table class=" table table-bordered text-center">
 								<tr>
 								<th style="width: 20px;">STT</th>
@@ -56,14 +58,28 @@
 								<th style="width: 20px;">Trạng thái</th>
 								</tr>
 								<tbody id="space_danhsachdonvikehoachnamsau" ></tbody>
-
 							</table>
-						</div>
-						<!-- <button id="btn_add_danhsachdonvikehoachnamsau_field" class="btn btn-outline-success btn-sm"> -->
-								<!-- <span class="fa fa-plus"></span> -->
-							<!-- </button> -->
-					<div id="grid"></div>
+						</div> -->
+					<!-- <button id="btn_add_danhsachdonvikehoachnamsau_field" class="btn btn-outline-success btn-sm"> -->
+					<!-- <span class="fa fa-plus"></span> -->
+					<!-- </button> -->
+					<!-- <div id="grid"></div> -->
 
+				</div>
+				<div class="card-body body_grid" style="display: none;">
+					<button class="chophepsua btn btn-primary">Sửa</button>
+					<button class="quaylaixem btn btn-primary" style="display: none;">quay lại</button>
+					<div class="row">
+						<div class="col-2  pt-1 pr-0">Lọc theo nội dung:</div>
+						<div class="pl-0 col-10">
+							<div class="form-group  required border rounded locnoidung">
+								<select class="selectpicker  col-md-12 m-0 p-0" data-live-search="true"
+									data-header="Bỏ chọn">
+								</select>
+							</div>
+						</div>
+					</div>
+					<div id="grid_all"></div>
 				</div>
 			</div>
 		</div>

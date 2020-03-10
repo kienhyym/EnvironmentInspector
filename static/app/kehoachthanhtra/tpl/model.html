@@ -240,7 +240,9 @@
 
 							<div class="row">
 								<div class="col-6">
-									<label>Lĩnh Vực</label>
+									<div class="form-group m-0 required">
+										<label>Lĩnh Vực</label>
+									</div>
 									<div class="form-group required border rounded chonlinhvuc">
 										<select class="selectpicker  col-md-12 m-0 p-0" multiple data-live-search="true">
 										</select>
@@ -248,7 +250,7 @@
 								</div>
 
 								<div class="col-6">
-									<div class="form-group">
+									<div class="form-group required">
 										<label>Ngày quyết định thanh tra</label>
 										<input type="text" data-bind="value:ngay_quyetdinh_thanhtra" class="form-control">
 									</div>
@@ -502,6 +504,8 @@
 							<button id="btn_review" class="btn btn-info">Gửi Xét Duyệt</button>
 							<button id="btn_approve" class="btn btn-info">Ra Quyết Định</button>
 							<button id="btn_cancel" class="btn btn-default">Từ Chối Duyệt</button>
+							<button class="linkchitiet btn btn-outline-primary" style="display: none;" >Xem chi tiết cuộc thanh tra</button>
+
 						</div>
 					</div>
 					<div class="row" id="lydotuchoi">

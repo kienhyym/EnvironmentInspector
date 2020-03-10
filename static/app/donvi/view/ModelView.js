@@ -46,6 +46,10 @@ define(function (require) {
 						},
 						command: function () {
 							var self = this;
+							if(self.model.get('ten') == null){
+								self.getApp().notify({ message: "Bạn chưa chọn viết tên đơn vị" }, { type: "danger", delay: 1000 });
+								return false
+							}
 							self.model.save(null, {
 								success: function (model, respose, options) {
 									self.getApp().notify("Lưu thông tin thành công");

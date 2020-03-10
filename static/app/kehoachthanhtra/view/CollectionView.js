@@ -197,7 +197,6 @@ define(function (require) {
 		},
 		getDataSource: function (status, filters, page, results_per_page) {
 			var self = this;
-			console.log('filter', filters);
 			$.ajax({
 				url: self.getApp().serviceURL + "/api/v1/kehoachthanhtra",
 				method: "GET",
@@ -312,7 +311,7 @@ define(function (require) {
 						],
 					},
 				],
-				dataSource: dataSource,
+				dataSource: lodash.orderBy(dataSource, ['stt'], ['asc']),
 				primaryField: "id",
 				selectionMode: false,
 				pagination: {

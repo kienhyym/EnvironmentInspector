@@ -44,6 +44,19 @@ define(function (require) {
 						},
 						command: function () {
 							var self = this;
+							if (self.model.get('malinhvuc') == null) {
+								self.getApp().notify({ message: "Mã lĩnh vực không được bỏ trống" }, { type: "danger", delay: 1000 });
+								return false
+							}
+							if (self.model.get('tenlinhvuc') == null) {
+								self.getApp().notify({ message: "Tên lĩnh vực không được bỏ trống" }, { type: "danger", delay: 1000 });
+								return false
+							}
+							if (self.model.get('grouplinhvuc') == null) {
+								self.getApp().notify({ message: "Nhóm lĩnh vực không được bỏ trống" }, { type: "danger", delay: 1000 });
+								return false
+							}
+							
 							self.model.save(null, {
 								success: function (model, respose, options) {
 									self.getApp().notify("Lưu thông tin thành công");
@@ -60,7 +73,7 @@ define(function (require) {
 										}
 									}
 									catch (err) {
-										self.getApp().notify({ message: "Lưu thông tin không thành công" }, { type: "danger", delay: 1000 });
+										self.getApp().notify({ message: "Mã lĩnh vực đã được sử dụng" }, { type: "danger", delay: 1000 });
 									}
 								}
 							});

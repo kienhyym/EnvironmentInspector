@@ -18,12 +18,12 @@ define(function (require) {
 
 		render: function () {
 			var self = this;
-			self.getApp().currentUser.roles.forEach(function (item,index) {
-				if( item.role_name == 'VanPhongCuc'){
+			self.getApp().currentUser.roles.forEach(function (item, index) {
+				if (item.role_name == 'VanPhongCuc') {
 					self.$el.find('.toolbar,.nutthem').hide();
 				}
-				
-			  })
+
+			})
 			self.applyBindings()
 
 			//Tạo tiêu đề cho cái nút thêm vào kế hoạch năm sau
@@ -38,6 +38,7 @@ define(function (require) {
 			self.chonChiSo();
 			self.chonSoLanThanhTra();
 			self.chonSoNamChuaThanhTra();
+			self.chonNoiDungThanhTra();
 			self.chonDonViChuTri();
 			self.chonDonViPhoiHop();
 			self.locDuLieu();
@@ -133,6 +134,53 @@ define(function (require) {
 				})
 			})
 		},
+		chonNoiDungThanhTra: function () {
+			var self = this;
+			var date = new Date();
+			var filters = {
+				filters: {
+					"$and": [
+						{ "nam": { "$eq": date.getFullYear()+1 } }
+					]
+				},
+				order_by: [{ "field": "created_at", "direction": "asc" }]
+			}
+			$.a
+			$.ajax({
+				url: self.getApp().serviceURL + "/api/v1/noidungkehoachnamsau?results_per_page=100000&max_results_per_page=1000000",
+				method: "GET",
+				data: "q=" + JSON.stringify(filters),
+				contentType: "application/json",
+				success: function (data) {
+					data.objects.forEach(function (item, index) {
+						self.$el.find('.chonnoidungthanhtra select').append(`
+						<option value="${item.id}" >${item.noidungkehoach}</option>
+					`)
+					})
+					self.$el.find('.chonnoidungthanhtra select').selectpicker('val', 'deselectAllText');
+					self.$el.find('.chonnoidungthanhtra select').on('shown.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+						self.$el.find('.popover-header .close').css('line-height', '10px')
+						self.$el.find('.popover-header .close').unbind('click').bind('click', function () {
+							self.$el.find('.chonnoidungthanhtra select').selectpicker('val', 'deselectAllText');
+							self.$el.find('#noidungkehoach').val('')
+							self.$el.find('#noidungkehoach').removeAttr('disabled')
+
+
+						})
+					})
+					self.$el.find('.chonnoidungthanhtra select').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+							var idNoiDung = self.$el.find('.chonnoidungthanhtra select').selectpicker('val');
+							var noiDung = self.$el.find('.chonnoidungthanhtra select').find("*[value='" + idNoiDung + "']").text().trim();
+							self.$el.find('#noidungkehoach').val(noiDung)
+							self.$el.find('#noidungkehoach').attr('disabled','disabled')
+
+					})
+				},
+				error: function (xhr, status, error) {
+					self.getApp().notify({ message: "Không lấy được dữ liệu" }, { type: "danger", delay: 1000 });
+				},
+			});
+		},
 		chonDonViChuTri: function () {
 			var self = this;
 			$.ajax({
@@ -183,19 +231,34 @@ define(function (require) {
 				},
 			});
 		},
-		
+
 		locDuLieu: function () {
 			var self = this;
 			self.$el.find('.boloc').unbind('click').bind('click', function () {
+
 				var d = new Date();
-				var giatriloc_SoNamChuaThanhTra = d.getFullYear() - self.$el.find('.chonsonamchuathanhtra select').selectpicker('val');
-				console.log(giatriloc_SoNamChuaThanhTra)
+				var giatriloc_SoNamChuaThanhTra = self.$el.find('.chonsonamchuathanhtra select').selectpicker('val');
+				if (self.$el.find('.chonsonamchuathanhtra select').selectpicker('val') != null) {
+					giatriloc_SoNamChuaThanhTra = d.getFullYear() - self.$el.find('.chonsonamchuathanhtra select').selectpicker('val');
+
+				}
 				var giatriloc_SoLanThanhTra = self.$el.find('.chonsolanthanhtra select').selectpicker('val');
 				var giatriloc_ChiSo = self.$el.find('.chonchiso select').selectpicker('val');
 				var giatriloc_TinhThanh = self.$el.find('.chontinhthanh select').selectpicker('val');
 				var giatriloc_LinhVuc = null;
 				if (self.$el.find('.chonlinhvuc select').selectpicker('val').length != 0) {
 					giatriloc_LinhVuc = self.$el.find('.chonlinhvuc select').selectpicker('val');
+				}
+				if(giatriloc_SoNamChuaThanhTra == null &&
+					giatriloc_SoLanThanhTra == null &&
+					giatriloc_TinhThanh == null &&
+					giatriloc_LinhVuc == null &&
+					giatriloc_ChiSo == null
+				){
+					self.$el.find('#themVaoKeHoachNamSau').attr('disabled','disabled');
+				}else{
+					self.$el.find('#themVaoKeHoachNamSau').removeAttr('disabled');
+
 				}
 				var mangBoLoc = [
 					{
@@ -269,7 +332,8 @@ define(function (require) {
 
 								});
 							}
-							self.btnLuuTaoKeHoachMoi(mangSauLocLinhVuc,giatriloc_LinhVuc);
+
+							self.btnLuuTaoKeHoachMoi(mangSauLocLinhVuc, giatriloc_LinhVuc);
 							self.render_grid2(0, mangSauLocLinhVuc);
 
 						},
@@ -301,16 +365,22 @@ define(function (require) {
 
 			});
 		},
-		btnLuuTaoKeHoachMoi: function (arr,linhvuc) {
+		btnLuuTaoKeHoachMoi: function (arr, linhvuc) {
 			var self = this;
 			self.$el.find('.btn-luu-taokehoachmoi').unbind('click').bind('click', function () {
 				var d = new Date();
+				
 				$.ajax({
-					url: self.getApp().serviceURL + "/api/v1/noidungkehoachnamsau",
+					url: self.getApp().serviceURL + "/api/v1/themvaonoidungkehoachnamsau",
 					type: 'POST',
 					data: JSON.stringify({
-						'noidungkehoach': self.$el.find('#noidungkehoach').val(),
+						'doanhnghiep': arr,
+						'linhvucloc': linhvuc,
+						'noidungkehoach_id': self.$el.find('.chonnoidungthanhtra select').selectpicker('val'),
+						'donvichutri_id': self.$el.find('.chondonvichutri select').selectpicker('val'),
+						'donviphoihop_id': self.$el.find('.chondonviphoihop select').selectpicker('val'),
 						'nam': d.getFullYear() + 1,
+						'noidungkehoach': self.$el.find('#noidungkehoach').val(),
 					}
 					),
 					headers: {
@@ -318,33 +388,13 @@ define(function (require) {
 					},
 					dataType: 'json',
 					success: function (datanoidungkehoach) {
-						$.ajax({
-							url: self.getApp().serviceURL + "/api/v1/themvaonoidungkehoachnamsau",
-							type: 'POST',
-							data: JSON.stringify({
-								'doanhnghiep': arr,
-								'linhvucloc':linhvuc,
-								'noidungkehoach_id': datanoidungkehoach.id,
-								'donvichutri_id': self.$el.find('.chondonvichutri select').selectpicker('val'),
-								'donviphoihop_id': self.$el.find('.chondonviphoihop select').selectpicker('val'),
-								'nam': d.getFullYear() + 1,
-							}
-							),
-							headers: {
-								'content-type': 'application/json'
-							},
-							dataType: 'json',
-							success: function (datanoidungkehoach) {
-								self.getApp().notify('Danh sách doanh nghiệp đã được thêm vào kế hoạch năm sau')
-								self.$el.find('.noidungcuocthanhtra').hide()
-								self.$el.find(".noidungtrang").css('opacity', '1');
-							},
-							error: function (request, textStatus, errorThrown) {
-								self.getApp().notify({ message: "Danh sách doanh nghiệp đã có trong kế hoạch năm sau" }, { type: "danger", delay: 1000 });
-							}
-						})
+						self.getApp().notify('Danh sách doanh nghiệp đã được thêm vào kế hoạch năm sau')
+						self.$el.find('.noidungcuocthanhtra').hide()
+						self.$el.find(".noidungtrang").css('opacity', '1');
 					},
 					error: function (request, textStatus, errorThrown) {
+						var thongBaoLoi = request.responseJSON.error_message
+						self.getApp().notify({ message: thongBaoLoi }, { type: "danger", delay: 1000 });
 					}
 				})
 
@@ -354,7 +404,7 @@ define(function (require) {
 		khoiTaoDuLieu: function () {
 			var self = this;
 			$.ajax({
-				url: self.getApp().serviceURL + "/api/v1/danhmucdoanhnghiep",
+				url: self.getApp().serviceURL + "/api/v1/danhmucdoanhnghiep?results_per_page=100000&max_results_per_page=1000000",
 				method: "GET",
 				data: { "q": JSON.stringify({ "order_by": [{ "field": "updated_at", "direction": "desc" }] }) },
 				contentType: "application/json",
@@ -370,7 +420,7 @@ define(function (require) {
 			var element = self.$el.find("#grid_all");
 
 			element.grid({
-				// showSortingIndicator: true,
+				showSortingIndicator: true,
 				orderByMode: "client",
 				language: {
 					no_records_found: "Chưa có dữ liệu"
@@ -407,7 +457,7 @@ define(function (require) {
 
 				pagination: {
 					page: 1,
-					pageSize: 100
+					pageSize: 5
 				},
 				events: {
 					"rowclick": function (e) {
