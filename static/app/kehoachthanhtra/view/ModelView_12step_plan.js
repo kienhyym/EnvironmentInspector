@@ -1009,7 +1009,7 @@ define(function (require) {
 			var ketThucThanhTraTrangThai = self.model.get("trangthai");
 
 			if (ketThucThanhTraTrangThai === "end_checked" || ketThucThanhTraTrangThai === "completed") {
-				self.$el.find(".btn_ketthuchoanthanh").hide();
+				self.$el.find(".btn_ketthuchoanthanh, .btn-end-exit").hide();
 				self.$el.find(".btn-them").hide();
 				btnSave.each(function () {
 					btnSave.hide();
@@ -1366,28 +1366,28 @@ define(function (require) {
 			// });
 
 
-			//10
-			// self.$el.find(".btn-save-gd10").unbind('click').bind('click', function () {
-			// 	//    			var sokehoach = self.model.get("sokehoach");
-			// 	//    			if(sokehoach === null || sokehoach===""){
-			// 	//    				self.getApp().notify("Vui lòng nhập số kế hoạch thanh tra");
-			// 	//    				return;
-			// 	//    			}
-			// 	//    			
-			// 	//    			var ngaylenkehoach = self.model.get("ngaylenkehoach");
-			// 	//    			if(ngaylenkehoach === null || ngaylenkehoach===""){
-			// 	//    				self.getApp().notify("Vui lòng nhập ngày lên kế hoạch thanh tra");
-			// 	//    				return;
-			// 	//    			}
-			// 	if (files != undefined) {
-			// 		files.forEach(function (item, index) {
-			// 			self.saveAttachment(item.arrAttachment, item.data_attr);
-			// 		})
-			// 	}
-			// 	else {
-			// 		self.saveModel();
-			// 	}
-			// });
+			// 10
+			self.$el.find(".btn-save-gd10").unbind('click').bind('click', function () {
+				//    			var sokehoach = self.model.get("sokehoach");
+				//    			if(sokehoach === null || sokehoach===""){
+				//    				self.getApp().notify("Vui lòng nhập số kế hoạch thanh tra");
+				//    				return;
+				//    			}
+				//    			
+				//    			var ngaylenkehoach = self.model.get("ngaylenkehoach");
+				//    			if(ngaylenkehoach === null || ngaylenkehoach===""){
+				//    				self.getApp().notify("Vui lòng nhập ngày lên kế hoạch thanh tra");
+				//    				return;
+				//    			}
+				if (files != undefined) {
+					files.forEach(function (item, index) {
+						self.saveAttachment(item.arrAttachment, item.data_attr);
+					})
+				}
+				else {
+					self.saveModel();
+				}
+			});
 
 			//11
 			self.$el.find(".btn-save-gd11").unbind('click').bind('click', function () {
@@ -1406,7 +1406,7 @@ define(function (require) {
 
 				if (tenfile_ketluan_thanhtra_attachmentt.length == 0) {
 					if (taive_ketluan_thanhtra_attachment.length == 0) {
-						self.getApp().notify({ message: "Vui lòng tải tài liệu kết luân thanh tra" }, { type: "danger", delay: 1000 });
+						self.getApp().notify({ message: "Vui lòng đưa tài liệu kết luân thanh tra lên" }, { type: "danger", delay: 1000 });
 						return;
 					}
 				}

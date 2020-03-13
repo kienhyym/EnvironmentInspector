@@ -154,7 +154,7 @@ define(function (require) {
 						],
 					},
 				],
-				dataSource: dataSource,
+				dataSource: lodash.orderBy(dataSource, ['stt'], ['asc']),
 				primaryField: "id",
 				selectionMode: false,
 				pagination: {
