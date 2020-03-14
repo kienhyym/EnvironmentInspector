@@ -20,7 +20,7 @@ from application import run_app
 from application.database import db
 from application.extensions import auth
 import os
-from application.models import Role, User, QuocGia, TinhThanh, QuanHuyen, XaPhuong, DanToc,DanhMucLinhVuc
+from application.models import Role, User, QuocGia, TinhThanh, QuanHuyen, XaPhuong, DanToc,DanhMucLinhVuc,DonVi
 from application.controllers.helper import generator_salt
 # Instance
 manager = Manager()
@@ -124,6 +124,12 @@ def create_default_models_linhvuc():
     db.session.flush()
     #add linh vuc 
     db.session.commit()
+@manager.command
+def create_default_models_donvi(): 
+    donvi1 = DonVi(ten="Cục môi trường y tế")
+    db.session.add(donvi1)
+    db.session.flush()
+    db.session.commit()
 
 @manager.command
 def create_default_models(): 
@@ -142,45 +148,43 @@ def create_default_models():
     db.session.add(role6)
     db.session.flush()
 
-    donvinhanuoc = DonVi(ten='Cục môi trường y tế')
-    db.session.add(donvinhanuoc)
-    db.session.flush()
-
+    
     #add user test   
     salt1 = generator_salt()  
+    donviid = db.session.query(DonVi).filter(DonVi.ten == "Cục môi trường y tế").first()
     user1 = User(email='cuctruong@gmail.com', name='Cục Trưởng',  password=auth.encrypt_password('123456', salt1), salt=salt1 ,active=True)
     user1.roles.append(role1)
-    user1.DonVi.append(donvinhanuoc)
+    user1.donvi_id = donviid.id
     db.session.add(user1)
 
     salt2 = generator_salt()  
     user2 = User(email='vanphongcuc@gmail.com', name='Văn Phòng Cục',  password=auth.encrypt_password('123456', salt2), salt=salt2 ,active=True)
     user2.roles.append(role2)
-    user2.DonVi.append(donvinhanuoc)
+    user2.donvi_id = donviid.id
     db.session.add(user2)
 
     salt3 = generator_salt()  
     user3 = User(email='phocuctruong@gmail.com', name='Phó Cục Trưởng',  password=auth.encrypt_password('123456', salt3), salt=salt3 ,active=True)
     user3.roles.append(role3)
-    user3.DonVi.append(donvinhanuoc)
+    user3.donvi_id = donviid.id
     db.session.add(user3)
 
     salt4 = generator_salt()  
     user4 = User(email='truongphong@gmail.com', name='Trưởng Phòng',  password=auth.encrypt_password('123456', salt4), salt=salt4 ,active=True)
     user4.roles.append(role4)
-    user4.DonVi.append(donvinhanuoc)
+    user4.donvi_id = donviid.id
     db.session.add(user4)
 
     salt5 = generator_salt()  
     user5 = User(email='chuyenvien@gmail.com', name='chuyên viên',  password=auth.encrypt_password('123456', salt4), salt=salt4 ,active=True)
     user5.roles.append(role5)
-    user5.DonVi.append(donvinhanuoc)
+    user5.donvi_id = donviid.id
     db.session.add(user5)
 
     salt6 = generator_salt()  
     user6 = User(email='thanhviendoanthanhtra@gmail.com', name='Thành Viên Đoàn Thanh Tra',  password=auth.encrypt_password('123456', salt4), salt=salt4 ,active=True)
     user6.roles.append(role6)
-    user6.DonVi.append(donvinhanuoc)
+    user6.donvi_id = donviid.id
     db.session.add(user6)
 
     db.session.commit()
@@ -256,11 +260,13 @@ def reset_pass_cuctruong():
 def run():
     role = db.session.query(Role).filter(Role.name == 'CucTruong').first()
     if role is None:
-        create_default_models()
+        create_default_models_donvi()
         create_default_models_linhvuc()
         add_danhsach_quocgia_tinhthanh()
         add_danhsach_quanhuyen()
         add_danhsach_xaphuong()
+        create_default_models()
+
         
     run_app(host="0.0.0.0", port=20404)
 
