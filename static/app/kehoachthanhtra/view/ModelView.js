@@ -489,6 +489,7 @@ define(function (require) {
 			var self = this;
 			self.$el.find('.link-taive-view div').each(function (indexhtml, itemhtml) {
 				if (self.model.get($(itemhtml).attr('data-field')) != null) {
+					console.log('saaaaaaaaaaaaaa',$(itemhtml).attr('data-field'))
 
 					$(self.$el.find('.custom-file-view')[indexhtml]).hide();
 					self.model.get($(itemhtml).attr('data-field')).forEach(function (itemfield, indexfield) {
