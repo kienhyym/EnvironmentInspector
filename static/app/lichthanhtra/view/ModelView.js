@@ -73,7 +73,7 @@ define(function (require) {
 					var filters = {
 						filters: {
 							"$or": [
-								{ "$and": [{ "ngaysoanthao": { "$gte": starttime._i/1000 } }, { "ngaysoanthao": { "$lte": endtime._i/1000  } }] },
+								{ "$and": [{ "ngay_quyetdinh_thanhtra": { "$gte": starttime._i/1000 } }, { "ngay_quyetdinh_thanhtra": { "$lte": endtime._i/1000  } }] },
 								{ "$and": [{ "ngaypheduyet_phong": { "$gte": starttime._i/1000 } }, { "ngaypheduyet_phong": { "$lte": endtime._i/1000  } }] },
 								{ "$and": [{ "ngaypheduyet_pct": { "$gte": starttime._i/1000 } }, { "ngaypheduyet_pct": { "$lte": endtime._i/1000  } }] },
 								{ "$and": [{ "ngaypheduyet_quyetdinh": { "$gte": starttime._i/1000  } }, { "ngaypheduyet_quyetdinh": { "$lte": endtime._i/1000  } }] },
@@ -108,7 +108,7 @@ define(function (require) {
 								} else if (item.ngaysoanthao !== null) {
 									start = item.ngaysoanthao;
 								}
-								var event_item = { "start": start*1000+100000000, "title": item.tenkehoach + '[' + self.getApp().trangthai[item.trangthai] + ']', "url": "#kehoachthanhtra/model?id=" + item.id };
+								var event_item = { "start": start*1000+100000000, "title": item.danhmucdoanhnghiep.name + '[' + self.getApp().trangthai[item.trangthai] + ']', "url": "#kehoachthanhtra/model?id=" + item.id };
 								events.push(event_item);
 							}
 							callback(events);
