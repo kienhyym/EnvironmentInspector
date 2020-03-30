@@ -58,6 +58,10 @@ define(function (require) {
 								self.getApp().notify({ message: "Bạn chưa chọn viết tên doanh nghiệp" }, { type: "danger", delay: 1000 });
 								return false
 							}
+							if (self.model.get('chisotuanthuphapluat') == null) {
+								self.getApp().notify({ message: "Bạn chưa chọn chỉ số tuân thủ phấp luật" }, { type: "danger", delay: 1000 });
+								return false
+							}
 							if (self.model.get('tinhthanh_id') == null) {
 								self.getApp().notify({ message: "Bạn chưa chọn tỉnh thành" }, { type: "danger", delay: 1000 });
 								return false
@@ -621,94 +625,146 @@ define(function (require) {
 			})
 			//Thêm chi nhánh mới
 			self.$el.find('.btn-luu').unbind('click').bind('click', function () {
+				if (self.$el.find('.chonlinhvuc select').selectpicker('val').length == 0) {
+					self.getApp().notify({ message: "Bạn chưa chọn lĩnh vực" }, { type: "danger", delay: 1000 });
+					return false
+				}
+				if (self.model.get('name') == null) {
+					self.getApp().notify({ message: "Bạn chưa chọn viết tên doanh nghiệp" }, { type: "danger", delay: 1000 });
+					return false
+				}
+				if (self.model.get('chisotuanthuphapluat') == null) {
+					self.getApp().notify({ message: "Bạn chưa chọn chỉ số tuân thủ phấp luật" }, { type: "danger", delay: 1000 });
+					return false
+				}
+				if (self.model.get('tinhthanh_id') == null) {
+					self.getApp().notify({ message: "Bạn chưa chọn tỉnh thành" }, { type: "danger", delay: 1000 });
+					return false
+				}
+				if (self.model.get('quanhuyen_id') == null) {
+					self.getApp().notify({ message: "Bạn chưa chọn quận huyện" }, { type: "danger", delay: 1000 });
+					return false
+				}
+				if (self.model.get('xaphuong_id') == null) {
+					self.getApp().notify({ message: "Bạn chưa chọn xã phường" }, { type: "danger", delay: 1000 });
+					return false
+				}
+				if (self.model.get('diachi') == null) {
+					self.getApp().notify({ message: "Bạn chưa viết địa chỉ" }, { type: "danger", delay: 1000 });
+					return false
+				}
 				if (self.kiemTraCanCo() == true) {
 					if (self.model.get('id') == null) {
-						self.model.save(null, {
-							success: function (model, respose, options) {
-								self.getApp().notify("Lưu thông tin thành công");
-								var param = {
-									id: gonrin.uuid(),
-									tenchinhanh: self.$el.find('#tenchinhanh').val(),
-									diachichinhanh: self.$el.find('#diachichinhanh').val(),
-									tinhthanh_id: idTinhThanh,
-									tinhthanh: TinhThanh,
-									quanhuyen_id: idQuanHuyen,
-									quanhuyen: QuanHuyen,
-									xaphuong_id: idXaPhuong,
-									xaphuong: XaPhuong,
-									danhmucdoanhnghiep_id: self.model.get('id')
-								};
-								$.ajax({
-									url: self.getApp().serviceURL + "/api/v1/danhsachchinhanhdonvi",
-									type: 'POST',
-									data: JSON.stringify(param),
-									headers: {
-										'content-type': 'application/json'
-									},
-									dataType: 'json',
-									success: function (data) {
-										self.getApp().notify("Thêm chi nhánh thành công");
-										window.location = self.getApp().serviceURL + "#danhmucdoanhnghiep/model?id=" + respose.id;
-									},
-									error: function (request, textStatus, errorThrown) {
-									}
-								})
-							},
-							error: function (xhr, status, error) {
-								try {
-									if (($.parseJSON(error.xhr.responseText).error_code) === "SESSION_EXPIRED") {
-										self.getApp().notify("Hết phiên làm việc, vui lòng đăng nhập lại!");
-										self.getApp().getRouter().navigate("login");
-									} else {
-										self.getApp().notify({ message: $.parseJSON(error.xhr.responseText).error_message }, { type: "danger", delay: 1000 });
-									}
-								}
-								catch (err) {
-									self.getApp().notify({ message: "Lưu thông tin không thành công" }, { type: "danger", delay: 1000 });
-								}
+						if (self.$el.find('.chonlinhvuc select').selectpicker('val').length != 0) {
+							var giatriloc_LinhVuc = self.$el.find('.chonlinhvuc select').selectpicker('val');
+							var filters = {
+								filters: {
+									"$and": [
+										{ "id": { "$in": giatriloc_LinhVuc } }
+									]
+								},
+								order_by: [{ "field": "created_at", "direction": "asc" }]
 							}
-						});
-					}
-					var param = {
-						id: gonrin.uuid(),
-						tenchinhanh: self.$el.find('#tenchinhanh').val(),
-						diachichinhanh: self.$el.find('#diachichinhanh').val(),
-						tinhthanh_id: idTinhThanh,
-						tinhthanh: TinhThanh,
-						quanhuyen_id: idQuanHuyen,
-						quanhuyen: QuanHuyen,
-						xaphuong_id: idXaPhuong,
-						xaphuong: XaPhuong,
-						danhmucdoanhnghiep_id: self.model.get('id')
-					};
-					$.ajax({
-						url: self.getApp().serviceURL + "/api/v1/danhsachchinhanhdonvi",
-						type: 'POST',
-						data: JSON.stringify(param),
-						headers: {
-							'content-type': 'application/json'
-						},
-						dataType: 'json',
-						success: function (data) {
-							self.$el.find(".content-main").css('opacity', '1');
-							self.$el.find(".formthemchinhanh").toggle();
-							self.$el.find("#them").show();
-							self.getApp().notify("Thêm chi nhánh thành công");
-							self.getApp().getRouter().refresh();
-						},
-						error: function (request, textStatus, errorThrown) {
+							$.ajax({
+								type: "GET",
+								url: self.getApp().serviceURL + "/api/v1/danhmuclinhvuc?results_per_page=100000&max_results_per_page=1000000",
+								data: { "q": JSON.stringify(filters) },
+								contentType: "application/json",
+								success: function (response) {
+									self.model.set('danhmuclinhvuc_foreign', response.objects)
+									self.model.save(null, {
+										success: function (model, respose, options) {
+											self.getApp().notify("Lưu thông tin thành công");
+											var param = {
+												id: gonrin.uuid(),
+												tenchinhanh: self.$el.find('#tenchinhanh').val(),
+												diachichinhanh: self.$el.find('#diachichinhanh').val(),
+												tinhthanh_id: idTinhThanh,
+												tinhthanh: TinhThanh,
+												quanhuyen_id: idQuanHuyen,
+												quanhuyen: QuanHuyen,
+												xaphuong_id: idXaPhuong,
+												xaphuong: XaPhuong,
+												danhmucdoanhnghiep_id: self.model.get('id')
+											};
+											$.ajax({
+												url: self.getApp().serviceURL + "/api/v1/danhsachchinhanhdonvi",
+												type: 'POST',
+												data: JSON.stringify(param),
+												headers: {
+													'content-type': 'application/json'
+												},
+												dataType: 'json',
+												success: function (data) {
+													self.getApp().notify("Thêm chi nhánh thành công");
+													window.location = self.getApp().serviceURL + "#danhmucdoanhnghiep/model?id=" + respose.id;
+												},
+												error: function (request, textStatus, errorThrown) {
+												}
+											})
+										},
+										error: function (xhr, status, error) {
+											try {
+												if (($.parseJSON(error.xhr.responseText).error_code) === "SESSION_EXPIRED") {
+													self.getApp().notify("Hết phiên làm việc, vui lòng đăng nhập lại!");
+													self.getApp().getRouter().navigate("login");
+												} else {
+													self.getApp().notify({ message: $.parseJSON(error.xhr.responseText).error_message }, { type: "danger", delay: 1000 });
+												}
+											}
+											catch (err) {
+												self.getApp().notify({ message: "Lưu thông tin không thành công" }, { type: "danger", delay: 1000 });
+											}
+										}
+									});
+								}
+							});
 						}
-					})
+
+					}
+					else {
+						var param = {
+							id: gonrin.uuid(),
+							tenchinhanh: self.$el.find('#tenchinhanh').val(),
+							diachichinhanh: self.$el.find('#diachichinhanh').val(),
+							tinhthanh_id: idTinhThanh,
+							tinhthanh: TinhThanh,
+							quanhuyen_id: idQuanHuyen,
+							quanhuyen: QuanHuyen,
+							xaphuong_id: idXaPhuong,
+							xaphuong: XaPhuong,
+							danhmucdoanhnghiep_id: self.model.get('id')
+						};
+						$.ajax({
+							url: self.getApp().serviceURL + "/api/v1/danhsachchinhanhdonvi",
+							type: 'POST',
+							data: JSON.stringify(param),
+							headers: {
+								'content-type': 'application/json'
+							},
+							dataType: 'json',
+							success: function (data) {
+								self.$el.find(".content-main").css('opacity', '1');
+								self.$el.find(".formthemchinhanh").toggle();
+								self.$el.find("#them").show();
+								self.getApp().notify("Thêm chi nhánh thành công");
+								self.getApp().getRouter().refresh();
+							},
+							error: function (request, textStatus, errorThrown) {
+							}
+						})
+					}
+
 				}
 
 			})
 			//sửa thông tin chi nhánh
 			self.$el.find('.btn-sua').unbind('click').bind('click', function () {
-				if(self.$el.find('#tenchinhanh').val() == null || self.$el.find('#tenchinhanh').val() == ""){
+				if (self.$el.find('#tenchinhanh').val() == null || self.$el.find('#tenchinhanh').val() == "") {
 					self.getApp().notify({ message: "Tên chi nhánh không được để trống" }, { type: "danger", delay: 1000 });
 					return false;
 				}
-				if(self.$el.find('#diachichinhanh').val() == null || self.$el.find('#diachichinhanh').val() == ""){
+				if (self.$el.find('#diachichinhanh').val() == null || self.$el.find('#diachichinhanh').val() == "") {
 					self.getApp().notify({ message: "Địa chỉ chi nhánh không được để trống" }, { type: "danger", delay: 1000 });
 					return false;
 				}
