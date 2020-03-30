@@ -19,10 +19,9 @@ define(function (require) {
 		render: function () {
 			var self = this;
 			self.getApp().currentUser.roles.forEach(function (item, index) {
-				if (item.role_name == 'VanPhongCuc') {
+				if (item.role_name != 'CucTruong') {
 					self.$el.find('.toolbar,.nutthem').hide();
 				}
-
 			})
 			self.applyBindings()
 
