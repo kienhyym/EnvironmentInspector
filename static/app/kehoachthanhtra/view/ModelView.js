@@ -185,6 +185,8 @@ define(function (require) {
 			})
 
 			self.chonLinhVuc();
+			self.chonDoanhNghiep();
+
 			self.getDoanhNghiep();
 			self.bindEventSelect();
 			self.updateUIPermission();
@@ -218,6 +220,7 @@ define(function (require) {
 						self.applyBindings();
 						self.hienThiLinhVuc();
 						self.chonLinhVuc();
+						self.chonDoanhNghiep();
 						
 						self.$el.find("#multiselect_donvidoanhnghiep").selectpicker('val', self.model.get("madoanhnghiep"));
 						self.updateUITimeline(self.model.toJSON());
@@ -343,23 +346,81 @@ define(function (require) {
 						}
 					})
 					self.$el.find('.chonlinhvuc select').selectpicker({
-						'actionsBox': 'true'
+						'actionsBox': 'true',
+						'dropupAuto':false,
+						'size':3,
+						'virtualScroll':true
+
 					});
+					self.$el.find('.chonlinhvuc select').on('hide.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+						$('body').css('overflow','scroll')
+					})
 
 					if (self.itemLinhVucKeHoachNamSau != null) {
 						var arrLinhvuc = self.itemLinhVucKeHoachNamSau.slice(1, self.itemLinhVucKeHoachNamSau.length - 1).split(',')
 						self.$el.find('.chonlinhvuc select').selectpicker('val', arrLinhvuc);
-
 					}
 				},
 				error: function (xhr, status, error) {
 					self.getApp().notify({ message: "Không lấy được dữ liệu" }, { type: "danger", delay: 1000 });
 				},
 			});
-
-
 		},
 
+		chonDoanhNghiep: function () {
+			var self = this;
+			$.ajax({
+				url: self.getApp().serviceURL + "/api/v1/danhmucdoanhnghiep",
+				method: "GET",
+				contentType: "application/json",
+				success: function (data) {
+					data.objects.forEach(function (item, index) {
+							self.$el.find('.chonDoanhNghiep select').append(`
+							<option value="${item.id}">${item.name}</option>
+							`)
+					})
+					self.$el.find('.chonDoanhNghiep select').selectpicker({
+						'actionsBox': 'true',
+						'dropupAuto':false,
+						'size':3,
+						'virtualScroll':true
+
+					});
+					self.$el.find('.chonDoanhNghiep select').on('show.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+						$('body').css('overflow','hidden')
+						self.$el.find('.chonDoanhNghiep div .dropdown-menu').css('max-height','280px')
+						self.$el.find('.chonDoanhNghiep div .dropdown-menu').append(`
+							<nav class="d-flex justify-content-end p-2">
+								<ul class="pagination">
+								<li class="page-item ">
+									<a class="page-link" href="#" tabindex="-1"><</a>
+								</li>
+								<li class="page-item"><a class="page-link" href="#">1</a></li>
+								<li class="page-item active">
+									<a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
+								</li>
+								<li class="page-item"><a class="page-link" href="#">3</a></li>
+								<li class="page-item">
+									<a class="page-link" href="#">></a>
+								</li>
+								</ul>
+							</nav>
+						`)
+					})
+					self.$el.find('.chonDoanhNghiep select').on('hide.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+						$('body').css('overflow','scroll')
+					})
+
+					if (self.itemLinhVucKeHoachNamSau != null) {
+						var arrLinhvuc = self.itemLinhVucKeHoachNamSau.slice(1, self.itemLinhVucKeHoachNamSau.length - 1).split(',')
+						self.$el.find('.chonDoanhNghiep select').selectpicker('val', arrLinhvuc);
+					}
+				},
+				error: function (xhr, status, error) {
+					self.getApp().notify({ message: "Không lấy được dữ liệu" }, { type: "danger", delay: 1000 });
+				},
+			});
+		},
 
 		bindEventGD: function (files) {
 			var self = this;

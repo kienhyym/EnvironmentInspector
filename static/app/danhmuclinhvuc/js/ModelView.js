@@ -56,7 +56,7 @@ define(function (require) {
 								self.getApp().notify({ message: "Nhóm lĩnh vực không được bỏ trống" }, { type: "danger", delay: 1000 });
 								return false
 							}
-							
+
 							self.model.save(null, {
 								success: function (model, respose, options) {
 									self.getApp().notify("Lưu thông tin thành công");

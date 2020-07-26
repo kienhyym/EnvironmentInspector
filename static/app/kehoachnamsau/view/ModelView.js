@@ -152,9 +152,12 @@ define(function (require) {
 						var text = 'Trạng thái';
 						if (self.model.get('trangthai') == "truongphongyeucausua") {
 							text = "Trưởng phòng yêu cầu sửa lại";
+
 						}
 						if (self.model.get('trangthai') == "truongphongdaduyet") {
 							text = "Trưởng phòng đã duyệt";
+							self.$el.find('.chophepsua').hide();
+
 						}
 						if (self.model.get('trangthai') == "cuctruongdaduyet") {
 							self.$el.find('.toolbar .btn-success').hide()
@@ -168,12 +171,16 @@ define(function (require) {
 						}
 						if (self.model.get('trangthai') == "phocuctruongdaduyet") {
 							text = "Phó cục trưởng đã duyệt";
+							self.$el.find('.chophepsua').hide();
+
 						}
 						if (self.model.get('trangthai') == "phocuctruongyeucausua") {
 							text = "Phó cục trưởng yêu cầu sửa lại";
 						}
 						if (self.model.get('trangthai') == "chuyenviendahoanthanh") {
 							text = "Chuyên viên đã hoàn thành";
+							self.$el.find('.chophepsua').hide();
+
 						}
 						self.$el.find('.trangthai2 div div input').attr('placeholder', text)
 						self.applyBindings();
